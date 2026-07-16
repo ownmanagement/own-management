@@ -3,208 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWN Architecture | Portafolio</title>
+    <title>OWN Architecture | Estudio</title>
     <style>
-        /* Estilos Globales */
+        /* Reset de estilos */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
+
         body {
-            background-color: #fbfbfb;
-            color: #1a1a1a;
-            line-height: 1.6;
+            background-color: #0d0d0d; /* Fondo oscuro muy elegante */
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        a {
+
+        /* Estilo para títulos elegantes (Serif) */
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', 'Didot', 'Georgia', serif;
+            font-weight: 300;
+        }
+
+        /* Navegación sutil y flotante */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 6%;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(13,13,13,0.8) 0%, rgba(13,13,13,0) 100%);
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            margin-left: 40px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.4s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        /* Portada de Impacto (Estilo Pinterest Editorial) */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 10%;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            /* Reemplaza la URL de arriba por la foto principal de tu proyecto más espectacular */
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 10;
+        }
+
+        .hero-content span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: rgba(255, 255, 255, 0.6);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        /* Sección de Introducción de la Empresa */
+        .about-section {
+            padding: 140px 10%;
+            background-color: #0d0d0d;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            color: #888888;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 600px;
+            background: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+            filter: grayscale(20%);
+        }
+
+        /* Galería Estilo Revista (Mosaico Minimalista) */
+        .gallery-section {
+            padding: 100px 6%;
+            background-color: #0d0d0d;
+        }
+
+        .gallery-header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .gallery-header h2 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .gallery-header p {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        /* Grilla asimétrica elegante */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
             text-decoration: none;
             color: inherit;
         }
 
-        /* Navegación */
-        header {
+        /* Alternamos tamaños para dar el efecto editorial */
+        .gallery-item:nth-child(even) {
+            margin-top: 80px;
+        }
+
+        .gallery-img-container {
+            width: 100%;
+            height: 650px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            position: relative;
+        }
+
+        .gallery-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: grayscale(15%);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-info {
+            margin-top: 25px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-            background: #fff;
-            border-bottom: 1px solid #eaeaea;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            align-items: baseline;
         }
-        .logo {
+
+        .gallery-info h3 {
             font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        nav a {
-            margin-left: 20px;
-            font-size: 0.9rem;
+
+        .gallery-info span {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: #666;
+        }
+
+        /* Footer Negro Minimalista */
+        footer {
+            background-color: #050505;
+            padding: 120px 10% 60px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: #555555;
+        }
+
+        .footer-col p, .footer-col a {
+            font-size: 0.95rem;
+            color: #888888;
+            margin-bottom: 12px;
+            text-decoration: none;
+            display: block;
             transition: color 0.3s;
         }
-        nav a:hover {
-            color: #000;
+
+        .footer-col a:hover {
+            color: #ffffff;
         }
 
-        /* Sección Principal (Hero) */
-        .hero {
-            height: 70vh;
-            background: #1a1a1a;
-            color: #fff;
+        .footer-bottom {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 600px;
-            font-weight: 300;
-        }
-
-        /* Sección Proyectos (Galería) */
-        .portfolio {
-            padding: 80px 8%;
-        }
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .project-card {
-            background: #fff;
-            border: 1px solid #eaeaea;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        .project-img {
-            width: 100%;
-            height: 250px;
-            background-color: #ddd; /* Temporal mientras subes tus fotos */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.9rem;
-        }
-        .project-info {
-            padding: 20px;
-        }
-        .project-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        .project-info p {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* Footer / Contacto */
-        footer {
-            background: #111;
-            color: #fff;
-            padding: 60px 8% 40px;
-            text-align: center;
-        }
-        .contact-info {
-            margin-bottom: 30px;
-        }
-        .contact-info p {
-            color: #999;
-            margin-bottom: 10px;
-        }
-        .copyright {
+            justify-content: space-between;
             font-size: 0.8rem;
-            color: #555;
-            border-top: 1px solid #222;
-            padding-top: 20px;
+            color: #444444;
+            border-top: 1px solid #111111;
+            padding-top: 40px;
+        }
+
+        /* Responsividad */
+        @media (max-width: 992px) {
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 80px 6%;
+            }
+            .about-image {
+                height: 400px;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .gallery-item:nth-child(even) {
+                margin-top: 0;
+            }
+            .gallery-img-container {
+                height: 450px;
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
- 
+
     <header>
         <div class="logo">OWN ARCHITECTURE</div>
         <nav>
             <a href="#proyectos">Proyectos</a>
+            <a href="#nosotros">Estudio</a>
             <a href="#contacto">Contacto</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Diseño con Propósito</h1>
-        <p>Creamos espacios contemporáneos que fusionan la estética, la funcionalidad y la sostenibilidad.</p>
+    <section class="hero-section">
+        <div class="hero-content">
+            <span>Diseño Contemporáneo</span>
+            <h1>Espacios puros que trascienden el tiempo.</h1>
+            <p>Arquitectura minimalista pensada para integrarse armónicamente con la luz natural, el entorno y las necesidades humanas.</p>
+        </div>
     </section>
 
-    <section class="portfolio" id="proyectos">
-        <h2 class="section-title">Proyectos Destacados</h2>
-        <div class="grid">
+    <section class="about-section" id="nosotros">
+        <div class="about-text">
+            <h2>Creemos en la belleza de lo esencial.</h2>
+            <p>En OWN Architecture, eliminamos los elementos superfluos para revelar la verdadera esencia de cada espacio. Nos centramos en el uso de materiales honestos, detalles precisos y un manejo magistral de la luz.</p>
+            <p>Cada proyecto es un viaje colaborativo diseñado a medida para reflejar un estilo de vida sofisticado, funcional y en equilibrio con la naturaleza.</p>
+        </div>
+        <div class="about-image"></div>
+    </section>
+
+    <section class="gallery-section" id="proyectos">
+        <div class="gallery-header">
+            <p>Obras seleccionadas</p>
+            <h2>Portafolio</h2>
+        </div>
+        
+        <div class="gallery-grid">
             
-            <div class="project-card">
-                <div class="project-img">[ Imagen Proyecto Residencial ]</div>
-                <div class="project-info">
-                    <h3>Casa Bosque</h3>
-                    <p>Residencial • 2025</p>
+            <a href="#" class="gallery-item">
+                <div class="gallery-img-container">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80" alt="Residencia en el Bosque">
                 </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-img">[ Imagen Proyecto Comercial ]</div>
-                <div class="project-info">
-                    <h3>Oficinas Prisma</h3>
-                    <p>Corporativo • 2024</p>
+                <div class="gallery-info">
+                    <h3>Casa del Acantilado</h3>
+                    <span>Residencial • 2025</span>
                 </div>
-            </div>
+            </a>
 
-            <div class="project-card">
-                <div class="project-img">[ Imagen Proyecto Urbano ]</div>
-                <div class="project-info">
-                    <h3>Pabellón de Luz</h3>
-                    <p>Cultural • 2026</p>
+            <a href="#" class="gallery-item">
+                <div class="gallery-img-container">
+                    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=80" alt="Pabellón de Concreto">
                 </div>
-            </div>
+                <div class="gallery-info">
+                    <h3>Pabellón de Hormigón</h3>
+                    <span>Cultural • 2026</span>
+                </div>
+            </a>
 
-        </div>
-    </section>
-
-    <footer id="contacto">
-        <div class="contact-info">
-            <h2 style="margin-bottom: 20px; font-weight: 300; letter-spacing: 2px;">CONTACTO</h2>
-            <p>Email: info@ownmanagement.com</p>
-            <p>Teléfono: +123 456 789</p>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2026 OWN Management. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-</body>
-</html>
+            <a href="#" class="gallery-item">
+                <div class="gallery-img-container">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80" alt="Apartamento Minimalista">
+                </div>
