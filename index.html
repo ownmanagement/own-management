@@ -89,21 +89,18 @@
             background-color: #000000;
         }
 
-     .hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: 
-        radial-gradient(rgba(0,0,0,0.4) 15%, transparent 16%) 0 0 / 4px 4px,
-        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), 
-        url('img/PORTADA.jpg') no-repeat center center/cover;
-    z-index: 1;
-    transform: scale(1);
-    animation: zoomLento 24s infinite alternate ease-in-out;
- animation: zoomLento 24s infinite alternate ease-in-out;
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Puntos eliminados: Solo queda el degradado oscuro y tu imagen de fondo */
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), 
+                        url('img/PORTADA.jpg') no-repeat center center/cover;
+            z-index: 1;
+            transform: scale(1);
+            animation: zoomLento 24s infinite alternate ease-in-out;
         }
 
         @keyframes zoomLento {
