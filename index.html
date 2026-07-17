@@ -32,7 +32,7 @@
             width: 100%;
         }
 
-        /* Navegación Minimalista Flotante */
+        /* Navegación Minimalista Flotante (Adaptada a fondo claro) */
         header {
             position: fixed;
             top: 0;
@@ -43,10 +43,10 @@
             align-items: center;
             padding: 25px 8%;
             z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo {
@@ -54,7 +54,7 @@
             font-weight: 700;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: #ffffff;
+            color: #111111;
         }
 
         nav {
@@ -64,7 +64,7 @@
 
         nav a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(17, 17, 17, 0.6);
             margin-left: 40px;
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -74,10 +74,10 @@
         }
 
         nav a:hover {
-            color: #ffffff;
+            color: #111111;
         }
 
-        /* Portada de Pantalla Completa (Efecto Ken Burns) */
+        /* Portada de Pantalla Completa Clara (Efecto Ken Burns) */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -86,7 +86,7 @@
             padding: 0 8%;
             position: relative;
             overflow: hidden; 
-            background-color: #000000;
+            background-color: #fbfbfb;
         }
 
         .hero-bg {
@@ -95,8 +95,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), 
+            /* Capa degradada muy clara y filtro para iluminar la fotografía */
+            background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), 
                         url('img/HAVANA 46.jpg') no-repeat center center/cover;
+            filter: brightness(1.15) contrast(1.05);
             z-index: 1;
             transform: scale(1);
             animation: zoomLento 24s infinite alternate ease-in-out;
@@ -111,7 +113,7 @@
             max-width: 650px;
             z-index: 10;
             position: relative;
-            color: #ffffff; 
+            color: #111111; 
             margin-top: 80px;
         }
 
@@ -119,7 +121,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 6px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(17, 17, 17, 0.6);
             display: block;
             margin-bottom: 25px;
             font-weight: 500;
@@ -131,12 +133,12 @@
             line-height: 1.15;
             letter-spacing: -2px;
             margin-bottom: 30px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
         }
 
         .hero-content p {
             font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(17, 17, 17, 0.8);
             font-weight: 300;
             line-height: 1.8;
             max-width: 500px;
@@ -215,7 +217,7 @@
             height: 600px;
             overflow: hidden;
             position: relative;
-            background-color: #000000; /* Fondo oscuro base para dar profundidad */
+            background-color: #f5f5f5; /* Fondo claro neutro para carga limpia */
         }
 
         .gallery-img-container img {
@@ -225,19 +227,14 @@
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
         }
 
-        /* FILTRO ESPECÍFICO PARA CORREGIR "CLARO DE LUZ" */
-        /* Reducimos el brillo drásticamente, subimos el contraste para recuperar detalle y desaturamos para asimilarlo a la portada */
+        /* SE ELIMINARON LOS FILTROS OSCUROS SOBRE CLARO DE LUZ */
         .gallery-item img[alt="Claro de Luz"] {
-            filter: brightness(0.45) contrast(1.2) saturate(0.8) sepia(0.05);
+            filter: none; /* Totalmente natural y luminosa */
         }
 
         .gallery-item:hover img {
-            opacity: 0.9;
+            opacity: 0.95;
             transform: scale(1.03);
-        }
-        
-        .gallery-item:hover img[alt="Claro de Luz"] {
-            filter: brightness(0.55) contrast(1.25) saturate(0.85);
         }
 
         .gallery-info {
@@ -417,7 +414,7 @@
                 </div>
             </a>
 
-            <!-- Cuarto elemento reemplazado por Claro de Luz -->
+            <!-- Claro de Luz completamente limpio y luminoso -->
             <a href="#" class="gallery-item">
                 <div class="gallery-img-container">
                     <img src="img/CLARODELUZ.jpg" alt="Claro de Luz">
