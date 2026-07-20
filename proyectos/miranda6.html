@@ -19,7 +19,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navegación (Usamos ../ para regresar correctamente a la raíz) */
+        /* Navegación Sólida */
         header {
             position: fixed;
             top: 0;
@@ -232,16 +232,16 @@
 <body>
 
     <header>
-        <a href="../index.html" class="logo">OWN ARCHITECTURE</a>
+        <!-- Rutas absolutas arregladas para GitHub Pages -->
+        <a href="/own-management/index.html" class="logo">OWN ARCHITECTURE</a>
         <nav>
-            <a href="../index.html">Inicio</a>
-            <a href="../index.html#proyectos">Proyectos</a>
-            <a href="../estudio.html">El Estudio</a>
+            <a href="/own-management/index.html">Inicio</a>
+            <a href="/own-management/index.html#proyectos">Proyectos</a>
+            <a href="/own-management/estudio.html">El Estudio</a>
         </nav>
     </header>
 
     <main>
-        <!-- Datos de Presentación -->
         <section class="project-hero">
             <div class="project-title">
                 <h1>MIRANDA 6</h1>
@@ -256,22 +256,20 @@
             </div>
         </section>
 
-        <!-- Bloques Visuales Intercalados -->
         <section class="project-images">
             <div class="img-large">
-                <!-- Imagen principal (Volvemos un nivel con ../ para buscar la carpeta img) -->
-                <img src="../img/MIRADA 6.jpg" alt="Vista Exterior Miranda 6">
+                <!-- Rutas de imagen apuntando directo a la carpeta de la raíz -->
+                <img src="/own-management/img/MIRADA 6.jpg" alt="Vista Exterior Miranda 6">
             </div>
             
             <div class="img-split">
-                <div><img src="../img/CLARODELUZ.jpg" alt="Interior detalle"></div>
-                <div><img src="../img/MIRADOR 42.jpg" alt="Detalle materialidad"></div>
+                <div><img src="/own-management/img/CLARODELUZ.jpg" alt="Interior detalle"></div>
+                <div><img src="/own-management/img/MIRADOR 42.jpg" alt="Detalle materialidad"></div>
             </div>
         </section>
 
-        <!-- Navegación interna al pie -->
         <div class="project-footer-nav">
-            <a href="../index.html#proyectos">← Volver a proyectos</a>
+            <a href="/own-management/index.html#proyectos">← Volver a proyectos</a>
             <a href="bigues-i-riells.html">Siguiente Proyecto →</a>
         </div>
     </main>
