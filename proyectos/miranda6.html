@@ -6,6 +6,7 @@
     <title>MIRANDA 6 | OWN Architecture</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Reset y tipografía global */
         * {
             margin: 0;
             padding: 0;
@@ -19,7 +20,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navegación Sólida */
+        /* Navegación Sólida para páginas secundarias */
         header {
             position: fixed;
             top: 0;
@@ -232,7 +233,7 @@
 <body>
 
     <header>
-        <!-- Retornamos al directorio raíz de forma segura con ../ -->
+        <!-- Rutas RELATIVAS puras (../) para volver a la raíz desde la carpeta proyectos -->
         <a href="../index.html" class="logo">OWN ARCHITECTURE</a>
         <nav>
             <a href="../index.html">Inicio</a>
@@ -258,7 +259,7 @@
 
         <section class="project-images">
             <div class="img-large">
-                <!-- Buscamos las imágenes subiendo un nivel -->
+                <!-- Rutas RELATIVAS de imagen (../img/) -->
                 <img src="../img/MIRADA 6.jpg" alt="Vista Exterior Miranda 6">
             </div>
             
