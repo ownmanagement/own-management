@@ -68,7 +68,7 @@
         /* Hero del Proyecto */
         .project-hero {
             padding-top: 140px;
-            padding-bottom: 60px;
+            padding-bottom: 40px;
             padding-left: 8%;
             padding-right: 8%;
         }
@@ -92,7 +92,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             gap: 20px;
         }
@@ -129,7 +129,7 @@
 
         /* Ficha Técnica y Descripción */
         .project-details {
-            padding: 0 8% 120px;
+            padding: 0 8% 100px;
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 80px;
@@ -179,20 +179,7 @@
             padding: 0 8% 120px;
             display: flex;
             flex-direction: column;
-            gap: 80px;
-        }
-
-        .gallery-row-full {
-            width: 100%;
-            max-height: 85vh;
-            overflow: hidden;
-            background-color: #f9f9f9;
-        }
-
-        .gallery-row-full img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            gap: 40px;
         }
 
         .gallery-row-double {
@@ -265,9 +252,9 @@
         @media (max-width: 992px) {
             .project-title-container h1 { font-size: 2.5rem; }
             .project-details { grid-template-columns: 1fr; gap: 40px; }
-            .gallery-row-double { grid-template-columns: 1fr; }
+            .gallery-row-double { grid-template-columns: 1fr; gap: 20px; }
             .gallery-row-double img { height: 400px; }
-            .main-image-container { height: 50vh; }
+            .main-image-container { height: 50vh; margin-bottom: 60px; }
         }
 
         @media (max-width: 600px) {
@@ -327,14 +314,18 @@
         </div>
     </section>
 
+    <!-- Galería de imágenes reorganizada -->
     <section class="project-gallery">
-        <div class="gallery-row-full">
-            <img src="../img/MIRADA 6.jpg" alt="Detalle arquitectónico de Miranda 6">
-        </div>
-        
+        <!-- Fila Doble 1 -->
         <div class="gallery-row-double">
             <img src="../img/miranda-6/miranda-1.jpg" alt="Interiorismo y espacio de Miranda 6">
             <img src="../img/miranda-6/miranda-2.jpg" alt="Relación interior y exterior">
+        </div>
+
+        <!-- Fila Doble 2 (Tercera y cuarta foto agregadas) -->
+        <div class="gallery-row-double">
+            <img src="../img/miranda-6/miranda-3.jpg" alt="Detalle de materiales">
+            <img src="../img/miranda-6/miranda-4.jpg" alt="Vista nocturna o perspectiva">
         </div>
     </section>
 
