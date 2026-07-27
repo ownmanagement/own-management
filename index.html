@@ -6,7 +6,7 @@
     <title>OWN Architecture | Estudio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Apple Style Reset */
+        /* Reset & Bases Apple Light Style */
         * {
             margin: 0;
             padding: 0;
@@ -18,14 +18,14 @@
         }
 
         body {
-            background-color: #000000;
-            color: #f5f5f7;
+            background-color: #ffffff;
+            color: #1d1d1f;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* NAVEGACIÓN APPLE: Glassmorphism ultralimpio */
+        /* NAVEGACIÓN APPLE: Cristal blanco traslúcido */
         header {
             position: fixed;
             top: 0;
@@ -34,13 +34,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
+            padding: 22px 8%;
             z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.65);
+            background-color: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.5s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.4s ease;
         }
 
         .logo {
@@ -48,12 +48,12 @@
             font-weight: 700;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: #f5f5f7;
+            color: #1d1d1f;
         }
 
         nav a {
             text-decoration: none;
-            color: rgba(245, 245, 247, 0.6);
+            color: #86868b;
             margin-left: 35px;
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -63,10 +63,10 @@
         }
 
         nav a:hover {
-            color: #ffffff;
+            color: #1d1d1f;
         }
 
-        /* HERO APPLE: Sensación de inmersión total */
+        /* HERO: Claridad y Profundidad Paralela */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -75,7 +75,7 @@
             padding: 0 8%;
             position: relative;
             overflow: hidden; 
-            background-color: #000000;
+            background-color: #fbfbfd;
         }
 
         .hero-bg {
@@ -83,18 +83,18 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 120%; /* Extra altura para parallax */
-            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), 
+            height: 120%; /* Extra para Parallax */
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.85) 100%), 
                         url('img/havana1.jpg') no-repeat center center/cover;
             z-index: 1;
             will-change: transform;
-            transition: transform 0.1s cubic-bezier(0,0,0.2,1);
+            transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1);
         }
 
         .hero-content {
             max-width: 900px;
             z-index: 10;
-            color: #ffffff;
+            color: #1d1d1f;
             margin-top: 60px;
             will-change: transform, opacity;
         }
@@ -109,35 +109,34 @@
             font-weight: 600;
         }
 
-        /* Título Estilo Apple: Tipografía masiva y gradiente directo */
+        /* Título Apple Light: Degradado directo en el texto de negro a gris de precisión */
         .hero-content h1 {
             font-size: 5rem;
             font-weight: 700;
             line-height: 1.05;
             letter-spacing: -3px;
             margin-bottom: 30px;
-            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
+            background: linear-gradient(180deg, #1d1d1f 0%, #6e6e73 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-content p {
             font-size: 1.3rem;
-            color: #a1a1a6;
+            color: #6e6e73;
             font-weight: 400;
             line-height: 1.6;
             max-width: 580px;
         }
 
-        /* SECCIÓN ESTUDIO: Revelado Mixto */
+        /* SECCIÓN ESTUDIO: Tipografía Escultórica */
         .about-section {
             padding: 200px 8%;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
             align-items: center;
-            background-color: #000000;
-            color: #f5f5f7;
+            background-color: #ffffff;
         }
 
         .about-text h2 {
@@ -145,36 +144,35 @@
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -2.5px;
-            background: linear-gradient(180deg, #ffffff 30%, #424245 100%);
+            background: linear-gradient(180deg, #1d1d1f 20%, #86868b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .about-details p {
-            color: #86868b;
+            color: #6e6e73;
             font-size: 1.2rem;
             line-height: 1.8;
             font-weight: 400;
             margin-bottom: 30px;
-            transition: color 0.5s ease;
         }
 
         .about-details p strong {
-            color: #f5f5f7;
+            color: #1d1d1f;
             font-weight: 600;
         }
 
         .line {
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(0, 0, 0, 0.08);
             width: 84%;
             margin: 0 auto;
         }
 
-        /* GALERÍA / PORTAFOLIO APPLE */
+        /* GALERÍA / PORTAFOLIO */
         .gallery-section {
             padding: 160px 8%;
-            background-color: #000000;
+            background-color: #ffffff;
         }
 
         .gallery-header {
@@ -195,7 +193,7 @@
             font-size: 4.2rem;
             font-weight: 700;
             letter-spacing: -3px;
-            background: linear-gradient(180deg, #ffffff 0%, #6e6e73 100%);
+            background: linear-gradient(180deg, #1d1d1f 0%, #86868b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -223,44 +221,44 @@
             height: 680px;
             overflow: hidden;
             position: relative;
-            border-radius: 18px; /* Bordes suaves estilo Apple */
-            background-color: #1d1d1f; 
+            border-radius: 20px; /* Esquinas redondas icónicas de la interfaz Apple */
+            background-color: #f5f5f7; 
         }
 
         .gallery-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.1); /* Efecto zoom inicial para revelado */
+            transform: scale(1.08);
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
-            filter: brightness(0.85);
+            filter: brightness(0.96);
         }
 
-        /* Efecto Zoom Out + Luz al Hover */
+        /* Micro-interacción Apple: Ajuste sutil de encuadre y nitidez */
         .gallery-item:hover img {
             transform: scale(1.0);
-            filter: brightness(1.05);
+            filter: brightness(1.02);
         }
 
         .gallery-info {
             margin-top: 25px;
-            padding: 0 10px;
+            padding: 0 8px;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
         }
 
         .gallery-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 600;
             letter-spacing: -0.5px;
-            color: #f5f5f7;
+            color: #1d1d1f;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
         }
 
         .gallery-item:hover .gallery-info h3 {
-            transform: translateX(8px);
-            color: #ffffff;
+            transform: translateX(6px);
+            color: #000000;
         }
 
         .gallery-info span {
@@ -273,9 +271,9 @@
 
         /* FOOTER */
         footer {
-            background-color: #000000;
+            background-color: #fbfbfd;
             padding: 160px 8% 60px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .footer-grid {
@@ -290,11 +288,11 @@
             letter-spacing: 5px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #ffffff;
+            color: #1d1d1f;
         }
 
         .footer-brand p {
-            color: #86868b;
+            color: #6e6e73;
             font-size: 1rem;
             font-weight: 400;
             max-width: 340px;
@@ -306,13 +304,13 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 25px;
-            color: #f5f5f7;
+            color: #1d1d1f;
             font-weight: 600;
         }
 
         .footer-col p, .footer-col a {
             font-size: 0.95rem;
-            color: #86868b;
+            color: #6e6e73;
             margin-bottom: 14px;
             text-decoration: none;
             display: block;
@@ -321,24 +319,24 @@
         }
 
         .footer-col a:hover {
-            color: #ffffff;
-            transform: translateX(5px);
+            color: #1d1d1f;
+            transform: translateX(4px);
         }
 
         .footer-bottom {
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
-            color: #6e6e73;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #86868b;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding-top: 40px;
             font-weight: 400;
         }
 
-        /* CLASE APPLE PARALLAX & REVEAL */
+        /* MOVIMIENTO APPLE REVEAL (Suave curva cúbica con escala) */
         .apple-reveal {
             opacity: 0;
-            transform: translateY(60px) scale(0.97);
+            transform: translateY(50px) scale(0.98);
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
         }
@@ -348,7 +346,7 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Responsive */
+        /* Responsividad */
         @media (max-width: 992px) {
             header { padding: 20px 5%; }
             .hero-content h1 { font-size: 3.5rem; }
@@ -552,23 +550,23 @@
         </div>
     </footer>
 
-    <!-- SCRIPT DE MOVIMIENTO ESTILO APPLE (Scroll Parallax & Smooth Reveal) -->
+    <!-- JS APPLE SCROLL DYNAMICS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const heroBg = document.getElementById('heroBg');
             const heroContent = document.getElementById('heroContent');
 
-            // 1. Scroll-Driven Parallax Suave (Sensación Apple)
+            // Parallax fluido al hacer Scroll
             window.addEventListener('scroll', () => {
                 const scrolled = window.scrollY;
                 if (scrolled <= window.innerHeight) {
-                    heroBg.style.transform = `translate3d(0, ${scrolled * 0.35}px, 0)`;
-                    heroContent.style.transform = `translate3d(0, ${scrolled * 0.25}px, 0)`;
-                    heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+                    heroBg.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0)`;
+                    heroContent.style.transform = `translate3d(0, ${scrolled * 0.2}px, 0)`;
+                    heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.75));
                 }
             });
 
-            // 2. Observer de Aparición Progresiva
+            // Reacción de entrada al campo de visión (Reveal)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -576,8 +574,8 @@
                     }
                 });
             }, {
-                threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px"
             });
 
             document.querySelectorAll('.apple-reveal').forEach(el => observer.observe(el));
