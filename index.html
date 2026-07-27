@@ -27,7 +27,7 @@
         }
 
         body.modal-open {
-            overflow: hidden; /* Bloquea el scroll de fondo cuando el proyecto se expande */
+            overflow: hidden;
         }
 
         /* CURSOR DINÁMICO */
@@ -122,9 +122,13 @@
             left: 0;
             width: 100%;
             height: 115%;
-            background: url('img/havana1.jpg') no-repeat center center/cover;
+            background-color: #1a1a1a;
+            background-image: url('./img/havana1.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
             z-index: 1;
-            transform: scale(1.15);
+            transform: scale(1.05);
             will-change: transform;
         }
 
@@ -134,7 +138,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
             z-index: 2;
         }
 
@@ -149,7 +153,7 @@
         .hero-content h1 { font-size: 4.8rem; font-weight: 800; line-height: 1.02; letter-spacing: -2.5px; margin-bottom: 24px; color: #ffffff; }
         .hero-content p { font-size: 1.15rem; color: rgba(255, 255, 255, 0.88); font-weight: 300; line-height: 1.6; max-width: 580px; }
 
-        /* GALERÍA DE PROYECTOS EN 1 SOLA COLUMNA */
+        /* GALERÍA DE PROYECTOS (1 COLUMNA) */
         .gallery-section { padding: 120px 6%; background-color: #ffffff; }
 
         .gallery-header {
@@ -165,7 +169,7 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: 1fr; /* 1 COLUMNA ÚNICA PARA TODOS LOS PROYECTOS */
+            grid-template-columns: 1fr;
             gap: 120px;
             max-width: 1200px;
             margin: 0 auto;
@@ -177,6 +181,14 @@
             text-decoration: none;
             color: inherit;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .gallery-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .gallery-img-container {
@@ -191,21 +203,21 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.15);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+            transform: scale(1.0);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             filter: brightness(0.95);
         }
 
-        .gallery-item.in-view .gallery-img-container img { transform: scale(1.0); }
-        .gallery-item:hover .gallery-img-container img { transform: scale(1.04); filter: brightness(1.02); }
+        .gallery-item:hover .gallery-img-container img {
+            transform: scale(1.03);
+            filter: brightness(1);
+        }
 
         .gallery-info { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
         .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
         .gallery-info h3 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #111111; }
 
-        /* ======================================================== */
-        /* MODAL / PREVISUALIZACIÓN EXPANDIBLE                      */
-        /* ======================================================== */
+        /* MODAL / PREVISUALIZACIÓN EXPANDIBLE */
         .project-modal {
             position: fixed;
             top: 0;
@@ -218,7 +230,7 @@
             pointer-events: none;
             overflow-y: auto;
             transform: translateY(40px) scale(0.98);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
         .project-modal.active {
@@ -227,7 +239,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Botón de cierre */
         .close-btn {
             position: fixed;
             top: 30px;
@@ -252,7 +263,6 @@
             transform: scale(1.05);
         }
 
-        /* Hero del Proyecto Expandido */
         .modal-hero {
             width: 100%;
             height: 85vh;
@@ -310,7 +320,6 @@
             max-width: 900px;
         }
 
-        /* Galería expandida continua */
         .modal-gallery-grid {
             display: flex;
             flex-direction: column;
@@ -337,6 +346,7 @@
             .modal-header-info { grid-template-columns: 1fr; gap: 30px; }
             .modal-header-info h2 { font-size: 2.8rem; }
             .modal-body { padding: 40px 6%; }
+            .hero-content h1 { font-size: 3rem; }
         }
     </style>
 </head>
@@ -348,13 +358,13 @@
         <div class="logo">OWN ARCHITECTURE</div>
         <nav>
             <a href="#proyectos">Proyectos</a>
-            <a href="#estudio">Estudio</a>
+            <a href="#proyectos">Estudio</a>
         </nav>
     </header>
 
     <!-- PORTADA PRINCIPAL -->
     <section class="hero-section">
-        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="mono-tag">ARCHIVE / 2026</span>
@@ -378,10 +388,10 @@
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2025"
                      data-desc="Inspirada en el diálogo continuo entre el hormigón visto y la luz natural. Un diseño escultórico concebido para abrir los espacios interiores hacia el horizonte del Mediterráneo."
-                     data-img="img/MIRADA 6.jpg"
-                     data-gallery="img/BIGUES I RIELLS.jpg,img/MIRADOR 42.jpg">
+                     data-img="./img/MIRADA 6.jpg"
+                     data-gallery="./img/BIGUES I RIELLS.jpg, ./img/MIRADOR 42.jpg">
                 <div class="gallery-img-container">
-                    <img src="img/MIRADA 6.jpg" alt="INFINITA">
+                    <img src="./img/MIRADA 6.jpg" alt="INFINITA">
                 </div>
                 <div class="gallery-info">
                     <div class="gallery-info-top">
@@ -398,10 +408,10 @@
                      data-category="RESIDENCIAL • BIGUES" 
                      data-year="2026"
                      data-desc="Una reinterpretación atemporal del volumen arquitectónico cerrado que se abre progresivamente hacia la vegetación autóctona."
-                     data-img="img/BIGUES I RIELLS.jpg"
-                     data-gallery="img/MIRADA 6.jpg,img/CLARODELUZ.jpg">
+                     data-img="./img/BIGUES I RIELLS.jpg"
+                     data-gallery="./img/MIRADA 6.jpg, ./img/CLARODELUZ.jpg">
                 <div class="gallery-img-container">
-                    <img src="img/BIGUES I RIELLS.jpg" alt="CLAROSCURO">
+                    <img src="./img/BIGUES I RIELLS.jpg" alt="CLAROSCURO">
                 </div>
                 <div class="gallery-info">
                     <div class="gallery-info-top">
@@ -415,12 +425,12 @@
         </div>
     </section>
 
-    <!-- PREVISUALIZACIÓN EXPANDIDA (MODAL FULLSCREEN) -->
+    <!-- PREVISUALIZACIÓN EXPANDIDA -->
     <div class="project-modal" id="projectModal">
-        <button class="close-btn" id="closeModal">✕ CERRAR (ESC)</button>
+        <button class="close-btn" id="closeModal">CERRAR (ESC)</button>
         
         <div class="modal-hero">
-            <img src="" id="modalHeroImg" alt="Proyecto Expandido">
+            <img src="about:blank" id="modalHeroImg" alt="Proyecto Expandido">
         </div>
 
         <div class="modal-body">
@@ -443,9 +453,7 @@
 
             <p class="modal-description" id="modalDesc">Descripción completa...</p>
 
-            <div class="modal-gallery-grid" id="modalGalleryGrid">
-                <!-- Las imágenes adicionales de la galería se inyectan dinámicamente aquí -->
-            </div>
+            <div class="modal-gallery-grid" id="modalGalleryGrid"></div>
         </div>
     </div>
 
@@ -456,7 +464,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT DE INTERACCIÓN Y NAVEGACIÓN -->
+    <!-- SCRIPT CORREGIDO -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('custom-cursor');
@@ -470,22 +478,28 @@
             const modalHeroImg = document.getElementById('modalHeroImg');
             const modalGalleryGrid = document.getElementById('modalGalleryGrid');
 
-            // 1. CURSOR INTERACTIVO
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // 2. EXPANSIÓN Y PREVISUALIZACIÓN DE IMÁGENES
-            document.querySelectorAll('.project-link').forEach(item => {
-                
-                item.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovering-project');
-                    cursor.innerText = 'EXPANDIR';
+            // CURSOR INTERACTIVO
+            if (window.innerWidth > 992) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
                 });
+            }
+
+            // APERTURA DE MODAL / EXPANDIR
+            document.querySelectorAll('.project-link').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    if (cursor) {
+                        cursor.classList.add('hovering-project');
+                        cursor.innerText = 'EXPANDIR';
+                    }
+                });
+                
                 item.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovering-project');
-                    cursor.innerText = '';
+                    if (cursor) {
+                        cursor.classList.remove('hovering-project');
+                        cursor.innerText = '';
+                    }
                 });
 
                 item.addEventListener('click', (e) => {
@@ -498,31 +512,32 @@
                     const heroImg = item.getAttribute('data-img');
                     const galleryStr = item.getAttribute('data-gallery');
 
-                    modalTitle.innerText = title;
-                    modalCategory.innerText = category;
-                    modalYear.innerText = year;
-                    modalDesc.innerText = desc;
-                    modalHeroImg.src = heroImg;
+                    modalTitle.innerText = title || '';
+                    modalCategory.innerText = category || '';
+                    modalYear.innerText = year || '';
+                    modalDesc.innerText = desc || '';
+                    modalHeroImg.src = heroImg || '';
 
-                    // Inyección de imágenes
                     modalGalleryGrid.innerHTML = '';
                     if (galleryStr) {
                         const images = galleryStr.split(',');
                         images.forEach(imgUrl => {
-                            const imgElem = document.createElement('img');
-                            imgElem.src = imgUrl.trim();
-                            modalGalleryGrid.appendChild(imgElem);
+                            const cleanUrl = imgUrl.trim();
+                            if (cleanUrl) {
+                                const imgElem = document.createElement('img');
+                                imgElem.src = cleanUrl;
+                                modalGalleryGrid.appendChild(imgElem);
+                            }
                         });
                     }
 
-                    // Activar modal
                     modal.classList.add('active');
                     document.body.classList.add('modal-open');
                     modal.scrollTop = 0;
                 });
             });
 
-            // 3. CIERRE DEL VISOR
+            // CIERRE
             const closeProject = () => {
                 modal.classList.remove('active');
                 document.body.classList.remove('modal-open');
@@ -536,7 +551,7 @@
                 }
             });
 
-            // 4. OBSERVADOR SCROLL ANIMATIONS
+            // ANIMACIÓN DE ENTRADA
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -546,759 +561,6 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
-        });
-    </script>
-</body>
-</html>color: #ffffff;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
-            margin-left: 32px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        nav a:hover { color: #ffffff; }
-
-        /* PORTADA MONUMENTAL (FULLSCREEN REAL CINEMATOGRÁFICO) */
-        .hero-section {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-            padding: 0 6% 80px 6%;
-            background-color: #0d0d0d;
-        }
-
-        .hero-bg-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 115%; /* Extra altura para efecto de desplazamiento de cámara */
-            z-index: 1;
-            will-change: transform;
-        }
-
-        .hero-bg-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ocupa toda la pantalla sin distorsión */
-            object-position: center center;
-            transform: scale(1.1); /* Zoom inicial listo para la transición */
-            transition: transform 0.1s ease-out;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
-            z-index: 2;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            color: #ffffff;
-            max-width: 950px;
-        }
-
-        .hero-content .mono-tag {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .hero-content h1 {
-            font-size: 4.8rem;
-            font-weight: 800;
-            letter-spacing: -2.5px;
-            line-height: 1.02;
-            margin-bottom: 24px;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 300;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        /* SECCIÓN DE LISTA EN 1 SOLA COLUMNA ESTILO BIG */
-        .gallery-section {
-            padding: 140px 6%;
-            background-color: #ffffff;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .gallery-header {
-            margin-bottom: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 2px solid #111111;
-            padding-bottom: 20px;
-        }
-
-        .gallery-header h2 { font-size: 2.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1.5px; }
-
-        .project-single-column {
-            display: flex;
-            flex-direction: column;
-            gap: 140px;
-        }
-
-        .project-card {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            border-bottom: 1px solid #e5e5e5;
-            padding-bottom: 60px;
-        }
-
-        /* CONTENEDOR PRINCIPAL DE IMAGEN DE PROYECTO */
-        .project-img-wrapper {
-            width: 100%;
-            height: 700px;
-            overflow: hidden;
-            position: relative;
-            background-color: #f4f4f4;
-        }
-
-        .project-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.12);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-            filter: brightness(0.95);
-        }
-
-        .project-card:hover .project-img-wrapper img {
-            transform: scale(1.0);
-            filter: brightness(1);
-        }
-
-        .project-info-bar {
-            margin-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .project-info-bar h3 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: #111111;
-        }
-
-        /* FICHA TÉCNICA Y FRASE DESTACADA EN HOVER */
-        .project-preview-details {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, margin-top 0.4s ease;
-            margin-top: 0;
-            display: grid;
-            grid-template-columns: 1.6fr 1fr;
-            gap: 50px;
-            background-color: #f8f8f8;
-            padding: 0 40px;
-            border-left: 3px solid #111111;
-        }
-
-        .project-card:hover .project-preview-details {
-            max-height: 350px;
-            opacity: 1;
-            margin-top: 30px;
-            padding: 40px;
-        }
-
-        .project-quote p {
-            font-size: 1.4rem;
-            font-weight: 300;
-            line-height: 1.5;
-            color: #222222;
-            font-style: italic;
-        }
-
-        .project-quote .quote-author {
-            margin-top: 15px;
-            display: block;
-        }
-
-        .project-tech-sheet {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 12px;
-            border-left: 1px solid #e0e0e0;
-            padding-left: 40px;
-        }
-
-        .tech-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #cccccc;
-            padding-bottom: 6px;
-        }
-
-        .tech-row .label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #888888;
-            text-transform: uppercase;
-        }
-
-        .tech-row .value {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #111111;
-        }
-
-        footer { background-color: #ffffff; padding: 80px 6% 40px; border-top: 1px solid #e5e5e5; }
-        .footer-bottom { display: flex; justify-content: space-between; }
-
-        @media (max-width: 992px) {
-            * { cursor: auto; }
-            #custom-cursor { display: none; }
-            .hero-content h1 { font-size: 3rem; }
-            .project-img-wrapper { height: 450px; }
-            .project-preview-details { grid-template-columns: 1fr; gap: 25px; max-height: none; opacity: 1; margin-top: 20px; padding: 20px; }
-            .project-tech-sheet { border-left: none; padding-left: 0; }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="custom-cursor"></div>
-
-    <header>
-        <div class="logo">OWN ARCHITECTURE</div>
-        <nav>
-            <a href="#proyectos">Proyectos</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-    </header>
-
-    <!-- PORTADA FULLSCREEN REAL CINEMATOGRÁFICA -->
-    <section class="hero-section">
-        <div class="hero-bg-wrapper" id="heroBgWrapper">
-            <img src="img/havana1.jpg" id="heroImg" alt="Portada Monumental">
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <span class="mono-tag">ARCHIVE / 2026</span>
-            <h1>La pureza de la línea y el espacio.</h1>
-            <p>Concebimos proyectos donde la luz natural esculpe formas sencillas, creando una arquitectura atemporal y equilibrada.</p>
-        </div>
-    </section>
-
-    <!-- LISTA EN 1 SOLA COLUMNA CON FICHA EN HOVER -->
-    <section class="gallery-section" id="proyectos">
-        <div class="gallery-header">
-            <h2>Proyectos</h2>
-            <span class="mono-tag">OBRAS SELECCIONADAS (1 COLUMNA)</span>
-        </div>
-
-        <div class="project-single-column">
-
-            <!-- PROYECTO 1 -->
-            <article class="project-card">
-                <div class="project-img-wrapper">
-                    <img src="img/MIRADA 6.jpg" alt="INFINITA">
-                </div>
-                <div class="project-info-bar">
-                    <div>
-                        <h3>INFINITA</h3>
-                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                    </div>
-                    <span class="mono-tag">2025</span>
-                </div>
-
-                <div class="project-preview-details">
-                    <div class="project-quote">
-                        <p>“Un volumen de hormigón esculpido para capturar la luz mediterránea y abrir el espacio hacia el horizonte.”</p>
-                        <span class="mono-tag quote-author">— CONCEPTO ARQUITECTÓNICO</span>
-                    </div>
-                    <div class="project-tech-sheet">
-                        <span class="mono-tag" style="color: #111; font-weight: 700; margin-bottom: 4px;">FICHA TÉCNICA</span>
-                        <div class="tech-row"><span class="label">Ubicación</span><span class="value">Barcelona, España</span></div>
-                        <div class="tech-row"><span class="label">Superficie</span><span class="value">450 m²</span></div>
-                        <div class="tech-row"><span class="label">Cliente</span><span class="value">Privado</span></div>
-                        <div class="tech-row"><span class="label">Estado</span><span class="value">Construido (2025)</span></div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- PROYECTO 2 -->
-            <article class="project-card">
-                <div class="project-img-wrapper">
-                    <img src="img/BIGUES I RIELLS.jpg" alt="CLAROSCURO">
-                </div>
-                <div class="project-info-bar">
-                    <div>
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">RESIDENCIAL • BIGUES</span>
-                    </div>
-                    <span class="mono-tag">2026</span>
-                </div>
-
-                <div class="project-preview-details">
-                    <div class="project-quote">
-                        <p>“Sombras profundas y umbrales de madera que reinterpretan la relación entre arquitectura y bosque.”</p>
-                        <span class="mono-tag quote-author">— CONCEPTO ARQUITECTÓNICO</span>
-                    </div>
-                    <div class="project-tech-sheet">
-                        <span class="mono-tag" style="color: #111; font-weight: 700; margin-bottom: 4px;">FICHA TÉCNICA</span>
-                        <div class="tech-row"><span class="label">Ubicación</span><span class="value">Bigues i Riells, España</span></div>
-                        <div class="tech-row"><span class="label">Superficie</span><span class="value">320 m²</span></div>
-                        <div class="tech-row"><span class="label">Cliente</span><span class="value">Residencial OWN</span></div>
-                        <div class="tech-row"><span class="label">Estado</span><span class="value">En proceso (2026)</span></div>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-    </section>
-
-    <footer id="contacto">
-        <div class="footer-bottom">
-            <span class="mono-tag">&copy; 2026 OWN ARCHITECTURE.</span>
-            <span class="mono-tag">ESTILO BIG CINEMATOGRÁFICO</span>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-            const heroImg = document.getElementById('heroImg');
-            const heroBgWrapper = document.getElementById('heroBgWrapper');
-
-            // 1. CURSOR SEGUIDOR
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // 2. PARALLAX Y DESPLAZAMIENTO SUAVE DE LA PORTADA HERO
-            window.addEventListener('scroll', () => {
-                const scrolled = window.scrollY;
-                if (scrolled <= window.innerHeight) {
-                    const scaleVal = 1.1 - (scrolled / window.innerHeight) * 0.1;
-                    const translateVal = scrolled * 0.3;
-                    heroImg.style.transform = `scale(${scaleVal})`;
-                    heroBgWrapper.style.transform = `translate3d(0, ${translateVal}px, 0)`;
-                }
-            });
-
-            // 3. EVENTOS HOVER EN PROYECTOS
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovering-project');
-                    cursor.innerText = 'INFO';
-                });
-                card.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovering-project');
-                    cursor.innerText = '';
-                });
-            });
-        });
-    </script>
-</body>
-</html>            text-decoration: none;
-            color: #666666;
-            margin-left: 32px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        nav a:hover { color: #000000; }
-
-        /* PORTADA HERO - IMAGEN SIN RECORTAR */
-        .hero-section {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 120px 6% 60px 6%;
-            background-color: #0d0d0d;
-        }
-
-        .hero-container {
-            width: 100%;
-            max-width: 1300px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .hero-img-frame {
-            width: 100%;
-            max-height: 70vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero-img-frame img {
-            max-width: 100%;
-            max-height: 70vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .hero-content {
-            width: 100%;
-            color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            padding-top: 24px;
-        }
-
-        .hero-content h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            max-width: 650px;
-            line-height: 1.1;
-        }
-
-        /* GALERÍA EN 1 SOLA COLUMNA CON TARJETAS GRANDES */
-        .gallery-section {
-            padding: 120px 6%;
-            background-color: #ffffff;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .gallery-header {
-            margin-bottom: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 2px solid #111111;
-            padding-bottom: 20px;
-        }
-
-        .gallery-header h2 { font-size: 2.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1.5px; }
-
-        /* LISTA EN 1 SOLA COLUMNA */
-        .project-single-column {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-        }
-
-        .project-card {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            border-bottom: 1px solid #e5e5e5;
-            padding-bottom: 60px;
-        }
-
-        /* CONTENEDOR PRINCIPAL DE IMAGEN */
-        .project-img-wrapper {
-            width: 100%;
-            height: 650px;
-            overflow: hidden;
-            position: relative;
-            background-color: #f2f2f2;
-        }
-
-        .project-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-            filter: brightness(0.95);
-        }
-
-        /* HOVER EN IMAGEN: EFECTO ZOOM */
-        .project-card:hover .project-img-wrapper img {
-            transform: scale(1.0);
-            filter: brightness(1);
-        }
-
-        /* CABECERA PERMANENTE DEL PROYECTO */
-        .project-info-bar {
-            margin-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .project-info-bar h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: #111111;
-        }
-
-        /* FICHA TÉCNICA Y FRASE DESTACADA DESPLEGABLES EN HOVER */
-        .project-preview-details {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, margin-top 0.4s ease;
-            margin-top: 0;
-            display: grid;
-            grid-template-columns: 1.6fr 1fr;
-            gap: 50px;
-            background-color: #f8f8f8;
-            padding: 0 40px;
-            border-left: 3px solid #111111;
-        }
-
-        /* ACTIVACIÓN AL PASAR EL CURSOR POR LA IMAGEN O TARJETA */
-        .project-card:hover .project-preview-details {
-            max-height: 350px;
-            opacity: 1;
-            margin-top: 30px;
-            padding: 35px 40px;
-        }
-
-        .project-quote {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .project-quote p {
-            font-size: 1.4rem;
-            font-weight: 300;
-            line-height: 1.5;
-            color: #222222;
-            font-style: italic;
-        }
-
-        .project-quote .quote-author {
-            margin-top: 15px;
-            font-weight: 600;
-            font-style: normal;
-        }
-
-        .project-tech-sheet {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 12px;
-            border-left: 1px solid #e0e0e0;
-            padding-left: 40px;
-        }
-
-        .tech-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #cccccc;
-            padding-bottom: 6px;
-        }
-
-        .tech-row .label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #888888;
-            text-transform: uppercase;
-        }
-
-        .tech-row .value {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #111111;
-        }
-
-        /* FOOTER */
-        footer { background-color: #ffffff; padding: 80px 6% 40px; border-top: 1px solid #e5e5e5; }
-        .footer-bottom { display: flex; justify-content: space-between; }
-
-        @media (max-width: 992px) {
-            * { cursor: auto; }
-            #custom-cursor { display: none; }
-            .project-img-wrapper { height: 400px; }
-            .project-preview-details { grid-template-columns: 1fr; gap: 25px; max-height: none; opacity: 1; margin-top: 20px; padding: 20px; }
-            .project-card:hover .project-preview-details { padding: 20px; }
-            .project-tech-sheet { border-left: none; padding-left: 0; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Cursor Interactivo -->
-    <div id="custom-cursor"></div>
-
-    <header>
-        <div class="logo">OWN ARCHITECTURE</div>
-        <nav>
-            <a href="#proyectos">Proyectos</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-    </header>
-
-    <!-- PORTADA HERO -->
-    <section class="hero-section">
-        <div class="hero-container">
-            <div class="hero-img-frame">
-                <img src="img/havana1.jpg" alt="Proyecto Portada Single Frame">
-            </div>
-            <div class="hero-content">
-                <h1>La pureza de la línea y el espacio.</h1>
-                <span class="mono-tag">ARCHIVE / 2026</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- PORTAFOLIO EN 1 COLUMNA CON DESPLEGABLE EN HOVER -->
-    <section class="gallery-section" id="proyectos">
-        <div class="gallery-header">
-            <h2>Proyectos</h2>
-            <span class="mono-tag">1 COLUMNA • PREVISUALIZACIÓN INTERACTIVA</span>
-        </div>
-
-        <div class="project-single-column">
-
-            <!-- PROYECTO 1 -->
-            <article class="project-card">
-                <div class="project-img-wrapper">
-                    <img src="img/MIRADA 6.jpg" alt="INFINITA">
-                </div>
-                <div class="project-info-bar">
-                    <div>
-                        <h3>INFINITA</h3>
-                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                    </div>
-                    <span class="mono-tag">2025</span>
-                </div>
-
-                <!-- DESPLEGABLE AL PONER EL CURSOR -->
-                <div class="project-preview-details">
-                    <div class="project-quote">
-                        <p>“Un volumen de hormigón esculpido para capturar la luz mediterránea y abrir el espacio hacia el horizonte.”</p>
-                        <span class="mono-tag quote-author">— CONCEPTO ARQUITECTÓNICO</span>
-                    </div>
-                    <div class="project-tech-sheet">
-                        <span class="mono-tag" style="color: #111; font-weight: 700; margin-bottom: 4px;">FICHA TÉCNICA</span>
-                        <div class="tech-row"><span class="label">Ubicación</span><span class="value">Barcelona, España</span></div>
-                        <div class="tech-row"><span class="label">Superficie</span><span class="value">450 m²</span></div>
-                        <div class="tech-row"><span class="label">Cliente</span><span class="value">Privado</span></div>
-                        <div class="tech-row"><span class="label">Estado</span><span class="value">Construido (2025)</span></div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- PROYECTO 2 -->
-            <article class="project-card">
-                <div class="project-img-wrapper">
-                    <img src="img/BIGUES I RIELLS.jpg" alt="CLAROSCURO">
-                </div>
-                <div class="project-info-bar">
-                    <div>
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">RESIDENCIAL • BIGUES</span>
-                    </div>
-                    <span class="mono-tag">2026</span>
-                </div>
-
-                <!-- DESPLEGABLE AL PONER EL CURSOR -->
-                <div class="project-preview-details">
-                    <div class="project-quote">
-                        <p>“Sombras profundas y umbrales de madera que reinterpretan la relación entre arquitectura y bosque.”</p>
-                        <span class="mono-tag quote-author">— CONCEPTO ARQUITECTÓNICO</span>
-                    </div>
-                    <div class="project-tech-sheet">
-                        <span class="mono-tag" style="color: #111; font-weight: 700; margin-bottom: 4px;">FICHA TÉCNICA</span>
-                        <div class="tech-row"><span class="label">Ubicación</span><span class="value">Bigues i Riells, España</span></div>
-                        <div class="tech-row"><span class="label">Superficie</span><span class="value">320 m²</span></div>
-                        <div class="tech-row"><span class="label">Cliente</span><span class="value">Residencial OWN</span></div>
-                        <div class="tech-row"><span class="label">Estado</span><span class="value">En proceso (2026)</span></div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- PROYECTO 3 -->
-            <article class="project-card">
-                <div class="project-img-wrapper">
-                    <img src="img/MIRADOR 42.jpg" alt="VILACLARA">
-                </div>
-                <div class="project-info-bar">
-                    <div>
-                        <h3>VILACLARA</h3>
-                        <span class="mono-tag">RESIDENCIAL • GIRONA</span>
-                    </div>
-                    <span class="mono-tag">2025</span>
-                </div>
-
-                <!-- DESPLEGABLE AL PONER EL CURSOR -->
-                <div class="project-preview-details">
-                    <div class="project-quote">
-                        <p>“Líneas horizontales puras que miran hacia el valle, disolviendo el límite entre interior y naturaleza.”</p>
-                        <span class="mono-tag quote-author">— CONCEPTO ARQUITECTÓNICO</span>
-                    </div>
-                    <div class="project-tech-sheet">
-                        <span class="mono-tag" style="color: #111; font-weight: 700; margin-bottom: 4px;">FICHA TÉCNICA</span>
-                        <div class="tech-row"><span class="label">Ubicación</span><span class="value">Girona, España</span></div>
-                        <div class="tech-row"><span class="label">Superficie</span><span class="value">510 m²</span></div>
-                        <div class="tech-row"><span class="label">Cliente</span><span class="value">Privado</span></div>
-                        <div class="tech-row"><span class="label">Estado</span><span class="value">Construido (2025)</span></div>
-                    </div>
-                </div>
-            </article>
-
-        </div>
-    </section>
-
-    <footer id="contacto">
-        <div class="footer-bottom">
-            <span class="mono-tag">&copy; 2026 OWN ARCHITECTURE.</span>
-            <span class="mono-tag">VISTA PREVIA ESTILO BIG</span>
-        </div>
-    </footer>
-
-    <!-- SCRIPT DE CURSOR E INTERACCIONES -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-
-            // Seguimiento del Cursor
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // Hover en tarjetas
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovering-project');
-                    cursor.innerText = 'INFO';
-                });
-                card.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovering-project');
-                    cursor.innerText = '';
-                });
-            });
         });
     </script>
 </body>
