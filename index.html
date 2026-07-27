@@ -54,7 +54,6 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
         }
 
         .logo {
@@ -63,7 +62,6 @@
             letter-spacing: 8px;
             text-transform: uppercase;
             color: #ffffff;
-            position: relative;
         }
 
         nav {
@@ -92,7 +90,7 @@
             width: 0;
             height: 1px;
             background-color: #ffffff;
-            transition: width 0.3s ease;
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         nav a:hover {
@@ -103,7 +101,7 @@
             width: 100%;
         }
 
-        /* Portada de Pantalla Completa Equilibrada */
+        /* Portada de Pantalla Completa */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -125,7 +123,7 @@
                         url('img/havana1.jpg') no-repeat center center/cover;
             filter: brightness(0.9) contrast(1.05);
             z-index: 1;
-            transform: scale(1.05);
+            transform: scale(1);
             animation: zoomLento 20s infinite alternate cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -135,11 +133,19 @@
         }
 
         .hero-content {
-            max-width: 750px;
+            max-width: 780px;
             z-index: 10;
             position: relative;
             color: #ffffff;
             margin-top: 60px;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* ANIMACIÓN DE TEXTO HERO */
+        .text-reveal-container {
+            overflow: hidden;
+            display: block;
         }
 
         .hero-content span {
@@ -150,9 +156,8 @@
             display: inline-block;
             margin-bottom: 25px;
             font-weight: 600;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards 0.2s;
+            transform: translateY(100%);
+            animation: slideTextUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
         }
 
         .hero-content h1 {
@@ -162,9 +167,8 @@
             letter-spacing: -2px;
             margin-bottom: 30px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s forwards 0.4s;
+            transform: translateY(100%);
+            animation: slideTextUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
         }
 
         .hero-content p {
@@ -174,11 +178,24 @@
             line-height: 1.8;
             max-width: 540px;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s forwards 0.6s;
+            transform: translateY(20px);
+            animation: fadeInSimple 1s ease forwards 0.8s;
         }
 
-        /* Sección Sobre Nosotros */
+        @keyframes slideTextUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInSimple {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sección Sobre Nosotros con Animación */
         .about-section {
             padding: 160px 8%;
             display: grid;
@@ -202,11 +219,40 @@
             line-height: 1.9;
             font-weight: 300;
             margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .about-section.active .about-details p {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .about-details p strong {
             font-weight: 600;
             color: #111111;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Resaltado interactivo para palabras clave */
+        .about-details p strong::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 100%;
+            height: 2px;
+            background-color: #111111;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .about-section.active .about-details p strong::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Portafolio: Grilla Asimétrica */
@@ -285,15 +331,16 @@
             border-color: #111111;
         }
 
+        /* MOVIMIENTO EN TEXTOS DE PROYECTOS */
         .gallery-info h3 {
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
         }
 
         .gallery-item:hover .gallery-info h3 {
-            transform: translateX(5px);
+            transform: translateX(12px);
         }
 
         .gallery-info span {
@@ -302,6 +349,12 @@
             letter-spacing: 2px;
             color: #777777;
             font-weight: 600;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover .gallery-info span {
+            transform: translateX(-6px);
+            color: #111111;
         }
 
         /* Footer */
@@ -354,7 +407,7 @@
 
         .footer-col a:hover {
             color: #111111;
-            transform: translateX(4px);
+            transform: translateX(6px);
         }
 
         .footer-bottom {
@@ -367,23 +420,16 @@
             font-weight: 400;
         }
 
-        /* Clase para animación Reveal al hacer Scroll */
-        .reveal {
+        /* CLASES DE REVELACIÓN PARA TEXTOS Y SECCIONES */
+        .text-reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(35px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .reveal.active {
+        .text-reveal.active {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         /* Responsividad Mejorada */
@@ -424,15 +470,19 @@
     <section class="hero-section">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <span>Estudio de Arquitectura</span>
-            <h1>La pureza de la línea y el espacio.</h1>
+            <div class="text-reveal-container">
+                <span>Estudio de Arquitectura</span>
+            </div>
+            <div class="text-reveal-container">
+                <h1>La pureza de la línea y el espacio.</h1>
+            </div>
             <p>Concebimos proyectos donde la luz natural esculpe formas sencillas, creando una arquitectura atemporal, equilibrada y conectada al entorno.</p>
         </div>
     </section>
 
-    <section class="about-section reveal" id="estudio">
+    <section class="about-section text-reveal" id="estudio">
         <div class="about-text">
-            <h2>Esculpimos con luz, aire y memoria.</h2>
+            <h2 class="text-reveal">Esculpimos con luz, aire y memoria.</h2>
         </div>
         <div class="about-details">
             <p>Creemos en los espacios que se sienten antes de entenderse. Nos mueven las <strong>geometrías silenciosas</strong> que filtran el ruido de la ciudad, los volúmenes que se apoyan con delicadeza sobre la tierra y la pátina de lo existente cuando se baña de luz contemporánea.</p>
@@ -440,10 +490,10 @@
         </div>
     </section>
 
-    <div class="line reveal"></div>
+    <div class="line text-reveal"></div>
 
     <section class="gallery-section" id="proyectos">
-        <div class="gallery-header reveal">
+        <div class="gallery-header text-reveal">
             <p>Selección de Obras</p>
             <h2>Proyectos</h2>
         </div>
@@ -451,7 +501,7 @@
         <div class="gallery-grid">
             
             <!-- Proyecto 1 -->
-            <a href="proyectos/miranda-6.html" class="gallery-item reveal">
+            <a href="proyectos/miranda-6.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/MIRADA 6.jpg" alt="MIRANDA 6">
                 </div>
@@ -462,7 +512,7 @@
             </a>
 
             <!-- Proyecto 2 -->
-            <a href="proyectos/bigues.html" class="gallery-item reveal">
+            <a href="proyectos/bigues.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/BIGUES I RIELLS.jpg" alt="Bigues i Riells">
                 </div>
@@ -473,7 +523,7 @@
             </a>
 
             <!-- Proyecto 3 -->
-            <a href="proyectos/mirador.html" class="gallery-item reveal">
+            <a href="proyectos/mirador.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/MIRADOR 42.jpg" alt="Mirador 42">
                 </div>
@@ -484,7 +534,7 @@
             </a>
 
             <!-- Proyecto 4 -->
-            <a href="proyectos/clarodeluz.html" class="gallery-item reveal">
+            <a href="proyectos/clarodeluz.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/CLARODELUZ.jpg" alt="Claro de Luz">
                 </div>
@@ -495,7 +545,7 @@
             </a>
 
             <!-- Proyecto 5 -->
-            <a href="proyectos/reivissa.html" class="gallery-item reveal">
+            <a href="proyectos/reivissa.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/reivissa-1.jpg" alt="Reivissa">
                 </div>
@@ -506,7 +556,7 @@
             </a>
 
             <!-- Proyecto 6 -->
-            <a href="proyectos/miranda4.html" class="gallery-item reveal">
+            <a href="proyectos/miranda4.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/miranda4/miranda4-1.jpg" alt="Miranda 4">
                 </div>
@@ -517,7 +567,7 @@
             </a>
 
             <!-- Proyecto 7 -->
-            <a href="proyectos/JP.html" class="gallery-item reveal">
+            <a href="proyectos/JP.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/jp1.jpg" alt="Altiplano">
                 </div>
@@ -528,7 +578,7 @@
             </a>
 
             <!-- Proyecto 8 -->
-            <a href="proyectos/havana48.html" class="gallery-item reveal">
+            <a href="proyectos/havana48.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/havana1.jpg" alt="Estudi BCN">
                 </div>
@@ -539,7 +589,7 @@
             </a>
 
             <!-- Proyecto 9 -->
-            <a href="proyectos/torre-negra.html" class="gallery-item reveal">
+            <a href="proyectos/torre-negra.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/TORRE NEGRA.jpg" alt="Torre Negra">
                 </div>
@@ -550,7 +600,7 @@
             </a>
 
             <!-- Proyecto 10 -->
-            <a href="proyectos/llum-i-buda.html" class="gallery-item reveal">
+            <a href="proyectos/llum-i-buda.html" class="gallery-item text-reveal">
                 <div class="gallery-img-container">
                     <img src="img/LLUM I BUDA.jpg" alt="Llum i Buda">
                 </div>
@@ -564,7 +614,7 @@
     </section>
 
     <footer id="contacto">
-        <div class="footer-grid reveal">
+        <div class="footer-grid text-reveal">
             <div class="footer-brand">
                 <h3>OWN ARCHITECTURE</h3>
                 <p>Estudio de diseño espacial centrado en la materialidad, la proporción y el entorno natural.</p>
@@ -591,12 +641,13 @@
         </div>
     </footer>
 
-    <!-- Script de Animación al Scroll -->
+    <!-- Script de Animaciones y Movimiento de Textos -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Reveal al Scroll para Textos y Bloques
             const observerOptions = {
                 threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+                rootMargin: "0px 0px -40px 0px"
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
@@ -608,7 +659,17 @@
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.reveal, .line').forEach(el => observer.observe(el));
+            document.querySelectorAll('.text-reveal, .line').forEach(el => observer.observe(el));
+
+            // 2. Parallax de Movimiento Sutil para el Texto Hero al Scroll
+            const heroContent = document.querySelector('.hero-content');
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                if (scrolled < window.innerHeight) {
+                    heroContent.style.transform = `translateY(${scrolled * 0.25}px)`;
+                    heroContent.style.opacity = 1 - (scrolled / 700);
+                }
+            });
         });
     </script>
 </body>
