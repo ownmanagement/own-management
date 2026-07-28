@@ -378,16 +378,16 @@
         
         <div class="gallery-grid">
             
-            <!-- Proyecto 1: MIRADA -->
+            <!-- Proyecto 1: CASA INFINITA (RUTAS CORREGIDAS AL ARCHIVO REAL "MIRADA 6.jpg") -->
             <article class="gallery-item project-link" 
                      data-title="CASA INFINITA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2025"
                      data-desc="Inspirada en el diálogo continuo entre el hormigón visto y la luz natural. Un diseño escultórico concebido para abrir los espacios interiores hacia el horizonte."
                      data-img="./img/MIRADA%206.jpg"
-                     data-gallery="./img/MIRADA%206.jpg, ./img/miranda-6/miranda-1.jpg, ./img/miranda-6/miranda-2.jpg">
+                     data-gallery="./img/MIRADA%206.jpg">
                 <div class="gallery-img-container">
-                    <img src="./img/miranda-6/miranda-1.jpg" alt="CASA MIRANDA">
+                    <img src="./img/MIRADA%206.jpg" alt="CASA INFINITA">
                 </div>
                 <div class="gallery-info">
                     <div class="gallery-info-top">
@@ -438,14 +438,14 @@
                 </div>
             </article>
 
-            <!-- Proyecto 4: CLARO DE LUZ -->
+            <!-- Proyecto 4: CLARO DE LUZ (Corregida doble barra en ruta) -->
             <article class="gallery-item project-link" 
                      data-title="CLARO DE LUZ" 
                      data-category="RESIDENCIAL • BESALÚ" 
                      data-year="2025"
                      data-desc="Estudio detallado sobre la refracción de la luz natural sobre superficies pulidas y materiales nobles como madera y basalto."
                      data-img="./img/clarodeluz/clarodeluz-1.jpg"
-                     data-gallery="./img/clarodeluz/clarodeluz-2.jpg, .//img/clarodeluz/clarodeluz-3.jpg">
+                     data-gallery="./img/clarodeluz/clarodeluz-2.jpg, ./img/clarodeluz/clarodeluz-3.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/clarodeluz/clarodeluz-4.jpg" alt="CLARO DE LUZ">
                 </div>
@@ -588,34 +588,38 @@
                     const heroImg = item.getAttribute('data-img');
                     const galleryStr = item.getAttribute('data-gallery');
 
-                    modalTitle.innerText = title || '';
-                    modalCategory.innerText = category || '';
-                    modalYear.innerText = year || '';
-                    modalDesc.innerText = desc || '';
-                    modalHeroImg.src = heroImg || '';
+                    if (modalTitle) modalTitle.innerText = title || '';
+                    if (modalCategory) modalCategory.innerText = category || '';
+                    if (modalYear) modalYear.innerText = year || '';
+                    if (modalDesc) modalDesc.innerText = desc || '';
+                    if (modalHeroImg) modalHeroImg.src = heroImg || '';
 
-                    modalGalleryGrid.innerHTML = '';
-                    if (galleryStr) {
-                        const images = galleryStr.split(',');
-                        images.forEach(imgUrl => {
-                            const cleanUrl = imgUrl.trim();
-                            if (cleanUrl) {
-                                const imgElem = document.createElement('img');
-                                imgElem.src = cleanUrl;
-                                modalGalleryGrid.appendChild(imgElem);
-                            }
-                        });
+                    if (modalGalleryGrid) {
+                        modalGalleryGrid.innerHTML = '';
+                        if (galleryStr) {
+                            const images = galleryStr.split(',');
+                            images.forEach(imgUrl => {
+                                const cleanUrl = imgUrl.trim();
+                                if (cleanUrl) {
+                                    const imgElem = document.createElement('img');
+                                    imgElem.src = cleanUrl;
+                                    modalGalleryGrid.appendChild(imgElem);
+                                }
+                            });
+                        }
                     }
 
-                    modal.classList.add('active');
-                    document.body.classList.add('modal-open');
-                    modal.scrollTop = 0;
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.classList.add('modal-open');
+                        modal.scrollTop = 0;
+                    }
                 });
             });
 
             // CIERRE SEGURO DEL MODAL
             const closeProject = () => {
-                modal.classList.remove('active');
+                if (modal) modal.classList.remove('active');
                 document.body.classList.remove('modal-open');
             };
 
@@ -625,7 +629,7 @@
 
             // TECLA ESCAPE
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
                     e.preventDefault();
                     closeProject();
                 }
