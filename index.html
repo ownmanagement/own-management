@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>OWN ARCHITECTURE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -11,16 +11,20 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
+            cursor: none !important; /* Desactiva el cursor por defecto del sistema */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
 
         body {
             background-color: #0d0d0d;
             color: #111111;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow: hidden; /* Oculto por defecto hasta elegir opción */
+            overflow: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -32,18 +36,32 @@
 
         body.story-active { overflow: hidden; }
 
-        /* CURSOR DINÁMICO */
+        /* CURSOR NEGRO PERSONALIZADO */
         #custom-cursor {
             position: fixed;
-            width: 12px;
-            height: 12px;
-            background-color: #ffffff;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #111111; /* PUNTO NEGRO */
+            border: 1px solid rgba(255, 255, 255, 0.8); /* Borde blanco fino para visibilidad en fondos oscuros */
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, width 0.25s ease, height 0.25s ease, background-color 0.25s ease;
-            mix-blend-mode: difference;
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+            opacity: 0; /* Inicia oculto hasta mover el ratón */
+        }
+
+        #custom-cursor.visible {
+            opacity: 1;
+        }
+
+        #custom-cursor.hovered {
+            width: 20px;
+            height: 20px;
+            background-color: #000000;
+            border-color: #ffffff;
         }
 
         .mono-tag {
@@ -54,20 +72,20 @@
             color: #777777;
         }
 
-        /* DUAL ENTRY SPLIT SCREEN (INICIO EXCLUSIVO) */
+        /* PANTALLA INICIAL DE SELECCIÓN (LANDING SPLIT) */
         .entry-split-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             z-index: 2000;
             background-color: #0d0d0d;
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
         }
 
-        /* Cuando se selecciona una opción, el Split Screen se oculta */
         .entry-split-container.hidden {
             transform: translateY(-100%);
             opacity: 0;
@@ -75,6 +93,655 @@
         }
 
         .split-pane {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .split-pane.pane-stories {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .split-pane.pane-visuals {
+            background-color: #f7f7f7;
+            color: #111111;
+        }
+
+        .pane-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            z-index: 1;
+        }
+        
+        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
+        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
+
+        @media (hover: hover) {
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
+            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+        }
+
+        .split-content-top { position: relative; z-index: 2; }
+        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+
+        .split-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
+
+        .split-title {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
+
+        .split-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .split-pane:hover .split-action svg { transform: translateX(8px); }
+
+        /* HEADER / NAVEGACIÓN */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 6%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+        }
+
+        body.content-active header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
+
+        .mode-switch-bar {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .mode-btn {
+            background: none;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #666666;
+            transition: all 0.25s ease;
+        }
+
+        .mode-btn.active {
+            background-color: #111111;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* GALERÍA DE PROYECTOS */
+        .main-view-container {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.3s;
+        }
+
+        body.content-active .main-view-container { opacity: 1; }
+
+        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; }
+
+        .gallery-header {
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #111111;
+            padding-bottom: 20px;
+        }
+
+        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        body.mode-visual-active .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px 40px;
+            max-width: 1400px;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .gallery-img-container {
+            width: 100%;
+            height: 55vh;
+            min-height: 300px;
+            max-height: 650px;
+            overflow: hidden;
+            position: relative;
+            background-color: #f2f2f2;
+        }
+
+        .gallery-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.95);
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover .gallery-img-container img { transform: scale(1.02); }
+
+        .gallery-info { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
+        .gallery-info h3 { font-size: clamp(1.4rem, 2.8vw, 2.2rem); font-weight: 800; letter-spacing: -1px; color: #111111; }
+
+        .story-preview-excerpt {
+            margin-top: 10px;
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            line-height: 1.6;
+            color: #555555;
+            font-weight: 300;
+            max-width: 800px;
+        }
+
+        body.mode-visual-active .story-preview-excerpt { display: none; }
+
+        /* EXPERIENCIA NARRATIVA DETALLE */
+        .story-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            background-color: #ffffff;
+            z-index: 5000;
+            opacity: 0;
+            pointer-events: none;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+
+        .story-container.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+        .close-story-btn {
+            position: fixed;
+            top: 24px;
+            right: 6%;
+            z-index: 6000;
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .story-header-cover {
+            width: 100%;
+            height: 75vh;
+            min-height: 400px;
+            position: relative;
+            background-color: #111111;
+        }
+
+        .story-header-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+        .story-title-overlay {
+            position: absolute;
+            bottom: clamp(30px, 6vh, 60px);
+            left: 6%;
+            right: 6%;
+            color: #ffffff;
+        }
+
+        .story-title-overlay h2 {
+            font-size: clamp(2.2rem, 5.5vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .story-body { padding: 80px 6%; max-width: 1300px; margin: 0 auto; }
+
+        .story-lead-statement {
+            font-size: clamp(1.3rem, 3vw, 2.6rem);
+            font-weight: 500;
+            line-height: 1.35;
+            letter-spacing: -1px;
+            color: #111111;
+            margin-bottom: 80px;
+        }
+
+        .story-section-fluid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .story-section-fluid.reverse { direction: rtl; }
+        .story-section-fluid.reverse .story-text-block { direction: ltr; }
+
+        .story-text-block { display: flex; flex-direction: column; gap: 16px; }
+        .story-chapter-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #888888; }
+        .story-section-title { font-size: clamp(1.3rem, 2vw, 1.8rem); font-weight: 700; letter-spacing: -1px; }
+        .story-paragraph { font-size: 1.05rem; line-height: 1.8; color: #444444; font-weight: 300; }
+
+        .story-img-block img { width: 100%; height: auto; object-fit: cover; }
+        .story-caption { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #888888; }
+        .story-fullwidth-img { width: 100%; margin-bottom: 120px; }
+        .story-fullwidth-img img { width: 100%; max-height: 80vh; object-fit: cover; }
+
+        /* RESPONSIVE & DISPOSITIVOS TÁCTILES */
+        @media (pointer: coarse), (hover: none) {
+            * { cursor: auto !important; }
+            #custom-cursor { display: none !important; }
+        }
+
+        @media (max-width: 1024px) {
+            header { padding: 18px 5%; }
+            .entry-split-container { flex-direction: column; }
+            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
+            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+            .gallery-section { padding-top: 120px; }
+            body.mode-visual-active .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 30px; }
+            .story-section-fluid { gap: 40px; margin-bottom: 80px; }
+            .story-fullwidth-img { margin-bottom: 80px; }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; padding: 14px 5%; background-color: rgba(255, 255, 255, 0.95); }
+            .mode-switch-bar { width: 100%; justify-content: center; }
+            .mode-btn { flex: 1; text-align: center; padding: 8px 0; }
+            .gallery-section { padding: 140px 5% 60px 5%; }
+            body.mode-visual-active .gallery-grid { grid-template-columns: 1fr; gap: 60px; }
+            .gallery-grid { gap: 60px; }
+            .gallery-img-container { height: 40vh; min-height: 260px; }
+            .story-section-fluid, .story-section-fluid.reverse { grid-template-columns: 1fr; direction: ltr !important; gap: 24px; margin-bottom: 60px; }
+            .story-section-fluid.reverse .story-text-block { direction: ltr !important; }
+            .story-header-cover { height: 55vh; min-height: 320px; }
+            .story-body { padding: 50px 5%; }
+            .story-lead-statement { margin-bottom: 50px; }
+            .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; padding: 14px; font-size: 0.75rem; }
+        }
+
+        @media (max-width: 480px) {
+            .split-pane { padding: 50px 6% 32px 6%; }
+            .split-title { font-size: 2.2rem; }
+            .gallery-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .gallery-info-top { flex-direction: column; align-items: flex-start; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PUNTO NEGRO PERSONALIZADO -->
+    <div id="custom-cursor"></div>
+
+    <!-- PANTALLA INICIAL DE SELECCIÓN -->
+    <section class="entry-split-container" id="entrySplit">
+        <div class="split-pane pane-stories" id="selectStories">
+            <div class="pane-bg"></div>
+            <div class="split-content-top">
+                <span class="split-badge">01 / NARRATIVA</span>
+            </div>
+            <div class="split-content-bottom">
+                <h2 class="split-title">MEMORIAS</h2>
+                <p class="split-desc">Sumérgete en el relato conceptual y poético de cada obra.</p>
+                <div class="split-action">
+                    ENTRAR EN MEMORIAS
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-pane pane-visuals" id="selectVisuals">
+            <div class="pane-bg"></div>
+            <div class="split-content-top">
+                <span class="split-badge">02 / GALERÍA VISUAL</span>
+            </div>
+            <div class="split-content-bottom">
+                <h2 class="split-title">PROYECTOS</h2>
+                <p class="split-desc">Una experiencia directa, fotográfica y contemplativa.</p>
+                <div class="split-action">
+                    VER PROYECTOS
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header id="mainHeader">
+        <div class="logo" id="brandLogo">OWN ARCHITECTURE</div>
+        <div class="mode-switch-bar">
+            <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
+            <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-view-container">
+        <section class="gallery-section" id="proyectos">
+            <div class="gallery-header">
+                <h2 id="galleryModeTitle">MEMORIAS</h2>
+                <span class="mono-tag" id="galleryModeTag">MODO COMPLETO</span>
+            </div>
+            
+            <div class="gallery-grid">
+                <article class="gallery-item project-link" 
+                         data-title="CASA INFINITA" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-year="2025"
+                         data-statement="Una geometría limpia suspendida sobre el Mediterráneo para desdibujar los límites entre la estructura y el mar."
+                         data-sec1-title="Diálogo con la topografía"
+                         data-sec1-text="El proyecto nace del desafío de intervenir en un acantilado de alta pendiente. En lugar de adaptar la parcela mediante contenciones masivas, articulamos dos losas de hormigón que vuelan suavemente hacia la línea de la costa."
+                         data-sec1-img="img/miranda-6/miranda-5.jpg"
+                         data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
+                         data-sec2-title="Tectónica y luz cenital"
+                         data-sec2-text="Los cerramientos vidriados sin carpintería permiten que el paisaje pase a formar parte del interior. Fisuras situadas en la losa superior canalizan haces de luz cambiantes a lo largo del día sobre el hormigón visto."
+                         data-sec2-img="img/miranda-6/miranda-2.jpg"
+                         data-sec2-cap="FIG 02. Detalle del encuentro estructural y la luz difusa"
+                         data-full-img="img/miranda-6/miranda-3.jpg"
+                         data-full-cap="FIG 03. Secuencia continua entre salón interior y el horizonte"
+                         data-hero-img="img/miranda-6/miranda-1.jpg">
+                    <div class="gallery-img-container">
+                        <img src="img/miranda-6/miranda-1.jpg" alt="CASA INFINITA">
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-info-top">
+                            <h3>CASA INFINITA</h3>
+                            <span class="mono-tag">2025</span>
+                        </div>
+                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
+                        <p class="story-preview-excerpt">Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba..</p>
+                    </div>
+                </article>
+
+                <article class="gallery-item project-link" 
+                         data-title="FUYU" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-year="2026"
+                         data-statement="La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores."
+                         data-sec1-title="La fachada como refugio"
+                         data-sec1-text="En un entorno urbano saturado de estímulos, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando todas las vistas hacia el centro."
+                         data-sec1-img="img/biguesiriells/bigues-1.jpg"
+                         data-sec1-cap="FIG 01. Fachada monolítica en hormigón pigmentado"
+                         data-sec2-title="Naturaleza interior"
+                         data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos de madera permiten transformar las estancias diáfanas en espacios completamente abiertos a la vegetación."
+                         data-sec2-img="img/biguesiriells/bigues-2.jpg"
+                         data-sec2-cap="FIG 02. Patio central de luz con lámina de agua"
+                         data-full-img="img/biguesiriells/bigues-3.jpg"
+                         data-full-cap="FIG 03. Relación matérica entre roble alistonado y granito"
+                         data-hero-img="img/biguesiriells/bigues-4.jpg">
+                    <div class="gallery-img-container">
+                        <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU">
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-info-top">
+                            <h3>FUYU</h3>
+                            <span class="mono-tag">2026</span>
+                        </div>
+                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
+                        <p class="story-preview-excerpt">La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores...</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- DETALLE DEL PROYECTO -->
+    <div class="story-container" id="storyContainer">
+        <button class="close-story-btn" id="closeStory">CERRAR</button>
+        <div class="story-header-cover">
+            <img src="" id="storyHeroImg" alt="Proyecto">
+            <div class="story-title-overlay">
+                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.8);">CATEGORÍA</span>
+                <h2 id="storyTitle">PROYECTO</h2>
+            </div>
+        </div>
+
+        <div class="story-body">
+            <p class="story-lead-statement" id="storyStatement">Frase inicial del proyecto...</p>
+            <div class="story-section-fluid">
+                <div class="story-text-block">
+                    <span class="story-chapter-num">01 / CONCEPT</span>
+                    <h3 class="story-section-title" id="storySec1Title">Título Sección 1</h3>
+                    <p class="story-paragraph" id="storySec1Text">Párrafo de desarrollo 1...</p>
+                </div>
+                <div>
+                    <div class="story-img-block">
+                        <img src="" id="storySec1Img" alt="Imagen 1">
+                    </div>
+                    <div class="story-caption" id="storySec1Cap">FIG 01</div>
+                </div>
+            </div>
+
+            <div class="story-fullwidth-img">
+                <div class="story-img-block">
+                    <img src="" id="storyFullImg" alt="Imagen panorámica">
+                </div>
+                <div class="story-caption" id="storyFullCap">FIG 02. PANORÁMICA</div>
+            </div>
+
+            <div class="story-section-fluid reverse">
+                <div class="story-text-block">
+                    <span class="story-chapter-num">02 / MATERIALITY</span>
+                    <h3 class="story-section-title" id="storySec2Title">Título Sección 2</h3>
+                    <p class="story-paragraph" id="storySec2Text">Párrafo de desarrollo 2...</p>
+                </div>
+                <div>
+                    <div class="story-img-block">
+                        <img src="" id="storySec2Img" alt="Imagen 2">
+                    </div>
+                    <div class="story-caption" id="storySec2Cap">FIG 03</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT CORREGIDO PARA EL CURSOR Y LA NAVEGACIÓN -->
+    <script>
+        const customCursor = document.getElementById('custom-cursor');
+        const entrySplit = document.getElementById('entrySplit');
+        const selectStories = document.getElementById('selectStories');
+        const selectVisuals = document.getElementById('selectVisuals');
+        const btnStories = document.getElementById('btnModeStories');
+        const btnVisuals = document.getElementById('btnModeVisuals');
+        const galleryTitle = document.getElementById('galleryModeTitle');
+        const galleryTag = document.getElementById('galleryModeTag');
+        const storyContainer = document.getElementById('storyContainer');
+        const closeStory = document.getElementById('closeStory');
+        const brandLogo = document.getElementById('brandLogo');
+
+        // LÓGICA ROBUSTA DEL CURSOR NEGRO
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = `${e.clientX}px`;
+                customCursor.style.top = `${e.clientY}px`;
+                
+                if (!customCursor.classList.contains('visible')) {
+                    customCursor.classList.add('visible');
+                }
+            });
+
+            // Ocultar si sale de la ventana
+            document.addEventListener('mouseleave', () => {
+                customCursor.classList.remove('visible');
+            });
+
+            // Aumentar cursor al pasar por elementos interactivos
+            const interactiveElements = 'button, a, .split-pane, .gallery-item, .logo';
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest(interactiveElements)) {
+                    customCursor.classList.add('hovered');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest(interactiveElements)) {
+                    customCursor.classList.remove('hovered');
+                }
+            });
+        }
+
+        // ENTRAR A LA WEB
+        function enterWebsite(mode) {
+            entrySplit.classList.add('hidden');
+            document.body.classList.add('content-active');
+
+            if (mode === 'visuals') {
+                setVisualMode();
+            } else {
+                setStoriesMode();
+            }
+        }
+
+        function setStoriesMode() {
+            document.body.classList.remove('mode-visual-active');
+            btnStories.classList.add('active');
+            btnVisuals.classList.remove('active');
+            galleryTitle.textContent = "MEMORIAS";
+            galleryTag.textContent = "MODO COMPLETO";
+        }
+
+        function setVisualMode() {
+            document.body.classList.add('mode-visual-active');
+            btnVisuals.classList.add('active');
+            btnStories.classList.remove('active');
+            galleryTitle.textContent = "PROYECTOS";
+            galleryTag.textContent = "GALERÍA VISUAL";
+        }
+
+        selectStories.addEventListener('click', () => enterWebsite('stories'));
+        selectVisuals.addEventListener('click', () => enterWebsite('visuals'));
+
+        btnStories.addEventListener('click', setStoriesMode);
+        btnVisuals.addEventListener('click', setVisualMode);
+
+        brandLogo.addEventListener('click', () => {
+            entrySplit.classList.remove('hidden');
+            document.body.classList.remove('content-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.project-link').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                document.getElementById('storyTitle').textContent = item.dataset.title;
+                document.getElementById('storyCategory').textContent = item.dataset.category;
+                document.getElementById('storyStatement').textContent = item.dataset.statement;
+                document.getElementById('storyHeroImg').src = item.dataset.heroImg;
+
+                document.getElementById('storySec1Title').textContent = item.dataset.sec1Title;
+                document.getElementById('storySec1Text').textContent = item.dataset.sec1Text;
+                document.getElementById('storySec1Img').src = item.dataset.sec1Img;
+                document.getElementById('storySec1Cap').textContent = item.dataset.sec1Cap;
+
+                document.getElementById('storySec2Title').textContent = item.dataset.sec2Title;
+                document.getElementById('storySec2Text').textContent = item.dataset.sec2Text;
+                document.getElementById('storySec2Img').src = item.dataset.sec2Img;
+                document.getElementById('storySec2Cap').textContent = item.dataset.sec2Cap;
+
+                document.getElementById('storyFullImg').src = item.dataset.fullImg;
+                document.getElementById('storyFullCap').textContent = item.dataset.fullCap;
+
+                storyContainer.classList.add('active');
+                document.body.classList.add('story-active');
+            });
+        });
+
+        const closeStoryModal = () => {
+            storyContainer.classList.remove('active');
+            document.body.classList.remove('story-active');
+        };
+
+        closeStory.addEventListener('click', closeStoryModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeStoryModal(); });
+    </script>
+</body>
+</html>        .split-pane {
             position: relative;
             flex: 1;
             height: 100%;
