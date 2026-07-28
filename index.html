@@ -26,7 +26,7 @@
 
         body.story-active { overflow: hidden; }
 
-        /* CURSOR DINÁMICO */
+        /* CURSOR DINÁMICO (Oculto en dispositivos táctiles) */
         #custom-cursor {
             position: fixed;
             width: 12px;
@@ -49,30 +49,6 @@
             line-height: 1;
         }
 
-        #custom-cursor.hovering-project {
-            width: 110px;
-            height: 110px;
-            background-color: rgba(17, 17, 17, 0.92);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #custom-cursor.hovering-split-left {
-            width: 130px;
-            height: 130px;
-            background-color: #ffffff;
-            color: #111111;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-
-        #custom-cursor.hovering-split-right {
-            width: 130px;
-            height: 130px;
-            background-color: #111111;
-            color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
         .mono-tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.72rem;
@@ -81,7 +57,7 @@
             color: #777777;
         }
 
-        /* DUAL ENTRY SPLIN SCREEN (HERO CON ELECCIÓN) */
+        /* DUAL ENTRY SPLIT SCREEN */
         .entry-split-container {
             position: relative;
             width: 100vw;
@@ -105,20 +81,17 @@
             overflow: hidden;
         }
 
-        /* PANE IZQUIERDO: MEMORIAS / NARRATIVA */
         .split-pane.pane-stories {
             background-color: #0d0d0d;
             color: #ffffff;
             border-right: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        /* PANE DERECHO: IMÁGENES / VISUAL */
         .split-pane.pane-visuals {
             background-color: #f7f7f7;
             color: #111111;
         }
 
-        /* FONDOS DINÁMICOS CON OVERLAY */
         .pane-bg {
             position: absolute;
             top: 0;
@@ -131,43 +104,18 @@
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
             z-index: 1;
         }
-        .pane-stories .pane-bg {
-            background-image: url('img/croquis.jpg');
-            /* Sin filtros si la imagen ya es un boceto en blanco y negro */
+        
+        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
+        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.2; filter: grayscale(30%); }
+
+        @media (hover: hover) {
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.7); }
+            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.6; }
         }
 
-        .pane-visuals .pane-bg {
-            background-image: url('img/HAVANA%2048.jpg');
-            opacity: 0.2;
-            filter: grayscale(30%);
-        }
-
-        /* EFECTOS HOVER SPLIT */
-        .entry-split-container:hover .split-pane {
-            flex: 0.8;
-            filter: brightness(0.7);
-        }
-
-        .entry-split-container .split-pane:hover {
-            flex: 1.4;
-            filter: brightness(1);
-        }
-
-        .entry-split-container .split-pane:hover .pane-bg {
-            transform: scale(1.05);
-            opacity: 0.6;
-        }
-
-        .split-content-top {
-            position: relative;
-            z-index: 2;
-        }
-
-        .split-content-bottom {
-            position: relative;
-            z-index: 2;
-            max-width: 520px;
-        }
+        .split-content-top { position: relative; z-index: 2; }
+        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
 
         .split-badge {
             display: inline-block;
@@ -180,20 +128,11 @@
             margin-bottom: 24px;
         }
 
-        .pane-stories .split-badge {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .pane-visuals .split-badge {
-            background-color: rgba(0, 0, 0, 0.06);
-            color: #111111;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-        }
+        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
 
         .split-title {
-            font-size: 3.8rem;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -2px;
@@ -201,12 +140,7 @@
             margin-bottom: 16px;
         }
 
-        .split-desc {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            font-weight: 300;
-            opacity: 0.85;
-        }
+        .split-desc { font-size: 1.05rem; line-height: 1.6; font-weight: 300; opacity: 0.85; }
 
         .split-action {
             display: inline-flex;
@@ -220,15 +154,7 @@
             font-weight: 700;
         }
 
-        .split-action svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s ease;
-        }
-
-        .split-pane:hover .split-action svg {
-            transform: translateX(8px);
-        }
+        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
 
         /* NAVEGACIÓN */
         header {
@@ -245,24 +171,9 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        header.dark-mode {
-            background-color: rgba(13, 13, 13, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .logo {
-            font-size: 0.95rem;
-            font-weight: 800;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #111111;
-            transition: color 0.3s ease;
-        }
-
-        header.dark-mode .logo { color: #ffffff; }
+        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
 
         .mode-switch-bar {
             display: flex;
@@ -270,11 +181,6 @@
             padding: 4px;
             border-radius: 30px;
             border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        header.dark-mode .mode-switch-bar {
-            background-color: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .mode-btn {
@@ -291,30 +197,18 @@
             transition: all 0.25s ease;
         }
 
-        header.dark-mode .mode-btn { color: #888888; }
-
         .mode-btn.active {
             background-color: #111111;
             color: #ffffff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        header.dark-mode .mode-btn.active {
-            background-color: #ffffff;
-            color: #111111;
-        }
-
-        /* CONTENEDOR PRINCIPAL DE CONTENIDOS */
-        .main-view-container {
-            position: relative;
-            width: 100%;
-        }
-
-        /* GALERÍA DE PROYECTOS (MODO VISUAL E HISTORIAS) */
+        /* GALERÍA DE PROYECTOS */
+        .main-view-container { position: relative; width: 100%; }
         .gallery-section { padding: 120px 6%; background-color: #ffffff; }
 
         .gallery-header {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -322,26 +216,20 @@
             padding-bottom: 20px;
         }
 
-        .gallery-header h2 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
+        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* VISTA GRID DE PROYECTOS */
         .gallery-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 120px;
+            gap: 80px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* MODO VISUAL PURO (GRID DE 2 COLUMNAS) */
         body.mode-visual-active .gallery-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
             max-width: 1400px;
-        }
-
-        body.mode-visual-active .gallery-img-container {
-            height: 520px;
         }
 
         .gallery-item {
@@ -350,59 +238,41 @@
             text-decoration: none;
             color: inherit;
             position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .gallery-item.in-view {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .gallery-img-container {
             width: 100%;
-            height: 700px;
+            height: 60vh;
+            min-height: 350px;
+            max-height: 700px;
             overflow: hidden;
             position: relative;
             background-color: #f2f2f2;
-            transition: height 0.4s ease;
         }
 
         .gallery-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.0);
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             filter: brightness(0.95);
         }
 
-        .gallery-item:hover .gallery-img-container img {
-            transform: scale(1.03);
-            filter: brightness(1);
-        }
-
-        .gallery-info { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+        .gallery-info { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
         .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
-        .gallery-info h3 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #111111; }
+        .gallery-info h3 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -1px; color: #111111; }
 
-        /* TRACTO EDITORIAL DIRECTO EN LISTA CUANDO ESTÁ EN MODO MEMORIAS */
         .story-preview-excerpt {
-            margin-top: 12px;
-            font-size: 1.05rem;
+            margin-top: 10px;
+            font-size: 1rem;
             line-height: 1.6;
             color: #555555;
             font-weight: 300;
             max-width: 800px;
-            display: block;
         }
 
-        body.mode-visual-active .story-preview-excerpt {
-            display: none;
-        }
+        body.mode-visual-active .story-preview-excerpt { display: none; }
 
-        /* EXPERIENCIA NARRATIVA FLUIDA (ESTILO BIG.DK) */
+        /* EXPERIENCIA NARRATIVA / DETALLE */
         .story-container {
             position: fixed;
             top: 0;
@@ -418,265 +288,176 @@
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
-        .story-container.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0);
-        }
+        .story-container.active { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-        /* BOTÓN FLOTANTE CERRAR */
         .close-story-btn {
             position: fixed;
-            top: 30px;
+            top: 24px;
             right: 6%;
             z-index: 6000;
             background: #111111;
             color: #ffffff;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
             border-radius: 40px;
-            transition: transform 0.2s ease, background-color 0.2s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .close-story-btn:hover {
-            background-color: #333333;
-            transform: scale(1.05);
-        }
-
-        /* CABECERA EDITORIAL DEL PROYECTO */
         .story-header-cover {
             width: 100%;
-            height: 90vh;
+            height: 80vh;
             position: relative;
             background-color: #111111;
         }
 
-        .story-header-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .story-header-cover img { width: 100%; height: 100%; object-fit: cover; }
 
         .story-title-overlay {
             position: absolute;
-            bottom: 60px;
+            bottom: 40px;
             left: 6%;
             right: 6%;
             color: #ffffff;
-            max-width: 1200px;
         }
 
         .story-title-overlay h2 {
-            font-size: 5rem;
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 800;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             line-height: 0.95;
             text-transform: uppercase;
             margin-top: 10px;
         }
 
-        /* RECORRIDO EDITORIAL FLUIDO */
-        .story-body {
-            padding: 120px 6%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
+        .story-body { padding: 80px 6%; max-width: 1300px; margin: 0 auto; }
 
-        /* MANIFIESTO O DECLARACIÓN INICIAL */
         .story-lead-statement {
-            font-size: 2.6rem;
+            font-size: clamp(1.4rem, 3.5vw, 2.6rem);
             font-weight: 500;
-            line-height: 1.25;
-            letter-spacing: -1.5px;
+            line-height: 1.3;
+            letter-spacing: -1px;
             color: #111111;
-            margin-bottom: 120px;
-            max-width: 1100px;
+            margin-bottom: 80px;
         }
 
-        /* BLOQUES NARRATIVOS TEXTO + IMAGEN (LAYOUT FLUIDO) */
         .story-section-fluid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 60px;
             align-items: center;
-            margin-bottom: 160px;
+            margin-bottom: 120px;
         }
 
-        .story-section-fluid.reverse {
-            direction: rtl;
+        .story-section-fluid.reverse { direction: rtl; }
+        .story-section-fluid.reverse .story-text-block { direction: ltr; }
+
+        .story-text-block { display: flex; flex-direction: column; gap: 16px; }
+        .story-chapter-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #888888; }
+        .story-section-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -1px; }
+        .story-paragraph { font-size: 1.05rem; line-height: 1.8; color: #444444; font-weight: 300; }
+
+        .story-img-block img { width: 100%; height: auto; object-fit: cover; }
+        .story-caption { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #888888; }
+        .story-fullwidth-img { width: 100%; margin-bottom: 120px; }
+        .story-fullwidth-img img { width: 100%; max-height: 80vh; object-fit: cover; }
+
+        /* =========================================================
+           ADAPTACIÓN RESPONSIVA AVANZADA (IPAD Y MÓVIL)
+           ========================================================= */
+
+        /* DISPOSITIVOS TÁCTILES GENERALES (Sin cursor personalizado) */
+        @media (pointer: coarse) {
+            * { cursor: auto !important; }
+            #custom-cursor { display: none !important; }
         }
 
-        .story-section-fluid.reverse .story-text-block {
-            direction: ltr;
+        /* TABLETS & IPADS (Pantallas hasta 1024px) */
+        @media (max-width: 1024px) {
+            header { padding: 18px 5%; }
+            .logo { font-size: 0.85rem; letter-spacing: 2px; }
+
+            .entry-split-container {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .split-pane {
+                min-height: 50vh;
+                padding: 100px 8% 60px 8%;
+            }
+
+            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+
+            body.mode-visual-active .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+
+            .gallery-img-container { height: 45vh; }
+            .story-section-fluid { gap: 40px; margin-bottom: 80px; }
         }
 
-        .story-text-block {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        /* MÓVILES GRANDES Y IPADS VERTICALES (Pantallas hasta 768px) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 14px 5%;
+            }
 
-        .story-chapter-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: #888888;
-            letter-spacing: 2px;
-        }
+            .mode-switch-bar { width: 100%; justify-content: center; }
+            .mode-btn { flex: 1; text-align: center; padding: 8px 0; }
 
-        .story-section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            color: #111111;
-            line-height: 1.2;
-        }
+            .gallery-section { padding: 140px 5% 60px; }
 
-        .story-paragraph {
-            font-size: 1.1rem;
-            line-height: 1.85;
-            color: #444444;
-            font-weight: 300;
-        }
+            /* En pantallas pequeñas, el modo visual pasa a 1 sola columna */
+            body.mode-visual-active .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
 
-        .story-img-block {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            background-color: #f5f5f5;
-        }
+            .gallery-grid { gap: 60px; }
+            .gallery-img-container { height: 40vh; min-height: 280px; }
 
-        .story-img-block img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+            /* Secciones de texto e imagen del relato se vuelven verticales */
+            .story-section-fluid, 
+            .story-section-fluid.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+                gap: 24px;
+                margin-bottom: 60px;
+            }
 
-        .story-img-block:hover img {
-            transform: scale(1.02);
-        }
-
-        .story-caption {
-            margin-top: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #888888;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* IMAGEN A ANCHO COMPLETO INTERCALADA */
-        .story-fullwidth-img {
-            width: 100%;
-            margin-bottom: 160px;
-        }
-
-        .story-fullwidth-img img {
-            width: 100%;
-            max-height: 85vh;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* METADATOS SUBTILES AL FINAL DEL RELATO */
-        .story-footer-meta {
-            border-top: 1px solid #e0e0e0;
-            padding-top: 60px;
-            margin-top: 100px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-        .meta-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .meta-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #888888;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .meta-val {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #111111;
-        }
-
-        /* LIGHTBOX PARA MODO VISUAL */
-        .lightbox-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 7000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .lightbox-modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .lightbox-modal img {
-            max-width: 90vw;
-            max-height: 85vh;
-            object-fit: contain;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 30px;
-            right: 6%;
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            background: none;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 24px;
-            border-radius: 30px;
-        }
-
-        /* FOOTER */
-        footer { background-color: #ffffff; padding: 100px 6% 40px; border-top: 1px solid #e5e5e5; }
-        .footer-bottom { display: flex; justify-content: space-between; padding-top: 20px; }
-
-        @media (max-width: 992px) {
-            * { cursor: auto; }
-            #custom-cursor { display: none; }
-            .entry-split-container { flex-direction: column; height: auto; }
-            .split-pane { padding: 80px 8% 60px 8%; min-height: 70vh; }
-            .split-title { font-size: 2.8rem; }
-            .gallery-img-container { height: 420px; }
-            body.mode-visual-active .gallery-grid { grid-template-columns: 1fr; }
             .story-header-cover { height: 60vh; }
-            .story-title-overlay h2 { font-size: 3rem; }
-            .story-lead-statement { font-size: 1.6rem; margin-bottom: 80px; }
-            .story-section-fluid { grid-template-columns: 1fr; gap: 40px; margin-bottom: 100px; }
-            .story-section-fluid.reverse { direction: ltr; }
-            .story-body { padding: 60px 6%; }
+            .story-body { padding: 50px 5%; }
+            .story-lead-statement { margin-bottom: 50px; }
+            .story-fullwidth-img { margin-bottom: 60px; }
+
+            .close-story-btn {
+                top: auto;
+                bottom: 30px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 80%;
+                max-width: 280px;
+                text-align: center;
+            }
+        }
+
+        /* MÓVILES PEQUEÑOS (Pantallas hasta 480px) */
+        @media (max-width: 480px) {
+            .split-pane { padding: 90px 6% 40px 6%; min-height: 45vh; }
+            .split-desc { font-size: 0.95rem; }
+            .split-action { font-size: 0.7rem; margin-top: 20px; }
+
+            .gallery-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .gallery-info-top { flex-direction: column; gap: 4px; }
         }
     </style>
 </head>
@@ -688,17 +469,16 @@
     <header id="mainHeader">
         <div class="logo">OWN ARCHITECTURE</div>
         
-        <!-- SELECTOR DE MODO EN LA BARRA -->
         <div class="mode-switch-bar">
             <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
             <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
         </div>
     </header>
 
-    <!-- DUAL ENTRY SPLIT SCREEN (LANDING CON DOBLE OPCIÓN) -->
+    <!-- DUAL ENTRY SPLIT SCREEN -->
     <section class="entry-split-container" id="entrySplit">
         
-        <!-- OPCIÓN 1: MODO MEMORIAS / NARRATIVO -->
+        <!-- OPCIÓN 1: MODO MEMORIAS -->
         <a href="#proyectos" class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
@@ -714,11 +494,11 @@
             </div>
         </a>
 
-        <!-- OPCIÓN 2: MODO IMÁGENES / PURAMENTE VISUAL -->
+        <!-- OPCIÓN 2: MODO IMÁGENES -->
         <a href="#proyectos" class="split-pane pane-visuals" id="selectVisuals">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">02 /GALERÍA VISUAL</span>
+                <span class="split-badge">02 / GALERÍA VISUAL</span>
             </div>
             <div class="split-content-bottom">
                 <h2 class="split-title">IMÁGENES</h2>
@@ -747,8 +527,6 @@
                          data-title="CASA INFINITA" 
                          data-category="RESIDENCIAL • BARCELONA" 
                          data-year="2025"
-                         data-location="Barcelona, España"
-                         data-size="650 m²"
                          data-statement="Una geometría limpia suspendida sobre el Mediterráneo para desdibujar los límites entre la estructura y el mar."
                          data-sec1-title="Diálogo con la topografía"
                          data-sec1-text="El proyecto nace del desafío de intervenir en un acantilado de alta pendiente. En lugar de adaptar la parcela mediante contenciones masivas, articulamos dos losas de hormigón que vuelan suavemente hacia la línea de la costa."
@@ -779,8 +557,6 @@
                          data-title="FUYU" 
                          data-category="RESIDENCIAL • BARCELONA" 
                          data-year="2026"
-                         data-location="Barcelona, España"
-                         data-size="480 m²"
                          data-statement="La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores."
                          data-sec1-title="La fachada como refugio"
                          data-sec1-text="En un entorno urbano saturado de estímulos, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando todas las vistas hacia el centro."
@@ -802,7 +578,7 @@
                             <span class="mono-tag">2026</span>
                         </div>
                         <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                        <p class="story-preview-excerpt">La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores. Un monolito de hormigón que aísla del exterior y abre sus vistas al cielo...</p>
+                        <p class="story-preview-excerpt">La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores. Un monolito de hormigón que aísla del exterior...</p>
                     </div>
                 </article>
 
@@ -811,8 +587,6 @@
                          data-title="VILA CLARA" 
                          data-category="RESIDENCIAL • CANYELLES" 
                          data-year="2024"
-                         data-location="Canyelles, España"
-                         data-size="520 m²"
                          data-statement="Paneles horizontales y ligereza estructural flotando sobre un bosque de pinos."
                          data-sec1-title="Baja huella sobre el terreno"
                          data-sec1-text="El proyecto se apoya sobre pilares metálicos aislados para evitar la tala de árboles en el pinar. Las marquesinas blancas filtran la radiación solar proporcionando sombra pasiva constante."
@@ -842,20 +616,18 @@
         </section>
     </main>
 
-    <!-- EXPERIENCIA NARRATIVA FLUIDA (MODO MEMORIAS DETALLE) -->
+    <!-- EXPERIENCIA NARRATIVA / MODAL -->
     <div class="story-container" id="storyContainer">
-        <button class="close-story-btn" id="closeStory">CERRAR (ESC)</button>
+        <button class="close-story-btn" id="closeStory">CERRAR</button>
         
-        <!-- COVER HEADER -->
         <div class="story-header-cover">
-            <img src="data:image/svg+xml,%3Csvg xmlns='img/mirador-42/mirador-1.jpg'/%3E" id="storyHeroImg" alt="Proyecto">
+            <img src="" id="storyHeroImg" alt="Proyecto">
             <div class="story-title-overlay">
                 <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.8);">CATEGORÍA</span>
                 <h2 id="storyTitle">PROYECTO</h2>
             </div>
         </div>
 
-        <!-- CUERPO EDITORIAL FLUIDO -->
         <div class="story-body">
             <p class="story-lead-statement" id="storyStatement">Frase inicial del proyecto...</p>
 
@@ -867,7 +639,7 @@
                 </div>
                 <div>
                     <div class="story-img-block">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storySec1Img" alt="Imagen 1">
+                        <img src="" id="storySec1Img" alt="Imagen 1">
                     </div>
                     <div class="story-caption" id="storySec1Cap">FIG 01</div>
                 </div>
@@ -875,7 +647,7 @@
 
             <div class="story-fullwidth-img">
                 <div class="story-img-block">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storyFullImg" alt="Imagen panorámica">
+                    <img src="" id="storyFullImg" alt="Imagen panorámica">
                 </div>
                 <div class="story-caption" id="storyFullCap">FIG 02. PANORÁMICA</div>
             </div>
@@ -884,10 +656,83 @@
                 <div class="story-text-block">
                     <span class="story-chapter-num">02 / MATERIALITY</span>
                     <h3 class="story-section-title" id="storySec2Title">Título Sección 2</h3>
-                    <p class="story-paragraph" id="storySec2Text">Párraf</p>
+                    <p class="story-paragraph" id="storySec2Text">Párrafo de desarrollo 2...</p>
+                </div>
+                <div>
+                    <div class="story-img-block">
+                        <img src="" id="storySec2Img" alt="Imagen 2">
+                    </div>
+                    <div class="story-caption" id="storySec2Cap">FIG 03</div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- LOGICA JAVASCRIPT SIMPLIFICADA -->
+    <script>
+        const btnStories = document.getElementById('btnModeStories');
+        const btnVisuals = document.getElementById('btnModeVisuals');
+        const galleryTitle = document.getElementById('galleryModeTitle');
+        const galleryTag = document.getElementById('galleryModeTag');
+        const storyContainer = document.getElementById('storyContainer');
+        const closeStory = document.getElementById('closeStory');
+
+        // MODO MEMORIAS / PROYECTOS
+        btnStories.addEventListener('click', () => {
+            document.body.classList.remove('mode-visual-active');
+            btnStories.classList.add('active');
+            btnVisuals.classList.remove('active');
+            galleryTitle.textContent = "MEMORIAS";
+            galleryTag.textContent = "MODO COMPLETO";
+        });
+
+        btnVisuals.addEventListener('click', () => {
+            document.body.classList.add('mode-visual-active');
+            btnVisuals.classList.add('active');
+            btnStories.classList.remove('active');
+            galleryTitle.textContent = "PROYECTOS";
+            galleryTag.textContent = "GALERÍA VISUAL";
+        });
+
+        document.getElementById('selectStories').addEventListener('click', () => btnStories.click());
+        document.getElementById('selectVisuals').addEventListener('click', () => btnVisuals.click());
+
+        // ABRIR RELATO EN CADA PROYECTO
+        document.querySelectorAll('.project-link').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                document.getElementById('storyTitle').textContent = item.dataset.title;
+                document.getElementById('storyCategory').textContent = item.dataset.category;
+                document.getElementById('storyStatement').textContent = item.dataset.statement;
+                document.getElementById('storyHeroImg').src = item.dataset.heroImg;
+
+                document.getElementById('storySec1Title').textContent = item.dataset.sec1Title;
+                document.getElementById('storySec1Text').textContent = item.dataset.sec1Text;
+                document.getElementById('storySec1Img').src = item.dataset.sec1Img;
+                document.getElementById('storySec1Cap').textContent = item.dataset.sec1Cap;
+
+                document.getElementById('storySec2Title').textContent = item.dataset.sec2Title;
+                document.getElementById('storySec2Text').textContent = item.dataset.sec2Text;
+                document.getElementById('storySec2Img').src = item.dataset.sec2Img;
+                document.getElementById('storySec2Cap').textContent = item.dataset.sec2Cap;
+
+                document.getElementById('storyFullImg').src = item.dataset.fullImg;
+                document.getElementById('storyFullCap').textContent = item.dataset.fullCap;
+
+                storyContainer.classList.add('active');
+                document.body.classList.add('story-active');
+            });
+        });
+
+        // CERRAR RELATO
+        const closeStoryModal = () => {
+            storyContainer.classList.remove('active');
+            document.body.classList.remove('story-active');
+        };
+
+        closeStory.addEventListener('click', closeStoryModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeStoryModal(); });
+    </script>
 </body>
 </html>
