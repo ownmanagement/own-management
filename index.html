@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWN ARCHITECTURE | ESTUDIO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* RESET & BASES */
         * {
@@ -24,7 +24,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        body.modal-open { overflow: hidden; }
+        body.story-active { overflow: hidden; }
 
         /* CURSOR DINÁMICO */
         #custom-cursor {
@@ -48,9 +48,9 @@
         }
 
         #custom-cursor.hovering-project {
-            width: 90px;
-            height: 90px;
-            background-color: rgba(17, 17, 17, 0.92);
+            width: 100px;
+            height: 100px;
+            background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(4px);
         }
 
@@ -73,10 +73,10 @@
             align-items: center;
             padding: 24px 6%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo {
@@ -100,7 +100,7 @@
 
         nav a:hover { color: #000000; }
 
-        /* HERO */
+        /* HERO PRINCIPAL */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -213,8 +213,8 @@
         .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
         .gallery-info h3 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #111111; }
 
-        /* MODAL NARRATIVO ESTILO BIG */
-        .project-modal {
+        /* EXPERIENCIA NARRATIVA FLUIDA (ESTILO BIG.DK) */
+        .story-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -225,21 +225,22 @@
             opacity: 0;
             pointer-events: none;
             overflow-y: auto;
-            transform: translateY(40px) scale(0.98);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
-        .project-modal.active {
+        .story-container.active {
             opacity: 1;
             pointer-events: all;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
-        .close-btn {
+        /* BOTÓN FLOTANTE CERRAR */
+        .close-story-btn {
             position: fixed;
             top: 30px;
             right: 6%;
-            z-index: 5100;
+            z-index: 6000;
             background: #111111;
             color: #ffffff;
             border: none;
@@ -254,165 +255,176 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .close-btn:hover {
+        .close-story-btn:hover {
             background-color: #333333;
             transform: scale(1.05);
         }
 
-        /* HERO DEL PROYECTO */
-        .modal-hero {
+        /* CABECERA EDITORIAL DEL PROYECTO */
+        .story-header-cover {
             width: 100%;
-            height: 80vh;
+            height: 90vh;
             position: relative;
             background-color: #111111;
-            overflow: hidden;
         }
 
-        .modal-hero img {
+        .story-header-cover img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .modal-body {
-            padding: 90px 10%;
-            max-width: 1400px;
+        .story-title-overlay {
+            position: absolute;
+            bottom: 60px;
+            left: 6%;
+            right: 6%;
+            color: #ffffff;
+            max-width: 1200px;
+        }
+
+        .story-title-overlay h2 {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* RECORRIDO EDITORIAL FLUIDO */
+        .story-body {
+            padding: 120px 6%;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* HEADER DEL RELATO */
-        .modal-header-narrative {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 80px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 70px;
-            margin-bottom: 80px;
-        }
-
-        .modal-title-container h2 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            letter-spacing: -3px;
-            line-height: 0.98;
-            margin-top: 12px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .modal-tagline {
-            font-size: 2.1rem;
+        /* MANIFIESTO O DECLARACIÓN INICIAL */
+        .story-lead-statement {
+            font-size: 2.6rem;
             font-weight: 500;
             line-height: 1.25;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             color: #111111;
+            margin-bottom: 120px;
+            max-width: 1100px;
         }
 
-        /* MATRIZ DE FICHA TÉCNICA (SPECS GRID ESTILO ARCHITECTURAL CASE STUDY) */
-        .modal-specs-grid {
+        /* BLOQUES NARRATIVOS TEXTO + IMAGEN (LAYOUT FLUIDO) */
+        .story-section-fluid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            background-color: #fcfcfc;
-            border: 1px solid #f0f0f0;
-            padding: 32px;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 160px;
         }
 
-        .spec-item-block {
+        .story-section-fluid.reverse {
+            direction: rtl;
+        }
+
+        .story-section-fluid.reverse .story-text-block {
+            direction: ltr;
+        }
+
+        .story-text-block {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            border-bottom: 1px solid #efefef;
-            padding-bottom: 12px;
+            gap: 24px;
         }
 
-        .spec-item-block:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .spec-value {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #111111;
-        }
-
-        /* ESTRUCTURA NARRATIVA CAPITULAR (EL RELATO DEL PROYECTO) */
-        .modal-story-container {
-            max-width: 880px;
-            margin-bottom: 100px;
-        }
-
-        .modal-lead-paragraph {
-            font-size: 1.35rem;
-            line-height: 1.7;
-            font-weight: 400;
-            color: #222222;
-            margin-bottom: 60px;
-            letter-spacing: -0.3px;
-        }
-
-        .story-chapter {
-            margin-bottom: 60px;
-        }
-
-        .chapter-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .chapter-num {
+        .story-chapter-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: #888888;
+            letter-spacing: 2px;
+        }
+
+        .story-section-title {
+            font-size: 1.8rem;
             font-weight: 700;
+            letter-spacing: -1px;
             color: #111111;
-            background-color: #f0f0f0;
-            padding: 4px 8px;
+            line-height: 1.2;
         }
 
-        .chapter-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
-        }
-
-        .chapter-text {
-            font-size: 1.08rem;
+        .story-paragraph {
+            font-size: 1.1rem;
             line-height: 1.85;
-            color: #555555;
+            color: #444444;
             font-weight: 300;
         }
 
-        /* GALERÍA DE IMÁGENES NARRATIVAS */
-        .modal-gallery-section {
-            display: flex;
-            flex-direction: column;
-            gap: 80px;
-        }
-
-        .modal-img-wrapper {
+        .story-img-block {
             width: 100%;
             position: relative;
+            overflow: hidden;
             background-color: #f5f5f5;
         }
 
-        .modal-img-wrapper img {
+        .story-img-block img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .story-img-block:hover img {
+            transform: scale(1.02);
+        }
+
+        .story-caption {
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* IMAGEN A ANCHO COMPLETO INTERCALADA */
+        .story-fullwidth-img {
+            width: 100%;
+            margin-bottom: 160px;
+        }
+
+        .story-fullwidth-img img {
             width: 100%;
             max-height: 85vh;
             object-fit: cover;
             display: block;
         }
 
-        .img-caption {
-            margin-top: 16px;
+        /* METADATOS SUBTILES AL FINAL DEL RELATO */
+        .story-footer-meta {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 60px;
+            margin-top: 100px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 12px;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .meta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .meta-val {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111111;
         }
 
         /* FOOTER */
@@ -423,11 +435,12 @@
             * { cursor: auto; }
             #custom-cursor { display: none; }
             .gallery-img-container { height: 420px; }
-            .modal-hero { height: 55vh; }
-            .modal-header-narrative { grid-template-columns: 1fr; gap: 40px; }
-            .modal-title-container h2 { font-size: 3rem; }
-            .modal-tagline { font-size: 1.5rem; }
-            .modal-body { padding: 50px 6%; }
+            .story-header-cover { height: 60vh; }
+            .story-title-overlay h2 { font-size: 3rem; }
+            .story-lead-statement { font-size: 1.6rem; margin-bottom: 80px; }
+            .story-section-fluid { grid-template-columns: 1fr; gap: 40px; margin-bottom: 100px; }
+            .story-section-fluid.reverse { direction: ltr; }
+            .story-body { padding: 60px 6%; }
             .hero-content h1 { font-size: 3rem; }
         }
     </style>
@@ -469,18 +482,20 @@
                      data-title="CASA INFINITA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2025"
-                     data-client="Privado"
+                     data-location="Barcelona, España"
                      data-size="650 m²"
-                     data-status="Completado"
-                     data-team="OWN Studio, Estructuras BIS"
-                     data-tagline="Una geometría suspendida sobre el Mediterráneo diseñada para desdibujar los límites entre la materia y el horizonte."
-                     data-lead="Ubicada en un acantilado sobre el litoral catalán, Casa Infinita surge como una respuesta radical al paisaje: transformar la contención de la estructura de hormigón en un marco transparente volcado hacia el mar."
-                     data-chapter1-title="El Desafío Topográfico"
-                     data-chapter1-text="La pronunciada pendiente de la parcela exigía un planteamiento tectónico claro. En lugar de incrustar masivamente el edificio en la roca, optamos por dos volúmenes monolíticos contrapuestos. El volumen inferior actúa como zócalo pétreo asentado en la ladera, mientras que el volumen superior vuela hacia el vacío creando una luz de 12 metros sin apoyos visibles."
-                     data-chapter2-title="Tectónica de la Luz"
-                     data-chapter2-text="Los paños de cristal continuo sin carpinterías verticales funcionan como membranas invisibles. Durante el día, la luz solar cenital penetra por fisuras lineales en el hormigón visto, dibujando sombras cambiantes sobre los pavimentos de microcemento pulido y la madera de roble."
-                     data-img="./img/MIRADA%206.jpg"
-                     data-gallery="./img/MIRADA%206.jpg|Punta del voladizo sobre la piscina infinita, ./img/miranda-6/miranda-2.jpg|Detalle del encuentro entre la losa de hormigón y el vidrio, ./img/miranda-6/miranda-3.jpg|Secuencia espacial de la zona de estar diáfana, ./img/miranda-6/miranda-4.jpg|Patio posterior con vegetación autóctona">
+                     data-statement="Una geometría limpia suspendida sobre el Mediterráneo para desdibujar los límites entre la estructura y el mar."
+                     data-sec1-title="Diálogo con la topografía"
+                     data-sec1-text="El proyecto nace del desafío de intervenir en un acantilado de alta pendiente. En lugar de adaptar la parcela mediante contenciones masivas, articulamos dos losas de hormigón que vuelan suavemente hacia la línea de la costa."
+                     data-sec1-img="./img/MIRADA%206.jpg"
+                     data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
+                     data-sec2-title="Tectónica y luz cenital"
+                     data-sec2-text="Los cerramientos vidriados sin carpintería permiten que el paisaje pase a formar parte del interior. Fisuras situadas en la losa superior canalizan haces de luz cambiantes a lo largo del día sobre el hormigón visto."
+                     data-sec2-img="./img/miranda-6/miranda-2.jpg"
+                     data-sec2-cap="FIG 02. Detalle del encuentro estructural y la luz difusa"
+                     data-full-img="./img/miranda-6/miranda-3.jpg"
+                     data-full-cap="FIG 03. Secuencia continua entre salón interior y el horizonte"
+                     data-hero-img="./img/MIRADA%206.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/MIRADA%206.jpg" alt="CASA INFINITA">
                 </div>
@@ -498,19 +513,20 @@
                      data-title="FUYU" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2026"
-                     data-client="Fundación Fuyu"
+                     data-location="Barcelona, España"
                      data-size="480 m²"
-                     data-status="En Construcción"
-                     data-team="OWN Studio, Landscape Design Studio"
-                     data-tagline="La búsqueda del silencio introspectivo a través de un monolito cerrado que esconde un universo vegetal interior."
-                     data-desc="Inspirada en el minimalismo oriental, FUYU se concibe como un recinto cerrado hacia el exterior urbano que gradualmente se desvela hacia patios serenos."
-                     data-lead="En un entorno periurbano denso, FUYU adopta la estrategia del enclave introvertido. Su arquitectura prescinde de ventanas hacia la calle para volcarse por completo hacia un sistema de patios interiores que canalizan la luz difusa."
-                     data-chapter1-title="Masa y Vacío"
-                     data-chapter1-text="El proyecto se articula mediante tres bloques de hormigón pigmenatado en tonos ceniza que encierran un jardín central de bambú y arces japoneses. La fachada ciega no transmite pesadez, sino una serena presencia monumental reforzada por juntas horizontales perfectamente pulidas."
-                     data-chapter2-title="Flujos e Intimidad"
-                     data-chapter2-text="El recorrido interior se plantea como una secuencia ritualizada: de la penumbra del acceso de piedra natural hacia las salas de estar bañadas en luz reflejada desde los láminas de agua del patio. La barrera entre interior y exterior queda anulada por paneles correderos de madera que se ocultan en los muros."
-                     data-img="./img/BIGUES%20I%20RIELLS.jpg"
-                     data-gallery="./img/biguesiriells/bigues-3.jpg|Vista de la fachada ciega en hormigón pigmentado, ./img/biguesiriells/bigues-1.jpg|Patio de agua interior y arce japonés, ./img/biguesiriells/bigues-2.jpg|Transición de materiales entre piedra y roble alistonado, ./img/biguesiriells/bigues-5.jpg|Vista nocturna del pabellón principal">
+                     data-statement="La búsqueda del silencio a través de una masa ciega que protege un microuniversos de patios interiores."
+                     data-sec1-title="La fachada como refugio"
+                     data-sec1-text="En un entorno urbano saturado de estímulos, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando todas las vistas hacia el centro."
+                     data-sec1-img="./img/biguesiriells/bigues-3.jpg"
+                     data-sec1-cap="FIG 01. Fachada monolítica en hormigón pigmentado"
+                     data-sec2-title="Naturaleza interior"
+                     data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos de madera permiten transformar las estancias diáfanas en espacios completamente abiertos a la vegetación."
+                     data-sec2-img="./img/biguesiriells/bigues-1.jpg"
+                     data-sec2-cap="FIG 02. Patio central de luz con lámina de agua"
+                     data-full-img="./img/biguesiriells/bigues-2.jpg"
+                     data-full-cap="FIG 03. Relación matérica entre roble alistonado y granito"
+                     data-hero-img="./img/BIGUES%20I%20RIELLS.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/biguesiriells/bigues-3.jpg" alt="FUYU">
                 </div>
@@ -528,18 +544,20 @@
                      data-title="VILA CLARA" 
                      data-category="RESIDENCIAL • CANYELLES" 
                      data-year="2024"
-                     data-client="Privado"
+                     data-location="Canyelles, España"
                      data-size="520 m²"
-                     data-status="Completado"
-                     data-team="OWN Studio, Static Engineering"
-                     data-tagline="Estructuras voladizas y marquesinas ligeras que flotan sutilmente sobre la orografía del terreno."
-                     data-lead="Vila Clara responde al desafío de edificar en una parcela de alta inclinación forestal reduciendo al mínimo la huella sobre el suelo y protegiendo el arbolado existente."
-                     data-chapter1-title="Integración Pasiva"
-                     data-chapter1-text="La vivienda se fragmenta en dos losas horizontales de hormigón blanco sustentadas sobre finos pilares metálicos. Este esquema permite que la brisa del valle circule libremente por debajo y alrededor del edificio, optimizando el comportamiento térmico en verano."
-                     data-chapter2-title="El Umbral Transparente"
-                     data-chapter2-text="Las fachadas longitudinales están configuradas por vidrios bajo emisivos de gran formato. Los voladizos pronunciados calculados según el ángulo solar evitan la radiación directa durante los meses cálidos mientras permiten el ingreso del sol invernal."
-                     data-img="./img/mirador-42/mirador-5.jpg"
-                     data-gallery="./img/mirador-42/mirador-1.jpg|Losa flotante integrada en la ladera del pinar, ./img/mirador-42/mirador-2.jpg|Espacio de estar volcado sobre las vistas del valle, ./img/mirador-42/mirador-3.jpg|Detalle estructural del voladizo y terrazas, ./img/mirador-42/mirador-4.jpg|Conexión fluida entre la cocina y el exterior">
+                     data-statement="Paneles horizontales y ligereza estructural flotando sobre un bosque de pinos."
+                     data-sec1-title="Baja huella sobre el terreno"
+                     data-sec1-text="El proyecto se apoya sobre pilares metálicos aislados para evitar la tala de árboles en el pinar. Las marquesinas blancas filtran la radiación solar proporcionando sombra pasiva constante."
+                     data-sec1-img="./img/mirador-42/mirador-1.jpg"
+                     data-sec1-cap="FIG 01. Losas blancas integradas en la vegetación"
+                     data-sec2-title="Transparencia continua"
+                     data-sec2-text="Grandes vidrieras de suelo a techo comunican el espacio principal con las terrazas de madera, convirtiendo el pinar exterior en el telón de fondo de la vivienda."
+                     data-sec2-img="./img/mirador-42/mirador-2.jpg"
+                     data-sec2-cap="FIG 02. Salón diáfano orientado hacia el valle"
+                     data-full-img="./img/mirador-42/mirador-3.jpg"
+                     data-full-cap="FIG 03. Vista inferior del voladizo principal"
+                     data-hero-img="./img/mirador-42/mirador-5.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/mirador-42/mirador-1.jpg" alt="VILA CLARA">
                 </div>
@@ -557,18 +575,20 @@
                      data-title="CLARO DE LUZ" 
                      data-category="RESIDENCIAL • BESALÚ" 
                      data-year="2025"
-                     data-client="Residencia Artística Besalú"
+                     data-location="Besalú, España"
                      data-size="390 m²"
-                     data-status="Completado"
-                     data-team="OWN Studio"
-                     data-tagline="Esculpir con sombras y matices cromáticos mediante perforaciones cenitales de precisión."
-                     data-lead="Concebido como espacio de vida y taller de creación, Claro de Luz es una exploración sobre la luz solar como elemento constructivo primario."
-                     data-chapter1-title="Geometría Solar"
-                     data-chapter1-text="El volumen se orienta siguiendo la trayectoria solar del equinoccio. A través de perforaciones cenitales y lucernarios cónicos en la cubierta de hormigón, la luz incide sobre paredes de basalto pulido y paneles de roble, transformando la atmósfera interior con cada hora del día."
-                     data-chapter2-title="Austeridad Material"
-                     data-chapter2-text="Se emplean únicamente tres materiales: piedra volcánica de la zona, madera tratada al aceite natural y vidrio. La sobriedad técnica dirige la atención del habitante hacia los matices del entorno natural."
-                     data-img="./img/clarodeluz/clarodeluz-1.jpg"
-                     data-gallery="./img/clarodeluz/clarodeluz-4.jpg|Apertura cenital y haz de luz sobre el salón, ./img/clarodeluz/clarodeluz-1.jpg|Vista exterior del volumen monolítico en Besalú, ./img/clarodeluz/clarodeluz-2.jpg|Detalle de acabados en madera de roble y piedra, ./img/clarodeluz/clarodeluz-3.jpg|Estudio de arte iluminado cenitalmente">
+                     data-statement="Esculpir el interior mediante aberturas cenitales de precisión quirúrgica."
+                     data-sec1-title="Geometría y orientación solar"
+                     data-sec1-text="El trazado responde a la trayectoria del sol durante todo el año. Lucernarios cónicos perforan la cubierta introduciendo haces de luz que rebotan sobre pavimentos de basalto."
+                     data-sec1-img="./img/clarodeluz/clarodeluz-4.jpg"
+                     data-sec1-cap="FIG 01. Entrada de luz cenital sobre el área principal"
+                     data-sec2-title="Austeridad matérica"
+                     data-sec2-text="Piedra volcánica, madera de roble y mortero mineral son los únicos elementos empleados para crear un espacio de concentración absoluta."
+                     data-sec2-img="./img/clarodeluz/clarodeluz-2.jpg"
+                     data-sec2-cap="FIG 02. Encuentro entre textura de basalto y madera"
+                     data-full-img="./img/clarodeluz/clarodeluz-1.jpg"
+                     data-full-cap="FIG 03. Fachada exterior sobria en el entorno natural"
+                     data-hero-img="./img/clarodeluz/clarodeluz-1.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/clarodeluz/clarodeluz-4.jpg" alt="CLARO DE LUZ">
                 </div>
@@ -586,18 +606,20 @@
                      data-title="PASSACAGLIA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2023"
-                     data-client="Privado"
+                     data-location="Barcelona, España"
                      data-size="310 m²"
-                     data-status="Completado"
-                     data-team="OWN Studio, Rehab Consult"
-                     data-tagline="Diálogo contemporáneo entre la mampostería tradicional y una retícula de acero estructural."
-                     data-lead="Una intervención en un edificio patrimonial del siglo XIX que contrapone la textura de la fábrica de ladrillo existente con la precisión quirúrgica del acero contemporáneo."
-                     data-chapter1-title="Arqueología Espacial"
-                     data-chapter1-text="El proyecto vacía el núcleo interior del edificio para reestructurar los niveles en torno a un triple espacio articulador. Los muros portantes de mampostería se consolidan y dejan vistos, sirviendo de lienzo sobre el cual se inserta una ligera estructura de perfiles metálicos negros."
-                     data-chapter2-title="Continuidad Vertical"
-                     data-chapter2-text="Una escalera suspendida de chapa de acero conecta los distintos niveles sin interrumpir el paso de la luz natural desde la linterna superior de la cubierta hasta la planta baja."
-                     data-img="./img/havana48/havana1.jpg"
-                     data-gallery="./img/havana48/havana4.jpg|Triple espacio interior y estructura metálica insertada, ./img/havana48/havana1.jpg|Intersección entre muros patrimoniales y acero, ./img/havana48/havana2.jpg|Escalera suspendida de chapa de acero, ./img/havana48/havana3.jpg|Detalle de iluminación y materiales">
+                     data-statement="Diálogo entre la mampostería histórica y una nueva estructura metálica suspendida."
+                     data-sec1-title="Intervención patrimonial"
+                     data-sec1-text="Se vacía el núcleo del edificio respetando la envolvente de piedra del siglo XIX, insertando una ligera retícula de perfiles de acero negro."
+                     data-sec1-img="./img/havana48/havana4.jpg"
+                     data-sec1-cap="FIG 01. Espacio central y estructura de acero"
+                     data-sec2-title="Fluidez vertical"
+                     data-sec2-text="Una escalera liviana suspendida permite que la luz de la linterna de cubierta alcance las plantas inferiores."
+                     data-sec2-img="./img/havana48/havana2.jpg"
+                     data-sec2-cap="FIG 02. Detalle de la escalera suspendida"
+                     data-full-img="./img/havana48/havana1.jpg"
+                     data-full-cap="FIG 03. Yuxtaposición de texturas de fábrica y acero"
+                     data-hero-img="./img/havana48/havana1.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/havana48/havana4.jpg" alt="PASSACAGLIA">
                 </div>
@@ -615,18 +637,20 @@
                      data-title="CLAROSCURO" 
                      data-category="REHABILITACIÓN • BARCELONA" 
                      data-year="2024"
-                     data-client="Inversiones Marítimas"
+                     data-location="Barcelona, España"
                      data-size="720 m²"
-                     data-status="Completado"
-                     data-team="OWN Studio"
-                     data-tagline="Plataformas mediterráneas escalonadas que se proyectan directamente hacia la línea del horizonte."
-                     data-lead="Rehabilitación y extensión de una vivienda de los años 70 reconvertida en un manifiesto de arquitectura blanca mediterránea."
-                     data-chapter1-title="Reorganización Topográfica"
-                     data-chapter1-text="Aprovechando la fuerte pendiente, el diseño crea una serie de terrazas escalonadas de mortero de cal blanco que funcionan como extensiones naturales de las estancias interiores."
-                     data-chapter2-title="El Filtro Solar"
-                     data-chapter2-text="Patios y celosías de cerámica blanca filtran el viento marino y la luz solar excesiva, ofreciendo sombras proyectadas de alta densidad geométrica sobre las plataformas de piedra natural."
-                     data-img="./img/JP/jp1.jpg"
-                     data-gallery="./img/JP/jp4.jpg|Plataformas escalonadas y piscina volcada al horizonte, ./img/JP/jp1.jpg|Vista general del volumen blanco mediterráneo, ./img/JP/jp2.jpg|Detalle de celosías cerámicas y sombreado, ./img/JP/jp3.jpg|Interiorismo minimalista orientado al mar">
+                     data-statement="Plataformas mediterráneas de mortero blanco escalonadas hacia el mar."
+                     data-sec1-title="Geometría mediterránea"
+                     data-sec1-text="Rehabilitación centrada en la creación de terrazas escalonadas que funcionan como salones exteriores expuestos a la brisa marina."
+                     data-sec1-img="./img/JP/jp4.jpg"
+                     data-sec1-cap="FIG 01. Terrazas escalonadas y lámina de agua"
+                     data-sec2-title="Celosías y sombras"
+                     data-sec2-text="Celosías cerámicas tradicionales filtran el sol intenso del mediodía creando patrones geométricos dinámicos sobre los suelos de piedra."
+                     data-sec2-img="./img/JP/jp2.jpg"
+                     data-sec2-cap="FIG 02. Sombras proyectadas por el filtro cerámico"
+                     data-full-img="./img/JP/jp1.jpg"
+                     data-full-cap="FIG 03. Vista exterior del conjunto blanco"
+                     data-hero-img="./img/JP/jp1.jpg">
                 <div class="gallery-img-container">
                     <img src="./img/JP/jp4.jpg" alt="CLAROSCURO">
                 </div>
@@ -642,106 +666,124 @@
         </div>
     </section>
 
-    <!-- PREVISUALIZACIÓN EXPANDIDA ESTILO BIG -->
-    <div class="project-modal" id="projectModal">
-        <button class="close-btn" id="closeModal">CERRAR (ESC)</button>
+    <!-- EXPERIENCIA NARRATIVA FLUIDA -->
+    <div class="story-container" id="storyContainer">
+        <button class="close-story-btn" id="closeStory">CERRAR (ESC)</button>
         
-        <div class="modal-hero">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="modalHeroImg" alt="Imagen principal">
+        <!-- COVER HEADER -->
+        <div class="story-header-cover">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storyHeroImg" alt="Proyecto">
+            <div class="story-title-overlay">
+                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.8);">CATEGORÍA</span>
+                <h2 id="storyTitle">PROYECTO</h2>
+            </div>
         </div>
 
-        <div class="modal-body">
-            <!-- CABECERA DEL PROYECTO -->
-            <div class="modal-header-narrative">
-                <div class="modal-title-container">
-                    <span class="mono-tag" id="modalCategory">CATEGORÍA • UBICACIÓN</span>
-                    <h2 id="modalTitle">TÍTULO DEL PROYECTO</h2>
-                    <p class="modal-tagline" id="modalTagline">Frase del proyecto...</p>
+        <!-- CUERPO EDITORIAL FLUIDO -->
+        <div class="story-body">
+            
+            <!-- DECLARACIÓN CONCEPTUAL -->
+            <p class="story-lead-statement" id="storyStatement">Frase inicial del proyecto...</p>
+
+            <!-- SECCIÓN FLUIDA 1 (TEXTO A LA IZQUIERDA, IMAGEN A LA DERECHA) -->
+            <div class="story-section-fluid">
+                <div class="story-text-block">
+                    <span class="story-chapter-num">01 / CONCEPT</span>
+                    <h3 class="story-section-title" id="storySec1Title">Título Sección 1</h3>
+                    <p class="story-paragraph" id="storySec1Text">Párrafo de desarrollo 1...</p>
                 </div>
-                
-                <!-- MATRIZ DE DATOS / SPECS GRID -->
-                <div class="modal-specs-grid">
-                    <div class="spec-item-block">
-                        <span class="mono-tag">AÑO</span>
-                        <span class="spec-value" id="modalYear">2026</span>
+                <div>
+                    <div class="story-img-block">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storySec1Img" alt="Imagen 1">
                     </div>
-                    <div class="spec-item-block">
-                        <span class="mono-tag">CLIENTE</span>
-                        <span class="spec-value" id="modalClient">Privado</span>
-                    </div>
-                    <div class="spec-item-block">
-                        <span class="mono-tag">SUPERFICIE</span>
-                        <span class="spec-value" id="modalSize">500 m²</span>
-                    </div>
-                    <div class="spec-item-block">
-                        <span class="mono-tag">ESTADO</span>
-                        <span class="spec-value" id="modalStatus">Completado</span>
-                    </div>
-                    <div class="spec-item-block">
-                        <span class="mono-tag">EQUIPO DE PROYECTO</span>
-                        <span class="spec-value" id="modalTeam">OWN Studio</span>
-                    </div>
+                    <div class="story-caption" id="storySec1Cap">FIG 01</div>
                 </div>
             </div>
 
-            <!-- RELATO CAPITULAR (STORYTELLING) -->
-            <div class="modal-story-container">
-                <p class="modal-lead-paragraph" id="modalLead">Párrafo introductorio...</p>
-
-                <div class="story-chapter">
-                    <div class="chapter-header">
-                        <span class="chapter-num">01</span>
-                        <h4 class="chapter-title" id="chap1Title">El Concepto</h4>
-                    </div>
-                    <p class="chapter-text" id="chap1Text">Texto del capítulo 1...</p>
+            <!-- IMAGEN A ANCHO COMPLETO -->
+            <div class="story-fullwidth-img">
+                <div class="story-img-block">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storyFullImg" alt="Imagen panorámica">
                 </div>
+                <div class="story-caption" id="storyFullCap">FIG 02. PANORÁMICA</div>
+            </div>
 
-                <div class="story-chapter">
-                    <div class="chapter-header">
-                        <span class="chapter-num">02</span>
-                        <h4 class="chapter-title" id="chap2Title">La Experiencia Espacial</h4>
+            <!-- SECCIÓN FLUIDA 2 (IMAGEN A LA IZQUIERDA, TEXTO A LA DERECHA) -->
+            <div class="story-section-fluid reverse">
+                <div class="story-text-block">
+                    <span class="story-chapter-num">02 / MATERIALITY</span>
+                    <h3 class="story-section-title" id="storySec2Title">Título Sección 2</h3>
+                    <p class="story-paragraph" id="storySec2Text">Párrafo de desarrollo 2...</p>
+                </div>
+                <div>
+                    <div class="story-img-block">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storySec2Img" alt="Imagen 2">
                     </div>
-                    <p class="chapter-text" id="chap2Text">Texto del capítulo 2...</p>
+                    <div class="story-caption" id="storySec2Cap">FIG 03</div>
                 </div>
             </div>
 
-            <!-- GALERÍA NARRATIVA -->
-            <div class="modal-gallery-section" id="modalGalleryGrid"></div>
+            <!-- PIE CON METADATOS SUBTILES -->
+            <div class="story-footer-meta">
+                <div class="meta-group">
+                    <span class="meta-label">AÑO</span>
+                    <span class="meta-val" id="storyYear">2026</span>
+                </div>
+                <div class="meta-group">
+                    <span class="meta-label">UBICACIÓN</span>
+                    <span class="meta-val" id="storyLocation">Barcelona, España</span>
+                </div>
+                <div class="meta-group">
+                    <span class="meta-label">SUPERFICIE</span>
+                    <span class="meta-val" id="storySize">500 m²</span>
+                </div>
+                <div class="meta-group">
+                    <span class="meta-label">AUTORÍA</span>
+                    <span class="meta-val">OWN ARCHITECTURE</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <footer>
         <div class="footer-bottom">
             <span class="mono-tag">&copy; 2026 OWN ARCHITECTURE.</span>
-            <span class="mono-tag">CASE STUDY EXPERIENCE</span>
+            <span class="mono-tag">EDITORIAL EXPERIENCE</span>
         </div>
     </footer>
 
-    <!-- SCRIPT DE INTERACCIÓN NARRATIVA -->
+    <!-- SCRIPT INTERACTIVO -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('custom-cursor');
-            const modal = document.getElementById('projectModal');
-            const closeModal = document.getElementById('closeModal');
+            const storyContainer = document.getElementById('storyContainer');
+            const closeStory = document.getElementById('closeStory');
 
-            // ELEMENTOS DEL MODAL
-            const modalTitle = document.getElementById('modalTitle');
-            const modalCategory = document.getElementById('modalCategory');
-            const modalYear = document.getElementById('modalYear');
-            const modalClient = document.getElementById('modalClient');
-            const modalSize = document.getElementById('modalSize');
-            const modalStatus = document.getElementById('modalStatus');
-            const modalTeam = document.getElementById('modalTeam');
-            const modalTagline = document.getElementById('modalTagline');
-            const modalLead = document.getElementById('modalLead');
-            const chap1Title = document.getElementById('chap1Title');
-            const chap1Text = document.getElementById('chap1Text');
-            const chap2Title = document.getElementById('chap2Title');
-            const chap2Text = document.getElementById('chap2Text');
-            const modalHeroImg = document.getElementById('modalHeroImg');
-            const modalGalleryGrid = document.getElementById('modalGalleryGrid');
+            // ELEMENTOS NARRATIVOS
+            const storyHeroImg = document.getElementById('storyHeroImg');
+            const storyTitle = document.getElementById('storyTitle');
+            const storyCategory = document.getElementById('storyCategory');
+            const storyStatement = document.getElementById('storyStatement');
+            
+            const storySec1Title = document.getElementById('storySec1Title');
+            const storySec1Text = document.getElementById('storySec1Text');
+            const storySec1Img = document.getElementById('storySec1Img');
+            const storySec1Cap = document.getElementById('storySec1Cap');
 
-            // CURSOR DINÁMICO
+            const storyFullImg = document.getElementById('storyFullImg');
+            const storyFullCap = document.getElementById('storyFullCap');
+
+            const storySec2Title = document.getElementById('storySec2Title');
+            const storySec2Text = document.getElementById('storySec2Text');
+            const storySec2Img = document.getElementById('storySec2Img');
+            const storySec2Cap = document.getElementById('storySec2Cap');
+
+            const storyYear = document.getElementById('storyYear');
+            const storyLocation = document.getElementById('storyLocation');
+            const storySize = document.getElementById('storySize');
+
+            // CURSOR INTERACTIVO
             if (window.innerWidth > 992 && cursor) {
                 document.addEventListener('mousemove', (e) => {
                     cursor.style.left = e.clientX + 'px';
@@ -749,12 +791,12 @@
                 });
             }
 
-            // ABRIR PROYECTO / RELATO
+            // APERTURA DE HISTORIA FLUIDA
             document.querySelectorAll('.project-link').forEach(item => {
                 item.addEventListener('mouseenter', () => {
                     if (cursor && window.innerWidth > 992) {
                         cursor.classList.add('hovering-project');
-                        cursor.innerText = 'LEER RELATO';
+                        cursor.innerText = 'VER HISTORIA';
                     }
                 });
                 
@@ -768,95 +810,52 @@
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
 
-                    // EXTRACCIÓN DE DATOS NARRATIVOS
-                    const title = item.getAttribute('data-title');
-                    const category = item.getAttribute('data-category');
-                    const year = item.getAttribute('data-year');
-                    const client = item.getAttribute('data-client');
-                    const size = item.getAttribute('data-size');
-                    const status = item.getAttribute('data-status');
-                    const team = item.getAttribute('data-team');
-                    const tagline = item.getAttribute('data-tagline');
-                    const lead = item.getAttribute('data-lead');
-                    const c1Title = item.getAttribute('data-chapter1-title');
-                    const c1Text = item.getAttribute('data-chapter1-text');
-                    const c2Title = item.getAttribute('data-chapter2-title');
-                    const c2Text = item.getAttribute('data-chapter2-text');
-                    const heroImg = item.getAttribute('data-img');
-                    const galleryStr = item.getAttribute('data-gallery');
+                    // ASIGNACIÓN DE CONTENIDOS
+                    if (storyHeroImg) storyHeroImg.src = item.getAttribute('data-hero-img') || '';
+                    if (storyTitle) storyTitle.innerText = item.getAttribute('data-title') || '';
+                    if (storyCategory) storyCategory.innerText = item.getAttribute('data-category') || '';
+                    if (storyStatement) storyStatement.innerText = item.getAttribute('data-statement') || '';
 
-                    // INYECCIÓN DE CONTENIDOS
-                    if (modalTitle) modalTitle.innerText = title || '';
-                    if (modalCategory) modalCategory.innerText = category || '';
-                    if (modalYear) modalYear.innerText = year || '';
-                    if (modalClient) modalClient.innerText = client || 'Privado';
-                    if (modalSize) modalSize.innerText = size || '---';
-                    if (modalStatus) modalStatus.innerText = status || 'Completado';
-                    if (modalTeam) modalTeam.innerText = team || 'OWN Studio';
-                    if (modalTagline) modalTagline.innerText = tagline || '';
-                    if (modalLead) modalLead.innerText = lead || '';
-                    if (chap1Title) chap1Title.innerText = c1Title || 'El Concepto';
-                    if (chap1Text) chap1Text.innerText = c1Text || '';
-                    if (chap2Title) chap2Title.innerText = c2Title || 'La Experiencia Espacial';
-                    if (chap2Text) chap2Text.innerText = c2Text || '';
-                    if (modalHeroImg) modalHeroImg.src = heroImg || '';
+                    if (storySec1Title) storySec1Title.innerText = item.getAttribute('data-sec1-title') || '';
+                    if (storySec1Text) storySec1Text.innerText = item.getAttribute('data-sec1-text') || '';
+                    if (storySec1Img) storySec1Img.src = item.getAttribute('data-sec1-img') || '';
+                    if (storySec1Cap) storySec1Cap.innerText = item.getAttribute('data-sec1-cap') || '';
 
-                    // GENERACIÓN DE GALERÍA CON PIE DE FOTO NARRATIVO
-                    if (modalGalleryGrid) {
-                        modalGalleryGrid.innerHTML = '';
-                        if (galleryStr) {
-                            const items = galleryStr.split(',');
-                            items.forEach((imgData, idx) => {
-                                const parts = imgData.split('|');
-                                const url = parts[0] ? parts[0].trim() : '';
-                                const caption = parts[1] ? parts[1].trim() : `Detalle fotográfico ${idx + 1}`;
+                    if (storyFullImg) storyFullImg.src = item.getAttribute('data-full-img') || '';
+                    if (storyFullCap) storyFullCap.innerText = item.getAttribute('data-full-cap') || '';
 
-                                if (url) {
-                                    const wrapper = document.createElement('div');
-                                    wrapper.className = 'modal-img-wrapper';
+                    if (storySec2Title) storySec2Title.innerText = item.getAttribute('data-sec2-title') || '';
+                    if (storySec2Text) storySec2Text.innerText = item.getAttribute('data-sec2-text') || '';
+                    if (storySec2Img) storySec2Img.src = item.getAttribute('data-sec2-img') || '';
+                    if (storySec2Cap) storySec2Cap.innerText = item.getAttribute('data-sec2-cap') || '';
 
-                                    const imgElem = document.createElement('img');
-                                    imgElem.src = url;
-                                    imgElem.alt = caption;
+                    if (storyYear) storyYear.innerText = item.getAttribute('data-year') || '';
+                    if (storyLocation) storyLocation.innerText = item.getAttribute('data-location') || '';
+                    if (storySize) storySize.innerText = item.getAttribute('data-size') || '';
 
-                                    const captionElem = document.createElement('div');
-                                    captionElem.className = 'img-caption';
-                                    captionElem.innerHTML = `
-                                        <span class="mono-tag">FIG. 0${idx + 1}</span>
-                                        <span class="mono-tag">${caption}</span>
-                                    `;
-
-                                    wrapper.appendChild(imgElem);
-                                    wrapper.appendChild(captionElem);
-                                    modalGalleryGrid.appendChild(wrapper);
-                                }
-                            });
-                        }
-                    }
-
-                    if (modal) {
-                        modal.classList.add('active');
-                        document.body.classList.add('modal-open');
-                        modal.scrollTop = 0;
+                    if (storyContainer) {
+                        storyContainer.classList.add('active');
+                        document.body.classList.add('story-active');
+                        storyContainer.scrollTop = 0;
                     }
                 });
             });
 
             // CIERRE
-            const closeProject = () => {
-                if (modal) modal.classList.remove('active');
-                document.body.classList.remove('modal-open');
+            const closeStoryFunc = () => {
+                if (storyContainer) storyContainer.classList.remove('active');
+                document.body.classList.remove('story-active');
             };
 
-            if (closeModal) closeModal.addEventListener('click', closeProject);
+            if (closeStory) closeStory.addEventListener('click', closeStoryFunc);
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-                    closeProject();
+                if (e.key === 'Escape' && storyContainer && storyContainer.classList.contains('active')) {
+                    closeStoryFunc();
                 }
             });
 
-            // SCROLL ANIMATION
+            // ANIMACIÓN SCROLL
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
