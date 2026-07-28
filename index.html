@@ -259,11 +259,13 @@
             transform: scale(1.05);
         }
 
+        /* IMAGEN DE CABECERA PRINCIPAL (Mantiene su gran tamaño) */
         .modal-hero {
             width: 100%;
-            height: 85vh;
+            height: 75vh;
             position: relative;
             background-color: #f2f2f2;
+            overflow: hidden;
         }
 
         .modal-hero img {
@@ -316,19 +318,31 @@
             max-width: 900px;
         }
 
+        /* GALERÍA SECUNDARIA DEL MODAL (Ajustada con zoom al pasar el ratón) */
         .modal-gallery-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 80px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
         }
 
-        .modal-gallery-grid img {
+        .modal-img-wrapper {
             width: 100%;
-            height: auto;
-            max-height: 90vh;
-            object-fit: cover;
+            height: 550px; /* Tamaño estandarizado idéntico para la galería secundaria */
+            overflow: hidden;
             background-color: #f5f5f5;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .modal-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Transición suave para el zoom */
+        }
+
+        /* EFECTO ZOOM AL PASAR EL CURSOR POR LA GALERÍA DEL MODAL */
+        .modal-img-wrapper:hover img {
+            transform: scale(1.06); /* Ajuste del nivel de zoom */
         }
 
         /* FOOTER */
@@ -339,6 +353,8 @@
             * { cursor: auto; }
             #custom-cursor { display: none; }
             .gallery-img-container { height: 420px; }
+            .modal-hero { height: 50vh; }
+            .modal-img-wrapper { height: 320px; }
             .modal-header-info { grid-template-columns: 1fr; gap: 30px; }
             .modal-header-info h2 { font-size: 2.8rem; }
             .modal-body { padding: 40px 6%; }
@@ -378,7 +394,7 @@
         
         <div class="gallery-grid">
             
-            <!-- Proyecto 1: CASA INFINITA (RUTAS CORREGIDAS AL ARCHIVO REAL "MIRADA 6.jpg") -->
+            <!-- Proyecto 1: CASA INFINITA -->
             <article class="gallery-item project-link" 
                      data-title="CASA INFINITA" 
                      data-category="RESIDENCIAL • BARCELONA" 
@@ -438,7 +454,7 @@
                 </div>
             </article>
 
-            <!-- Proyecto 4: CLARO DE LUZ (Corregida doble barra en ruta) -->
+            <!-- Proyecto 4: CLARO DE LUZ -->
             <article class="gallery-item project-link" 
                      data-title="CLARO DE LUZ" 
                      data-category="RESIDENCIAL • BESALÚ" 
@@ -554,7 +570,7 @@
             const modalHeroImg = document.getElementById('modalHeroImg');
             const modalGalleryGrid = document.getElementById('modalGalleryGrid');
 
-            // CURSOR INTERACTIVO EN ESCRITORIO
+            // CURSOR INTERACTIVO
             if (window.innerWidth > 992 && cursor) {
                 document.addEventListener('mousemove', (e) => {
                     cursor.style.left = e.clientX + 'px';
@@ -601,9 +617,14 @@
                             images.forEach(imgUrl => {
                                 const cleanUrl = imgUrl.trim();
                                 if (cleanUrl) {
+                                    const wrapper = document.createElement('div');
+                                    wrapper.className = 'modal-img-wrapper';
+
                                     const imgElem = document.createElement('img');
                                     imgElem.src = cleanUrl;
-                                    modalGalleryGrid.appendChild(imgElem);
+                                    
+                                    wrapper.appendChild(imgElem);
+                                    modalGalleryGrid.appendChild(wrapper);
                                 }
                             });
                         }
