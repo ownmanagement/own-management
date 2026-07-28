@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWN ARCHITECTURE | ESTUDIO</title>
-    <!-- Se añade Cormorant Garamond para el texto destacado editorial -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* RESET & BASES */
         * {
@@ -214,7 +213,7 @@
         .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
         .gallery-info h3 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #111111; }
 
-        /* MODAL EXPANDIBLE */
+        /* MODAL EXPANDIBLE MINIMALISTA */
         .project-modal {
             position: fixed;
             top: 0;
@@ -276,8 +275,8 @@
         }
 
         .modal-body {
-            padding: 80px 12%;
-            max-width: 1400px;
+            padding: 90px 12%;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
@@ -285,15 +284,15 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 60px;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid #eeeeee;
             padding-bottom: 60px;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
         .modal-header-info h2 {
             font-size: 4rem;
             font-weight: 800;
-            letter-spacing: -2px;
+            letter-spacing: -2.5px;
             line-height: 1.05;
         }
 
@@ -306,38 +305,33 @@
         .spec-item {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f4f4f4;
             padding-bottom: 8px;
         }
 
-        /* TIPOGRAFÍAS DE TEXTO EDITORIAL DEL PROYECTO */
+        /* BLOQUE TIPOGRÁFICO MINIMALISTA Y MODERNO */
         .modal-text-content {
-            max-width: 900px;
-            margin-bottom: 90px;
+            max-width: 820px;
+            margin-bottom: 100px;
         }
 
-        /* FRASE DESTACADA CON ESTILO EDITORIAL / SERIF */
+        /* FRASE DESTACADA: MODERNA, LIMPIA Y SIN ORNAMENTOS INVASIVOS */
         .modal-tagline {
-            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 2.3rem;
-            font-weight: 300;
-            font-style: italic;
-            line-height: 1.35;
+            font-weight: 500;
+            line-height: 1.25;
+            letter-spacing: -1.2px;
             color: #111111;
-            margin-bottom: 28px;
-            position: relative;
-            padding-left: 24px;
-            border-left: 2px solid #111111; /* Sutil línea vertical de distinción */
+            margin-bottom: 32px;
         }
 
-        /* DESCRIPCIÓN SECUNDARIA TÉCNICA */
+        /* DESCRIPCIÓN TÉCNICA Y NARRATIVA */
         .modal-description {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.05rem;
-            line-height: 1.85;
-            color: #555555;
+            font-size: 1.08rem;
+            line-height: 1.9;
+            color: #666666;
             font-weight: 300;
-            letter-spacing: 0.2px;
+            letter-spacing: -0.1px;
         }
 
         /* GALERÍA SECUNDARIA DEL MODAL */
@@ -351,19 +345,18 @@
             width: 100%;
             height: 550px;
             overflow: hidden;
-            background-color: #f5f5f5;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            background-color: #f8f8f8;
         }
 
         .modal-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .modal-img-wrapper:hover img {
-            transform: scale(1.06);
+            transform: scale(1.05);
         }
 
         /* FOOTER */
@@ -378,8 +371,8 @@
             .modal-img-wrapper { height: 320px; }
             .modal-header-info { grid-template-columns: 1fr; gap: 30px; }
             .modal-header-info h2 { font-size: 2.8rem; }
-            .modal-tagline { font-size: 1.7rem; padding-left: 16px; }
-            .modal-body { padding: 40px 6%; }
+            .modal-tagline { font-size: 1.7rem; letter-spacing: -0.8px; }
+            .modal-body { padding: 50px 6%; }
             .hero-content h1 { font-size: 3rem; }
         }
     </style>
@@ -421,8 +414,8 @@
                      data-title="CASA INFINITA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2025"
-                     data-tagline="«Una estructura monumental donde los límites entre el interior y la naturaleza se disuelven por completo.»"
-                     data-desc="Inspirada en el diálogo continuo entre el hormigón visto y la luz natural. Un diseño escultórico concebido para abrir los espacios interiores hacia el horizonte a través de grandes acristalamientos estructurales y una paleta cromática minimalista."
+                     data-tagline="Una geometría limpia diseñada para desdibujar los límites entre la estructura y el horizonte."
+                     data-desc="Basada en la continuidad material del hormigón visto y el cristal continuo, esta residencia articula sus paños de luz para proyectar la sensación de amplitud infinita. Los espacios interiores responden a un esquema libre donde la sobriedad espacial acentúa el paisaje costero exterior."
                      data-img="./img/MIRADA%206.jpg"
                      data-gallery="./img/MIRADA%206.jpg, ./img/miranda-6/miranda-2.jpg, ./img/miranda-6/miranda-3.jpg, ./img/miranda-6/miranda-4.jpg">
                 <div class="gallery-img-container">
@@ -442,8 +435,8 @@
                      data-title="FUYU" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2026"
-                     data-tagline="«Intimidad monolítica que se desvela gradualmente hacia el paisaje que la rodea.»"
-                     data-desc="Una reinterpretación atemporal del volumen arquitectónico cerrado que se abre progresivamente hacia la vegetación autóctona. El uso de geometrías puras y texturas pétreas crea un refugio sereno protegido de la mirada exterior."
+                     data-tagline="La búsqueda del silencio a través de una volumen sólido de estética atemporal."
+                     data-desc="Inspirada en el minimalismo nórdico y oriental, FUYU se compone como un refugio de presencia serena. Su fachada ciega hacia el exterior resguarda la privacidad familiar, abriéndose estratégicamente mediante patios interiores ajardinados que canalizan la luz difusa."
                      data-img="./img/BIGUES%20I%20RIELLS.jpg"
                      data-gallery="./img/biguesiriells/bigues-1.jpg, ./img/biguesiriells/bigues-2.jpg, ./img/biguesiriells/bigues-5.jpg">
                 <div class="gallery-img-container">
@@ -463,8 +456,8 @@
                      data-title="VILA CLARA" 
                      data-category="RESIDENCIAL • CANYELLES" 
                      data-year="2024"
-                     data-tagline="«Arquitectura ligera en perfecta sintonía con la topografía y las vistas del valle.»"
-                     data-desc="Estructura abierta orientada estratégicamente para maximizar el soleamiento pasivo. El uso de panelerías continuas de cristal y voladizos pronunciados permite una integración fluida entre la vida cotidiana y el entorno natural."
+                     data-tagline="Paneles volantes y transparencias que flotan sobre la orografía natural del terreno."
+                     data-desc="Una propuesta de baja huella visual que aprovecha el escalonamiento de la parcela. Sus grandes losas horizontales de hormigón blanco parecen flotar sobre el terreno, ofreciendo sombra pasiva y vistas despejadas al valle de Canyelles."
                      data-img="./img/mirador-42/mirador-5.jpg"
                      data-gallery="./img/mirador-42/mirador-2.jpg, ./img/mirador-42/mirador-3.jpg, ./img/mirador-42/mirador-4.jpg">
                 <div class="gallery-img-container">
@@ -484,8 +477,8 @@
                      data-title="CLARO DE LUZ" 
                      data-category="RESIDENCIAL • BESALÚ" 
                      data-year="2025"
-                     data-tagline="«El arte de esculpir con sombras, matices cálidos y materia en su estado más puro.»"
-                     data-desc="Un estudio detallado sobre la refracción de la luz natural sobre superficies pulidas y materiales nobles como la madera de roble y el basalto. Las aperturas cenitales filtran el sol a lo largo del día cambiando la atmósfera interior constantemente."
+                     data-tagline="Modelando la sombra y los matices cromáticos mediante aperturas cenitales precisas."
+                     data-desc="El proyecto explora el comportamiento del sol a lo largo de las estaciones. A través de lucernarios rasantes sobre muros de basalto y roble natural, los recintos interiores mutan gradualmente de atmósfera ofreciendo una experiencia sensorial sutil."
                      data-img="./img/clarodeluz/clarodeluz-1.jpg"
                      data-gallery="./img/clarodeluz/clarodeluz-2.jpg, ./img/clarodeluz/clarodeluz-3.jpg, ./img/clarodeluz/clarodeluz-5.jpg">
                 <div class="gallery-img-container">
@@ -505,8 +498,8 @@
                      data-title="PASSACAGLIA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2023"
-                     data-tagline="«El encuentro armónico entre la memoria del pasado y la precisión estética moderna.»"
-                     data-desc="Conservación de elementos arquitectónicos tradicionales fusionados con una estructura limpia de acero y cristal. La vivienda articula patios interiores para dar amplitud visual e iluminación óptima en todos sus niveles."
+                     data-tagline="Diálogo contemporáneo entre la preexistencia histórica y el acero estructural."
+                     data-desc="Intervención sutil en una construcción histórica urbana. El proyecto respeta la memoria del edificio original mediante la recuperación de sus cerramientos pétreos, contrastándolos con una retícula metálica negra de líneas puras."
                      data-img="./img/havana48/havana1.jpg"
                      data-gallery="./img/havana48/havana2.jpg, ./img/havana48/havana3.jpg, ./img/havana48/havana5.jpg">
                 <div class="gallery-img-container">
@@ -526,8 +519,8 @@
                      data-title="CLAROSCURO" 
                      data-category="REHABILITACIÓN • BARCELONA" 
                      data-year="2024"
-                     data-tagline="«Terrazas escalonadas que se proyectan directamente hacia la línea del horizonte marino.»"
-                     data-desc="Vivienda unifamiliar mediterránea que aprovecha la topografía en pendiente para crear plataformas exteriores y volúmenes blancos que contrastan con los tonos del mar y la vegetación nativa."
+                     data-tagline="Sucesión de plataformas mediterráneas escalonadas hacia la brisa del mar."
+                     data-desc="Rehabilitación completa articulada en torno a terrazas abiertas que descienden de manera suave adaptándose a la ladera. La paleta de blancos puros y morteros minerales potencia el carácter mediterráneo esencial."
                      data-img="./img/JP/jp1.jpg"
                      data-gallery="./img/JP/jp2.jpg, ./img/JP/jp3.jpg, ./img/JP/jp5.jpg">
                 <div class="gallery-img-container">
@@ -571,7 +564,7 @@
                 </div>
             </div>
 
-            <!-- BLOQUE CON TIPOGRAFÍAS DE ALTO CONTRASTE -->
+            <!-- BLOQUE DE TEXTO CON DISEÑO SOBRIO Y MINIMALISTA -->
             <div class="modal-text-content">
                 <h3 class="modal-tagline" id="modalTagline">Frase destacada del proyecto...</h3>
                 <p class="modal-description" id="modalDesc">Descripción secundaria completa...</p>
