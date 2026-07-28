@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWN ARCHITECTURE | ESTUDIO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Se añade Cormorant Garamond para el texto destacado editorial -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* RESET & BASES */
         * {
@@ -259,7 +260,7 @@
             transform: scale(1.05);
         }
 
-        /* IMAGEN DE CABECERA DEL MODAL */
+        /* IMAGEN DE CABECERA */
         .modal-hero {
             width: 100%;
             height: 75vh;
@@ -309,26 +310,34 @@
             padding-bottom: 8px;
         }
 
-        /* BLOQUE DE TEXTO DEL PROYECTO */
+        /* TIPOGRAFÍAS DE TEXTO EDITORIAL DEL PROYECTO */
         .modal-text-content {
             max-width: 900px;
             margin-bottom: 90px;
         }
 
+        /* FRASE DESTACADA CON ESTILO EDITORIAL / SERIF */
         .modal-tagline {
-            font-size: 2rem;
-            font-weight: 600;
-            line-height: 1.3;
-            letter-spacing: -0.5px;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.3rem;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.35;
             color: #111111;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px solid #111111; /* Sutil línea vertical de distinción */
         }
 
+        /* DESCRIPCIÓN SECUNDARIA TÉCNICA */
         .modal-description {
-            font-size: 1.15rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
             line-height: 1.85;
             color: #555555;
             font-weight: 300;
+            letter-spacing: 0.2px;
         }
 
         /* GALERÍA SECUNDARIA DEL MODAL */
@@ -369,7 +378,7 @@
             .modal-img-wrapper { height: 320px; }
             .modal-header-info { grid-template-columns: 1fr; gap: 30px; }
             .modal-header-info h2 { font-size: 2.8rem; }
-            .modal-tagline { font-size: 1.5rem; }
+            .modal-tagline { font-size: 1.7rem; padding-left: 16px; }
             .modal-body { padding: 40px 6%; }
             .hero-content h1 { font-size: 3rem; }
         }
@@ -412,7 +421,7 @@
                      data-title="CASA INFINITA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2025"
-                     data-tagline="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
+                     data-tagline="«Una estructura monumental donde los límites entre el interior y la naturaleza se disuelven por completo.»"
                      data-desc="Inspirada en el diálogo continuo entre el hormigón visto y la luz natural. Un diseño escultórico concebido para abrir los espacios interiores hacia el horizonte a través de grandes acristalamientos estructurales y una paleta cromática minimalista."
                      data-img="./img/MIRADA%206.jpg"
                      data-gallery="./img/MIRADA%206.jpg, ./img/miranda-6/miranda-2.jpg, ./img/miranda-6/miranda-3.jpg, ./img/miranda-6/miranda-4.jpg">
@@ -433,7 +442,7 @@
                      data-title="FUYU" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2026"
-                     data-tagline="Intimidad monolítica que se desvela gradualmente hacia el paisaje que la rodea."
+                     data-tagline="«Intimidad monolítica que se desvela gradualmente hacia el paisaje que la rodea.»"
                      data-desc="Una reinterpretación atemporal del volumen arquitectónico cerrado que se abre progresivamente hacia la vegetación autóctona. El uso de geometrías puras y texturas pétreas crea un refugio sereno protegido de la mirada exterior."
                      data-img="./img/BIGUES%20I%20RIELLS.jpg"
                      data-gallery="./img/biguesiriells/bigues-1.jpg, ./img/biguesiriells/bigues-2.jpg, ./img/biguesiriells/bigues-5.jpg">
@@ -454,7 +463,7 @@
                      data-title="VILA CLARA" 
                      data-category="RESIDENCIAL • CANYELLES" 
                      data-year="2024"
-                     data-tagline="Arquitectura ligera en perfecta sintonía con la topografía y las vistas del valle."
+                     data-tagline="«Arquitectura ligera en perfecta sintonía con la topografía y las vistas del valle.»"
                      data-desc="Estructura abierta orientada estratégicamente para maximizar el soleamiento pasivo. El uso de panelerías continuas de cristal y voladizos pronunciados permite una integración fluida entre la vida cotidiana y el entorno natural."
                      data-img="./img/mirador-42/mirador-5.jpg"
                      data-gallery="./img/mirador-42/mirador-2.jpg, ./img/mirador-42/mirador-3.jpg, ./img/mirador-42/mirador-4.jpg">
@@ -475,8 +484,8 @@
                      data-title="CLARO DE LUZ" 
                      data-category="RESIDENCIAL • BESALÚ" 
                      data-year="2025"
-                     data-tagline="El arte de esculpir con sombras, matices cálidos y materia en su estado más puro."
-                     data-desc="Un estudio detallado sobre la refracción de la luz natural sobre superficies pulidas y materiales nobles como la madera de roble y el basalto. Las aperturas Cenitales filtran el sol a lo largo del día cambiando la atmósfera interior constantemente."
+                     data-tagline="«El arte de esculpir con sombras, matices cálidos y materia en su estado más puro.»"
+                     data-desc="Un estudio detallado sobre la refracción de la luz natural sobre superficies pulidas y materiales nobles como la madera de roble y el basalto. Las aperturas cenitales filtran el sol a lo largo del día cambiando la atmósfera interior constantemente."
                      data-img="./img/clarodeluz/clarodeluz-1.jpg"
                      data-gallery="./img/clarodeluz/clarodeluz-2.jpg, ./img/clarodeluz/clarodeluz-3.jpg, ./img/clarodeluz/clarodeluz-5.jpg">
                 <div class="gallery-img-container">
@@ -496,7 +505,7 @@
                      data-title="PASSACAGLIA" 
                      data-category="RESIDENCIAL • BARCELONA" 
                      data-year="2023"
-                     data-tagline="El encuentro armónico entre la memoria del pasado y la precisión estética moderna."
+                     data-tagline="«El encuentro armónico entre la memoria del pasado y la precisión estética moderna.»"
                      data-desc="Conservación de elementos arquitectónicos tradicionales fusionados con una estructura limpia de acero y cristal. La vivienda articula patios interiores para dar amplitud visual e iluminación óptima en todos sus niveles."
                      data-img="./img/havana48/havana1.jpg"
                      data-gallery="./img/havana48/havana2.jpg, ./img/havana48/havana3.jpg, ./img/havana48/havana5.jpg">
@@ -517,7 +526,7 @@
                      data-title="CLAROSCURO" 
                      data-category="REHABILITACIÓN • BARCELONA" 
                      data-year="2024"
-                     data-tagline="Terrazas escalonadas que se proyectan directamente hacia la línea del horizonte marino."
+                     data-tagline="«Terrazas escalonadas que se proyectan directamente hacia la línea del horizonte marino.»"
                      data-desc="Vivienda unifamiliar mediterránea que aprovecha la topografía en pendiente para crear plataformas exteriores y volúmenes blancos que contrastan con los tonos del mar y la vegetación nativa."
                      data-img="./img/JP/jp1.jpg"
                      data-gallery="./img/JP/jp2.jpg, ./img/JP/jp3.jpg, ./img/JP/jp5.jpg">
@@ -562,7 +571,7 @@
                 </div>
             </div>
 
-            <!-- BLOQUE DE FRASE DESTACADA Y DESCRIPCIÓN TÉCNICA -->
+            <!-- BLOQUE CON TIPOGRAFÍAS DE ALTO CONTRASTE -->
             <div class="modal-text-content">
                 <h3 class="modal-tagline" id="modalTagline">Frase destacada del proyecto...</h3>
                 <p class="modal-description" id="modalDesc">Descripción secundaria completa...</p>
