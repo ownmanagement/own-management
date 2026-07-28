@@ -105,7 +105,7 @@
             overflow: hidden;
         }
 
-        /* PANE IZQUIERDO: RELATOS / NARRATIVA */
+        /* PANE IZQUIERDO: MEMORIAS / NARRATIVA */
         .split-pane.pane-stories {
             background-color: #0d0d0d;
             color: #ffffff;
@@ -131,10 +131,10 @@
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
             z-index: 1;
         }
-.pane-stories .pane-bg {
-    background-image: url('img/croquis.jpg');
-    /* Sin filtros si la imagen ya es un boceto en blanco y negro */
-}
+        .pane-stories .pane-bg {
+            background-image: url('img/croquis.jpg');
+            /* Sin filtros si la imagen ya es un boceto en blanco y negro */
+        }
 
         .pane-visuals .pane-bg {
             background-image: url('img/HAVANA%2048.jpg');
@@ -387,7 +387,7 @@
         .gallery-info-top { display: flex; justify-content: space-between; align-items: baseline; }
         .gallery-info h3 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: #111111; }
 
-        /* TRACTO EDITORIAL DIRECTO EN LISTA CUANDO ESTÁ EN MODO RELATOS */
+        /* TRACTO EDITORIAL DIRECTO EN LISTA CUANDO ESTÁ EN MODO MEMORIAS */
         .story-preview-excerpt {
             margin-top: 12px;
             font-size: 1.05rem;
@@ -698,7 +698,7 @@
     <!-- DUAL ENTRY SPLIT SCREEN (LANDING CON DOBLE OPCIÓN) -->
     <section class="entry-split-container" id="entrySplit">
         
-        <!-- OPCIÓN 1: MODO RELATOS / NARRATIVO -->
+        <!-- OPCIÓN 1: MODO MEMORIAS / NARRATIVO -->
         <a href="#proyectos" class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
@@ -842,7 +842,7 @@
         </section>
     </main>
 
-    <!-- EXPERIENCIA NARRATIVA FLUIDA (MODO RELATOS DETALLE) -->
+    <!-- EXPERIENCIA NARRATIVA FLUIDA (MODO MEMORIAS DETALLE) -->
     <div class="story-container" id="storyContainer">
         <button class="close-story-btn" id="closeStory">CERRAR (ESC)</button>
         
@@ -884,199 +884,10 @@
                 <div class="story-text-block">
                     <span class="story-chapter-num">02 / MATERIALITY</span>
                     <h3 class="story-section-title" id="storySec2Title">Título Sección 2</h3>
-                    <p class="story-paragraph" id="storySec2Text">Párrafo de desarrollo 2...</p>
-                </div>
-                <div>
-                    <div class="story-img-block">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="storySec2Img" alt="Imagen 2">
-                    </div>
-                    <div class="story-caption" id="storySec2Cap">FIG 03</div>
-                </div>
-            </div>
-
-            <div class="story-footer-meta">
-                <div class="meta-group">
-                    <span class="meta-label">AÑO</span>
-                    <span class="meta-val" id="storyYear">2026</span>
-                </div>
-                <div class="meta-group">
-                    <span class="meta-label">UBICACIÓN</span>
-                    <span class="meta-val" id="storyLocation">Barcelona, España</span>
-                </div>
-                <div class="meta-group">
-                    <span class="meta-label">SUPERFICIE</span>
-                    <span class="meta-val" id="storySize">500 m²</span>
-                </div>
-                <div class="meta-group">
-                    <span class="meta-label">AUTORÍA</span>
-                    <span class="meta-val">OWN ARCHITECTURE</span>
+                    <p class="story-paragraph" id="storySec2Text">Párraf</p>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- LIGHTBOX PARA MODAL VISUAL -->
-    <div class="lightbox-modal" id="lightboxModal">
-        <button class="lightbox-close" id="closeLightbox">CERRAR</button>
-        <img src="" id="lightboxImg" alt="Ampliación visual">
-    </div>
-
-    <footer>
-        <div class="footer-bottom">
-            <span class="mono-tag">&copy; 2026 OWN ARCHITECTURE.</span>
-            <span class="mono-tag">DUAL EXPERIENCE ARCHITECTURE</span>
-        </div>
-    </footer>
-
-    <!-- SCRIPT INTERACTIVO -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cursor = document.getElementById('custom-cursor');
-            const storyContainer = document.getElementById('storyContainer');
-            const closeStory = document.getElementById('closeStory');
-            const btnModeStories = document.getElementById('btnModeStories');
-            const btnModeVisuals = document.getElementById('btnModeVisuals');
-            const galleryModeTitle = document.getElementById('galleryModeTitle');
-            const galleryModeTag = document.getElementById('galleryModeTag');
-            const selectStories = document.getElementById('selectStories');
-            const selectVisuals = document.getElementById('selectVisuals');
-            
-            const lightboxModal = document.getElementById('lightboxModal');
-            const lightboxImg = document.getElementById('lightboxImg');
-            const closeLightbox = document.getElementById('closeLightbox');
-
-            let currentMode = 'stories'; // 'stories' | 'visuals'
-
-            // CURSOR INTELIGENTE
-            if (window.innerWidth > 992 && cursor) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                });
-
-                selectStories.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovering-split-left');
-                    cursor.innerText = 'LEER\nRELATOS';
-                });
-                selectStories.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovering-split-left');
-                    cursor.innerText = '';
-                });
-
-                selectVisuals.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovering-split-right');
-                    cursor.innerText = 'VER\nGALERÍA';
-                });
-                selectVisuals.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovering-split-right');
-                    cursor.innerText = '';
-                });
-            }
-
-            // FUNCIÓN CAMBIO DE MODO (RELATOS VS IMÁGENES)
-            const switchMode = (mode) => {
-                currentMode = mode;
-                if (mode === 'visuals') {
-                    document.body.classList.add('mode-visual-active');
-                    btnModeVisuals.classList.add('active');
-                    btnModeStories.classList.remove('active');
-                    galleryModeTitle.innerText = 'GALERÍA DE IMÁGENES';
-                    galleryModeTag.innerText = 'MODO CONTEMPLATIVO';
-                } else {
-                    document.body.classList.remove('mode-visual-active');
-                    btnModeStories.classList.add('active');
-                    btnModeVisuals.classList.remove('active');
-                    galleryModeTitle.innerText = 'RELATOS ARCHITECTURALES';
-                    galleryModeTag.innerText = 'MODO NARRATIVO';
-                }
-            };
-
-            btnModeStories.addEventListener('click', () => switchMode('stories'));
-            btnModeVisuals.addEventListener('click', () => switchMode('visuals'));
-
-            selectStories.addEventListener('click', () => switchMode('stories'));
-            selectVisuals.addEventListener('click', () => switchMode('visuals'));
-
-            // CLICKS EN LOS PROYECTOS SEGÚN EL MODO
-            document.querySelectorAll('.project-link').forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    if (cursor && window.innerWidth > 992 && !cursor.classList.contains('hovering-split-left') && !cursor.classList.contains('hovering-split-right')) {
-                        cursor.classList.add('hovering-project');
-                        cursor.innerText = currentMode === 'stories' ? 'LEER RELATO' : 'AMPLIAR';
-                    }
-                });
-
-                item.addEventListener('mouseleave', () => {
-                    if (cursor && window.innerWidth > 992) {
-                        cursor.classList.remove('hovering-project');
-                        cursor.innerText = '';
-                    }
-                });
-
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    if (currentMode === 'visuals') {
-                        // EN MODO VISUAL: ABRE UN LIGHTBOX LIMPIO DE LA IMAGEN
-                        const imgSrc = item.querySelector('img').src;
-                        lightboxImg.src = imgSrc;
-                        lightboxModal.classList.add('active');
-                    } else {
-                        // EN MODO RELATOS: ABRE LA EXPERIENCIA EDITORIAL COMPLETA
-                        document.getElementById('storyHeroImg').src = item.getAttribute('data-hero-img') || '';
-                        document.getElementById('storyTitle').innerText = item.getAttribute('data-title') || '';
-                        document.getElementById('storyCategory').innerText = item.getAttribute('data-category') || '';
-                        document.getElementById('storyStatement').innerText = item.getAttribute('data-statement') || '';
-
-                        document.getElementById('storySec1Title').innerText = item.getAttribute('data-sec1-title') || '';
-                        document.getElementById('storySec1Text').innerText = item.getAttribute('data-sec1-text') || '';
-                        document.getElementById('storySec1Img').src = item.getAttribute('data-sec1-img') || '';
-                        document.getElementById('storySec1Cap').innerText = item.getAttribute('data-sec1-cap') || '';
-
-                        document.getElementById('storyFullImg').src = item.getAttribute('data-full-img') || '';
-                        document.getElementById('storyFullCap').innerText = item.getAttribute('data-full-cap') || '';
-
-                        document.getElementById('storySec2Title').innerText = item.getAttribute('data-sec2-title') || '';
-                        document.getElementById('storySec2Text').innerText = item.getAttribute('data-sec2-text') || '';
-                        document.getElementById('storySec2Img').src = item.getAttribute('data-sec2-img') || '';
-                        document.getElementById('storySec2Cap').innerText = item.getAttribute('data-sec2-cap') || '';
-
-                        document.getElementById('storyYear').innerText = item.getAttribute('data-year') || '';
-                        document.getElementById('storyLocation').innerText = item.getAttribute('data-location') || '';
-                        document.getElementById('storySize').innerText = item.getAttribute('data-size') || '';
-
-                        storyContainer.classList.add('active');
-                        document.body.classList.add('story-active');
-                        storyContainer.scrollTop = 0;
-                    }
-                });
-            });
-
-            // CIERRE DE STORY Y LIGHTBOX
-            const closeAll = () => {
-                if (storyContainer) storyContainer.classList.remove('active');
-                if (lightboxModal) lightboxModal.classList.remove('active');
-                document.body.classList.remove('story-active');
-            };
-
-            if (closeStory) closeStory.addEventListener('click', closeAll);
-            if (closeLightbox) closeLightbox.addEventListener('click', closeAll);
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeAll();
-            });
-
-            // ANIMACIÓN SCROLL REVEAL
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
-        });
-    </script>
 </body>
 </html>
