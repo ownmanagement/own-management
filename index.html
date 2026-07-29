@@ -2,117 +2,80 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>OWN ARCHITECTURE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Proyectos & Memorias</title>
     <style>
-        /* RESET & BASES */
+        /* ==========================================
+           RESET Y ESTILOS BASE
+           ========================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html { 
-            scroll-behavior: smooth;
-            font-size: 16px;
         }
 
         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #0d0d0d;
-            color: #111111;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body.content-active {
+            color: #f5f5f7;
             overflow-x: hidden;
-            overflow-y: auto;
-            background-color: #ffffff;
         }
 
-        body.story-active, body.modal-active { overflow: hidden; }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-        /* CURSOR NEGRO PURO */
-        #custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 10px;
-            height: 10px;
-            background-color: #000000;
+        button {
+            background: none;
             border: none;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
-            opacity: 0;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
         }
 
-        #custom-cursor.visible { opacity: 1; }
-
-        #custom-cursor.hovered {
-            width: 22px;
-            height: 22px;
-            background-color: #000000;
-        }
-
-        .mono-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #777777;
-        }
-
-        /* PANTALLA INICIAL DE SELECCIÓN (SPLIT LANDING) */
+        /* ==========================================
+           PANTALLA DE ENTRADA (SPLIT COVER)
+           ========================================== */
         .entry-split-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            height: 100dvh;
             display: flex;
-            z-index: 2000;
-            background-color: #0d0d0d;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+            z-index: 1000;
+            background-color: #000;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease, visibility 0.8s;
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
+        /* ESTADO OCULTO: Libera la pantalla para permitir clics al contenido posterior */
         .entry-split-container.hidden {
             transform: translateY(-100%);
             opacity: 0;
-            pointer-events: none;
+            pointer-events: none !important;
+            visibility: hidden;
         }
 
         .split-pane {
-            position: relative;
             flex: 1;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
-            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
             overflow: hidden;
+            transition: flex 0.5s ease, filter 0.5s ease;
         }
 
-        .split-pane.pane-stories {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .split-pane.pane-visuals {
-            background-color: #f7f7f7;
-            color: #111111;
-        }
-
-        .pane-bg {
+        .split-pane::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -120,2099 +83,471 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.3;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            opacity: 0.4;
+            transition: transform 0.6s ease, opacity 0.6s ease;
             z-index: 1;
         }
-        
-        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
-        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
 
-        @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
-            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
-            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+        .split-pane:hover::before {
+            transform: scale(1.05);
+            opacity: 0.7;
         }
 
-        .split-content-top { position: relative; z-index: 2; }
-        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
-
-        .split-badge {
-            display: inline-block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 30px;
-            margin-bottom: 20px;
+        .split-pane.pane-stories::before {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80');
         }
 
-        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
+        .split-pane.pane-visuals::before {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .split-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
 
         .split-title {
-            font-size: clamp(2rem, 5vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -1.5px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
-
-        .split-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 28px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 2.5rem;
+            font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-        .split-pane:hover .split-action svg { transform: translateX(8px); }
+        .split-subtitle {
+            font-size: 1rem;
+            color: #a1a1a6;
+            letter-spacing: 1px;
+        }
 
-        /* HEADER / NAVEGACIÓN */
+        /* ==========================================
+           NAVEGACIÓN PRINCIPAL
+           ========================================== */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 6%;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+            z-index: 500;
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        body.content-active header {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
-
-        .mode-switch-bar {
-            display: flex;
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 4px;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .mode-btn {
-            background: none;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 600;
-            color: #666666;
-            transition: all 0.25s ease;
-        }
-
-        .mode-btn.active {
-            background-color: #111111;
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        /* VISTAS PRINCIPALES (MEMORIAS VS PROYECTOS) */
-        .main-view-container {
-            position: relative;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.6s ease 0.3s;
-        }
-
-        body.content-active .main-view-container { opacity: 1; }
-
-        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; }
-
-        .gallery-header {
-            margin-bottom: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 2px solid #111111;
-            padding-bottom: 20px;
-        }
-
-        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
-
-        /* SECCIÓN MEMORIAS (VISTA PRINCIPAL) */
-        .view-stories-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .story-card-item {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 80px;
-        }
-
-        .story-card-item:last-child { border-bottom: none; }
-
-        .story-card-img {
-            width: 100%;
-            height: 55vh;
-            min-height: 350px;
-            overflow: hidden;
-            background-color: #f0f0f0;
-        }
-
-        .story-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: transform 0.6s ease, filter 0.6s ease;
-        }
-
-        .story-card-item:hover .story-card-img img {
-            filter: grayscale(0%);
-            transform: scale(1.02);
-        }
-
-        .story-card-content h3 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin: 10px 0; }
-        .story-card-excerpt { font-size: 1.1rem; line-height: 1.8; color: #444444; font-weight: 300; margin-bottom: 20px; max-width: 850px; }
-        .story-read-more { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #111111; display: inline-flex; align-items: center; gap: 8px; }
-
-        /* SECCIÓN PROYECTOS (GALERÍA FOTOGRÁFICA) */
-        .view-visuals-layout {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 50px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .visual-card-item {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .visual-card-img {
-            width: 100%;
-            height: 60vh;
-            min-height: 350px;
-            overflow: hidden;
-            background-color: #f2f2f2;
-            position: relative;
-        }
-
-        .visual-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .visual-card-item:hover .visual-card-img img {
-            transform: scale(1.04);
-        }
-
-        .visual-card-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-top: 6px;
-        }
-
-        .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
-
-        body:not(.mode-visual-active) .view-visuals-layout { display: none; }
-        body.mode-visual-active .view-stories-layout { display: none; }
-
-        /* MODAL GALERÍA FOTOGRÁFICA / LIGHTBOX PARA PROYECTOS */
-        .gallery-modal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background-color: #000000;
-            z-index: 7000;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery-modal-container.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .gallery-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 6%;
-            z-index: 7001;
-            color: #ffffff;
-        }
-
-        .gallery-modal-title {
+        .brand-logo {
             font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: 2px;
+            cursor: pointer;
         }
 
-        .gallery-modal-close {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 22px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            border-radius: 30px;
-            transition: background 0.2s ease;
+        .nav-controls {
+            display: flex;
+            gap: 1.5rem;
         }
 
-        .gallery-modal-close:hover {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        .gallery-modal-stage {
+        .nav-btn {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #86868b;
+            padding: 0.5rem 0;
             position: relative;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 6%;
-            overflow: hidden;
+            transition: color 0.3s ease;
         }
 
-        .gallery-modal-stage img {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .nav-btn.active, .nav-btn:hover {
+            color: #ffffff;
         }
 
-        .gallery-nav-btn {
+        .nav-btn.active::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background 0.2s ease;
-            z-index: 7002;
-        }
-
-        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
-        .gallery-nav-prev { left: 4%; }
-        .gallery-nav-next { right: 4%; }
-
-        .gallery-modal-footer {
-            padding: 24px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ffffff;
-            z-index: 7001;
-        }
-
-        .gallery-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #888888;
-        }
-
-        /* DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA) */
-        .story-container {
-            position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            height: 100dvh;
+            height: 2px;
             background-color: #ffffff;
-            z-index: 5000;
-            opacity: 0;
-            pointer-events: none;
-            overflow-y: auto;
-            outline: none;
-            transform: translateY(30px);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
-        .story-container.active { 
-            opacity: 1; 
-            pointer-events: all; 
-            transform: translateY(0); 
+        /* ==========================================
+           CONTENEDOR DE SECCIONES
+           ========================================== */
+        main {
+            padding-top: 6rem;
+            min-height: 100vh;
         }
 
-        .close-story-btn {
-            position: fixed;
-            top: 24px;
-            right: 6%;
-            z-index: 6000;
-            background: #111111;
-            color: #ffffff;
-            border: none;
-            padding: 12px 26px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            border-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .close-story-btn:hover {
-            transform: scale(1.05);
-            background-color: #000000;
-        }
-
-        .story-header-cover {
-            width: 100%;
-            height: 70vh;
-            min-height: 450px;
-            position: relative;
-            background-color: #111111;
-        }
-
-        .story-header-cover img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            filter: brightness(0.85);
-        }
-
-        .story-title-overlay {
-            position: absolute;
-            bottom: clamp(40px, 8vh, 80px);
-            left: 6%;
-            right: 6%;
-            color: #ffffff;
+        .view-section {
+            display: none;
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .story-title-overlay h2 {
-            font-size: clamp(2.5rem, 6vw, 5.5rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 0.95;
-            text-transform: uppercase;
-            margin-top: 12px;
-        }
-
-        .story-editorial-body { 
-            padding: 100px 6% 140px 6%; 
-            max-width: 1100px; 
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 90px;
-        }
-
-        .story-lead-statement { 
-            font-size: clamp(1.4rem, 2.8vw, 2.2rem); 
-            font-weight: 400; 
-            line-height: 1.45; 
-            color: #111111; 
-            border-left: 3px solid #111111;
-            padding-left: 32px;
-            margin-bottom: 20px;
-        }
-
-        .story-text-block-narrative {
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .story-chapter-num { 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.75rem; 
-            color: #888888; 
-            margin-bottom: 12px;
+        .view-section.active-view {
             display: block;
         }
 
-        .story-section-title { 
-            font-size: clamp(1.6rem, 2.5vw, 2.2rem); 
-            font-weight: 800; 
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            color: #111111;
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
         }
 
-        .story-paragraph { 
-            font-size: 1.15rem; 
-            line-height: 1.9; 
-            color: #333333; 
-            font-weight: 300; 
+        .section-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
         }
 
-        .story-hero-frame {
-            width: 100%;
-            height: 55vh;
-            min-height: 380px;
-            max-height: 650px;
-            margin: 20px 0;
-            background-color: #f0f0f0;
+        /* ==========================================
+           SECCIÓN MEMORIAS (TEXTOS / HISTORIAS)
+           ========================================== */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background-color: #1c1c1e;
+            border-radius: 12px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            background-color: #2c2c2e;
+        }
+
+        .story-date {
+            font-size: 0.8rem;
+            color: #86868b;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-excerpt {
+            font-size: 0.95rem;
+            color: #a1a1a6;
+            line-height: 1.6;
+        }
+
+        /* ==========================================
+           SECCIÓN PROYECTOS (VISUALES / GALERÍA)
+           ========================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+            aspect-ratio: 4/3;
+            cursor: pointer;
         }
 
-        .story-hero-frame img {
+        .project-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            transition: transform 0.5s ease;
         }
 
-        .story-caption { 
-            margin-top: 14px; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.7rem; 
-            color: #777777; 
+        .project-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .project-tag {
+            font-size: 0.8rem;
+            color: #a1a1a6;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* RESPONSIVE DESIGN */
-        @media (pointer: coarse), (hover: none) {
-            * { cursor: auto !important; }
-            #custom-cursor { display: none !important; }
-        }
-
-        @media (max-width: 1024px) {
-            header { padding: 18px 5%; }
-            .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
-            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-            .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-            .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
-            .story-hero-frame { height: 45vh; min-height: 280px; }
-        }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 12px; padding: 14px 5%; }
-            .mode-switch-bar { width: 100%; justify-content: center; }
-            .mode-btn { flex: 1; text-align: center; }
-            .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
-            .visual-card-img { height: 45vh; }
-            .story-header-cover { height: 50vh; }
-            .story-hero-frame { height: 35vh; min-height: 250px; }
-            .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
-            .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- PUNTO NEGRO PERSONALIZADO -->
-    <div id="custom-cursor"></div>
-
-    <!-- PANTALLA INICIAL DE SELECCIÓN (SPLIT LANDING) -->
-    <section class="entry-split-container" id="entrySplit">
-        <div class="split-pane pane-stories" id="selectStories">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title">MEMORIAS</h2>
-                <p class="split-desc">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
-                <div class="split-action">
-                    VER MEMORIAS
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-        </div>
-
-        <div class="split-pane pane-visuals" id="selectVisuals">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title">PROYECTOS</h2>
-                <p class="split-desc">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
-                <div class="split-action">
-                    EXPLORAR GALERÍA
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HEADER / NAVEGACIÓN -->
-    <header id="mainHeader">
-        <div class="logo" id="brandLogo">OWN ARCHITECTURE</div>
-        <div class="mode-switch-bar">
-            <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
-            <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
-        </div>
-    </header>
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-view-container">
-        <section class="gallery-section">
-            <div class="gallery-header">
-                <h2 id="galleryModeTitle">MEMORIAS</h2>
-                <span class="mono-tag" id="galleryModeTag">RELATOS Y CONCEPTOS</span>
-            </div>
-            
-            <!-- VISTA 1: MEMORIAS (TODOS LOS PROYECTOS INTEGRADOS) -->
-            <div class="view-stories-layout">
-                
-                <!-- 1. INFINITA -->
-                <article class="story-card-item story-link"
-                         data-title="INFINITA" 
-                         data-category="RESIDENCIAL • BARCELONA" 
-                         data-statement="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
-                         data-sec1-title="Diálogo con la topografía"
-                         data-sec1-text="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra, fue el punto de partida. De ahí surgió la plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita."
-                         data-sec1-img="img/miranda-6/miranda-6.jpg"
-                         data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="Un gran porche cubierto bajo el primer volumen prolonga este plano habitable, diluyendo los límites entre interior y exterior para llevar la mirada hacia un horizonte continuo."
-                         data-sec2-img="img/miranda-6/miranda-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz difusa y textura"
-                         data-hero-img="img/miranda-6/miranda-1.jpg">
-                    <div class="story-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Infinita Concepto">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 01 • BARCELONA</span>
-                        <h3>INFINITA</h3>
-                        <p class="story-card-excerpt">Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 2. PASSACAGLIA (HAVANA 48) -->
-                <article class="story-card-item story-link"
-                         data-title="PASSACAGLIA" 
-                         data-category="RESIDENCIAL • HAVANA 48" 
-                         data-statement="Ritmo, repetición y masa. Un estudio del paso del tiempo reflejado en la profundidad de la luz."
-                         data-sec1-title="El ritmo de la fachada"
-                         data-sec1-text="Basada en las variaciones continuas de la composición musical Passacaglia, la estructura exterior modula el paso del sol mediante lamas masivas de hormigón."
-                         data-sec1-img="img/HAVANA%2048.jpg"
-                         data-sec1-cap="FIG 01. Fachada y composición modular"
-                         data-sec2-title="Atmósferas interiores"
-                         data-sec2-text="El contraste visual entre los materiales tectónicos y el mobiliario mínimo acentúa la solidez y la calma del espacio central."
-                         data-sec2-img="img/HAVANA%2048.jpg"
-                         data-sec2-cap="FIG 02. Transición hacia las zonas habitables"
-                         data-hero-img="img/HAVANA%2048.jpg">
-                    <div class="story-card-img">
-                        <img src="img/HAVANA%2048.jpg" alt="Passacaglia Havana 48">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 02 • HAVANA 48</span>
-                        <h3>PASSACAGLIA</h3>
-                        <p class="story-card-excerpt">Una composición basada en las variaciones continuas de la luz. Ritmo y masa tectónica orientados a la serenidad...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 3. FUYU (BIGUES I RIELLS) -->
-                <article class="story-card-item story-link"
-                         data-title="FUYU" 
-                         data-category="RESIDENCIAL • BIGUES I RIELLS" 
-                         data-statement="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores."
-                         data-sec1-title="La fachada como refugio"
-                         data-sec1-text="FUYU actúa como un monolito introspectivo. La fachada reduce su presencia hacia la calle, concentrando toda la vida e iluminación hacia el núcleo interior."
-                         data-sec1-img="img/biguesiriells/bigues-1.jpg"
-                         data-sec1-cap="FIG 01. Fachada monolítica sobre el entorno"
-                         data-sec2-title="Naturaleza interior"
-                         data-sec2-text="El volumen se perfora estratégicamente mediante patios ajardinados que permiten integrar los espacios habitables con la vegetación."
-                         data-sec2-img="img/biguesiriells/bigues-2.jpg"
-                         data-sec2-cap="FIG 02. Patio central de luz y lámina de agua"
-                         data-hero-img="img/biguesiriells/bigues-4.jpg">
-                    <div class="story-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="Fuyu Bigues i Riells">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 03 • BIGUES I RIELLS</span>
-                        <h3>FUYU</h3>
-                        <p class="story-card-excerpt">Una reflexión teórica sobre la intimidad y el aislamiento sonoro en la arquitectura contemporánea...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 4. VILA CLARA (MIRADOR 42) -->
-                <article class="story-card-item story-link"
-                         data-title="VILA CLARA" 
-                         data-category="RESIDENCIAL • MIRADOR 42" 
-                         data-statement="Transparencia tectónica orientada al mar, donde la horizontalidad enmarca el horizonte."
-                         data-sec1-title="Apertura al paisaje"
-                         data-sec1-text="Mirador 42 articula una serie de voladizos ligeros que flotan sobre la orografía de Canyelles, abriendo las vistas directamente hacia el Mediterráneo."
-                         data-sec1-img="img/mirador-42/mirador-1.jpg"
-                         data-sec1-cap="FIG 01. Volúmenes superpuestos abiertos al exterior"
-                         data-sec2-title="Geometría limpia"
-                         data-sec2-text="Los acabados en blanco puro y cristal enfatizan la limpieza geométrica, maximizando la entrada de luz directa durante todas las estaciones del año."
-                         data-sec2-img="img/mirador-42/mirador-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de terraza y relación con el entorno"
-                         data-hero-img="img/mirador-42/mirador-3.jpg">
-                    <div class="story-card-img">
-                        <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara Mirador 42">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 04 • MIRADOR 42</span>
-                        <h3>VILA CLARA</h3>
-                        <p class="story-card-excerpt">Transparencia y geometría sobre el paisaje. Un mirador residencial que captura la luz del mar mediante voladizos limpios...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 5. CLAROSCURO (JP) -->
-                <article class="story-card-item story-link"
-                         data-title="CLAROSCURO" 
-                         data-category="RESIDENCIAL • JP" 
-                         data-statement="Un ejercicio sombrío de contrastes profundos, luces tamizadas y texturas minerales."
-                         data-sec1-title="Elogio de la sombra"
-                         data-sec1-text="Claroscuro investiga la luz no desde la sobreexposición, sino desde el dominio de la penumbra y los reflejos indirectos sobre superficies oscuras."
-                         data-sec1-img="img/croquis.jpg"
-                         data-sec1-cap="FIG 01. Esquema de tamizado de luz indirecta"
-                         data-sec2-title="Materialidad pura"
-                         data-sec2-text="Maderas tratadas y piedras pulidas generan una atmósfera envolvente y atemporal centrada en el aislamiento sensorial."
-                         data-sec2-img="img/HAVANA%2048.jpg"
-                         data-sec2-cap="FIG 02. Iluminación puntual en zonas privadas"
-                         data-hero-img="img/croquis.jpg">
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Claroscuro JP">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 05 • JP</span>
-                        <h3>CLAROSCURO</h3>
-                        <p class="story-card-excerpt">Un ejercicio de penumbra y contraste. La luz indirecta moldea los volúmenes interiores con serenidad...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 6. BRISA DEL ALBA (REIVISSA) -->
-                <article class="story-card-item story-link"
-                         data-title="BRISA DEL ALBA" 
-                         data-category="RESIDENCIAL • REIVISSA" 
-                         data-statement="Arquitectura mediterránea adaptada a las corrientes de aire fresco y la luminosidad de primera hora."
-                         data-sec1-title="Ventilación cruzada"
-                         data-sec1-text="El proyecto se configura como una secuencia de pabellones conectados por pérgolas de madera que canalizan el viento proveniente de la costa."
-                         data-sec1-img="img/miranda-6/miranda-3.jpg"
-                         data-sec1-cap="FIG 01. Pérgolas y patios abiertos a la brisa"
-                         data-sec2-title="Integración natural"
-                         data-sec2-text="Uso de cal, materiales vernáculos y sombras proyectadas para refrescar de manera pasiva los interiores."
-                         data-sec2-img="img/miranda-6/miranda-2.jpg"
-                         data-sec2-cap="FIG 02. Espacio de porche continuo"
-                         data-hero-img="img/miranda-6/miranda-3.jpg">
-                    <div class="story-card-img">
-                        <img src="img/miranda-6/miranda-3.jpg" alt="Brisa del Alba Reivissa">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 06 • REIVISSA</span>
-                        <h3>BRISA DEL ALBA</h3>
-                        <p class="story-card-excerpt">Diseño bioclimático integrado en el litoral. Pérgolas y estructuras abiertas que permiten tamizar la luz matutina...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 7. BRISA DE LUZ (MIRANDA-4) -->
-                <article class="story-card-item story-link"
-                         data-title="BRISA DE LUZ" 
-                         data-category="RESIDENCIAL • MIRANDA 4" 
-                         data-statement="Ligereza estructural para capturar destellos y sombras en movimiento constante."
-                         data-sec1-title="Estructuras diáfanas"
-                         data-sec1-text="Miranda 4 utiliza cerramientos ligeros y dobles alturas para favorecer la fluidez del espacio y una iluminación envolvente."
-                         data-sec1-img="img/miranda-6/miranda-2.jpg"
-                         data-sec1-cap="FIG 01. Doble altura y entrada de luz"
-                         data-sec2-title="Fluidez espacial"
-                         data-sec2-text="Líneas continuas que conectan el programa social de la vivienda con el jardín exterior."
-                         data-sec2-img="img/miranda-6/miranda-1.jpg"
-                         data-sec2-cap="FIG 02. Vista desde el porche cubierto"
-                         data-hero-img="img/miranda-6/miranda-2.jpg">
-                    <div class="story-card-img">
-                        <img src="img/miranda-6/miranda-2.jpg" alt="Brisa de Luz Miranda 4">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 07 • MIRANDA 4</span>
-                        <h3>BRISA DE LUZ</h3>
-                        <p class="story-card-excerpt">Espacios diáfanos donde los reflectores naturales del hormigón y el cristal dispersan la luz día tras día...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-                <!-- 8. CLARO DE LUZ (MIRANDA-6) -->
-                <article class="story-card-item story-link"
-                         data-title="CLARO DE LUZ" 
-                         data-category="RESIDENCIAL • MIRANDA 6" 
-                         data-statement="Un claro en el bosque mediterráneo donde la arquitectura sirve de claraboya natural."
-                         data-sec1-title="Lucernarios estratégicos"
-                         data-sec1-text="Ubicada en una ladera arbolada, la casa perfora su cubierta para recibir la luz cenital exactamente sobre los espacios principales."
-                         data-sec1-img="img/miranda-6/miranda-6.jpg"
-                         data-sec1-cap="FIG 01. Claraboia cenital sobre el volumen principal"
-                         data-sec2-title="Materialidad de terreno"
-                         data-sec2-text="Muros de contención que emergen de la propia tierra combinados con acabados limpios e industriales."
-                         data-sec2-img="img/miranda-6/miranda-3.jpg"
-                         data-sec2-cap="FIG 02. Integración con el bosque"
-                         data-hero-img="img/miranda-6/miranda-6.jpg">
-                    <div class="story-card-img">
-                        <img src="img/miranda-6/miranda-6.jpg" alt="Claro de Luz Miranda 6">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 08 • MIRANDA 6</span>
-                        <h3>CLARO DE LUZ</h3>
-                        <p class="story-card-excerpt">Aperturas superiores que bañan los interiores de luz cenital. Un refugio en la ladera para contemplar el paisaje...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-
-            </div>
-
-            <!-- VISTA 2: PROYECTOS (TODOS LOS PROYECTOS EN GALERÍA VISUAL) -->
-            <div class="view-visuals-layout">
-                
-                <!-- 1. INFINITA -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="INFINITA"
-                     data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-6.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Infinita">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>INFINITA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
-
-                <!-- 2. PASSACAGLIA (HAVANA 48) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="PASSACAGLIA (HAVANA 48)"
-                     data-images='["img/HAVANA%2048.jpg", "img/croquis.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/HAVANA%2048.jpg" alt="Passacaglia Havana 48">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">HAVANA 48</span>
-                    </div>
-                </div>
-
-                <!-- 3. FUYU (BIGUES I RIELLS) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="FUYU (BIGUES I RIELLS)"
-                     data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="Fuyu Bigues i Riells">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BIGUES I RIELLS</span>
-                    </div>
-                </div>
-
-                <!-- 4. VILA CLARA (MIRADOR 42) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="VILA CLARA (MIRADOR 42)"
-                     data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-2.jpg", "img/mirador-42/mirador-3.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara Mirador 42">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>VILA CLARA</h3>
-                        <span class="mono-tag">MIRADOR 42</span>
-                    </div>
-                </div>
-
-                <!-- 5. CLAROSCURO (JP) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CLAROSCURO (JP)"
-                     data-images='["img/croquis.jpg", "img/HAVANA%2048.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/croquis.jpg" alt="Claroscuro JP">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">JP</span>
-                    </div>
-                </div>
-
-                <!-- 6. BRISA DEL ALBA (REIVISSA) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="BRISA DEL ALBA (REIVISSA)"
-                     data-images='["img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-2.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-3.jpg" alt="Brisa del Alba Reivissa">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DEL ALBA</h3>
-                        <span class="mono-tag">REIVISSA</span>
-                    </div>
-                </div>
-
-                <!-- 7. BRISA DE LUZ (MIRANDA-4) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="BRISA DE LUZ (MIRANDA 4)"
-                     data-images='["img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-1.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-2.jpg" alt="Brisa de Luz Miranda 4">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">MIRANDA 4</span>
-                    </div>
-                </div>
-
-                <!-- 8. CLARO DE LUZ (MIRANDA-6) -->
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CLARO DE LUZ (MIRANDA 6)"
-                     data-images='["img/miranda-6/miranda-6.jpg", "img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-3.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-6.jpg" alt="Claro de Luz Miranda 6">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLARO DE LUZ</h3>
-                        <span class="mono-tag">MIRANDA 6</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-    </main>
-
-    <!-- MODAL DETALLE DE MEMORIAS -->
-    <div class="story-container" id="storyContainer" tabindex="-1">
-        <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
-        
-        <div class="story-header-cover">
-            <img src="" id="storyHeroImg" alt="Memoria">
-            <div class="story-title-overlay">
-                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.85);">CATEGORÍA</span>
-                <h2 id="storyTitle">PROYECTO</h2>
-            </div>
-        </div>
-
-        <div class="story-editorial-body">
-            <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
-
-            <div class="story-text-block-narrative">
-                <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
-                <h3 class="story-section-title" id="storySec1Title">Título 1</h3>
-                <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
-            </div>
-
-            <div>
-                <div class="story-hero-frame">
-                    <img src="" id="storySec1Img" alt="Imagen 1">
-                </div>
-                <div class="story-caption" id="storySec1Cap">FIG 01</div>
-            </div>
-
-            <div class="story-text-block-narrative">
-                <span class="story-chapter-num">02 / TECTÓNICA Y ESPACIALIDAD</span>
-                <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
-                <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
-            </div>
-
-            <div>
-                <div class="story-hero-frame">
-                    <img src="" id="storySec2Img" alt="Imagen 2">
-                </div>
-                <div class="story-caption" id="storySec2Cap">FIG 02</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL LIGHTBOX PARA LA GALERÍA FOTOGRÁFICA DE PROYECTOS -->
-    <div class="gallery-modal-container" id="galleryModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title" id="galleryModalTitle">PROYECTO</span>
-            <button class="gallery-modal-close" id="closeGalleryModal">CERRAR [ESC]</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">&larr;</button>
-            <img src="" id="galleryModalImage" alt="Fotografía del proyecto">
-            <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="mono-tag">FOTOGRAFÍA ARQUITECTÓNICA</span>
-            <span class="gallery-counter" id="galleryCounter">1 / 1</span>
-        </div>
-    </div>
-
-    <!-- SCRIPT DE NAVEGACIÓN, MEMORIAS Y GALERÍAS -->
-    <script>
-        const customCursor = document.getElementById('custom-cursor');
-        const entrySplit = document.getElementById('entrySplit');
-        const selectStories = document.getElementById('selectStories');
-        const selectVisuals = document.getElementById('selectVisuals');
-        const btnStories = document.getElementById('btnModeStories');
-        const btnVisuals = document.getElementById('btnModeVisuals');
-        const galleryTitle = document.getElementById('galleryModeTitle');
-        const galleryTag = document.getElementById('galleryModeTag');
-        const storyContainer = document.getElementById('storyContainer');
-        const closeStory = document.getElementById('closeStory');
-        const brandLogo = document.getElementById('brandLogo');
-
-        // CURSOR PERSONALIZADO
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                customCursor.style.left = `${e.clientX}px`;
-                customCursor.style.top = `${e.clientY}px`;
-                if (!customCursor.classList.contains('visible')) customCursor.classList.add('visible');
-            });
-
-            document.addEventListener('mouseleave', () => customCursor.classList.remove('visible'));
-
-            const hoverTargets = 'button, a, .split-pane, .story-card-item, .visual-card-item, .logo, .gallery-nav-btn';
-            document.addEventListener('mouseover', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.add('hovered');
-            });
-            document.addEventListener('mouseout', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.remove('hovered');
-            });
-        }
-
-        // CONTROL DE VISTAS (MEMORIAS VS PROYECTOS)
-        function setStoriesMode() {
-            document.body.classList.remove('mode-visual-active');
-            btnStories.classList.add('active');
-            btnVisuals.classList.remove('active');
-            galleryTitle.textContent = "MEMORIAS";
-            galleryTag.textContent = "RELATOS Y CONCEPTOS";
-        }
-
-        function setVisualMode() {
-            document.body.classList.add('mode-visual-active');
-            btnVisuals.classList.add('active');
-            btnStories.classList.remove('active');
-            galleryTitle.textContent = "PROYECTOS";
-            galleryTag.textContent = "GALERÍA FOTOGRÁFICA";
-        }
-
-        function enterWebsite(mode) {
-            entrySplit.classList.add('hidden');
-            document.body.classList.add('content-active');
-            if (mode === 'visuals') setVisualMode();
-            else setStoriesMode();
-        }
-
-        selectStories.addEventListener('click', () => enterWebsite('stories'));
-        selectVisuals.addEventListener('click', () => enterWebsite('visuals'));
-
-        btnStories.addEventListener('click', setStoriesMode);
-        btnVisuals.addEventListener('click', setVisualMode);
-
-        brandLogo.addEventListener('click', () => {
-            entrySplit.classList.remove('hidden');
-            document.body.classList.remove('content-active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // MEMORIA MODAL DETALLE
-        const storyLinks = document.querySelectorAll('.story-link');
-        storyLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('storyTitle').textContent = link.dataset.title;
-                document.getElementById('storyCategory').textContent = link.dataset.category;
-                document.getElementById('storyStatement').textContent = link.dataset.statement;
-                document.getElementById('storySec1Title').textContent = link.dataset.sec1Title;
-                document.getElementById('storySec1Text').textContent = link.dataset.sec1Text;
-                document.getElementById('storySec1Img').src = link.dataset.sec1Img;
-                document.getElementById('storySec1Cap').textContent = link.dataset.sec1Cap;
-                document.getElementById('storySec2Title').textContent = link.dataset.sec2Title;
-                document.getElementById('storySec2Text').textContent = link.dataset.sec2Text;
-                document.getElementById('storySec2Img').src = link.dataset.sec2Img;
-                document.getElementById('storySec2Cap').textContent = link.dataset.sec2Cap;
-                document.getElementById('storyHeroImg').src = link.dataset.heroImg;
-
-                storyContainer.classList.add('active');
-                document.body.classList.add('story-active');
-                storyContainer.scrollTop = 0;
-            });
-        });
-
-        const closeStoryModal = () => {
-            storyContainer.classList.remove('active');
-            document.body.classList.remove('story-active');
-        };
-
-        closeStory.addEventListener('click', closeStoryModal);
-
-        // MODAL LIGHTBOX DE PROYECTOS Y GALERÍA
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryModalTitle = document.getElementById('galleryModalTitle');
-        const galleryModalImage = document.getElementById('galleryModalImage');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeGalleryModalBtn = document.getElementById('closeGalleryModal');
-        const galleryPrevBtn = document.getElementById('galleryPrevBtn');
-        const galleryNextBtn = document.getElementById('galleryNextBtn');
-
-        let currentGalleryImages = [];
-        let currentImageIndex = 0;
-
-        function updateGalleryImage() {
-            galleryModalImage.style.opacity = '0.3';
-            galleryModalImage.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                galleryModalImage.src = currentGalleryImages[currentImageIndex];
-                galleryCounter.textContent = `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
-                galleryModalImage.style.opacity = '1';
-                galleryModalImage.style.transform = 'scale(1)';
-            }, 150);
-        }
-
-        document.querySelectorAll('.project-gallery-trigger').forEach(card => {
-            card.addEventListener('click', () => {
-                const projectTitle = card.dataset.project;
-                try {
-                    currentGalleryImages = JSON.parse(card.dataset.images);
-                } catch(e) {
-                    currentGalleryImages = [card.querySelector('img').src];
-                }
-                currentImageIndex = 0;
-                galleryModalTitle.textContent = projectTitle;
-                updateGalleryImage();
-
-                galleryModal.classList.add('active');
-                document.body.classList.add('modal-active');
-            });
-        });
-
-        const closeGallery = () => {
-            galleryModal.classList.remove('active');
-            document.body.classList.remove('modal-active');
-        };
-
-        closeGalleryModalBtn.addEventListener('click', closeGallery);
-
-        galleryPrevBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-            updateGalleryImage();
-        });
-
-        galleryNextBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-            updateGalleryImage();
-        });
-
-        // CONTROLES TECLADO (ESCAPE, FLECHAS NAVEGACIÓN)
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-                if (galleryModal.classList.contains('active')) closeGallery();
-                if (storyContainer.classList.contains('active')) closeStoryModal();
-            }
-            if (galleryModal.classList.contains('active')) {
-                if (e.key === 'ArrowRight') {
-                    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-                    updateGalleryImage();
-                } else if (e.key === 'ArrowLeft') {
-                    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-                    updateGalleryImage();
-                }
-            }
-        });
-    </script>
-</body>
-</html>            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
+        /* ==========================================
+           MODALES / LIGHTBOX
+           ========================================== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 2000;
-            background-color: #0d0d0d;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
-        }
-
-        .entry-split-container.hidden {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .split-pane {
-            position: relative;
-            flex: 1;
-            height: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
-            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-            overflow: hidden;
-        }
-
-        .split-pane.pane-stories {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .split-pane.pane-visuals {
-            background-color: #f7f7f7;
-            color: #111111;
-        }
-
-        .pane-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-            z-index: 1;
-        }
-        
-        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
-        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
-
-        @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
-            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
-            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
-        }
-
-        .split-content-top { position: relative; z-index: 2; }
-        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
-
-        .split-badge {
-            display: inline-block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 30px;
-            margin-bottom: 20px;
-        }
-
-        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
-
-        .split-title {
-            font-size: clamp(2rem, 5vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -1.5px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
-
-        .split-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 28px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-        .split-pane:hover .split-action svg { transform: translateX(8px); }
-
-        /* HEADER / NAVEGACIÓN */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 6%;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
-        }
-
-        body.content-active header {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
-
-        .mode-switch-bar {
-            display: flex;
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 4px;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .mode-btn {
-            background: none;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 600;
-            color: #666666;
-            transition: all 0.25s ease;
-        }
-
-        .mode-btn.active {
-            background-color: #111111;
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        /* VISTAS PRINCIPALES (MEMORIAS VS PROYECTOS) */
-        .main-view-container {
-            position: relative;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.6s ease 0.3s;
-        }
-
-        body.content-active .main-view-container { opacity: 1; }
-
-        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; }
-
-        .gallery-header {
-            margin-bottom: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 2px solid #111111;
-            padding-bottom: 20px;
-        }
-
-        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
-
-        /* SECCIÓN MEMORIAS (VISTA PRINCIPAL) */
-        .view-stories-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .story-card-item {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 80px;
-        }
-
-        .story-card-item:last-child { border-bottom: none; }
-
-        .story-card-img {
-            width: 100%;
-            height: 55vh;
-            min-height: 350px;
-            overflow: hidden;
-            background-color: #f0f0f0;
-        }
-
-        .story-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: transform 0.6s ease, filter 0.6s ease;
-        }
-
-        .story-card-item:hover .story-card-img img {
-            filter: grayscale(0%);
-            transform: scale(1.02);
-        }
-
-        .story-card-content h3 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin: 10px 0; }
-        .story-card-excerpt { font-size: 1.1rem; line-height: 1.8; color: #444444; font-weight: 300; margin-bottom: 20px; max-width: 850px; }
-        .story-read-more { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #111111; display: inline-flex; align-items: center; gap: 8px; }
-
-        /* SECCIÓN PROYECTOS (SOLO GALERÍA FOTOGRÁFICA) */
-        .view-visuals-layout {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 50px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .visual-card-item {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .visual-card-img {
-            width: 100%;
-            height: 60vh;
-            min-height: 350px;
-            overflow: hidden;
-            background-color: #f2f2f2;
-            position: relative;
-        }
-
-        .visual-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .visual-card-item:hover .visual-card-img img {
-            transform: scale(1.04);
-        }
-
-        .visual-card-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-top: 6px;
-        }
-
-        .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
-
-        body:not(.mode-visual-active) .view-visuals-layout { display: none; }
-        body.mode-visual-active .view-stories-layout { display: none; }
-
-        /* ==========================================================
-           MODAL GALERÍA FOTOGRÁFICA / LIGHTBOX PARA PROYECTOS
-           ========================================================== */
-        .gallery-modal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background-color: #000000;
-            z-index: 7000;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery-modal-container.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .gallery-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 6%;
-            z-index: 7001;
-            color: #ffffff;
-        }
-
-        .gallery-modal-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-
-        .gallery-modal-close {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 22px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            border-radius: 30px;
-            transition: background 0.2s ease;
-        }
-
-        .gallery-modal-close:hover {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        .gallery-modal-stage {
-            position: relative;
-            flex: 1;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 0 6%;
-            overflow: hidden;
-        }
-
-        .gallery-modal-stage img {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .gallery-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background 0.2s ease;
-            z-index: 7002;
-        }
-
-        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
-        .gallery-nav-prev { left: 4%; }
-        .gallery-nav-next { right: 4%; }
-
-        .gallery-modal-footer {
-            padding: 24px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ffffff;
-            z-index: 7001;
-        }
-
-        .gallery-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #888888;
-        }
-
-        /* DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA) */
-        .story-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            background-color: #ffffff;
-            z-index: 5000;
             opacity: 0;
             pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-body {
+            background-color: #1c1c1e;
+            padding: 3rem;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
             overflow-y: auto;
-            outline: none;
-            transform: translateY(30px);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-        }
-
-        .story-container.active { 
-            opacity: 1; 
-            pointer-events: all; 
-            transform: translateY(0); 
-        }
-
-        .close-story-btn {
-            position: fixed;
-            top: 24px;
-            right: 6%;
-            z-index: 6000;
-            background: #111111;
-            color: #ffffff;
-            border: none;
-            padding: 12px 26px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            border-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .close-story-btn:hover {
-            transform: scale(1.05);
-            background-color: #000000;
-        }
-
-        .story-header-cover {
-            width: 100%;
-            height: 70vh;
-            min-height: 450px;
             position: relative;
-            background-color: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .story-header-cover img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            filter: brightness(0.85);
-        }
-
-        .story-title-overlay {
+        .modal-close {
             position: absolute;
-            bottom: clamp(40px, 8vh, 80px);
-            left: 6%;
-            right: 6%;
-            color: #ffffff;
-            max-width: 1200px;
-            margin: 0 auto;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: #a1a1a6;
         }
 
-        .story-title-overlay h2 {
-            font-size: clamp(2.5rem, 6vw, 5.5rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 0.95;
-            text-transform: uppercase;
-            margin-top: 12px;
+        .modal-close:hover {
+            color: #fff;
         }
 
-        .story-editorial-body { 
-            padding: 100px 6% 140px 6%; 
-            max-width: 1100px; 
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 90px;
-        }
-
-        .story-lead-statement { 
-            font-size: clamp(1.4rem, 2.8vw, 2.2rem); 
-            font-weight: 400; 
-            line-height: 1.45; 
-            color: #111111; 
-            border-left: 3px solid #111111;
-            padding-left: 32px;
-            margin-bottom: 20px;
-        }
-
-        .story-text-block-narrative {
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .story-chapter-num { 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.75rem; 
-            color: #888888; 
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .story-section-title { 
-            font-size: clamp(1.6rem, 2.5vw, 2.2rem); 
-            font-weight: 800; 
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            color: #111111;
-        }
-
-        .story-paragraph { 
-            font-size: 1.15rem; 
-            line-height: 1.9; 
-            color: #333333; 
-            font-weight: 300; 
-        }
-
-        .story-hero-frame {
-            width: 100%;
-            height: 55vh;
-            min-height: 380px;
-            max-height: 650px;
-            margin: 20px 0;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
-        }
-
-        .story-hero-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .story-caption { 
-            margin-top: 14px; 
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.7rem; 
-            color: #777777; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* RESPONSIVE DESIGN */
-        @media (pointer: coarse), (hover: none) {
-            * { cursor: auto !important; }
-            #custom-cursor { display: none !important; }
-        }
-
-        @media (max-width: 1024px) {
-            header { padding: 18px 5%; }
-            .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
-            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-            .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-            .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
-            .story-hero-frame { height: 45vh; min-height: 280px; }
-        }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 12px; padding: 14px 5%; }
-            .mode-switch-bar { width: 100%; justify-content: center; }
-            .mode-btn { flex: 1; text-align: center; }
-            .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
-            .visual-card-img { height: 45vh; }
-            .story-header-cover { height: 50vh; }
-            .story-hero-frame { height: 35vh; min-height: 250px; }
-            .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
-            .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; }
+        /* Lightbox para Proyectos */
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- PUNTO NEGRO PERSONALIZADO -->
-    <div id="custom-cursor"></div>
-
-    <!-- PANTALLA INICIAL DE SELECCIÓN (SPLIT LANDING) -->
-    <section class="entry-split-container" id="entrySplit">
+    <!-- PANTALLA DE ENTRADA CON SELECCIÓN DIVIDIDA -->
+    <div class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title">MEMORIAS</h2>
-                <p class="split-desc">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
-                <div class="split-action">
-                    VER MEMORIAS
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
+            <div class="split-content">
+                <div class="split-title">Memorias</div>
+                <div class="split-subtitle">Textos, Ensayos & Bitácoras</div>
             </div>
         </div>
-
         <div class="split-pane pane-visuals" id="selectVisuals">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title">PROYECTOS</h2>
-                <p class="split-desc">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
-                <div class="split-action">
-                    EXPLORAR GALERÍA
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
+            <div class="split-content">
+                <div class="split-title">Proyectos</div>
+                <div class="split-subtitle">Galería Visual & Trabajos</div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- HEADER / NAVEGACIÓN -->
-    <header id="mainHeader">
-        <div class="logo" id="brandLogo">OWN ARCHITECTURE</div>
-        <div class="mode-switch-bar">
-            <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
-            <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
-        </div>
+    <!-- CABECERA PRINCIPAL -->
+    <header>
+        <div class="brand-logo" id="brandLogo">PORTAFOLIO</div>
+        <nav class="nav-controls">
+            <button class="nav-btn" id="btnStories">Memorias</button>
+            <button class="nav-btn" id="btnVisuals">Proyectos</button>
+        </nav>
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-view-container">
-        <section class="gallery-section">
-            <div class="gallery-header">
-                <h2 id="galleryModeTitle">MEMORIAS</h2>
-                <span class="mono-tag" id="galleryModeTag">RELATOS Y CONCEPTOS</span>
+    <main>
+        <!-- VISTA MEMORIAS -->
+        <section class="view-section" id="storiesView">
+            <div class="section-header">
+                <h1>Memorias</h1>
+                <p>Reflexiones sobre diseño, desarrollo y arquitectura de software.</p>
             </div>
-            
-            <!-- VISTA 1: MEMORIAS (Explicativo y Conceptual) -->
-            <div class="view-stories-layout">
-                
-                <article class="story-card-item story-link"
-                         data-title="CASA INFINITA" 
-                         data-category="RESIDENCIAL • BARCELONA" 
-                         data-statement="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
-                         data-sec1-title="Diálogo con la topografía"
-                         data-sec1-text="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior."
-                         data-sec1-img="img/miranda-6/miranda-6.jpg"
-                         data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
-                         data-sec2-img="img/miranda-6/miranda-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz difusa y textura"
-                         data-hero-img="img/miranda-6/miranda-1.jpg">
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Infinita">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 01 • BARCELONA</span>
-                        <h3>CASA INFINITA</h3>
-                        <p class="story-card-excerpt">Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
+            <div class="stories-grid">
+                <article class="story-card" data-title="El Arte de Intersectar Vistas" data-date="24 de Mayo, 2024" data-content="Texto completo sobre el proceso creativo de estructurar layouts dinámicos y la importancia del rendimiento en la web moderna.">
+                    <div class="story-date">24 de Mayo, 2024</div>
+                    <h2 class="story-title">El Arte de Intersectar Vistas</h2>
+                    <p class="story-excerpt">Explorando cómo la integración fluida entre CSS y JS genera experiencias interactivas sin sacrificar accesibilidad...</p>
                 </article>
 
-                <article class="story-card-item story-link"
-                         data-title="FUYU" 
-                         data-category="RESIDENCIAL • BARCELONA" 
-                         data-statement="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores."
-                         data-sec1-title="La fachada como refugio"
-                         data-sec1-text="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando la vida hacia el núcleo."
-                         data-sec1-img="img/biguesiriells/bigues-1.jpg"
-                         data-sec1-cap="FIG 01. Fachada monolítica sobre el entorno"
-                         data-sec2-title="Naturaleza interior"
-                         data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos permiten transformar las estancias diáfanas en espacios integrados con la vegetación."
-                         data-sec2-img="img/biguesiriells/bigues-2.jpg"
-                         data-sec2-cap="FIG 02. Patio central de luz y lámina de agua"
-                         data-hero-img="img/biguesiriells/bigues-4.jpg">
-                    <div class="story-card-img">
-                        <img src="img/HAVANA%2048.jpg" alt="Concepto Fuyu">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 02 • BARCELONA</span>
-                        <h3>FUYU</h3>
-                        <p class="story-card-excerpt">Una reflexión teórica sobre la intimidad y el aislamiento sonoro en la arquitectura contemporánea. FUYU rechaza las vistas exteriores para centrarse en patios interiores privados...</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
+                <article class="story-card" data-title="Arquitectura Limpia en Frontend" data-date="10 de Abril, 2024" data-content="Profundizando en el desacoplamiento de componentes de interfaz y cómo manejar adecuadamente capas estáticas y dinámicas en el DOM.">
+                    <div class="story-date">10 de Abril, 2024</div>
+                    <h2 class="story-title">Arquitectura Limpia en Frontend</h2>
+                    <p class="story-excerpt">Cómo estructurar estilos y eventos para evitar bloqueos del flujo de datos en aplicaciones complejas...</p>
                 </article>
-
             </div>
+        </section>
 
-            <!-- VISTA 2: PROYECTOS (Solo Galería Visual / Fotos) -->
-            <div class="view-visuals-layout">
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CASA INFINITA"
-                     data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-6.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Obra">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA • 2025</span>
+        <!-- VISTA PROYECTOS -->
+        <section class="view-section" id="visualsView">
+            <div class="section-header">
+                <h1>Proyectos Visuales</h1>
+                <p>Una muestra de desarrollo gráfico, fotografía y diseño de interfaces.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" data-img="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80">
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="Proyecto Alfa">
+                    <div class="project-overlay">
+                        <span class="project-tag">UI / UX</span>
+                        <h2 class="project-title">Sistema de Diseño Minimalista</h2>
                     </div>
                 </div>
 
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="FUYU"
-                     data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="Fuyu Fachada">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA • 2026</span>
-                    </div>
-                </div>
-
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="VILA CLARA"
-                     data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-2.jpg", "img/mirador-42/mirador-3.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>VILA CLARA</h3>
-                        <span class="mono-tag">CANYELLES • 2024</span>
-                    </div>
-                </div>
-
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CASA INFINITA II"
-                     data-images='["img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-2.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-3.jpg" alt="Casa Infinita Interior">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CASA INFINITA II</h3>
-                        <span class="mono-tag">INTERIORES</span>
+                <div class="project-card" data-img="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Proyecto Beta">
+                    <div class="project-overlay">
+                        <span class="project-tag">Desarrollo Web</span>
+                        <h2 class="project-title">Editor de Código Web</h2>
                     </div>
                 </div>
             </div>
-
         </section>
     </main>
 
-    <!-- MODAL DETALLE DE MEMORIAS -->
-    <div class="story-container" id="storyContainer" tabindex="-1">
-        <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
-        
-        <div class="story-header-cover">
-            <img src="" id="storyHeroImg" alt="Memoria">
-            <div class="story-title-overlay">
-                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.85);">CATEGORÍA</span>
-                <h2 id="storyTitle">PROYECTO</h2>
-            </div>
-        </div>
-
-        <div class="story-editorial-body">
-            <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
-
-            <div class="story-text-block-narrative">
-                <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
-                <h3 class="story-section-title" id="storySec1Title">Título 1</h3>
-                <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
-            </div>
-
-            <div>
-                <div class="story-hero-frame">
-                    <img src="" id="storySec1Img" alt="Imagen 1">
-                </div>
-                <div class="story-caption" id="storySec1Cap">FIG 01</div>
-            </div>
-
-            <div class="story-text-block-narrative">
-                <span class="story-chapter-num">02 / TECTÓNICA Y ESPACIALIDAD</span>
-                <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
-                <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
-            </div>
-
-            <div>
-                <div class="story-hero-frame">
-                    <img src="" id="storySec2Img" alt="Imagen 2">
-                </div>
-                <div class="story-caption" id="storySec2Cap">FIG 02</div>
-            </div>
+    <!-- MODAL MEMORIAS -->
+    <div class="modal" id="storyModal">
+        <div class="modal-body">
+            <button class="modal-close" id="closeStoryModal">&times;</button>
+            <div class="story-date" id="modalStoryDate"></div>
+            <h2 class="story-title" id="modalStoryTitle" style="font-size: 2rem; margin-bottom: 1.5rem;"></h2>
+            <div class="story-excerpt" id="modalStoryContent" style="color: #e1e1e6; line-height: 1.8;"></div>
         </div>
     </div>
 
-    <!-- MODAL LIGHTBOX PARA LA GALERÍA FOTOGRÁFICA DE PROYECTOS -->
-    <div class="gallery-modal-container" id="galleryModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title" id="galleryModalTitle">PROYECTO</span>
-            <button class="gallery-modal-close" id="closeGalleryModal">CERRAR [ESC]</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">&larr;</button>
-            <img src="" id="galleryModalImage" alt="Fotografía del proyecto">
-            <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="mono-tag">FOTOGRAFÍA ARQUITECTÓNICA</span>
-            <span class="gallery-counter" id="galleryCounter">1 / 1</span>
-        </div>
+    <!-- LIGHTBOX PROYECTOS -->
+    <div class="modal" id="lightboxModal">
+        <button class="modal-close" id="closeLightbox" style="top: 2rem; right: 2rem;">&times;</button>
+        <img src="" alt="Ampliada" class="lightbox-img" id="lightboxImg">
     </div>
 
-    <!-- SCRIPT DE NAVEGACIÓN, MEMORIAS Y GALERÍAS -->
     <script>
-        const customCursor = document.getElementById('custom-cursor');
+        // ==========================================
+        // REFERENCIAS AL DOM
+        // ==========================================
         const entrySplit = document.getElementById('entrySplit');
         const selectStories = document.getElementById('selectStories');
         const selectVisuals = document.getElementById('selectVisuals');
-        const btnStories = document.getElementById('btnModeStories');
-        const btnVisuals = document.getElementById('btnModeVisuals');
-        const galleryTitle = document.getElementById('galleryModeTitle');
-        const galleryTag = document.getElementById('galleryModeTag');
-        const storyContainer = document.getElementById('storyContainer');
-        const closeStory = document.getElementById('closeStory');
+        
+        const btnStories = document.getElementById('btnStories');
+        const btnVisuals = document.getElementById('btnVisuals');
         const brandLogo = document.getElementById('brandLogo');
 
-        // CURSOR PERSONALIZADO
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                customCursor.style.left = `${e.clientX}px`;
-                customCursor.style.top = `${e.clientY}px`;
-                if (!customCursor.classList.contains('visible')) customCursor.classList.add('visible');
-            });
+        const storiesView = document.getElementById('storiesView');
+        const visualsView = document.getElementById('visualsView');
 
-            document.addEventListener('mouseleave', () => customCursor.classList.remove('visible'));
+        const storyModal = document.getElementById('storyModal');
+        const closeStoryModal = document.getElementById('closeStoryModal');
+        const modalStoryDate = document.getElementById('modalStoryDate');
+        const modalStoryTitle = document.getElementById('modalStoryTitle');
+        const modalStoryContent = document.getElementById('modalStoryContent');
 
-            const hoverTargets = 'button, a, .split-pane, .story-card-item, .visual-card-item, .logo, .gallery-nav-btn';
-            document.addEventListener('mouseover', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.add('hovered');
-            });
-            document.addEventListener('mouseout', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.remove('hovered');
-            });
-        }
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const closeLightbox = document.getElementById('closeLightbox');
 
-        // CONTROL DE VISTAS (MEMORIAS VS PROYECTOS)
+        // ==========================================
+        // MANEJO DE VISTAS Y NAVEGACIÓN
+        // ==========================================
         function setStoriesMode() {
-            document.body.classList.remove('mode-visual-active');
+            storiesView.classList.add('active-view');
+            visualsView.classList.remove('active-view');
             btnStories.classList.add('active');
             btnVisuals.classList.remove('active');
-            galleryTitle.textContent = "MEMORIAS";
-            galleryTag.textContent = "RELATOS Y CONCEPTOS";
         }
 
         function setVisualMode() {
-            document.body.classList.add('mode-visual-active');
+            visualsView.classList.add('active-view');
+            storiesView.classList.remove('active-view');
             btnVisuals.classList.add('active');
             btnStories.classList.remove('active');
-            galleryTitle.textContent = "PROYECTOS";
-            galleryTag.textContent = "GALERÍA FOTOGRÁFICA";
         }
 
         function enterWebsite(mode) {
+            // Añade la clase que aplica translateY(-100%), visibility: hidden y pointer-events: none
             entrySplit.classList.add('hidden');
-            document.body.classList.add('content-active');
-            if (mode === 'visuals') setVisualMode();
-            else setStoriesMode();
+            
+            if (mode === 'visuals') {
+                setVisualMode();
+            } else {
+                setStoriesMode();
+            }
         }
 
+        // Clics desde la portada inicial
         selectStories.addEventListener('click', () => enterWebsite('stories'));
         selectVisuals.addEventListener('click', () => enterWebsite('visuals'));
 
+        // Clics en los botones de navegación superiores
         btnStories.addEventListener('click', setStoriesMode);
         btnVisuals.addEventListener('click', setVisualMode);
 
+        // Volver a la portada al hacer clic en el Logo
         brandLogo.addEventListener('click', () => {
             entrySplit.classList.remove('hidden');
-            document.body.classList.remove('content-active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // MEMORIA MODAL DETALLE
-        const storyLinks = document.querySelectorAll('.story-link');
-        storyLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('storyTitle').textContent = link.dataset.title;
-                document.getElementById('storyCategory').textContent = link.dataset.category;
-                document.getElementById('storyStatement').textContent = link.dataset.statement;
-                document.getElementById('storySec1Title').textContent = link.dataset.sec1Title;
-                document.getElementById('storySec1Text').textContent = link.dataset.sec1Text;
-                document.getElementById('storySec1Img').src = link.dataset.sec1Img;
-                document.getElementById('storySec1Cap').textContent = link.dataset.sec1Cap;
-                document.getElementById('storySec2Title').textContent = link.dataset.sec2Title;
-                document.getElementById('storySec2Text').textContent = link.dataset.sec2Text;
-                document.getElementById('storySec2Img').src = link.dataset.sec2Img;
-                document.getElementById('storySec2Cap').textContent = link.dataset.sec2Cap;
-                document.getElementById('storyHeroImg').src = link.dataset.heroImg;
+        // ==========================================
+        // INTERACCIÓN CON TARJETAS (MODALES Y LIGHTBOX)
+        // ==========================================
 
-                storyContainer.classList.add('active');
-                document.body.classList.add('story-active');
-                storyContainer.scrollTop = 0;
-            });
-        });
-
-        const closeStoryModal = () => {
-            storyContainer.classList.remove('active');
-            document.body.classList.remove('story-active');
-        };
-
-        closeStory.addEventListener('click', closeStoryModal);
-
-        // MODAL LIGHTBOX DE PROYECTOS Y GALERÍA
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryModalTitle = document.getElementById('galleryModalTitle');
-        const galleryModalImage = document.getElementById('galleryModalImage');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeGalleryModalBtn = document.getElementById('closeGalleryModal');
-        const galleryPrevBtn = document.getElementById('galleryPrevBtn');
-        const galleryNextBtn = document.getElementById('galleryNextBtn');
-
-        let currentGalleryImages = [];
-        let currentImageIndex = 0;
-
-        function updateGalleryImage() {
-            galleryModalImage.style.opacity = '0.3';
-            galleryModalImage.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                galleryModalImage.src = currentGalleryImages[currentImageIndex];
-                galleryCounter.textContent = `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
-                galleryModalImage.style.opacity = '1';
-                galleryModalImage.style.transform = 'scale(1)';
-            }, 150);
-        }
-
-        document.querySelectorAll('.project-gallery-trigger').forEach(card => {
+        // Abrir Modal de Memorias
+        document.querySelectorAll('.story-card').forEach(card => {
             card.addEventListener('click', () => {
-                const projectTitle = card.dataset.project;
-                try {
-                    currentGalleryImages = JSON.parse(card.dataset.images);
-                } catch(e) {
-                    currentGalleryImages = [card.querySelector('img').src];
-                }
-                currentImageIndex = 0;
-                galleryModalTitle.textContent = projectTitle;
-                updateGalleryImage();
-
-                galleryModal.classList.add('active');
-                document.body.classList.add('modal-active');
+                modalStoryTitle.textContent = card.dataset.title;
+                modalStoryDate.textContent = card.dataset.date;
+                modalStoryContent.textContent = card.dataset.content;
+                storyModal.classList.add('active');
             });
         });
 
-        const closeGallery = () => {
-            galleryModal.classList.remove('active');
-            document.body.classList.remove('modal-active');
-        };
-
-        closeGalleryModalBtn.addEventListener('click', closeGallery);
-
-        galleryPrevBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-            updateGalleryImage();
+        closeStoryModal.addEventListener('click', () => {
+            storyModal.classList.remove('active');
         });
 
-        galleryNextBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-            updateGalleryImage();
+        // Abrir Lightbox de Proyectos
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                lightboxImg.src = card.dataset.img;
+                lightboxModal.classList.add('active');
+            });
         });
 
-        // CONTROLES TECLADO (ESCAPE, FLECHAS NAVEGACIÓN)
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-                if (galleryModal.classList.contains('active')) closeGallery();
-                if (storyContainer.classList.contains('active')) closeStoryModal();
-            }
-            if (galleryModal.classList.contains('active')) {
-                if (e.key === 'ArrowRight') {
-                    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-                    updateGalleryImage();
-                } else if (e.key === 'ArrowLeft') {
-                    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-                    updateGalleryImage();
-                }
-            }
+        closeLightbox.addEventListener('click', () => {
+            lightboxModal.classList.remove('active');
+        });
+
+        // Cerrar modales al hacer clic fuera del contenido
+        window.addEventListener('click', (e) => {
+            if (e.target === storyModal) storyModal.classList.remove('active');
+            if (e.target === lightboxModal) lightboxModal.classList.remove('active');
         });
     </script>
 </body>
