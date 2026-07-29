@@ -36,15 +36,15 @@
 
         body.story-active { overflow: hidden; }
 
-        /* CURSOR NEGRO PURO (SIN BORDE BLANCO) */
+        /* CURSOR NEGRO PURO */
         #custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
             width: 10px;
             height: 10px;
-            background-color: #000000; /* Negro puro */
-            border: none; /* Borde eliminado */
+            background-color: #000000;
+            border: none;
             border-radius: 50%;
             pointer-events: none;
             z-index: 99999;
@@ -255,7 +255,7 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN MEMORIAS (NARRATIVA) */
+        /* SECCIÓN MEMORIAS (VISTA PRINCIPAL) */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
@@ -276,8 +276,8 @@
 
         .story-card-img {
             width: 100%;
-            height: 50vh;
-            min-height: 300px;
+            height: 55vh;
+            min-height: 350px;
             overflow: hidden;
             background-color: #f0f0f0;
         }
@@ -342,11 +342,12 @@
 
         .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
 
-        /* MUESTRA Y OCULTA SEGÚN EL MODO ACTIVO */
         body:not(.mode-visual-active) .view-visuals-layout { display: none; }
         body.mode-visual-active .view-stories-layout { display: none; }
 
-        /* MODAL DE DETALLE MEMORIAS */
+        /* ==========================================================
+           NUEVA DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA)
+           ========================================================== */
         .story-container {
             position: fixed;
             top: 0;
@@ -359,11 +360,15 @@
             opacity: 0;
             pointer-events: none;
             overflow-y: auto;
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
 
-        .story-container.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .story-container.active { 
+            opacity: 1; 
+            pointer-events: all; 
+            transform: translateY(0); 
+        }
 
         .close-story-btn {
             position: fixed;
@@ -373,62 +378,131 @@
             background: #111111;
             color: #ffffff;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 26px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
             border-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
+        .close-story-btn:hover {
+            transform: scale(1.05);
+            background-color: #000000;
+        }
+
+        /* PORTADA DEL RELATO */
         .story-header-cover {
             width: 100%;
-            height: 70vh;
-            min-height: 400px;
+            height: 80vh;
+            min-height: 480px;
             position: relative;
             background-color: #111111;
         }
 
-        .story-header-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .story-header-cover img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.85);
+        }
 
         .story-title-overlay {
             position: absolute;
-            bottom: clamp(30px, 6vh, 60px);
+            bottom: clamp(40px, 8vh, 80px);
             left: 6%;
             right: 6%;
             color: #ffffff;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .story-title-overlay h2 {
-            font-size: clamp(2.2rem, 5.5vw, 5rem);
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
             font-weight: 800;
             letter-spacing: -2px;
             line-height: 0.95;
             text-transform: uppercase;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        .story-body { padding: 80px 6%; max-width: 1200px; margin: 0 auto; }
-        .story-lead-statement { font-size: clamp(1.3rem, 2.5vw, 2.2rem); font-weight: 400; line-height: 1.4; color: #111111; margin-bottom: 80px; }
-
-        .story-section-fluid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-bottom: 100px;
+        /* ESTRUCTURA TIPO ENSAYO EDITORIAL */
+        .story-editorial-body { 
+            padding: 100px 6% 140px 6%; 
+            max-width: 1100px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 90px;
         }
 
-        .story-section-fluid.reverse { direction: rtl; }
-        .story-section-fluid.reverse .story-text-block { direction: ltr; }
-        .story-text-block { display: flex; flex-direction: column; gap: 16px; }
-        .story-chapter-num { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #888888; }
-        .story-section-title { font-size: clamp(1.3rem, 2vw, 1.8rem); font-weight: 700; }
-        .story-paragraph { font-size: 1.05rem; line-height: 1.8; color: #444444; font-weight: 300; }
-        .story-img-block img { width: 100%; height: auto; object-fit: cover; }
-        .story-caption { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #888888; }
+        /* Cita / Manifesto introductorio */
+        .story-lead-statement { 
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem); 
+            font-weight: 400; 
+            line-height: 1.45; 
+            color: #111111; 
+            border-left: 3px solid #111111;
+            padding-left: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* Bloque de texto intercalado con foco de lectura */
+        .story-text-block-narrative {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .story-chapter-num { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.75rem; 
+            color: #888888; 
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .story-section-title { 
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem); 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: #111111;
+        }
+
+        .story-paragraph { 
+            font-size: 1.15rem; 
+            line-height: 1.9; 
+            color: #333333; 
+            font-weight: 300; 
+        }
+
+        /* Imagen de alta jerarquía intercalada */
+        .story-hero-frame {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .story-hero-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 82vh;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+        }
+
+        .story-caption { 
+            margin-top: 14px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.7rem; 
+            color: #777777; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         /* RESPONSIVE DESIGN */
         @media (pointer: coarse), (hover: none) {
@@ -442,6 +516,7 @@
             .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
             .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
         }
 
         @media (max-width: 768px) {
@@ -450,8 +525,8 @@
             .mode-btn { flex: 1; text-align: center; }
             .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
             .visual-card-img { height: 45vh; }
-            .story-section-fluid, .story-section-fluid.reverse { grid-template-columns: 1fr; direction: ltr !important; gap: 24px; margin-bottom: 60px; }
-            .story-section-fluid.reverse .story-text-block { direction: ltr !important; }
+            .story-header-cover { height: 60vh; }
+            .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
             .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; }
         }
     </style>
@@ -525,7 +600,7 @@
                          data-sec2-title="Tectónica y luz cenital"
                          data-sec2-text="Los cerramientos vidriados sin carpintería permiten que el paisaje pase a formar parte del interior. Fisuras situadas en la losa superior canalizan haces de luz cambiantes sobre el hormigón visto."
                          data-sec2-img="img/miranda-6/miranda-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz difusa"
+                         data-sec2-cap="FIG 02. Detalle de luz difusa y textura"
                          data-hero-img="img/miranda-6/miranda-1.jpg">
                     <div class="story-card-img">
                         <img src="img/croquis.jpg" alt="Croquis Casa Infinita">
@@ -545,11 +620,11 @@
                          data-sec1-title="La fachada como refugio"
                          data-sec1-text="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando la vida hacia el núcleo."
                          data-sec1-img="img/biguesiriells/bigues-1.jpg"
-                         data-sec1-cap="FIG 01. Fachada monolítica"
+                         data-sec1-cap="FIG 01. Fachada monolítica sobre el entorno"
                          data-sec2-title="Naturaleza interior"
                          data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos permiten transformar las estancias diáfanas en espacios integrados con la vegetación."
                          data-sec2-img="img/biguesiriells/bigues-2.jpg"
-                         data-sec2-cap="FIG 02. Patio central"
+                         data-sec2-cap="FIG 02. Patio central de luz y lámina de agua"
                          data-hero-img="img/biguesiriells/bigues-4.jpg">
                     <div class="story-card-img">
                         <img src="img/HAVANA%2048.jpg" alt="Concepto Fuyu">
@@ -566,7 +641,6 @@
 
             <!-- VISTA 2: PROYECTOS (Solo Galería Visual / Fotos) -->
             <div class="view-visuals-layout">
-                
                 <div class="visual-card-item">
                     <div class="visual-card-img">
                         <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Obra">
@@ -606,51 +680,51 @@
                         <span class="mono-tag">INTERIORES</span>
                     </div>
                 </div>
-
             </div>
 
         </section>
     </main>
 
-    <!-- MODAL DETALLE DE MEMORIAS -->
+    <!-- MODAL DETALLE DE MEMORIAS (INTERCALADO NARRATIVO) -->
     <div class="story-container" id="storyContainer">
         <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
+        
         <div class="story-header-cover">
             <img src="" id="storyHeroImg" alt="Memoria">
             <div class="story-title-overlay">
-                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.8);">CATEGORÍA</span>
+                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.85);">CATEGORÍA</span>
                 <h2 id="storyTitle">PROYECTO</h2>
             </div>
         </div>
 
-        <div class="story-body">
+        <div class="story-editorial-body">
+            <!-- DECLARACIÓN INICIAL DE LA MEMORIA -->
             <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
-            <div class="story-section-fluid">
-                <div class="story-text-block">
-                    <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
-                    <h3 class="story-section-title" id="storySec1Title">Título</h3>
-                    <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
-                </div>
-                <div>
-                    <div class="story-img-block">
-                        <img src="" id="storySec1Img" alt="Imagen 1">
-                    </div>
-                    <div class="story-caption" id="storySec1Cap">FIG 01</div>
-                </div>
+
+            <!-- BLOQUE NARRATIVO 1 -->
+            <div class="story-text-block-narrative">
+                <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
+                <h3 class="story-section-title" id="storySec1Title">Título 1</h3>
+                <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
             </div>
 
-            <div class="story-section-fluid reverse">
-                <div class="story-text-block">
-                    <span class="story-chapter-num">02 / TECTÓNICA</span>
-                    <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
-                    <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
-                </div>
-                <div>
-                    <div class="story-img-block">
-                        <img src="" id="storySec2Img" alt="Imagen 2">
-                    </div>
-                    <div class="story-caption" id="storySec2Cap">FIG 02</div>
-                </div>
+            <!-- IMAGEN 1 DE ALTA JERARQUÍA -->
+            <div class="story-hero-frame">
+                <img src="" id="storySec1Img" alt="Imagen 1">
+                <div class="story-caption" id="storySec1Cap">FIG 01</div>
+            </div>
+
+            <!-- BLOQUE NARRATIVO 2 -->
+            <div class="story-text-block-narrative">
+                <span class="story-chapter-num">02 / TECTÓNICA Y ESPACIALIDAD</span>
+                <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
+                <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
+            </div>
+
+            <!-- IMAGEN 2 DE ALTA JERARQUÍA -->
+            <div class="story-hero-frame">
+                <img src="" id="storySec2Img" alt="Imagen 2">
+                <div class="story-caption" id="storySec2Cap">FIG 02</div>
             </div>
         </div>
     </div>
@@ -669,7 +743,7 @@
         const closeStory = document.getElementById('closeStory');
         const brandLogo = document.getElementById('brandLogo');
 
-        // MANEJO DE CURSOR
+        // MANEJO DE CURSOR NEGRO
         if (window.matchMedia('(pointer: fine)').matches) {
             document.addEventListener('mousemove', (e) => {
                 customCursor.style.left = `${e.clientX}px`;
@@ -725,6 +799,21 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // FUNCIONALIDAD PARA CERRAR DETALLE SIN MINIMIZAR LA PÁGINA
+        const closeStoryModal = () => {
+            storyContainer.classList.remove('active');
+            document.body.classList.remove('story-active');
+        };
+
+        closeStory.addEventListener('click', closeStoryModal);
+
+        // SALIDA CON TECLA ESCAPE
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && storyContainer.classList.contains('active')) {
+                closeStoryModal();
+            }
+        });
+
         // DESPLEGAR DETALLE DE MEMORIA
         document.querySelectorAll('.story-link').forEach(item => {
             item.addEventListener('click', () => {
@@ -745,12 +834,8 @@
 
                 storyContainer.classList.add('active');
                 document.body.classList.add('story-active');
+                storyContainer.scrollTop = 0; // Inicia siempre arriba
             });
-        });
-
-        closeStory.addEventListener('click', () => {
-            storyContainer.classList.remove('active');
-            document.body.classList.remove('story-active');
         });
     </script>
 </body>
