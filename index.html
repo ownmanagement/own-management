@@ -346,7 +346,7 @@
         body.mode-visual-active .view-stories-layout { display: none; }
 
         /* ==========================================================
-           NUEVA DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA)
+           DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA)
            ========================================================== */
         .story-container {
             position: fixed;
@@ -360,6 +360,7 @@
             opacity: 0;
             pointer-events: none;
             overflow-y: auto;
+            outline: none; /* Quita el borde de foco por defecto */
             transform: translateY(30px);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
@@ -394,11 +395,11 @@
             background-color: #000000;
         }
 
-        /* PORTADA DEL RELATO */
+        /* PORTADA DEL RELATO DE TAMAÑO HOMOGÉNEO */
         .story-header-cover {
             width: 100%;
-            height: 80vh;
-            min-height: 480px;
+            height: 70vh;
+            min-height: 450px;
             position: relative;
             background-color: #111111;
         }
@@ -429,7 +430,7 @@
             margin-top: 12px;
         }
 
-        /* ESTRUCTURA TIPO ENSAYO EDITORIAL */
+        /* ESTRUCTURA EDITORIAL */
         .story-editorial-body { 
             padding: 100px 6% 140px 6%; 
             max-width: 1100px; 
@@ -439,7 +440,6 @@
             gap: 90px;
         }
 
-        /* Cita / Manifesto introductorio */
         .story-lead-statement { 
             font-size: clamp(1.4rem, 2.8vw, 2.2rem); 
             font-weight: 400; 
@@ -450,7 +450,6 @@
             margin-bottom: 20px;
         }
 
-        /* Bloque de texto intercalado con foco de lectura */
         .story-text-block-narrative {
             max-width: 800px;
             margin: 0 auto;
@@ -480,19 +479,23 @@
             font-weight: 300; 
         }
 
-        /* Imagen de alta jerarquía intercalada */
+        /* CONTENEDOR E IMÁGENES DE TAMAÑO COMPLETAMENTE IDÉNTICO Y UNIFORME */
         .story-hero-frame {
             width: 100%;
+            height: 55vh;
+            min-height: 380px;
+            max-height: 650px;
             margin: 20px 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
         }
 
         .story-hero-frame img {
             width: 100%;
-            height: auto;
-            max-height: 82vh;
+            height: 100%;
             object-fit: cover;
             display: block;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
         }
 
         .story-caption { 
@@ -517,6 +520,7 @@
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
             .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
             .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
+            .story-hero-frame { height: 45vh; min-height: 280px; }
         }
 
         @media (max-width: 768px) {
@@ -525,7 +529,8 @@
             .mode-btn { flex: 1; text-align: center; }
             .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
             .visual-card-img { height: 45vh; }
-            .story-header-cover { height: 60vh; }
+            .story-header-cover { height: 50vh; }
+            .story-hero-frame { height: 35vh; min-height: 250px; }
             .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
             .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; }
         }
@@ -685,8 +690,8 @@
         </section>
     </main>
 
-    <!-- MODAL DETALLE DE MEMORIAS (INTERCALADO NARRATIVO) -->
-    <div class="story-container" id="storyContainer">
+    <!-- MODAL DETALLE DE MEMORIAS (tabindex ALINEADO PARA DETECTAR ESCAPE) -->
+    <div class="story-container" id="storyContainer" tabindex="-1">
         <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
         
         <div class="story-header-cover">
@@ -698,7 +703,7 @@
         </div>
 
         <div class="story-editorial-body">
-            <!-- DECLARACIÓN INICIAL DE LA MEMORIA -->
+            <!-- DECLARACIÓN INICIAL -->
             <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
 
             <!-- BLOQUE NARRATIVO 1 -->
@@ -708,9 +713,11 @@
                 <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
             </div>
 
-            <!-- IMAGEN 1 DE ALTA JERARQUÍA -->
-            <div class="story-hero-frame">
-                <img src="" id="storySec1Img" alt="Imagen 1">
+            <!-- IMAGEN 1 HOMOGÉNEA -->
+            <div>
+                <div class="story-hero-frame">
+                    <img src="" id="storySec1Img" alt="Imagen 1">
+                </div>
                 <div class="story-caption" id="storySec1Cap">FIG 01</div>
             </div>
 
@@ -721,15 +728,17 @@
                 <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
             </div>
 
-            <!-- IMAGEN 2 DE ALTA JERARQUÍA -->
-            <div class="story-hero-frame">
-                <img src="" id="storySec2Img" alt="Imagen 2">
+            <!-- IMAGEN 2 HOMOGÉNEA -->
+            <div>
+                <div class="story-hero-frame">
+                    <img src="" id="storySec2Img" alt="Imagen 2">
+                </div>
                 <div class="story-caption" id="storySec2Cap">FIG 02</div>
             </div>
         </div>
     </div>
 
-    <!-- CONTROL DE INTERACCIÓN -->
+    <!-- SCRIPT DE NAVEGACIÓN Y TECLADO -->
     <script>
         const customCursor = document.getElementById('custom-cursor');
         const entrySplit = document.getElementById('entrySplit');
@@ -743,7 +752,7 @@
         const closeStory = document.getElementById('closeStory');
         const brandLogo = document.getElementById('brandLogo');
 
-        // MANEJO DE CURSOR NEGRO
+        // CURSOR PERSONALIZADO
         if (window.matchMedia('(pointer: fine)').matches) {
             document.addEventListener('mousemove', (e) => {
                 customCursor.style.left = `${e.clientX}px`;
@@ -762,7 +771,7 @@
             });
         }
 
-        // CAMBIOS DE MODO REALES
+        // MODO VISTAS
         function setStoriesMode() {
             document.body.classList.remove('mode-visual-active');
             btnStories.classList.add('active');
@@ -786,7 +795,6 @@
             else setStoriesMode();
         }
 
-        // EVENTOS CLIC EN LANDING
         selectStories.addEventListener('click', () => enterWebsite('stories'));
         selectVisuals.addEventListener('click', () => enterWebsite('visuals'));
 
@@ -799,7 +807,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // FUNCIONALIDAD PARA CERRAR DETALLE SIN MINIMIZAR LA PÁGINA
+        // CIERRE DE MEMORIA
         const closeStoryModal = () => {
             storyContainer.classList.remove('active');
             document.body.classList.remove('story-active');
@@ -807,10 +815,13 @@
 
         closeStory.addEventListener('click', closeStoryModal);
 
-        // SALIDA CON TECLA ESCAPE
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && storyContainer.classList.contains('active')) {
-                closeStoryModal();
+        // CAPTURA GLOBAL DE LA TECLA ESCAPE
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                if (storyContainer.classList.contains('active')) {
+                    e.preventDefault();
+                    closeStoryModal();
+                }
             }
         });
 
@@ -834,7 +845,12 @@
 
                 storyContainer.classList.add('active');
                 document.body.classList.add('story-active');
-                storyContainer.scrollTop = 0; // Inicia siempre arriba
+                storyContainer.scrollTop = 0;
+                
+                // Dar foco al contenedor para captura asegurada de la tecla Escape
+                setTimeout(() => {
+                    storyContainer.focus();
+                }, 50);
             });
         });
     </script>
