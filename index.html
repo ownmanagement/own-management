@@ -34,7 +34,7 @@
             background-color: #ffffff;
         }
 
-        body.story-active { overflow: hidden; }
+        body.story-active, body.modal-active { overflow: hidden; }
 
         /* CURSOR NEGRO PURO */
         #custom-cursor {
@@ -320,6 +320,7 @@
             min-height: 350px;
             overflow: hidden;
             background-color: #f2f2f2;
+            position: relative;
         }
 
         .visual-card-img img {
@@ -346,8 +347,119 @@
         body.mode-visual-active .view-stories-layout { display: none; }
 
         /* ==========================================================
-           DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA)
+           MODAL GALERÍA FOTOGRÁFICA / LIGHTBOX PARA PROYECTOS
            ========================================================== */
+        .gallery-modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-color: #000000;
+            z-index: 7000;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-modal-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .gallery-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 6%;
+            z-index: 7001;
+            color: #ffffff;
+        }
+
+        .gallery-modal-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .gallery-modal-close {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            transition: background 0.2s ease;
+        }
+
+        .gallery-modal-close:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .gallery-modal-stage {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6%;
+            overflow: hidden;
+        }
+
+        .gallery-modal-stage img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background 0.2s ease;
+            z-index: 7002;
+        }
+
+        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
+        .gallery-nav-prev { left: 4%; }
+        .gallery-nav-next { right: 4%; }
+
+        .gallery-modal-footer {
+            padding: 24px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            z-index: 7001;
+        }
+
+        .gallery-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #888888;
+        }
+
+        /* DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA) */
         .story-container {
             position: fixed;
             top: 0;
@@ -360,7 +472,7 @@
             opacity: 0;
             pointer-events: none;
             overflow-y: auto;
-            outline: none; /* Quita el borde de foco por defecto */
+            outline: none;
             transform: translateY(30px);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
         }
@@ -395,7 +507,6 @@
             background-color: #000000;
         }
 
-        /* PORTADA DEL RELATO DE TAMAÑO HOMOGÉNEO */
         .story-header-cover {
             width: 100%;
             height: 70vh;
@@ -430,7 +541,6 @@
             margin-top: 12px;
         }
 
-        /* ESTRUCTURA EDITORIAL */
         .story-editorial-body { 
             padding: 100px 6% 140px 6%; 
             max-width: 1100px; 
@@ -479,7 +589,6 @@
             font-weight: 300; 
         }
 
-        /* CONTENEDOR E IMÁGENES DE TAMAÑO COMPLETAMENTE IDÉNTICO Y UNIFORME */
         .story-hero-frame {
             width: 100%;
             height: 55vh;
@@ -646,7 +755,9 @@
 
             <!-- VISTA 2: PROYECTOS (Solo Galería Visual / Fotos) -->
             <div class="view-visuals-layout">
-                <div class="visual-card-item">
+                <div class="visual-card-item project-gallery-trigger"
+                     data-project="CASA INFINITA"
+                     data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-6.jpg"]'>
                     <div class="visual-card-img">
                         <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Obra">
                     </div>
@@ -656,7 +767,9 @@
                     </div>
                 </div>
 
-                <div class="visual-card-item">
+                <div class="visual-card-item project-gallery-trigger"
+                     data-project="FUYU"
+                     data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]'>
                     <div class="visual-card-img">
                         <img src="img/biguesiriells/bigues-1.jpg" alt="Fuyu Fachada">
                     </div>
@@ -666,7 +779,9 @@
                     </div>
                 </div>
 
-                <div class="visual-card-item">
+                <div class="visual-card-item project-gallery-trigger"
+                     data-project="VILA CLARA"
+                     data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-2.jpg", "img/mirador-42/mirador-3.jpg"]'>
                     <div class="visual-card-img">
                         <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara">
                     </div>
@@ -676,7 +791,9 @@
                     </div>
                 </div>
 
-                <div class="visual-card-item">
+                <div class="visual-card-item project-gallery-trigger"
+                     data-project="CASA INFINITA II"
+                     data-images='["img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-2.jpg"]'>
                     <div class="visual-card-img">
                         <img src="img/miranda-6/miranda-3.jpg" alt="Casa Infinita Interior">
                     </div>
@@ -690,7 +807,7 @@
         </section>
     </main>
 
-    <!-- MODAL DETALLE DE MEMORIAS (tabindex ALINEADO PARA DETECTAR ESCAPE) -->
+    <!-- MODAL DETALLE DE MEMORIAS -->
     <div class="story-container" id="storyContainer" tabindex="-1">
         <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
         
@@ -703,17 +820,14 @@
         </div>
 
         <div class="story-editorial-body">
-            <!-- DECLARACIÓN INICIAL -->
             <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
 
-            <!-- BLOQUE NARRATIVO 1 -->
             <div class="story-text-block-narrative">
                 <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
                 <h3 class="story-section-title" id="storySec1Title">Título 1</h3>
                 <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
             </div>
 
-            <!-- IMAGEN 1 HOMOGÉNEA -->
             <div>
                 <div class="story-hero-frame">
                     <img src="" id="storySec1Img" alt="Imagen 1">
@@ -721,14 +835,12 @@
                 <div class="story-caption" id="storySec1Cap">FIG 01</div>
             </div>
 
-            <!-- BLOQUE NARRATIVO 2 -->
             <div class="story-text-block-narrative">
                 <span class="story-chapter-num">02 / TECTÓNICA Y ESPACIALIDAD</span>
                 <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
                 <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
             </div>
 
-            <!-- IMAGEN 2 HOMOGÉNEA -->
             <div>
                 <div class="story-hero-frame">
                     <img src="" id="storySec2Img" alt="Imagen 2">
@@ -738,7 +850,24 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE NAVEGACIÓN Y TECLADO -->
+    <!-- MODAL LIGHTBOX PARA LA GALERÍA FOTOGRÁFICA DE PROYECTOS -->
+    <div class="gallery-modal-container" id="galleryModal">
+        <div class="gallery-modal-header">
+            <span class="gallery-modal-title" id="galleryModalTitle">PROYECTO</span>
+            <button class="gallery-modal-close" id="closeGalleryModal">CERRAR [ESC]</button>
+        </div>
+        <div class="gallery-modal-stage">
+            <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">&larr;</button>
+            <img src="" id="galleryModalImage" alt="Fotografía del proyecto">
+            <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">&rarr;</button>
+        </div>
+        <div class="gallery-modal-footer">
+            <span class="mono-tag">FOTOGRAFÍA ARQUITECTÓNICA</span>
+            <span class="gallery-counter" id="galleryCounter">1 / 1</span>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE NAVEGACIÓN, MEMORIAS Y GALERÍAS -->
     <script>
         const customCursor = document.getElementById('custom-cursor');
         const entrySplit = document.getElementById('entrySplit');
@@ -762,7 +891,7 @@
 
             document.addEventListener('mouseleave', () => customCursor.classList.remove('visible'));
 
-            const hoverTargets = 'button, a, .split-pane, .story-card-item, .visual-card-item, .logo';
+            const hoverTargets = 'button, a, .split-pane, .story-card-item, .visual-card-item, .logo, .gallery-nav-btn';
             document.addEventListener('mouseover', (e) => {
                 if (e.target.closest(hoverTargets)) customCursor.classList.add('hovered');
             });
@@ -771,7 +900,7 @@
             });
         }
 
-        // MODO VISTAS
+        // CONTROL DE VISTAS (MEMORIAS VS PROYECTOS)
         function setStoriesMode() {
             document.body.classList.remove('mode-visual-active');
             btnStories.classList.add('active');
@@ -807,7 +936,29 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // CIERRE DE MEMORIA
+        // MEMORIA MODAL DETALLE
+        const storyLinks = document.querySelectorAll('.story-link');
+        storyLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('storyTitle').textContent = link.dataset.title;
+                document.getElementById('storyCategory').textContent = link.dataset.category;
+                document.getElementById('storyStatement').textContent = link.dataset.statement;
+                document.getElementById('storySec1Title').textContent = link.dataset.sec1Title;
+                document.getElementById('storySec1Text').textContent = link.dataset.sec1Text;
+                document.getElementById('storySec1Img').src = link.dataset.sec1Img;
+                document.getElementById('storySec1Cap').textContent = link.dataset.sec1Cap;
+                document.getElementById('storySec2Title').textContent = link.dataset.sec2Title;
+                document.getElementById('storySec2Text').textContent = link.dataset.sec2Text;
+                document.getElementById('storySec2Img').src = link.dataset.sec2Img;
+                document.getElementById('storySec2Cap').textContent = link.dataset.sec2Cap;
+                document.getElementById('storyHeroImg').src = link.dataset.heroImg;
+
+                storyContainer.classList.add('active');
+                document.body.classList.add('story-active');
+                storyContainer.scrollTop = 0;
+            });
+        });
+
         const closeStoryModal = () => {
             storyContainer.classList.remove('active');
             document.body.classList.remove('story-active');
@@ -815,43 +966,78 @@
 
         closeStory.addEventListener('click', closeStoryModal);
 
-        // CAPTURA GLOBAL DE LA TECLA ESCAPE
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-                if (storyContainer.classList.contains('active')) {
-                    e.preventDefault();
-                    closeStoryModal();
+        // MODAL LIGHTBOX DE PROYECTOS Y GALERÍA
+        const galleryModal = document.getElementById('galleryModal');
+        const galleryModalTitle = document.getElementById('galleryModalTitle');
+        const galleryModalImage = document.getElementById('galleryModalImage');
+        const galleryCounter = document.getElementById('galleryCounter');
+        const closeGalleryModalBtn = document.getElementById('closeGalleryModal');
+        const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+        const galleryNextBtn = document.getElementById('galleryNextBtn');
+
+        let currentGalleryImages = [];
+        let currentImageIndex = 0;
+
+        function updateGalleryImage() {
+            galleryModalImage.style.opacity = '0.3';
+            galleryModalImage.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                galleryModalImage.src = currentGalleryImages[currentImageIndex];
+                galleryCounter.textContent = `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
+                galleryModalImage.style.opacity = '1';
+                galleryModalImage.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        document.querySelectorAll('.project-gallery-trigger').forEach(card => {
+            card.addEventListener('click', () => {
+                const projectTitle = card.dataset.project;
+                try {
+                    currentGalleryImages = JSON.parse(card.dataset.images);
+                } catch(e) {
+                    currentGalleryImages = [card.querySelector('img').src];
                 }
-            }
+                currentImageIndex = 0;
+                galleryModalTitle.textContent = projectTitle;
+                updateGalleryImage();
+
+                galleryModal.classList.add('active');
+                document.body.classList.add('modal-active');
+            });
         });
 
-        // DESPLEGAR DETALLE DE MEMORIA
-        document.querySelectorAll('.story-link').forEach(item => {
-            item.addEventListener('click', () => {
-                document.getElementById('storyTitle').textContent = item.dataset.title;
-                document.getElementById('storyCategory').textContent = item.dataset.category;
-                document.getElementById('storyStatement').textContent = item.dataset.statement;
-                document.getElementById('storyHeroImg').src = item.dataset.heroImg;
+        const closeGallery = () => {
+            galleryModal.classList.remove('active');
+            document.body.classList.remove('modal-active');
+        };
 
-                document.getElementById('storySec1Title').textContent = item.dataset.sec1Title;
-                document.getElementById('storySec1Text').textContent = item.dataset.sec1Text;
-                document.getElementById('storySec1Img').src = item.dataset.sec1Img;
-                document.getElementById('storySec1Cap').textContent = item.dataset.sec1Cap;
+        closeGalleryModalBtn.addEventListener('click', closeGallery);
 
-                document.getElementById('storySec2Title').textContent = item.dataset.sec2Title;
-                document.getElementById('storySec2Text').textContent = item.dataset.sec2Text;
-                document.getElementById('storySec2Img').src = item.dataset.sec2Img;
-                document.getElementById('storySec2Cap').textContent = item.dataset.sec2Cap;
+        galleryPrevBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+            updateGalleryImage();
+        });
 
-                storyContainer.classList.add('active');
-                document.body.classList.add('story-active');
-                storyContainer.scrollTop = 0;
-                
-                // Dar foco al contenedor para captura asegurada de la tecla Escape
-                setTimeout(() => {
-                    storyContainer.focus();
-                }, 50);
-            });
+        galleryNextBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+            updateGalleryImage();
+        });
+
+        // CONTROLES TECLADO (ESCAPE, FLECHAS NAVEGACIÓN)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                if (galleryModal.classList.contains('active')) closeGallery();
+                if (storyContainer.classList.contains('active')) closeStoryModal();
+            }
+            if (galleryModal.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+                    updateGalleryImage();
+                } else if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+                    updateGalleryImage();
+                }
+            }
         });
     </script>
 </body>
