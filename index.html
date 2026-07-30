@@ -210,6 +210,7 @@
             padding: 4px;
             border-radius: 30px;
             border: 1px solid rgba(0, 0, 0, 0.08);
+            gap: 4px;
         }
 
         .mode-btn {
@@ -232,7 +233,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* VISTAS PRINCIPALES (MEMORIAS VS PROYECTOS) */
+        /* VISTAS PRINCIPALES */
         .main-view-container {
             position: relative;
             width: 100%;
@@ -242,7 +243,7 @@
 
         body.content-active .main-view-container { opacity: 1; }
 
-        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; }
+        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; min-height: 100vh; }
 
         .gallery-header {
             margin-bottom: 60px;
@@ -255,7 +256,7 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN MEMORIAS (VISTA PRINCIPAL) */
+        /* SECCIÓN MEMORIAS */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
@@ -299,7 +300,7 @@
         .story-card-excerpt { font-size: 1.1rem; line-height: 1.8; color: #444444; font-weight: 300; margin-bottom: 20px; max-width: 850px; }
         .story-read-more { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #111111; display: inline-flex; align-items: center; gap: 8px; }
 
-        /* SECCIÓN PROYECTOS (SOLO GALERÍA FOTOGRÁFICA) */
+        /* SECCIÓN PROYECTOS */
         .view-visuals-layout {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -343,12 +344,175 @@
 
         .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
 
-        body:not(.mode-visual-active) .view-visuals-layout { display: none; }
-        body.mode-visual-active .view-stories-layout { display: none; }
+        /* SECCIÓN ESTUDIO */
+        .view-about-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
 
-        /* ==========================================================
-           MODAL GALERÍA FOTOGRÁFICA / LIGHTBOX PARA PROYECTOS
-           ========================================================== */
+        .about-statement {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 300;
+            line-height: 1.35;
+            letter-spacing: -1px;
+            color: #111111;
+            border-left: 3px solid #111111;
+            padding-left: 30px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            margin-top: 20px;
+        }
+
+        .about-col h4 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-col p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555555;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 50vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        /* SECCIÓN CONTACTO */
+        .view-contact-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .contact-info-block h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .contact-info-block p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555555;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .contact-detail-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-detail-item label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .contact-detail-item p, .contact-detail-item a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111111;
+            text-decoration: none;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 16px 0;
+            border: none;
+            border-bottom: 1px solid #cccccc;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #111111;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-bottom-color: #111111;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            background-color: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #000000;
+            transform: scale(1.02);
+        }
+
+        /* CONTROL DE VISIBILIDAD DE VISTAS */
+        .layout-block { display: none; }
+        body.mode-stories-active .view-stories-layout { display: flex; }
+        body.mode-visual-active .view-visuals-layout { display: grid; }
+        body.mode-about-active .view-about-layout { display: flex; }
+        body.mode-contact-active .view-contact-layout { display: grid; }
+
+        /* MODAL GALERÍA FOTOGRÁFICA */
         .gallery-modal-container {
             position: fixed;
             top: 0;
@@ -380,11 +544,7 @@
             color: #ffffff;
         }
 
-        .gallery-modal-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
+        .gallery-modal-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
 
         .gallery-modal-close {
             background: rgba(255, 255, 255, 0.15);
@@ -398,10 +558,7 @@
             transition: background 0.2s ease;
         }
 
-        .gallery-modal-close:hover {
-            background: #ffffff;
-            color: #000000;
-        }
+        .gallery-modal-close:hover { background: #ffffff; color: #000000; }
 
         .gallery-modal-stage {
             position: relative;
@@ -459,7 +616,7 @@
             color: #888888;
         }
 
-        /* DIAGRAMACIÓN EDITORIAL DE MEMORIAS (MODAL DE LECTURA) */
+        /* MODAL DE LECTURA / MEMORIAS */
         .story-container {
             position: fixed;
             top: 0;
@@ -630,12 +787,14 @@
             .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
             .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
             .story-hero-frame { height: 45vh; min-height: 280px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 12px; padding: 14px 5%; }
-            .mode-switch-bar { width: 100%; justify-content: center; }
-            .mode-btn { flex: 1; text-align: center; }
+            .mode-switch-bar { width: 100%; justify-content: center; flex-wrap: wrap; }
+            .mode-btn { flex: 1; text-align: center; padding: 6px 12px; }
             .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
             .visual-card-img { height: 45vh; }
             .story-header-cover { height: 50vh; }
@@ -645,7 +804,7 @@
         }
     </style>
 </head>
-<body>
+<body class="mode-stories-active">
 
     <!-- PUNTO NEGRO PERSONALIZADO -->
     <div id="custom-cursor"></div>
@@ -689,6 +848,8 @@
         <div class="mode-switch-bar">
             <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
             <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
+            <button class="mode-btn" id="btnModeAbout">ESTUDIO</button>
+            <button class="mode-btn" id="btnModeContact">CONTACTO</button>
         </div>
     </header>
 
@@ -700,8 +861,8 @@
                 <span class="mono-tag" id="galleryModeTag">RELATOS Y CONCEPTOS</span>
             </div>
             
-            <!-- VISTA 1: MEMORIAS (Explicativo y Conceptual) -->
-            <div class="view-stories-layout">
+            <!-- VISTA 1: MEMORIAS -->
+            <div class="view-stories-layout layout-block">
                 
                 <article class="story-card-item story-link"
                          data-title="CASA INFINITA" 
@@ -750,13 +911,13 @@
                         <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
                     </div>
                 </article>
+
                 <article class="story-card-item story-link"
                          data-title="PASSACAGLIA" 
                          data-category="RESIDENCIAL • BARCELONA" 
                          data-statement="Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical."
                          data-sec1-title="Diálogo con el paisaje"
-                         data-sec1-text="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios.
-"
+                         data-sec1-text="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios."
                          data-sec1-img="img/havana48/havana1.jpg"
                          data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
                          data-sec2-title="Tectónica y luz cenital"
@@ -774,12 +935,13 @@
                         <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
                     </div>
                 </article>
+
                 <article class="story-card-item story-link"
                          data-title="VILA CLARA" 
                          data-category="RESIDENCIAL • BARCELONA" 
                          data-statement="Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
                          data-sec1-title="Diálogo con la luz"
-                         data-sec1-text="Es una pequeña vivienda en Canyelles organizada alrededor de una escalera central. Más que un elemento de circulación, la escalera se convierte en un hueco vertical que introduce la luz natural en el corazón de la casa, conectando las distintas plantas y dando profundidad a los espacios interiores"
+                         data-sec1-text="Es una pequeña vivienda en Canyelles organizada alrededor de una escalera central. Más que un elemento de circulación, la escalera se convierte en un hueco vertical que introduce la luz natural en el corazón de la casa, conectando las distintas plantas y dando profundidad a los espacios interiores."
                          data-sec1-img="img/mirador-42/mirador-4.jpg"
                          data-sec1-cap="FIG 01. Vista vacío escalera central"
                          data-sec2-title="Tectónica y luz cenital"
@@ -788,7 +950,7 @@
                          data-sec2-cap="FIG 02. Detalle de luz interior"
                          data-hero-img="img/mirador-42/mirador-3.jpg">
                     <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Passacaglia">
+                        <img src="img/croquis.jpg" alt="Croquis Vila Clara">
                     </div>
                     <div class="story-card-content">
                         <span class="mono-tag">MEMORIA N° 04 • BARCELONA</span>
@@ -797,395 +959,280 @@
                         <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
                     </div>
                 </article>
-     <article class="story-card-item story-link"
+
+                <article class="story-card-item story-link"
                          data-title="CLARO DE LUZ" 
                          data-category="RESIDENCIAL • BARCELONA" 
                          data-statement="Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro."
                          data-sec1-title="Diálogo con el entorno"
                          data-sec1-text="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
-                         data-sec1-img="img/clarodeluz/clarodeluz-1.jpg"
-                         data-sec1-cap="FIG 01. Vista vacío escalera central"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="El proyecto se protege hacia el exterior y se abre con generosidad hacia el sol y el jardín. Las celosías y los grandes ventanales filtran la luz y construyen una atmósfera cálida y silenciosa."
-                         data-sec2-img="img/clarodeluz/clarodeluz-4.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz interior"
-                         data-hero-img="img/clarodeluz/clarodeluz-3.jpg">
+                         data-sec1-img="img/miranda-6/miranda-1.jpg"
+                         data-sec1-cap="FIG 01. Integración con el espacio vegetal"
+                         data-sec2-title="Atmósfera interior"
+                         data-sec2-text="Cada estancia busca la luz de forma matizada, creando espacios de contemplación y serenidad."
+                         data-sec2-img="img/miranda-6/miranda-2.jpg"
+                         data-sec2-cap="FIG 02. Interior diáfano"
+                         data-hero-img="img/miranda-6/miranda-6.jpg">
                     <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Passacaglia">
+                        <img src="img/croquis.jpg" alt="Croquis Claro de Luz">
                     </div>
                     <div class="story-card-content">
                         <span class="mono-tag">MEMORIA N° 05 • BARCELONA</span>
                         <h3>CLARO DE LUZ</h3>
-                        <p class="story-card-excerpt">Una arquitectura que no solo habita el espacio, sino también la luz.</p>
+                        <p class="story-card-excerpt">Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro.</p>
                         <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
                     </div>
                 </article>
-                 <article class="story-card-item story-link"
-                         data-title="BRISA DE LUZ" 
-                         data-category="RESIDENCIAL • SANT PERE DE RIBES" 
-                         data-statement="Un refugio mediterráneo donde la arquitectura se funde con la luz."
-                         data-sec1-title="Diálogo con el entorno"
-                         data-sec1-text="Ubicada sobre una parcela con pendiente y orientada al nordeste, la vivienda se diseña con un gesto claro: maximizar el espacio ajardinado en planta baja y capturar el sol, que se encuentra casi a sus espaldas respecto a las vistas del valle."
-                         data-sec1-img="img/miranda4/miranda4-1.jpg"
-                         data-sec1-cap="FIG 01. Vista vacío escalera central"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="La vivienda se organiza en dos plantas. El acceso y el garaje se encuentran en la planta superior, aprovechando la pendiente del terreno. Desde esta cota, una espectacular escalera desciende hacia la planta baja, desvelando progresivamente las vistas y la amplitud del espacio principal. En este nivel, la zona de día se desarrolla en una secuencia fluida entre la sala de estar, la cocina, el porche y la piscina, complementada por una suite que aporta exclusividad y confort."
-                         data-sec2-img="img/miranda4/miranda4-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz interior"
-                         data-hero-img="img/miranda4/miranda4-3.jpg">
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Brisa de Luz">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 06 • SANT PERE DE RIBES</span>
-                        <h3>BRISA DE LUZ</h3>
-                        <p class="story-card-excerpt">Un refugio mediterráneo donde la arquitectura se funde con la luz.</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-                  <article class="story-card-item story-link"
-                         data-title="BRISA DEL ALBA" 
-                         data-category="RESIDENCIAL • CANYELLES" 
-                         data-statement="Un refugio contemporáneo donde la arquitectura se funde con el entorno, capturando la energía del amanecer y la suavidad de la brisa en lo alto de Sitges."
-                         data-sec1-title="Diálogo con el entorno"
-                         data-sec1-text="es una vivienda diseñada para capturar la luz del amanecer y la brisa marina. "
-                         data-sec1-img="img/reivissa/reivissa-1.jpg"
-                         data-sec1-cap="FIG 01. Vista vacío escalera central"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="La vivienda se organiza en dos plantas. El acceso y el garaje se encuentran en la planta superior, aprovechando la pendiente del terreno. Desde esta cota, una espectacular escalera desciende hacia la planta baja, desvelando progresivamente las vistas y la amplitud del espacio principal. En este nivel, la zona de día se desarrolla en una secuencia fluida entre la sala de estar, la cocina, el porche y la piscina, complementada por una suite que aporta exclusividad y confort."
-                         data-sec2-img="img/reivissa/reivissa-2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz interior"
-                         data-hero-img="img/reivissa/reivissa-3.jpg">
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Brisa de Luz">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 07 • CANYELLES</span>
-                        <h3>BRISA DEL ALBA</h3>
-                        <p class="story-card-excerpt">Un refugio contemporáneo donde la arquitectura se funde con el entorno, capturando la energía del amanecer y la suavidad de la brisa en lo alto de Sitges.</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
-                </article>
-                <article class="story-card-item story-link"
-                         data-title="CLAROSCURO" 
-                         data-category="REFORMA • BARCELONA" 
-                         data-statement="Casa Claroscuro no es una reforma que impone una imagen, sino una que revela."
-                         data-sec1-title="Diálogo con el entorno"
-                         data-sec1-text="Es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià. El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa."
-                         data-sec1-img="img/JP/jp1.jpg"
-                         data-sec1-cap="FIG 01. Vista interior"
-                         data-sec2-title="Tectónica y luz cenital"
-                         data-sec2-text="La luz se convierte en el verdadero material del proyecto. Entra tamizada, recorre el espacio longitudinalmente y se desliza sobre la piedra, generando un juego constante de claros y sombras que cambia a lo largo del día. El techo, con las vigas originales vistas, refuerza esta lectura estratificada del espacio, donde cada época mantiene su identidad."
-                         data-sec2-img="img/JP/jp2.jpg"
-                         data-sec2-cap="FIG 02. Detalle de luz interior"
-                         data-hero-img="img/JP/jp3.jpg">
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Brisa de Luz">
-                    </div>
-                    <div class="story-card-content">
-                        <span class="mono-tag">MEMORIA N° 08 • BARCELONA</span>
-                        <h3>CLAROSCURO</h3>
-                        <p class="story-card-excerpt">La intervención no busca borrar el pasado del edificio, sino hacerlo visible.</p>
-                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
-                    </div>
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (Solo Galería Visual / Fotos) -->
-            <div class="view-visuals-layout">
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CASA INFINITA"
-                     data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-3.jpg", "img/miranda-6/miranda-6.jpg"]'>
+            <!-- VISTA 2: PROYECTOS (GALERÍA FOTOGRÁFICA) -->
+            <div class="view-visuals-layout layout-block">
+                <div class="visual-card-item">
                     <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Obra">
+                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita">
                     </div>
                     <div class="visual-card-info">
                         <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA • 2025</span>
+                        <span class="mono-tag">BARCELONA</span>
                     </div>
                 </div>
-
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="FUYU"
-                     data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]'>
+                <div class="visual-card-item">
                     <div class="visual-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="Fuyu Fachada">
+                        <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU">
                     </div>
                     <div class="visual-card-info">
                         <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA • 2026</span>
+                        <span class="mono-tag">BARCELONA</span>
                     </div>
                 </div>
-
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="VILA CLARA"
-                     data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-2.jpg", "img/mirador-42/mirador-3.jpg"]'>
+                <div class="visual-card-item">
                     <div class="visual-card-img">
-                        <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara">
+                        <img src="img/havana48/havana1.jpg" alt="PASSACAGLIA">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>PASSACAGLIA</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/mirador-42/mirador-3.jpg" alt="VILA CLARA">
                     </div>
                     <div class="visual-card-info">
                         <h3>VILA CLARA</h3>
-                        <span class="mono-tag">CANYELLES • 2024</span>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 3: SOBRE EL ESTUDIO -->
+            <div class="view-about-layout layout-block">
+                <p class="about-statement">
+                    Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
+                </p>
+                <div class="about-grid">
+                    <div class="about-col">
+                        <h4>FILOSOFÍA</h4>
+                        <p>En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.</p>
+                        <p>Cada proyecto nace de un diálogo constante con las limitaciones del territorio y las dinámicas del habitar contemporáneo.</p>
+                    </div>
+                    <div class="about-col">
+                        <h4>MÉTODO DE TRABAJO</h4>
+                        <p>Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
+                        <p>Inspirados por una sensibilidad minimalista y tectónica, materializamos estructuras duraderas con vocación escultórica.</p>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
+                </div>
+            </div>
+
+            <!-- VISTA 4: CONTACTO -->
+            <div class="view-contact-layout layout-block">
+                <div class="contact-info-block">
+                    <h3>HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
+                    <p>Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
+                    
+                    <div class="contact-detail-item">
+                        <label>UBICACIÓN</label>
+                        <p>Barcelona, España</p>
+                    </div>
+                    <div class="contact-detail-item">
+                        <label>EMAIL</label>
+                        <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
+                    </div>
+                    <div class="contact-detail-item">
+                        <label>TELÉFONO</label>
+                        <p>+34 930 000 000</p>
                     </div>
                 </div>
 
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CASA PASSACAGLIA"
-                     data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/havana48/havana3.jpg" alt="Casa Pasacaglia Interior">
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado correctamente.');">
+                    <div class="form-group">
+                        <label>NOMBRE COMPLETO</label>
+                        <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
-                    <div class="visual-card-info">
-                        <h3>CASA PASSACAGLIA</h3>
-                        <span class="mono-tag">INTERIORES</span>
+                    <div class="form-group">
+                        <label>CORREO ELECTRÓNICO</label>
+                        <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
-                </div>
-                
-                <div class="visual-card-item project-gallery-trigger"
-                     data-project="CASA CLAROSCURO"
-                     data-images='["img/JP/jp1.jpg", "img/JP/jp2.jpg"]'>
-                    <div class="visual-card-img">
-                        <img src="img/JP/jp3.jpg" alt="Casa Claroscuro Interior">
+                    <div class="form-group">
+                        <label>ASUNTO / PROYECTO</label>
+                        <input type="text" placeholder="Ej. Residencia Unifamiliar">
                     </div>
-                    <div class="visual-card-info">
-                        <h3>CASA CLAROSCURO</h3>
-                        <span class="mono-tag">INTERIORES</span>
+                    <div class="form-group">
+                        <label>MENSAJE</label>
+                        <textarea rows="4" placeholder="Describe brevemente la idea o necesidad del proyecto..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ENVIAR MENSAJE</button>
+                </form>
             </div>
 
         </section>
     </main>
 
-    <!-- MODAL DETALLE DE MEMORIAS -->
-    <div class="story-container" id="storyContainer" tabindex="-1">
-        <button class="close-story-btn" id="closeStory">CERRAR MEMORIA</button>
-        
+    <!-- MODAL DE MEMORIA EDITORIAL -->
+    <div class="story-container" id="storyModal">
+        <button class="close-story-btn" id="closeStoryBtn">&larr; CERRAR MEMORIA</button>
         <div class="story-header-cover">
-            <img src="" id="storyHeroImg" alt="Memoria">
+            <img id="mHeroImg" src="" alt="">
             <div class="story-title-overlay">
-                <span class="mono-tag" id="storyCategory" style="color: rgba(255,255,255,0.85);">CATEGORÍA</span>
-                <h2 id="storyTitle">PROYECTO</h2>
+                <span class="mono-tag" id="mCategory" style="color: rgba(255,255,255,0.7);"></span>
+                <h2 id="mTitle"></h2>
             </div>
         </div>
-
         <div class="story-editorial-body">
-            <p class="story-lead-statement" id="storyStatement">Extracto de la memoria...</p>
+            <p class="story-lead-statement" id="mStatement"></p>
 
             <div class="story-text-block-narrative">
-                <span class="story-chapter-num">01 / CONCEPTUALIZACIÓN</span>
-                <h3 class="story-section-title" id="storySec1Title">Título 1</h3>
-                <p class="story-paragraph" id="storySec1Text">Detalle conceptual...</p>
-            </div>
-
-            <div>
+                <span class="story-chapter-num">01 / CAPÍTULO I</span>
+                <h3 class="story-section-title" id="mSec1Title"></h3>
+                <p class="story-paragraph" id="mSec1Text"></p>
                 <div class="story-hero-frame">
-                    <img src="" id="storySec1Img" alt="Imagen 1">
+                    <img id="mSec1Img" src="" alt="">
                 </div>
-                <div class="story-caption" id="storySec1Cap">FIG 01</div>
+                <p class="story-caption" id="mSec1Cap"></p>
             </div>
 
             <div class="story-text-block-narrative">
-                <span class="story-chapter-num">02 / TECTÓNICA Y ESPACIALIDAD</span>
-                <h3 class="story-section-title" id="storySec2Title">Título 2</h3>
-                <p class="story-paragraph" id="storySec2Text">Detalle teórico 2...</p>
-            </div>
-
-            <div>
+                <span class="story-chapter-num">02 / CAPÍTULO II</span>
+                <h3 class="story-section-title" id="mSec2Title"></h3>
+                <p class="story-paragraph" id="mSec2Text"></p>
                 <div class="story-hero-frame">
-                    <img src="" id="storySec2Img" alt="Imagen 2">
+                    <img id="mSec2Img" src="" alt="">
                 </div>
-                <div class="story-caption" id="storySec2Cap">FIG 02</div>
+                <p class="story-caption" id="mSec2Cap"></p>
             </div>
         </div>
     </div>
 
-    <!-- MODAL LIGHTBOX PARA LA GALERÍA FOTOGRÁFICA DE PROYECTOS -->
-    <div class="gallery-modal-container" id="galleryModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title" id="galleryModalTitle">PROYECTO</span>
-            <button class="gallery-modal-close" id="closeGalleryModal">CERRAR [ESC]</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">&larr;</button>
-            <img src="" id="galleryModalImage" alt="Fotografía del proyecto">
-            <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="mono-tag">FOTOGRAFÍA ARQUITECTÓNICA</span>
-            <span class="gallery-counter" id="galleryCounter">1 / 1</span>
-        </div>
-    </div>
-
-    <!-- SCRIPT DE NAVEGACIÓN, MEMORIAS Y GALERÍAS -->
+    <!-- SCRIPT DE INTERACTIVIDAD -->
     <script>
-        const customCursor = document.getElementById('custom-cursor');
+        // CURSOR PERSONALIZADO
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
+        });
+
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-card-item, .visual-card-item, input, textarea');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // CONTROL DE SPLIT INITIAL
         const entrySplit = document.getElementById('entrySplit');
         const selectStories = document.getElementById('selectStories');
         const selectVisuals = document.getElementById('selectVisuals');
-        const btnStories = document.getElementById('btnModeStories');
-        const btnVisuals = document.getElementById('btnModeVisuals');
-        const galleryTitle = document.getElementById('galleryModeTitle');
-        const galleryTag = document.getElementById('galleryModeTag');
-        const storyContainer = document.getElementById('storyContainer');
-        const closeStory = document.getElementById('closeStory');
-        const brandLogo = document.getElementById('brandLogo');
 
-        // CURSOR PERSONALIZADO
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                customCursor.style.left = `${e.clientX}px`;
-                customCursor.style.top = `${e.clientY}px`;
-                if (!customCursor.classList.contains('visible')) customCursor.classList.add('visible');
-            });
-
-            document.addEventListener('mouseleave', () => customCursor.classList.remove('visible'));
-
-            const hoverTargets = 'button, a, .split-pane, .story-card-item, .visual-card-item, .logo, .gallery-nav-btn';
-            document.addEventListener('mouseover', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.add('hovered');
-            });
-            document.addEventListener('mouseout', (e) => {
-                if (e.target.closest(hoverTargets)) customCursor.classList.remove('hovered');
-            });
-        }
-
-        // CONTROL DE VISTAS (MEMORIAS VS PROYECTOS)
-        function setStoriesMode() {
-            document.body.classList.remove('mode-visual-active');
-            btnStories.classList.add('active');
-            btnVisuals.classList.remove('active');
-            galleryTitle.textContent = "MEMORIAS";
-            galleryTag.textContent = "RELATOS Y CONCEPTOS";
-        }
-
-        function setVisualMode() {
-            document.body.classList.add('mode-visual-active');
-            btnVisuals.classList.add('active');
-            btnStories.classList.remove('active');
-            galleryTitle.textContent = "PROYECTOS";
-            galleryTag.textContent = "GALERÍA FOTOGRÁFICA";
-        }
-
-        function enterWebsite(mode) {
+        function activateContent(mode) {
             entrySplit.classList.add('hidden');
             document.body.classList.add('content-active');
-            if (mode === 'visuals') setVisualMode();
-            else setStoriesMode();
+            switchMode(mode);
         }
 
-        selectStories.addEventListener('click', () => enterWebsite('stories'));
-        selectVisuals.addEventListener('click', () => enterWebsite('visuals'));
+        selectStories.addEventListener('click', () => activateContent('stories'));
+        selectVisuals.addEventListener('click', () => activateContent('visuals'));
 
-        btnStories.addEventListener('click', setStoriesMode);
-        btnVisuals.addEventListener('click', setVisualMode);
+        // CONMUTACIÓN DE SECCIONES (NAVEGACIÓN)
+        const btnStories = document.getElementById('btnModeStories');
+        const btnVisuals = document.getElementById('btnModeVisuals');
+        const btnAbout = document.getElementById('btnModeAbout');
+        const btnContact = document.getElementById('btnModeContact');
 
-        brandLogo.addEventListener('click', () => {
-            entrySplit.classList.remove('hidden');
-            document.body.classList.remove('content-active');
+        const titleHeader = document.getElementById('galleryModeTitle');
+        const tagHeader = document.getElementById('galleryModeTag');
+
+        function switchMode(mode) {
+            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-about-active', 'mode-contact-active');
+            btnStories.classList.remove('active');
+            btnVisuals.classList.remove('active');
+            btnAbout.classList.remove('active');
+            btnContact.classList.remove('active');
+
+            if (mode === 'stories') {
+                document.body.classList.add('mode-stories-active');
+                btnStories.classList.add('active');
+                titleHeader.textContent = 'MEMORIAS';
+                tagHeader.textContent = 'RELATOS Y CONCEPTOS';
+            } else if (mode === 'visuals') {
+                document.body.classList.add('mode-visual-active');
+                btnVisuals.classList.add('active');
+                titleHeader.textContent = 'PROYECTOS';
+                tagHeader.textContent = 'GALERÍA FOTOGRÁFICA';
+            } else if (mode === 'about') {
+                document.body.classList.add('mode-about-active');
+                btnAbout.classList.add('active');
+                titleHeader.textContent = 'EL ESTUDIO';
+                tagHeader.textContent = 'FILOSOFÍA Y EQUIPO';
+            } else if (mode === 'contact') {
+                document.body.classList.add('mode-contact-active');
+                btnContact.classList.add('active');
+                titleHeader.textContent = 'CONTACTO';
+                tagHeader.textContent = 'CONSULTAS Y PROYECTOS';
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        }
 
-        // MEMORIA MODAL DETALLE
+        btnStories.addEventListener('click', () => switchMode('stories'));
+        btnVisuals.addEventListener('click', () => switchMode('visuals'));
+        btnAbout.addEventListener('click', () => switchMode('about'));
+        btnContact.addEventListener('click', () => switchMode('contact'));
+
+        // Cargar Modal de Memorias
         const storyLinks = document.querySelectorAll('.story-link');
+        const storyModal = document.getElementById('storyModal');
+        const closeStoryBtn = document.getElementById('closeStoryBtn');
+
         storyLinks.forEach(link => {
             link.addEventListener('click', () => {
-                document.getElementById('storyTitle').textContent = link.dataset.title;
-                document.getElementById('storyCategory').textContent = link.dataset.category;
-                document.getElementById('storyStatement').textContent = link.dataset.statement;
-                document.getElementById('storySec1Title').textContent = link.dataset.sec1Title;
-                document.getElementById('storySec1Text').textContent = link.dataset.sec1Text;
-                document.getElementById('storySec1Img').src = link.dataset.sec1Img;
-                document.getElementById('storySec1Cap').textContent = link.dataset.sec1Cap;
-                document.getElementById('storySec2Title').textContent = link.dataset.sec2Title;
-                document.getElementById('storySec2Text').textContent = link.dataset.sec2Text;
-                document.getElementById('storySec2Img').src = link.dataset.sec2Img;
-                document.getElementById('storySec2Cap').textContent = link.dataset.sec2Cap;
-                document.getElementById('storyHeroImg').src = link.dataset.heroImg;
+                document.getElementById('mTitle').textContent = link.dataset.title;
+                document.getElementById('mCategory').textContent = link.dataset.category;
+                document.getElementById('mStatement').textContent = link.dataset.statement;
+                
+                document.getElementById('mSec1Title').textContent = link.dataset.sec1Title;
+                document.getElementById('mSec1Text').textContent = link.dataset.sec1Text;
+                document.getElementById('mSec1Img').src = link.dataset.sec1Img;
+                document.getElementById('mSec1Cap').textContent = link.dataset.sec1Cap;
 
-                storyContainer.classList.add('active');
+                document.getElementById('mSec2Title').textContent = link.dataset.sec2Title;
+                document.getElementById('mSec2Text').textContent = link.dataset.sec2Text;
+                document.getElementById('mSec2Img').src = link.dataset.sec2Img;
+                document.getElementById('mSec2Cap').textContent = link.dataset.sec2Cap;
+
+                document.getElementById('mHeroImg').src = link.dataset.heroImg;
+
+                storyModal.classList.add('active');
                 document.body.classList.add('story-active');
-                storyContainer.scrollTop = 0;
             });
         });
 
-        const closeStoryModal = () => {
-            storyContainer.classList.remove('active');
+        closeStoryBtn.addEventListener('click', () => {
+            storyModal.classList.remove('active');
             document.body.classList.remove('story-active');
-        };
-
-        closeStory.addEventListener('click', closeStoryModal);
-
-        // MODAL LIGHTBOX DE PROYECTOS Y GALERÍA
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryModalTitle = document.getElementById('galleryModalTitle');
-        const galleryModalImage = document.getElementById('galleryModalImage');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeGalleryModalBtn = document.getElementById('closeGalleryModal');
-        const galleryPrevBtn = document.getElementById('galleryPrevBtn');
-        const galleryNextBtn = document.getElementById('galleryNextBtn');
-
-        let currentGalleryImages = [];
-        let currentImageIndex = 0;
-
-        function updateGalleryImage() {
-            galleryModalImage.style.opacity = '0.3';
-            galleryModalImage.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                galleryModalImage.src = currentGalleryImages[currentImageIndex];
-                galleryCounter.textContent = `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
-                galleryModalImage.style.opacity = '1';
-                galleryModalImage.style.transform = 'scale(1)';
-            }, 150);
-        }
-
-        document.querySelectorAll('.project-gallery-trigger').forEach(card => {
-            card.addEventListener('click', () => {
-                const projectTitle = card.dataset.project;
-                try {
-                    currentGalleryImages = JSON.parse(card.dataset.images);
-                } catch(e) {
-                    currentGalleryImages = [card.querySelector('img').src];
-                }
-                currentImageIndex = 0;
-                galleryModalTitle.textContent = projectTitle;
-                updateGalleryImage();
-
-                galleryModal.classList.add('active');
-                document.body.classList.add('modal-active');
-            });
-        });
-
-        const closeGallery = () => {
-            galleryModal.classList.remove('active');
-            document.body.classList.remove('modal-active');
-        };
-
-        closeGalleryModalBtn.addEventListener('click', closeGallery);
-
-        galleryPrevBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-            updateGalleryImage();
-        });
-
-        galleryNextBtn.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-            updateGalleryImage();
-        });
-
-        // CONTROLES TECLADO (ESCAPE, FLECHAS NAVEGACIÓN)
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-                if (galleryModal.classList.contains('active')) closeGallery();
-                if (storyContainer.classList.contains('active')) closeStoryModal();
-            }
-            if (galleryModal.classList.contains('active')) {
-                if (e.key === 'ArrowRight') {
-                    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-                    updateGalleryImage();
-                } else if (e.key === 'ArrowLeft') {
-                    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-                    updateGalleryImage();
-                }
-            }
         });
     </script>
 </body>
