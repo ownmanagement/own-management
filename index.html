@@ -202,7 +202,22 @@
             transform: translateY(0);
         }
 
-        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
+        .logo { 
+            font-size: 0.95rem; 
+            font-weight: 800; 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            color: #111111; 
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        .logo:hover { opacity: 0.6; }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
         .mode-switch-bar {
             display: flex;
@@ -231,6 +246,34 @@
             background-color: #111111;
             color: #ffffff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* SELECTOR DE IDIOMA */
+        .lang-switch-bar {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px 8px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            gap: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #777777;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn.active {
+            background-color: #111111;
+            color: #ffffff;
         }
 
         /* VISTAS PRINCIPALES */
@@ -300,49 +343,67 @@
         .story-card-excerpt { font-size: 1.1rem; line-height: 1.8; color: #444444; font-weight: 300; margin-bottom: 20px; max-width: 850px; }
         .story-read-more { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #111111; display: inline-flex; align-items: center; gap: 8px; }
 
-        /* SECCIÓN PROYECTOS */
+        /* SECCIÓN PROYECTOS (MÚLTIPLES IMÁGENES POR PROYECTO) */
         .view-visuals-layout {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .visual-card-item {
+        .visual-project-block {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 20px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 80px;
         }
 
-        .visual-card-img {
-            width: 100%;
-            height: 60vh;
-            min-height: 350px;
-            overflow: hidden;
-            background-color: #f2f2f2;
-            position: relative;
-        }
+        .visual-project-block:last-child { border-bottom: none; }
 
-        .visual-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .visual-card-item:hover .visual-card-img img {
-            transform: scale(1.04);
-        }
-
-        .visual-card-info {
+        .visual-project-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-top: 6px;
         }
 
-        .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
+        .visual-project-header h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .project-multi-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            height: 55vh;
+            min-height: 400px;
+        }
+
+        .grid-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f2f2f2;
+        }
+
+        .grid-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+            filter: grayscale(20%);
+        }
+
+        .grid-img-wrapper:hover img {
+            transform: scale(1.04);
+            filter: grayscale(0%);
+        }
 
         /* SECCIÓN ESTUDIO */
         .view-about-layout {
@@ -508,11 +569,11 @@
         /* CONTROL DE VISIBILIDAD DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: flex; }
-        body.mode-visual-active .view-visuals-layout { display: grid; }
+        body.mode-visual-active .view-visuals-layout { display: flex; }
         body.mode-about-active .view-about-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
 
-        /* MODAL GALERÍA FOTOGRÁFICA */
+        /* MODAL GALERÍA FOTOGRÁFICA A PANTALLA COMPLETA */
         .gallery-modal-container {
             position: fixed;
             top: 0;
@@ -520,7 +581,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background-color: #000000;
+            background-color: #0d0d0d;
             z-index: 7000;
             opacity: 0;
             pointer-events: none;
@@ -575,7 +636,7 @@
             max-height: 75vh;
             object-fit: contain;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .gallery-nav-btn {
@@ -784,19 +845,17 @@
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-            .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .project-multi-grid { grid-template-columns: 1fr; height: auto; }
+            .grid-img-wrapper { height: 350px; }
             .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
-            .story-hero-frame { height: 45vh; min-height: 280px; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 12px; padding: 14px 5%; }
-            .mode-switch-bar { width: 100%; justify-content: center; flex-wrap: wrap; }
-            .mode-btn { flex: 1; text-align: center; padding: 6px 12px; }
-            .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
-            .visual-card-img { height: 45vh; }
+            .header-controls { width: 100%; justify-content: space-between; }
+            .mode-switch-bar { flex: 1; justify-content: center; }
             .story-header-cover { height: 50vh; }
             .story-hero-frame { height: 35vh; min-height: 250px; }
             .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
@@ -817,10 +876,10 @@
                 <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title">MEMORIAS</h2>
-                <p class="split-desc">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
+                <h2 class="split-title" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
+                <p class="split-desc" data-es="El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, els fonaments i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
                 <div class="split-action">
-                    VER MEMORIAS
+                    <span data-es="VER MEMORIAS" data-cat="VEURE MEMÒRIES">VER MEMORIAS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
@@ -832,46 +891,44 @@
                 <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title">PROYECTOS</h2>
-                <p class="split-desc">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
+                <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
+                <p class="split-desc" data-es="Una experiencia limpia, directa y contemplativa a través de la fotografía final." data-cat="Una experiència neta, directa i contemplativa a través de la fotografia final.">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
                 <div class="split-action">
-                    EXPLORAR GALERÍA
+                    <span data-es="EXPLORAR GALERÍA" data-cat="EXPLORAR GALERIA">EXPLORAR GALERÍA</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
         </div>
     </section>
 
-
-<header class="main-header">
-  <!-- 1. Enlace al Inicio en el Logo -->
-  <a href="#" id="brand-logo" class="brand-link">OWN ARCHITECTURE</a>
-
-  <nav class="main-nav">
-    <!-- Enlaces de navegación con atributos de idioma -->
-    <a href="#" class="nav-link" data-section="proyectos" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</a>
-    <a href="#" class="nav-link" data-section="estudio" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</a>
-    <a href="#" class="nav-link" data-section="contacto" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</a>
-    
-    <!-- 2. Selector de Idioma -->
-    <div class="lang-selector">
-      <button class="lang-btn active" data-lang="es">ES</button>
-      <span>|</span>
-      <button class="lang-btn" data-lang="cat">CAT</button>
-    </div>
-  </nav>
-</header>
+    <!-- HEADER / NAVEGACIÓN CON LOGO INTERACTIVO Y IDIOMAS -->
+    <header id="mainHeader">
+        <a href="#" class="logo" id="brandLogo">OWN ARCHITECTURE</a>
+        <div class="header-controls">
+            <div class="mode-switch-bar">
+                <button class="mode-btn active" id="btnModeStories" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</button>
+                <button class="mode-btn" id="btnModeVisuals" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
+                <button class="mode-btn" id="btnModeAbout" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
+                <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
+            </div>
+            <div class="lang-switch-bar">
+                <button class="lang-btn active" id="langEs">ES</button>
+                <span>|</span>
+                <button class="lang-btn" id="langCat">CAT</button>
+            </div>
+        </div>
+    </header>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="main-view-container">
         <section class="gallery-section">
             <div class="gallery-header">
-                <h2 id="galleryModeTitle">MEMORIAS</h2>
-                <span class="mono-tag" id="galleryModeTag">RELATOS Y CONCEPTOS</span>
+                <h2 id="galleryModeTitle" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
+                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y CONCEPTOS" data-cat="RELATS I CONCEPTES">RELATOS Y CONCEPTOS</span>
             </div>
             
             <!-- VISTA 1: MEMORIAS -->
-            <div class="view-stories-layout layout-block">
+              <div class="view-stories-layout layout-block">
                 
                 <article class="story-card-item story-link"
                          data-title="CASA INFINITA" 
@@ -995,97 +1052,101 @@
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (GALERÍA FOTOGRÁFICA) -->
+            <!-- VISTA 2: PROYECTOS (MÚLTIPLES IMÁGENES POR PROYECTO) -->
             <div class="view-visuals-layout layout-block">
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita">
-                    </div>
-                    <div class="visual-card-info">
+                
+                <!-- PROYECTO 1 -->
+                <div class="visual-project-block">
+                    <div class="visual-project-header">
                         <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA</span>
+                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
+                    </div>
+                    <div class="project-multi-grid">
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="0">
+                            <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Vista 1">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="1">
+                            <img src="img/miranda-6/miranda-2.jpg" alt="Casa Infinita Vista 2">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="2">
+                            <img src="img/miranda-6/miranda-6.jpg" alt="Casa Infinita Vista 3">
+                        </div>
                     </div>
                 </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU">
-                    </div>
-                    <div class="visual-card-info">
+
+                <!-- PROYECTO 2 -->
+                <div class="visual-project-block">
+                    <div class="visual-project-header">
                         <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA</span>
+                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
+                    </div>
+                    <div class="project-multi-grid">
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="0">
+                            <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU Vista 1">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="1">
+                            <img src="img/biguesiriells/bigues-2.jpg" alt="FUYU Vista 2">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="2">
+                            <img src="img/biguesiriells/bigues-4.jpg" alt="FUYU Vista 3">
+                        </div>
                     </div>
                 </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/havana48/havana1.jpg" alt="PASSACAGLIA">
-                    </div>
-                    <div class="visual-card-info">
+
+                <!-- PROYECTO 3 -->
+                <div class="visual-project-block">
+                    <div class="visual-project-header">
                         <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">BARCELONA</span>
+                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
+                    </div>
+                    <div class="project-multi-grid">
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana4.jpg"]' data-index="0">
+                            <img src="img/havana48/havana1.jpg" alt="Passacaglia Vista 1">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana4.jpg"]' data-index="1">
+                            <img src="img/havana48/havana2.jpg" alt="Passacaglia Vista 2">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana4.jpg"]' data-index="2">
+                            <img src="img/havana48/havana4.jpg" alt="Passacaglia Vista 3">
+                        </div>
                     </div>
                 </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/mirador-42/mirador-3.jpg" alt="VILA CLARA">
-                    </div>
-                    <div class="visual-card-info">
+
+            </div>
+                    <!-- PROYECTO 4 -->
+                <div class="visual-project-block">
+                    <div class="visual-project-header">
                         <h3>VILA CLARA</h3>
-                        <span class="mono-tag">BARCELONA</span>
+                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
                     </div>
-                         </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/clarodeluz/clarodeluz-1.jpg" alt="CLARO DE LUZ">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLARO DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                    </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/miranda4/miranda4-1.jpg" alt="BRISA DE LUZ">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                     </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/reivissa/reivissa-1.jpg" alt="BRISA DEL ALBA">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DEL ALBA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                     </div>
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/JP/jp1.jpg" alt="CLAROSCURO">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">BARCELONA</span>
+                    <div class="project-multi-grid">
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-5.jpg", "img/mirador-42/mirador-4.jpg"]' data-index="0">
+                            <img src="img/mirador-42/mirador-1.jpg" alt="Vila Clara Vista 1">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-5.jpg", "img/mirador-42/mirador-4.jpg"]' data-index="1">
+                            <img src="img/mirador-42/mirador-4.jpg" alt="Vila Clara Vista 2">
+                        </div>
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/mirador-42/mirador-1.jpg", "img/mirador-42/mirador-5.jpg", "iimg/mirador-42/mirador-4.jpg"]' data-index="2">
+                            <img src="img/mirador-42/mirador-5.jpg" alt="Vila Clara Vista 3">
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- VISTA 3: SOBRE EL ESTUDIO -->
             <div class="view-about-layout layout-block">
-                <p class="about-statement">
+                <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
                     Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
                 </p>
                 <div class="about-grid">
                     <div class="about-col">
-                        <h4>FILOSOFÍA</h4>
-                        <p>En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.</p>
-                        <p>Cada proyecto nace de un diálogo constante con las limitaciones del territorio y las dinámicas del habitar contemporáneo.</p>
+                        <h4 data-es="FILOSOFÍA" data-cat="FILOSOFIA">FILOSOFÍA</h4>
+                        <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals.">En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva.</p>
                     </div>
                     <div class="about-col">
-                        <h4>MÉTODO DE TRABAJO</h4>
-                        <p>Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
-                        <p>Inspirados por una sensibilidad minimalista y tectónica, materializamos estructuras duraderas con vocación escultórica.</p>
+                        <h4 data-es="MÉTODO DE TRABAJO" data-cat="MÈTODE DE TREBALL">MÉTODO DE TRABAJO</h4>
+                        <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
                     </div>
                 </div>
                 <div class="about-image">
@@ -1096,46 +1157,54 @@
             <!-- VISTA 4: CONTACTO -->
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
-                    <h3>HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
-                    <p>Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
+                    <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
+                    <p data-es="Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales." data-cat="Estem disponibles per a encàrrecs, col·laboracions i consultes arquitectòniques internacionals.">Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
                     
                     <div class="contact-detail-item">
-                        <label>UBICACIÓN</label>
+                        <label data-es="UBICACIÓN" data-cat="UBICACIÓ">UBICACIÓN</label>
                         <p>Barcelona, España</p>
                     </div>
                     <div class="contact-detail-item">
                         <label>EMAIL</label>
                         <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
                     </div>
-                    <div class="contact-detail-item">
-                        <label>TELÉFONO</label>
-                        <p>+34 930 000 000</p>
-                    </div>
                 </div>
 
-                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado correctamente.');">
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado.');">
                     <div class="form-group">
-                        <label>NOMBRE COMPLETO</label>
+                        <label data-es="NOMBRE COMPLETO" data-cat="NOM SENCER">NOMBRE COMPLETO</label>
                         <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
-                        <label>CORREO ELECTRÓNICO</label>
+                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÓNICO</label>
                         <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
-                        <label>ASUNTO / PROYECTO</label>
-                        <input type="text" placeholder="Ej. Residencia Unifamiliar">
+                        <label data-es="MENSAJE" data-cat="MISSATGE">MENSAJE</label>
+                        <textarea rows="4" placeholder="..." required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>MENSAJE</label>
-                        <textarea rows="4" placeholder="Describe brevemente la idea o necesidad del proyecto..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">ENVIAR MENSAJE</button>
+                    <button type="submit" class="submit-btn" data-es="ENVIAR MENSAJE" data-cat="ENVIAR MISSATGE">ENVIAR MENSAJE</button>
                 </form>
             </div>
 
         </section>
     </main>
+
+    <!-- MODAL VISOR DE FOTOGRAFÍAS PROYECTOS -->
+    <div class="gallery-modal-container" id="visualModal">
+        <div class="gallery-modal-header">
+            <span class="gallery-modal-title">OWN ARCHITECTURE</span>
+            <button class="gallery-modal-close" id="closeVisualModal">&times; CERRAR</button>
+        </div>
+        <div class="gallery-modal-stage">
+            <button class="gallery-nav-btn gallery-nav-prev" id="prevGalleryImg">&larr;</button>
+            <img id="galleryModalImg" src="" alt="Fotografía ampliación">
+            <button class="gallery-nav-btn gallery-nav-next" id="nextGalleryImg">&rarr;</button>
+        </div>
+        <div class="gallery-modal-footer">
+            <span class="gallery-counter" id="galleryCounter">1 / 3</span>
+        </div>
+    </div>
 
     <!-- MODAL DE MEMORIA EDITORIAL -->
     <div class="story-container" id="storyModal">
@@ -1172,9 +1241,11 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <!-- SCRIPT INTERACTIVO INTEGRADO -->
     <script>
-        // CURSOR PERSONALIZADO
+        let currentLang = 'es';
+
+        // 1. CURSOR PERSONALIZADO
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -1182,14 +1253,23 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-card-item, .visual-card-item, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-card-item, .grid-img-wrapper, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
 
-        // CONTROL DE SPLIT INITIAL
+        // 2. RETORNO AL INICIO (LOGO CLICK)
+        const brandLogo = document.getElementById('brandLogo');
         const entrySplit = document.getElementById('entrySplit');
+
+        brandLogo.addEventListener('click', (e) => {
+            e.preventDefault();
+            entrySplit.classList.remove('hidden');
+            document.body.classList.remove('content-active');
+        });
+
+        // SPLIT INICIAL CLICK
         const selectStories = document.getElementById('selectStories');
         const selectVisuals = document.getElementById('selectVisuals');
 
@@ -1202,7 +1282,30 @@
         selectStories.addEventListener('click', () => activateContent('stories'));
         selectVisuals.addEventListener('click', () => activateContent('visuals'));
 
-        // CONMUTACIÓN DE SECCIONES (NAVEGACIÓN)
+        // 3. CAMBIO DE IDIOMA (ESPAÑOL / CATALÀ)
+        const langEsBtn = document.getElementById('langEs');
+        const langCatBtn = document.getElementById('langCat');
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            if (lang === 'es') {
+                langEsBtn.classList.add('active');
+                langCatBtn.classList.remove('active');
+            } else {
+                langCatBtn.classList.add('active');
+                langEsBtn.classList.remove('active');
+            }
+
+            // Traducir todos los elementos con atributos data-es y data-cat
+            document.querySelectorAll('[data-es]').forEach(elem => {
+                elem.textContent = elem.getAttribute(`data-${lang}`);
+            });
+        }
+
+        langEsBtn.addEventListener('click', () => setLanguage('es'));
+        langCatBtn.addEventListener('click', () => setLanguage('cat'));
+
+        // CONMUTACIÓN DE SECCIONES
         const btnStories = document.getElementById('btnModeStories');
         const btnVisuals = document.getElementById('btnModeVisuals');
         const btnAbout = document.getElementById('btnModeAbout');
@@ -1221,24 +1324,25 @@
             if (mode === 'stories') {
                 document.body.classList.add('mode-stories-active');
                 btnStories.classList.add('active');
-                titleHeader.textContent = 'MEMORIAS';
-                tagHeader.textContent = 'RELATOS Y CONCEPTOS';
+                titleHeader.setAttribute('data-es', 'MEMORIAS'); titleHeader.setAttribute('data-cat', 'MEMÒRIES');
+                tagHeader.setAttribute('data-es', 'RELATOS Y CONCEPTOS'); tagHeader.setAttribute('data-cat', 'RELATS I CONCEPTES');
             } else if (mode === 'visuals') {
                 document.body.classList.add('mode-visual-active');
                 btnVisuals.classList.add('active');
-                titleHeader.textContent = 'PROYECTOS';
-                tagHeader.textContent = 'GALERÍA FOTOGRÁFICA';
+                titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
+                tagHeader.setAttribute('data-es', 'GALERÍA FOTOGRÁFICA'); tagHeader.setAttribute('data-cat', 'GALERIA FOTOGRÀFICA');
             } else if (mode === 'about') {
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
-                titleHeader.textContent = 'EL ESTUDIO';
-                tagHeader.textContent = 'FILOSOFÍA Y EQUIPO';
+                titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y EQUIPO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I EQUIP');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
-                titleHeader.textContent = 'CONTACTO';
-                tagHeader.textContent = 'CONSULTAS Y PROYECTOS';
+                titleHeader.setAttribute('data-es', 'CONTACTO'); titleHeader.setAttribute('data-cat', 'CONTACTE');
+                tagHeader.setAttribute('data-es', 'CONSULTAS Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'CONSULTES I PROJECTES');
             }
+            setLanguage(currentLang);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1247,7 +1351,44 @@
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // Cargar Modal de Memorias
+        // 4. MODAL VISOR FOTOGRÁFICO DE PROYECTOS
+        const visualModal = document.getElementById('visualModal');
+        const galleryModalImg = document.getElementById('galleryModalImg');
+        const galleryCounter = document.getElementById('galleryCounter');
+        const closeVisualModal = document.getElementById('closeVisualModal');
+        const prevGalleryImg = document.getElementById('prevGalleryImg');
+        const nextGalleryImg = document.getElementById('nextGalleryImg');
+
+        let activeImageArray = [];
+        let activeImageIndex = 0;
+
+        document.querySelectorAll('.visual-modal-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                activeImageArray = JSON.parse(trigger.getAttribute('data-images'));
+                activeImageIndex = parseInt(trigger.getAttribute('data-index'));
+                updateGalleryModal();
+                visualModal.classList.add('active');
+            });
+        });
+
+        function updateGalleryModal() {
+            galleryModalImg.src = activeImageArray[activeImageIndex];
+            galleryCounter.textContent = `${activeImageIndex + 1} / ${activeImageArray.length}`;
+        }
+
+        prevGalleryImg.addEventListener('click', () => {
+            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
+            updateGalleryModal();
+        });
+
+        nextGalleryImg.addEventListener('click', () => {
+            activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
+            updateGalleryModal();
+        });
+
+        closeVisualModal.addEventListener('click', () => visualModal.classList.remove('active'));
+
+        // 5. MODAL DE MEMORIAS CON SOPORTE BILINGÜE
         const storyLinks = document.querySelectorAll('.story-link');
         const storyModal = document.getElementById('storyModal');
         const closeStoryBtn = document.getElementById('closeStoryBtn');
@@ -1256,15 +1397,15 @@
             link.addEventListener('click', () => {
                 document.getElementById('mTitle').textContent = link.dataset.title;
                 document.getElementById('mCategory').textContent = link.dataset.category;
-                document.getElementById('mStatement').textContent = link.dataset.statement;
                 
-                document.getElementById('mSec1Title').textContent = link.dataset.sec1Title;
-                document.getElementById('mSec1Text').textContent = link.dataset.sec1Text;
+                document.getElementById('mStatement').textContent = link.getAttribute(`data-statement-${currentLang}`);
+                document.getElementById('mSec1Title').textContent = link.getAttribute(`data-sec1-title-${currentLang}`);
+                document.getElementById('mSec1Text').textContent = link.getAttribute(`data-sec1-text-${currentLang}`);
                 document.getElementById('mSec1Img').src = link.dataset.sec1Img;
                 document.getElementById('mSec1Cap').textContent = link.dataset.sec1Cap;
 
-                document.getElementById('mSec2Title').textContent = link.dataset.sec2Title;
-                document.getElementById('mSec2Text').textContent = link.dataset.sec2Text;
+                document.getElementById('mSec2Title').textContent = link.getAttribute(`data-sec2-title-${currentLang}`);
+                document.getElementById('mSec2Text').textContent = link.getAttribute(`data-sec2-text-${currentLang}`);
                 document.getElementById('mSec2Img').src = link.dataset.sec2Img;
                 document.getElementById('mSec2Cap').textContent = link.dataset.sec2Cap;
 
