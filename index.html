@@ -842,16 +842,25 @@
         </div>
     </section>
 
-    <!-- HEADER / NAVEGACIÓN -->
-    <header id="mainHeader">
-        <div class="logo" id="brandLogo">OWN ARCHITECTURE</div>
-        <div class="mode-switch-bar">
-            <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
-            <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
-            <button class="mode-btn" id="btnModeAbout">ESTUDIO</button>
-            <button class="mode-btn" id="btnModeContact">CONTACTO</button>
-        </div>
-    </header>
+
+<header class="main-header">
+  <!-- 1. Enlace al Inicio en el Logo -->
+  <a href="#" id="brand-logo" class="brand-link">OWN ARCHITECTURE</a>
+
+  <nav class="main-nav">
+    <!-- Enlaces de navegación con atributos de idioma -->
+    <a href="#" class="nav-link" data-section="proyectos" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</a>
+    <a href="#" class="nav-link" data-section="estudio" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</a>
+    <a href="#" class="nav-link" data-section="contacto" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</a>
+    
+    <!-- 2. Selector de Idioma -->
+    <div class="lang-selector">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span>|</span>
+      <button class="lang-btn" data-lang="cat">CAT</button>
+    </div>
+  </nav>
+</header>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="main-view-container">
