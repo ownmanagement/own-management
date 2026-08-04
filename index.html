@@ -104,20 +104,9 @@
             border-right: none;
         }
 
-        .split-pane.pane-stories {
-            background-color: #0d0d0d;
-            color: #ffffff;
-        }
-
-        .split-pane.pane-method {
-            background-color: #141414;
-            color: #ffffff;
-        }
-
-        .split-pane.pane-studio {
-            background-color: #1a1a1a;
-            color: #ffffff;
-        }
+        .split-pane.pane-stories { background-color: #0d0d0d; color: #ffffff; }
+        .split-pane.pane-method { background-color: #141414; color: #ffffff; }
+        .split-pane.pane-studio { background-color: #1a1a1a; color: #ffffff; }
 
         .pane-bg {
             position: absolute;
@@ -132,7 +121,6 @@
             z-index: 1;
         }
         
-        /* Rutas absolutas relativas a la raíz para GitHub Pages */
         .pane-stories .pane-bg { background-image: url('./img/croquis.jpg'); }
         .pane-method .pane-bg { background-image: url('./img/passacaglia2.jpg'); }
         .pane-studio .pane-bg { background-image: url('./img/HAVANA%2048.jpg'); }
@@ -307,7 +295,7 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN MEMORIAS (CON SLIDER INTERNO FLUIDO) */
+        /* VISTA 1: MEMORIAS (SLIDER FLUIDO) */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
@@ -339,7 +327,6 @@
             text-transform: uppercase;
         }
 
-        /* CONTENEDOR FLUIDO INTERNO (SLIDER DE MEMORIA) */
         .story-fluid-container {
             position: relative;
             width: 100%;
@@ -404,7 +391,6 @@
             max-height: 500px;
         }
 
-        /* NAVEGADOR INTERNO DE CADA MEMORIA */
         .story-fluid-nav {
             display: flex;
             justify-content: space-between;
@@ -414,10 +400,7 @@
             border-top: 1px solid #e0e0e0;
         }
 
-        .story-nav-controls {
-            display: flex;
-            gap: 12px;
-        }
+        .story-nav-controls { display: flex; gap: 12px; }
 
         .story-nav-btn {
             background: #111111;
@@ -453,7 +436,70 @@
             margin-bottom: 10px;
         }
 
-        /* SECCIÓN ESTUDIO / SOBRE NOSOTROS */
+        /* VISTA 2: MÉTODO (NUEVO DISEÑO EN GRID DE ETAPAS / PILARES) */
+        .view-method-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .method-intro-banner {
+            font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+            font-weight: 300;
+            line-height: 1.4;
+            letter-spacing: -1px;
+            color: #111111;
+            border-left: 3px solid #111111;
+            padding-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        .method-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .method-step-card {
+            background-color: #fcfcfc;
+            border: 1px solid #eaeaea;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .method-step-card:hover {
+            transform: translateY(-4px);
+            border-color: #111111;
+        }
+
+        .method-step-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #888888;
+        }
+
+        .method-step-card h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: #111111;
+        }
+
+        .method-step-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #555555;
+            font-weight: 300;
+        }
+
+        /* VISTA 3: ESTUDIO / SOBRE NOSOTROS */
         .view-about-layout {
             max-width: 1100px;
             margin: 0 auto;
@@ -509,7 +555,7 @@
             filter: grayscale(100%);
         }
 
-        /* SECCIÓN CONTACTO */
+        /* VISTA 4: CONTACTO */
         .view-contact-layout {
             max-width: 1100px;
             margin: 0 auto;
@@ -534,9 +580,7 @@
             margin-bottom: 40px;
         }
 
-        .contact-detail-item {
-            margin-bottom: 30px;
-        }
+        .contact-detail-item { margin-bottom: 30px; }
 
         .contact-detail-item label {
             display: block;
@@ -555,17 +599,9 @@
             text-decoration: none;
         }
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
+        .contact-form { display: flex; flex-direction: column; gap: 30px; }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
 
         .form-group label {
             font-family: 'JetBrains Mono', monospace;
@@ -588,9 +624,7 @@
             transition: border-color 0.3s ease;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
-            border-bottom-color: #111111;
-        }
+        .form-group input:focus, .form-group textarea:focus { border-bottom-color: #111111; }
 
         .submit-btn {
             align-self: flex-start;
@@ -608,14 +642,12 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .submit-btn:hover {
-            background-color: #000000;
-            transform: scale(1.02);
-        }
+        .submit-btn:hover { background-color: #000000; transform: scale(1.02); }
 
         /* CONTROL DE VISIBILIDAD DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: flex; }
+        body.mode-method-active .view-method-layout { display: flex; }
         body.mode-about-active .view-about-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
 
@@ -629,7 +661,7 @@
             header { padding: 18px 5%; }
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 33vh; min-height: 33dvh; padding: 40px 8%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .method-steps-grid, .about-grid { grid-template-columns: 1fr; gap: 30px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
@@ -699,6 +731,7 @@
         <div class="header-controls">
             <div class="mode-switch-bar">
                 <button class="mode-btn active" id="btnModeStories" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</button>
+                <button class="mode-btn" id="btnModeMethod" data-es="MÉTODO" data-cat="MÈTODE">MÉTODO</button>
                 <button class="mode-btn" id="btnModeAbout" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
                 <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
             </div>
@@ -964,7 +997,54 @@
 
             </div>
 
-            <!-- VISTA 2: ESTUDIO / SOBRE NOSOTROS -->
+            <!-- VISTA 2: MÉTODO (NUEVO FORMATO DE PILARES / PROCESO) -->
+            <div class="view-method-layout layout-block">
+                <p class="method-intro-banner" 
+                   data-es="Entendemos el proyecto como un proceso sistemático donde la teoría, la materia y el contexto convergen en una solución única." 
+                   data-cat="Entenem el projecte com un procés sistemàtic on la teoria, la matèria i el context convergeixen en una solució única.">
+                    Entendemos el proyecto como un proceso sistemático donde la teoría, la materia y el contexto convergen en una solución única.
+                </p>
+
+                <div class="method-steps-grid">
+                    <div class="method-step-card">
+                        <span class="method-step-num">01 / ANÁLISIS</span>
+                        <h3 data-es="Lectura del Lugar" data-cat="Lectura del Lloc">Lectura del Lugar</h3>
+                        <p data-es="Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño."
+                           data-cat="Cada intervenció neix d'una atenta escolta de l'entorn. Estudiem la topografia, les normatives urbanístiques i les preexistències per transformar les limitacions en els eixos principals del disseny.">
+                            Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño.
+                        </p>
+                    </div>
+
+                    <div class="method-step-card">
+                        <span class="method-step-num">02 / CONCEPTO</span>
+                        <h3 data-es="Introspección Teórica" data-cat="Introspecció Teòrica">Introspección Teórica</h3>
+                        <p data-es="Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos."
+                           data-cat="Desenvolupament del relat conceptual de l'obra abans de traçar la primera línia. Busquem que la forma respongui a una necessitat espacial i atmosfèrica clara, fugint de artificis superfusos.">
+                            Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos.
+                        </p>
+                    </div>
+
+                    <div class="method-step-card">
+                        <span class="method-step-num">03 / MATERIALIDAD</span>
+                        <h3 data-es="Tectónica y Detalle" data-cat="Tectònica i Detall">Tectónica y Detalle</h3>
+                        <p data-es="La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales."
+                           data-cat="La materialitat defineix el caràcter de l'arquitectura. Seleccionem rigorosament cada element constructiu, textures i entrades de llum cenital per modelar espais atemporals.">
+                            La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales.
+                        </p>
+                    </div>
+
+                    <div class="method-step-card">
+                        <span class="method-step-num">04 / EJECUCIÓN</span>
+                        <h3 data-es="Dirección Técnica" data-cat="Direcció Tècnica">Dirección Técnica</h3>
+                        <p data-es="Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original."
+                           data-cat="Acompanyem el projecte des dels croquis inicials fins a la direcció tècnica d'obra, controlant de prop l'execució per garantir la màxima fidelitat al concepte original.">
+                            Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 3: ESTUDIO / SOBRE NOSOTROS -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
                     Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
@@ -975,7 +1055,7 @@
                         <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigurosa ejecución constructiva. Creemos en espacios donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais on la llum i l'ombra motllen atmosferes atemporals.">En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigurosa ejecución constructiva.</p>
                     </div>
                     <div class="about-col">
-                        <h4 data-es="MÉTODO DE TRABAJO" data-cat="MÈTODE DE TREBALL">MÉTODO DE TRABAJO</h4>
+                        <h4 data-es="IDENTIDAD" data-cat="IDENTITAT">IDENTIDAD</h4>
                         <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
                     </div>
                 </div>
@@ -984,7 +1064,7 @@
                 </div>
             </div>
 
-            <!-- VISTA 3: CONTACTO -->
+            <!-- VISTA 4: CONTACTO -->
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
                     <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
@@ -1006,7 +1086,7 @@
                         <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
-                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÒNIC</label>
+                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREU ELECTRÒNIC</label>
                         <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
@@ -1030,7 +1110,7 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .method-step-card, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -1056,7 +1136,7 @@
         }
 
         selectStories.addEventListener('click', () => activateContent('stories'));
-        selectMethod.addEventListener('click', () => activateContent('stories'));
+        selectMethod.addEventListener('click', () => activateContent('method'));
         selectStudio.addEventListener('click', () => activateContent('about'));
 
         const langEsBtn = document.getElementById('langEs');
@@ -1081,6 +1161,7 @@
         langCatBtn.addEventListener('click', () => setLanguage('cat'));
 
         const btnStories = document.getElementById('btnModeStories');
+        const btnMethod = document.getElementById('btnModeMethod');
         const btnAbout = document.getElementById('btnModeAbout');
         const btnContact = document.getElementById('btnModeContact');
 
@@ -1088,8 +1169,9 @@
         const tagHeader = document.getElementById('galleryModeTag');
 
         function switchMode(mode) {
-            document.body.classList.remove('mode-stories-active', 'mode-about-active', 'mode-contact-active');
+            document.body.classList.remove('mode-stories-active', 'mode-method-active', 'mode-about-active', 'mode-contact-active');
             btnStories.classList.remove('active');
+            btnMethod.classList.remove('active');
             btnAbout.classList.remove('active');
             btnContact.classList.remove('active');
 
@@ -1098,11 +1180,16 @@
                 btnStories.classList.add('active');
                 titleHeader.setAttribute('data-es', 'MEMORIAS Y PROYECTOS'); titleHeader.setAttribute('data-cat', 'MEMÒRIES I PROJECTES');
                 tagHeader.setAttribute('data-es', 'RELATOS Y FLUJO VISUAL'); tagHeader.setAttribute('data-cat', 'RELATS I FLUIX VISUAL');
+            } else if (mode === 'method') {
+                document.body.classList.add('mode-method-active');
+                btnMethod.classList.add('active');
+                titleHeader.setAttribute('data-es', 'MÉTODO DE TRABAJO'); titleHeader.setAttribute('data-cat', 'MÈTODE DE TREBALL');
+                tagHeader.setAttribute('data-es', 'PROCESO Y SISTEMA'); tagHeader.setAttribute('data-cat', 'PROCÉS I SISTEMA');
             } else if (mode === 'about') {
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
                 titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE');
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA E IDENTIDAD'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I IDENTITAT');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
@@ -1114,6 +1201,7 @@
         }
 
         btnStories.addEventListener('click', () => switchMode('stories'));
+        btnMethod.addEventListener('click', () => switchMode('method'));
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
