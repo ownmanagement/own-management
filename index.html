@@ -282,92 +282,113 @@
 
         .gallery-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1.5px; text-transform: uppercase; }
 
-        /* VISTA 1A: ÍNDICE DE PROYECTOS (TARJETAS LIMPIAS) */
-        .projects-grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 40px;
-            max-width: 1300px;
+        /* VISTA 1A: ÍNDICE DE PROYECTOS (GRAN FORMATO / LISTADO VERTICAL) */
+        .projects-list-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .project-card {
-            background: #fafafa;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #eaeaea;
+        .project-big-card {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 50px;
+            align-items: center;
             cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #eaeaea;
         }
 
-        .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+        .project-big-card:nth-child(even) {
+            grid-template-columns: 1fr 1.4fr;
         }
 
-        .project-card-thumb {
+        .project-big-card:nth-child(even) .project-big-thumb {
+            order: 2;
+        }
+
+        .project-big-card:nth-child(even) .project-big-info {
+            order: 1;
+        }
+
+        .project-big-thumb {
             width: 100%;
-            height: 280px;
+            height: clamp(380px, 45vw, 560px);
             overflow: hidden;
             background-color: #eaeaea;
+            border-radius: 4px;
         }
 
-        .project-card-thumb img {
+        .project-big-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .project-card:hover .project-card-thumb img {
+        .project-big-card:hover .project-big-thumb img {
             transform: scale(1.04);
         }
 
-        .project-card-info {
-            padding: 24px;
+        .project-big-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            flex-grow: 1;
-            justify-content: space-between;
+            gap: 20px;
         }
 
-        .project-card-info h3 {
-            font-size: 1.35rem;
+        .project-big-info h3 {
+            font-size: clamp(2rem, 3vw, 2.8rem);
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
             color: #111111;
+            line-height: 1.1;
         }
 
-        .project-card-desc {
-            font-size: 0.95rem;
-            line-height: 1.5;
+        .project-big-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
             color: #555555;
             font-weight: 300;
         }
 
-        .project-card-footer {
-            display: flex;
-            justify-content: space-between;
+        .project-big-action {
+            display: inline-flex;
             align-items: center;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #eee;
-        }
-
-        .project-card-link {
+            gap: 10px;
+            margin-top: 10px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 1.5px;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
             color: #111111;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        }
+
+        .project-big-action span {
+            position: relative;
+        }
+
+        .project-big-action span::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #111111;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .project-big-card:hover .project-big-action span::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* VISTA 1B: DETALLE INDIVIDUAL DE CADA PROYECTO */
@@ -731,6 +752,9 @@
             .about-grid { grid-template-columns: 1fr; gap: 24px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 40px; }
             .project-detail-meta-grid { grid-template-columns: 1fr; }
+            .project-big-card, .project-big-card:nth-child(even) { grid-template-columns: 1fr; gap: 24px; }
+            .project-big-card:nth-child(even) .project-big-thumb { order: 1; }
+            .project-big-card:nth-child(even) .project-big-info { order: 2; }
         }
 
         @media (max-width: 768px) {
@@ -815,88 +839,73 @@
                 <span class="mono-tag" id="galleryModeTag" data-es="SELECCIÓN DE OBRAS" data-cat="SELECCIÓ D'OBRES">SELECCIÓN DE OBRAS</span>
             </div>
             
-            <!-- VISTA 1: CONTENEDOR DE MEMORIAS (ÍNDICE + DETALLES INDIVIDUALES) -->
+            <!-- VISTA 1: CONTENEDOR DE MEMORIAS (Índice de gran formato + detalles individuales) -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- A) ÍNDICE GENERAL DE PROYECTOS (TARJETAS) -->
-                <div class="projects-grid-layout" id="projectsGrid">
+                <!-- A) ÍNDICE GENERAL DE PROYECTOS (GRAN FORMATO VERTICAL) -->
+                <div class="projects-list-layout" id="projectsList">
                     
-                    <!-- Tarjeta Proyecto 1 -->
-                    <div class="project-card" data-project="clarodeluz">
-                        <div class="project-card-thumb"><img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Casa Claro de Luz"></div>
-                        <div class="project-card-info">
-                            <div>
-                                <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                                <h3 style="margin-top: 6px;">CASA CLARO DE LUZ</h3>
-                                <p class="project-card-desc" data-es="Refugio sereno concebido mediante una gran plataforma continua que prioriza la luz y la calma." data-cat="Refugi serè concebut mitjançant una gran plataforma contínua que prioritza la llum i la calma.">Refugio sereno concebido mediante una gran plataforma continua que prioriza la luz y la calma.</p>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-link" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</span>
-                                <span class="mono-tag">01</span>
+                    <!-- Proyecto Grande 1 -->
+                    <div class="project-big-card" data-project="clarodeluz">
+                        <div class="project-big-thumb"><img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Casa Claro de Luz"></div>
+                        <div class="project-big-info">
+                            <span class="mono-tag">01 / RESIDENCIAL • BARCELONA</span>
+                            <h3>CASA CLARO DE LUZ</h3>
+                            <p class="project-big-desc" data-es="Refugio sereno concebido mediante una gran plataforma continua que prioriza la luz y la calma, integrando la normativa estricta en una ventaja de diseño paisajístico." data-cat="Refugi serè concebut mitjançant una gran plataforma contínua que prioritza la llum i la calma.">Refugio sereno concebido mediante una gran plataforma continua que prioriza la luz y la calma, integrando la normativa estricta en una ventaja de diseño paisajístico.</p>
+                            <div class="project-big-action">
+                                <span data-es="VER MEMORIA COMPLETA &rarr;" data-cat="VEURE MEMÒRIA COMPLETA &rarr;">VER MEMORIA COMPLETA &rarr;</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Proyecto 2 -->
-                    <div class="project-card" data-project="miranda6">
-                        <div class="project-card-thumb"><img src="./img/miranda-6/miranda-1.jpg" alt="Miranda 6"></div>
-                        <div class="project-card-info">
-                            <div>
-                                <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                                <h3 style="margin-top: 6px;">MIRANDA 6</h3>
-                                <p class="project-card-desc" data-es="Exploración formal orientada a maximizar las visuales lejanas y la integración en el entorno." data-cat="Exploració formal orientada a maximitzar les visuals llunyanes i la integració en l'entorn.">Exploración formal orientada a maximizar las visuales lejanas y la integración en el entorno.</p>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-link" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</span>
-                                <span class="mono-tag">02</span>
+                    <!-- Proyecto Grande 2 -->
+                    <div class="project-big-card" data-project="miranda6">
+                        <div class="project-big-thumb"><img src="./img/miranda-6/miranda-1.jpg" alt="Miranda 6"></div>
+                        <div class="project-big-info">
+                            <span class="mono-tag">02 / RESIDENCIAL • BARCELONA</span>
+                            <h3>MIRANDA 6</h3>
+                            <p class="project-big-desc" data-es="Exploración formal orientada a maximizar las visuales lejanas y la integración armónica en el entorno consolidado." data-cat="Exploració formal orientada a maximitzar les visuals llunyanes i la integració harmònica en l'entorn consolidat.">Exploración formal orientada a maximizar las visuales lejanas y la integración armónica en el entorno consolidado.</p>
+                            <div class="project-big-action">
+                                <span data-es="VER MEMORIA COMPLETA &rarr;" data-cat="VEURE MEMÒRIA COMPLETA &rarr;">VER MEMORIA COMPLETA &rarr;</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Proyecto 3 -->
-                    <div class="project-card" data-project="biguesiriells">
-                        <div class="project-card-thumb"><img src="./img/biguesiriells/bigues-1.jpg" alt="Bigues i Riells"></div>
-                        <div class="project-card-info">
-                            <div>
-                                <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                                <h3 style="margin-top: 6px;">BIGUES I RIELLS</h3>
-                                <p class="project-card-desc" data-es="Arquitectura en sintonía con el entorno natural, apostando por volúmenes rotundos y materiales del lugar." data-cat="Arquitectura en sintonia amb l'entorn natural, apostant per volums rotunds i materials del lloc.">Arquitectura en sintonía con el entorno natural, apostando por volúmenes rotundos y materiales del lugar.</p>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-link" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</span>
-                                <span class="mono-tag">03</span>
+                    <!-- Proyecto Grande 3 -->
+                    <div class="project-big-card" data-project="biguesiriells">
+                        <div class="project-big-thumb"><img src="./img/biguesiriells/bigues-1.jpg" alt="Bigues i Riells"></div>
+                        <div class="project-big-info">
+                            <span class="mono-tag">03 / RESIDENCIAL • BARCELONA</span>
+                            <h3>BIGUES I RIELLS</h3>
+                            <p class="project-big-desc" data-es="Arquitectura en sintonía con el entorno natural, apostando por volúmenes rotundos y materiales del lugar." data-cat="Arquitectura en sintonia amb l'entorn natural, apostant per volums rotunds i materials del lloc.">Arquitectura en sintonía con el entorno natural, apostando por volúmenes rotundos y materiales del lugar.</p>
+                            <div class="project-big-action">
+                                <span data-es="VER MEMORIA COMPLETA &rarr;" data-cat="VEURE MEMÒRIA COMPLETA &rarr;">VER MEMORIA COMPLETA &rarr;</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Proyecto 4 -->
-                    <div class="project-card" data-project="havana48">
-                        <div class="project-card-thumb"><img src="./img/havana48/havana1.jpg" alt="Havana 48"></div>
-                        <div class="project-card-info">
-                            <div>
-                                <span class="mono-tag">REHABILITACIÓN • BARCELONA</span>
-                                <h3 style="margin-top: 6px;">HAVANA 48</h3>
-                                <p class="project-card-desc" data-es="Intervención contemporánea en contexto consolidado, revalorizando la estructura original." data-cat="Intervenció contemporània en context consolidat, revaloritzant l'estructura original.">Intervención contemporánea en contexto consolidado, revalorizando la estructura original.</p>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-link" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</span>
-                                <span class="mono-tag">04</span>
+                    <!-- Proyecto Grande 4 -->
+                    <div class="project-big-card" data-project="havana48">
+                        <div class="project-big-thumb"><img src="./img/havana48/havana1.jpg" alt="Havana 48"></div>
+                        <div class="project-big-info">
+                            <span class="mono-tag">04 / REHABILITACIÓN • BARCELONA</span>
+                            <h3>HAVANA 48</h3>
+                            <p class="project-big-desc" data-es="Intervención contemporánea en contexto consolidado, revalorizando la estructura original con un lenguaje limpio y honesto." data-cat="Intervenció contemporània en context consolidat, revaloritzant l'estructura original amb un llenguatge net i honest.">Intervención contemporánea en contexto consolidado, revalorizando la estructura original con un lenguaje limpio y honesto.</p>
+                            <div class="project-big-action">
+                                <span data-es="VER MEMORIA COMPLETA &rarr;" data-cat="VEURE MEMÒRIA COMPLETA &rarr;">VER MEMORIA COMPLETA &rarr;</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Proyecto 5 -->
-                    <div class="project-card" data-project="jp">
-                        <div class="project-card-thumb"><img src="./img/JP/jp1.jpg" alt="Proyecto JP"></div>
-                        <div class="project-card-info">
-                            <div>
-                                <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                                <h3 style="margin-top: 6px;">PROYECTO JP</h3>
-                                <p class="project-card-desc" data-es="Investigación sobre la sección arquitectónica y la permeabilidad visual." data-cat="Investigació sobre la secció arquitectònica i la permeabilitat visual.">Investigación sobre la sección arquitectónica y la permeabilidad visual.</p>
-                            </div>
-                            <div class="project-card-footer">
-                                <span class="project-card-link" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</span>
-                                <span class="mono-tag">05</span>
+                    <!-- Proyecto Grande 5 -->
+                    <div class="project-big-card" data-project="jp">
+                        <div class="project-big-thumb"><img src="./img/JP/jp1.jpg" alt="Proyecto JP"></div>
+                        <div class="project-big-info">
+                            <span class="mono-tag">05 / RESIDENCIAL • BARCELONA</span>
+                            <h3>PROYECTO JP</h3>
+                            <p class="project-big-desc" data-es="Investigación sobre la sección arquitectónica y la permeabilidad visual entre los diferentes niveles de la casa." data-cat="Investigació sobre la secció arquitectònica i la permeabilitat visual entre els diferents nivells de la casa.">Investigación sobre la sección arquitectónica y la permeabilidad visual entre los diferentes niveles de la casa.</p>
+                            <div class="project-big-action">
+                                <span data-es="VER MEMORIA COMPLETA &rarr;" data-cat="VEURE MEMÒRIA COMPLETA &rarr;">VER MEMORIA COMPLETA &rarr;</span>
                             </div>
                         </div>
                     </div>
@@ -1322,8 +1331,7 @@
             btnAbout.classList.remove('active');
             btnContact.classList.remove('active');
 
-            // Al cambiar de sección general, restablecemos la vista de proyectos al índice por defecto
-            showProjectGrid();
+            showProjectList();
 
             if (mode === 'stories') {
                 document.body.classList.add('mode-stories-active');
@@ -1355,15 +1363,15 @@
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // Sistema de navegación para tarjetas e individuales
-        const projectsGrid = document.getElementById('projectsGrid');
-        const projectCards = document.querySelectorAll('.project-card');
+        // Sistema de navegación para tarjetas de gran formato e individuales
+        const projectsList = document.getElementById('projectsList');
+        const projectBigCards = document.querySelectorAll('.project-big-card');
         const detailViews = document.querySelectorAll('.single-project-view');
 
-        projectCards.forEach(card => {
+        projectBigCards.forEach(card => {
             card.addEventListener('click', () => {
                 const targetProj = card.getAttribute('data-project');
-                projectsGrid.style.display = 'none';
+                projectsList.style.display = 'none';
                 
                 detailViews.forEach(v => v.classList.remove('active'));
                 const activeDetail = document.getElementById(`detail-${targetProj}`);
@@ -1378,17 +1386,17 @@
             });
         });
 
-        function showProjectGrid() {
+        function showProjectList() {
             detailViews.forEach(v => v.classList.remove('active'));
-            projectsGrid.style.display = 'grid';
-            tagHeader.setAttribute('data-es', 'SELECCIÓN DE Obras');
+            projectsList.style.display = 'flex';
+            tagHeader.setAttribute('data-es', 'SELECCIÓN DE OBRAS');
             tagHeader.setAttribute('data-cat', "SELECCIÓ D'OBRES");
             setLanguage(currentLang);
         }
 
         document.querySelectorAll('.back-to-list-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                showProjectGrid();
+                showProjectList();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
