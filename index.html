@@ -67,7 +67,7 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (SPLIT LANDING) */
+        /* PANTALLA INICIAL (TRIPLE SPLIT / 3 COLUMNAS) */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -94,20 +94,29 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+            padding: clamp(50px, 8vh, 100px) 4% clamp(30px, 6vh, 60px) 4%;
             transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             overflow: hidden;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .split-pane:last-child {
+            border-right: none;
         }
 
         .split-pane.pane-stories {
             background-color: #0d0d0d;
             color: #ffffff;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .split-pane.pane-visuals {
-            background-color: #f7f7f7;
-            color: #111111;
+        .split-pane.pane-method {
+            background-color: #141414;
+            color: #ffffff;
+        }
+
+        .split-pane.pane-studio {
+            background-color: #1a1a1a;
+            color: #ffffff;
         }
 
         .pane-bg {
@@ -118,64 +127,66 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.3;
+            opacity: 0.25;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
             z-index: 1;
         }
         
-        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
-        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
+        /* Rutas absolutas relativas a la raíz para GitHub Pages */
+        .pane-stories .pane-bg { background-image: url('./img/croquis.jpg'); }
+        .pane-method .pane-bg { background-image: url('./img/passacaglia2.jpg'); }
+        .pane-studio .pane-bg { background-image: url('./img/HAVANA%2048.jpg'); }
 
         @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
-            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
-            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+            .entry-split-container:hover .split-pane { flex: 0.85; filter: brightness(0.55); }
+            .entry-split-container .split-pane:hover { flex: 1.45; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.45; }
         }
 
         .split-content-top { position: relative; z-index: 2; }
-        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+        .split-content-bottom { position: relative; z-index: 2; }
 
         .split-badge {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            padding: 6px 14px;
+            padding: 6px 12px;
             border-radius: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: #ffffff; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
 
         .split-title {
-            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-size: clamp(1.8rem, 3.2vw, 3.2rem);
             font-weight: 800;
-            line-height: 1;
-            letter-spacing: -1.5px;
+            line-height: 1.1;
+            letter-spacing: -1px;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
-        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
+        .split-desc { font-size: clamp(0.85rem, 1.1vw, 1rem); line-height: 1.5; font-weight: 300; opacity: 0.8; }
 
         .split-action {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 28px;
+            gap: 10px;
+            margin-top: 22px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
         }
 
-        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-        .split-pane:hover .split-action svg { transform: translateX(8px); }
+        .split-action svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+        .split-pane:hover .split-action svg { transform: translateX(6px); }
 
-        /* HEADER / NAVEGACIÓN */
+        /* HEADER / NAVEGACIÓN PRINCIPAL */
         header {
             position: fixed;
             top: 0;
@@ -186,7 +197,7 @@
             align-items: center;
             padding: 24px 6%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -273,7 +284,7 @@
             color: #ffffff;
         }
 
-        /* VISTAS PRINCIPALES */
+        /* CONTENEDOR DE VISTAS */
         .main-view-container {
             position: relative;
             width: 100%;
@@ -296,11 +307,11 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN MEMORIAS (EDITORIAL Y COMPLETA) */
+        /* SECCIÓN MEMORIAS (CON SLIDER INTERNO FLUIDO) */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
-            gap: 120px;
+            gap: 140px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -310,7 +321,7 @@
             flex-direction: column;
             gap: 32px;
             border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
 
         .story-item-card:last-child { border-bottom: none; }
@@ -328,190 +339,121 @@
             text-transform: uppercase;
         }
 
-        .story-hero-media {
+        /* CONTENEDOR FLUIDO INTERNO (SLIDER DE MEMORIA) */
+        .story-fluid-container {
+            position: relative;
             width: 100%;
-            height: 65vh;
-            min-height: 400px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
             overflow: hidden;
-            background-color: #f5f5f5;
+            border: 1px solid #eaeaea;
         }
 
-        .story-hero-media img {
+        .story-fluid-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+        }
+
+        .story-fluid-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 50px clamp(30px, 6vw, 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .slide-step-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: #888888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .story-fluid-slide h4 {
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #111111;
+        }
+
+        .story-fluid-slide p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333333;
+            font-weight: 300;
+            max-width: 850px;
+        }
+
+        .story-slide-media {
+            width: 100%;
+            max-height: 500px;
+            overflow: hidden;
+            margin-top: 10px;
+            background-color: #eaeaea;
+        }
+
+        .story-slide-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(15%);
-            transition: transform 0.6s ease;
+            max-height: 500px;
         }
 
-        .story-item-card:hover .story-hero-media img {
-            transform: scale(1.02);
-            filter: grayscale(0%);
+        /* NAVEGADOR INTERNO DE CADA MEMORIA */
+        .story-fluid-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px clamp(30px, 6vw, 80px);
+            background-color: #efefef;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .story-nav-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .story-nav-btn {
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .story-nav-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        .story-slide-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #666666;
         }
 
         .story-summary-text {
-            font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-            line-height: 1.5;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            line-height: 1.6;
             font-weight: 300;
-            color: #111111;
+            color: #222222;
             border-left: 3px solid #111111;
-            padding-left: 28px;
-            max-width: 950px;
-        }
-
-        .toggle-memory-btn {
-            align-self: flex-start;
-            background: none;
-            border: 1px solid #111111;
-            padding: 14px 32px;
-            border-radius: 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #111111;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .toggle-memory-btn:hover {
-            background-color: #111111;
-            color: #ffffff;
-        }
-
-        /* MEMORIA EXTENDIDA EDITORIAL DESPLEGABLE */
-        .story-full-details {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            background-color: #fafafa;
-            border-radius: 4px;
-        }
-
-        .story-full-details.open {
-            max-height: 4000px;
-            opacity: 1;
-            padding: 60px clamp(20px, 5vw, 60px);
-            margin-top: 20px;
-            border: 1px solid #eeeeee;
-        }
-
-        .story-chapter-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: #888888;
-            margin-bottom: 8px;
-            display: block;
-            letter-spacing: 1.5px;
-        }
-
-        .story-detail-block h4 {
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
-            font-weight: 800;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            color: #111111;
-        }
-
-        .story-detail-block p {
-            font-size: 1.1rem;
-            line-height: 1.85;
-            color: #333333;
-            font-weight: 300;
+            padding-left: 24px;
             max-width: 900px;
+            margin-bottom: 10px;
         }
 
-        .story-figure-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .story-figure-wrapper img {
-            width: 100%;
-            max-height: 550px;
-            object-fit: cover;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .story-caption {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #777777;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        /* SECCIÓN PROYECTOS (VISUAL) */
-        .view-visuals-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .visual-project-block {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 80px;
-        }
-
-        .visual-project-block:last-child { border-bottom: none; }
-
-        .visual-project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .visual-project-header h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-        }
-
-        .project-multi-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-            height: 55vh;
-            min-height: 400px;
-        }
-
-        .grid-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #f2f2f2;
-        }
-
-        .grid-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
-            filter: grayscale(20%);
-        }
-
-        .grid-img-wrapper:hover img {
-            transform: scale(1.04);
-            filter: grayscale(0%);
-        }
-
-        /* SECCIÓN ESTUDIO */
+        /* SECCIÓN ESTUDIO / SOBRE NOSOTROS */
         .view-about-layout {
             max-width: 1100px;
             margin: 0 auto;
@@ -674,113 +616,8 @@
         /* CONTROL DE VISIBILIDAD DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: flex; }
-        body.mode-visual-active .view-visuals-layout { display: flex; }
         body.mode-about-active .view-about-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
-
-        /* MODAL GALERÍA FOTOGRÁFICA DE PROYECTOS */
-        .gallery-modal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background-color: #0d0d0d;
-            z-index: 7000;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery-modal-container.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .gallery-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 6%;
-            z-index: 7001;
-            color: #ffffff;
-        }
-
-        .gallery-modal-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
-
-        .gallery-modal-close {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 22px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            border-radius: 30px;
-            transition: background 0.2s ease;
-        }
-
-        .gallery-modal-close:hover { background: #ffffff; color: #000000; }
-
-        .gallery-modal-stage {
-            position: relative;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 6%;
-            overflow: hidden;
-        }
-
-        .gallery-modal-stage img {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background 0.2s ease;
-            z-index: 7002;
-        }
-
-        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
-        .gallery-nav-prev { left: 4%; }
-        .gallery-nav-next { right: 4%; }
-
-        .gallery-modal-footer {
-            padding: 24px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ffffff;
-            z-index: 7001;
-        }
-
-        .gallery-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #888888;
-        }
 
         /* RESPONSIVE DESIGN */
         @media (pointer: coarse), (hover: none) {
@@ -791,10 +628,7 @@
         @media (max-width: 1024px) {
             header { padding: 18px 5%; }
             .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
-            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-            .project-multi-grid { grid-template-columns: 1fr; height: auto; }
-            .grid-img-wrapper { height: 350px; }
+            .split-pane { min-height: 33vh; min-height: 33dvh; padding: 40px 8%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
@@ -811,46 +645,60 @@
     <!-- CURSOR PERSONALIZADO -->
     <div id="custom-cursor"></div>
 
-    <!-- PANTALLA INICIAL (SPLIT LANDING) -->
+    <!-- PANTALLA INICIAL (TRIPLE SPLIT / 3 COLUMNAS) -->
     <section class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
+                <span class="split-badge">01 / CONCEPTOS</span>
             </div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
-                <p class="split-desc" data-es="El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, els fonaments i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
+                <p class="split-desc" data-es="El desarrollo teórico y la fluidez conceptual de cada obra." data-cat="El desenvolupament teòric i la fluidesa conceptual de cada obra.">El desarrollo teórico y la fluidez conceptual de cada obra.</p>
                 <div class="split-action">
-                    <span data-es="VER MEMORIAS" data-cat="VEURE MEMÒRIES">VER MEMORIAS</span>
+                    <span data-es="EXPLORAR" data-cat="EXPLORAR">EXPLORAR</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
         </div>
 
-        <div class="split-pane pane-visuals" id="selectVisuals">
+        <div class="split-pane pane-method" id="selectMethod">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
+                <span class="split-badge">02 / PROCESO</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
-                <p class="split-desc" data-es="Una experiencia limpia, directa y contemplativa a través de la fotografía final." data-cat="Una experiència neta, directa i contemplativa a través de la fotografia final.">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
+                <h2 class="split-title" data-es="MÉTODO" data-cat="MÈTODE">MÉTODO</h2>
+                <p class="split-desc" data-es="Cómo abordamos el diseño y la materialidad integral." data-cat="Com abordem el disseny i la materialitat integral.">Cómo abordamos el diseño y la materialidad integral.</p>
                 <div class="split-action">
-                    <span data-es="EXPLORAR GALERÍA" data-cat="EXPLORAR GALERIA">EXPLORAR GALERÍA</span>
+                    <span data-es="CONOCER" data-cat="CONÈIXER">CONOCER</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-pane pane-studio" id="selectStudio">
+            <div class="pane-bg"></div>
+            <div class="split-content-top">
+                <span class="split-badge">03 / IDENTIDAD</span>
+            </div>
+            <div class="split-content-bottom">
+                <h2 class="split-title" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h2>
+                <p class="split-desc" data-es="Filosofía, mirada y ubicación en Barcelona." data-cat="Filosofia, mirada i ubicació a Barcelona.">Filosofía, mirada y ubicación en Barcelona.</p>
+                <div class="split-action">
+                    <span data-es="VER MÁS" data-cat="VEURE MÉS">VER MÁS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HEADER CON REDIRECCIÓN AL INICIO Y IDIOMAS -->
+    <!-- HEADER DE NAVEGACIÓN PRINCIPAL -->
     <header id="mainHeader">
         <a href="#" class="logo" id="brandLogo">OWN ARCHITECTURE</a>
         <div class="header-controls">
             <div class="mode-switch-bar">
                 <button class="mode-btn active" id="btnModeStories" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</button>
-                <button class="mode-btn" id="btnModeVisuals" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
                 <button class="mode-btn" id="btnModeAbout" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
                 <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
             </div>
@@ -866,61 +714,67 @@
     <main class="main-view-container">
         <section class="gallery-section">
             <div class="gallery-header">
-                <h2 id="galleryModeTitle" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
-                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y CONCEPTOS" data-cat="RELATS I CONCEPTES">RELATOS Y CONCEPTOS</span>
+                <h2 id="galleryModeTitle" data-es="MEMORIAS Y PROYECTOS" data-cat="MEMÒRIES I PROJECTES">MEMORIAS Y PROYECTOS</h2>
+                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y FLUJO VISUAL" data-cat="RELATS I FLUIX VISUAL">RELATOS Y FLUJO VISUAL</span>
             </div>
             
-            <!-- VISTA 1: MEMORIAS (ESTRUCTURA EDITORIAL CONTEXTUALIZADA) -->
+            <!-- VISTA 1: MEMORIAS CON SLIDER INTERNO FLUIDO -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- PROYECTO 1: CASA INFINITA -->
+                <!-- PROYECTO 1: CASA CLARO DE LUZ -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>CASA CLARO DE LUZ</h3>
                         <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
                     </div>
-                    
-                    <div class="story-hero-media">
-                    <img src="img/croquis.jpg" 
-                            
-                            "alt="Casa Claro de luz Croquis">
-                    </div>
 
                     <p class="story-summary-text" data-es="Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro." data-cat="Es un refugi sereno, una vivienda que es repliega para que la luz y la calma ocupen el centro.">
                         Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro.
-
                     </p>
 
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Diálogo con la topografía" data-cat="Diàleg amb la topografia">Diálogo con la topografía</h4>
-                            <p data-es="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
-                               data-cat="La normativa urbanística, molt restrictiva quant a moviments de terra i creació de desnivells, va ser el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma contínua a la planta intermèdia, on s'ubica la zona de dia, basada amb un jardí elevat i una piscina infinita que s'estén sobre la coberta del nivell inferior.">
-                                La normativa urbanística, molt restrictiva quant a moviments de terra i creació de desnivells, va ser el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma contínua a la planta intermèdia, on s'ubica la zona de dia, basada amb un jardí elevat i una piscina infinita que s'estén sobre la coberta del nivell inferior.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/CLARODELUZ.jpg" alt="Voladizo principal">
-                                <span class="story-caption">FIG 01. VOLADIZO PRINCIPAL PROYECTADO SOBRE LA LADERA</span>
+                    <div class="story-fluid-container">
+                        <div class="story-fluid-track">
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">01 / CAPÍTULO I</span>
+                                <h4 data-es="Diálogo con la topografía" data-cat="Diàleg amb la topografia">Diálogo con la topografía</h4>
+                                <p data-es="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, con un jardín elevado y una piscina infinita sobre la coberta del nivel inferior."
+                                   data-cat="La normativa urbanística, molt restrictiva quant a moviments de terra i creació de desnivells, va ser el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma contínua a la planta intermèdia, on s'ubica la zona de dia, basada amb un jardí elevat i una piscina infinita.">
+                                    La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental: generar una gran plataforma continua en la planta intermedia.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/CLARODELUZ.jpg" alt="Voladizo principal">
+                                </div>
+                            </div>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">02 / CAPÍTULO II</span>
+                                <h4 data-es="Tectónica y luz cenital" data-cat="Tectònica i llum cenital">Tectónica y luz cenital</h4>
+                                <p data-es="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada hacia un horizonte sin fin."
+                                   data-cat="Un gran porxo cobert, sota el primer volum, perllonga aquest pla habitable, diluint els límits entre interior i exterior. Des de cada racó, els punts de fuga porten la mirada cap a un horitzó sense fi.">
+                                    Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada hacia un horizonte sin fin.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/miranda-6/miranda-2.jpg" alt="Detalle luz difusa">
+                                </div>
+                            </div>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">03 / FOTOGRAFÍA FINAL</span>
+                                <h4 data-es="Integración espacial" data-cat="Integració espacial">Integración espacial</h4>
+                                <p data-es="Vista general de la plataforma y su comunión directa con el paisaje circundante de Barcelona." data-cat="Vista general de la plataforma i la seva comunió directa amb el paisatge circumdant de Barcelona.">
+                                    Vista general de la plataforma y su comunión directa con el paisaje circundante de Barcelona.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Claro de luz exterior">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">02 / CAPÍTULO II</span>
-                            <h4 data-es="Tectónica y luz cenital" data-cat="Tectònica i llum cenital">Tectónica y luz cenital</h4>
-                            <p data-es="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
-                               data-cat="Un gran porxo cobert, sota el primer volum, perllonga aquest pla habitable, diluint els límits entre interior i exterior. Des de cada racó, els punts de fuga porten la mirada més enllà, cap a un horitzó sense fi.">
-                                Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/miranda-6/miranda-2.jpg" alt="Detalle luz difusa">
-                                <span class="story-caption">FIG 02. DETALLE DE LUZ DIFUSA Y TEXTURA</span>
+                        <div class="story-fluid-nav">
+                            <span class="story-slide-counter">1 / 3</span>
+                            <div class="story-nav-controls">
+                                <button class="story-nav-btn prev-slide-btn">&larr;</button>
+                                <button class="story-nav-btn next-slide-btn">&rarr;</button>
                             </div>
                         </div>
-
                     </div>
                 </article>
 
@@ -930,69 +784,87 @@
                         <h3>FUYU</h3>
                         <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
                     </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/HAVANA%2048.jpg" alt="FUYU Concepto">
-                    </div>
 
-                    <p class="story-summary-text" data-es="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores." data-cat="La cerca del silenci a través d'una massa meva que protegeix microuniversos de patis interiors.">
+                    <p class="story-summary-text" data-es="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores." data-cat="La cerca del silenci a través d'una massa que protegeix microuniversos de patis interiors.">
                         La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores.
                     </p>
 
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="La fachada como refugio" data-cat="La façana com a refugi">La fachada como refugio</h4>
-                            <p data-es="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado."
-                               data-cat="En un entorn urbà saturat, FUYU actua com un monòlit introspectiu. La façana manté el silenci cap al carrer orientant tota la ventilació cap al nucli.">
-                                En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/biguesiriells/bigues-1.jpg" alt="Fachada exterior">
-                                <span class="story-caption">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span>
+                    <div class="story-fluid-container">
+                        <div class="story-fluid-track">
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">01 / CAPÍTULO I</span>
+                                <h4 data-es="La fachada como refugio" data-cat="La façana com a refugi">La fachada como refugio</h4>
+                                <p data-es="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando la vida hacia el núcleo ajardinado."
+                                   data-cat="En un entorn urbà saturat, FUYU actua com un monòlit introspectiu. La façana manca d'obertures tradicionals cap al carrer, orientant la vida cap al nucli enjardinat.">
+                                    En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/biguesiriells/bigues-1.jpg" alt="Fachada exterior">
+                                </div>
                             </div>
-                             <div class="story-figure-wrapper">
-                                <img src="img/biguesiriells/bigues-3.jpg" alt="Fachada exterior">
-                                <span class="story-caption">FIG 02. DETALLE ARQUITECTURA SUSPENDIDA</span>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">02 / CAPÍTULO II</span>
+                                <h4 data-es="Estructura suspendida" data-cat="Estructura suspesa">Estructura suspendida</h4>
+                                <p data-es="Detalle constructivo de la arquitectura suspendida y la relación íntima con los patios interiores." data-cat="Detall constructiu de l'arquitectura suspesa i la relació íntima amb els patis interiors.">
+                                    Detalle constructivo de la arquitectura suspendida y la relación íntima con los patios interiores.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/biguesiriells/bigues-3.jpg" alt="Detalle arquitectura suspendida">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-fluid-nav">
+                            <span class="story-slide-counter">1 / 2</span>
+                            <div class="story-nav-controls">
+                                <button class="story-nav-btn prev-slide-btn">&larr;</button>
+                                <button class="story-nav-btn next-slide-btn">&rarr;</button>
                             </div>
                         </div>
                     </div>
                 </article>
 
-                <!-- PROYECTO 3: INFINITA-->
+                <!-- PROYECTO 3: INFINITA -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>INFINITA</h3>
                         <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
                     </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Infinita Detail">
-                    </div>
 
-                    <p class="story-summary-text" data-es="Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Una casa on la arquitectura es converteix en paisatge, i el paisatge en part essencial de l'habitar.">
+                    <p class="story-summary-text" data-es="La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado." data-cat="La casa s'articula en tres volums esglaonats que permeten maximitzar l'espai enjardinat.">
                         La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado.
                     </p>
 
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Sutileza en la materia" data-cat="Subtilesa en la matèria">Sutileza en la materia</h4>
-                            <p data-es="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia."
-                               data-cat="La normativa urbanística, molt restrictiva en quant a moviments de terra i creació de desnivells, era el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma continua en la planta intermedia.">
-                                Infinita diluye los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/miranda-6/miranda-6.jpg" alt="Miranda 6 Exterior">
-                                <span class="story-caption">FIG 01. VISTA PLATAFORMA CONTÍNUA</span>
+                    <div class="story-fluid-container">
+                        <div class="story-fluid-track">
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">01 / CAPÍTULO I</span>
+                                <h4 data-es="Sutileza en la materia" data-cat="Subtilesa en la matèria">Sutileza en la materia</h4>
+                                <p data-es="Infinita diluye los límites entre interior y exterior mediante plataformas continuas que buscan un horizonte sin fin."
+                                   data-cat="Infinita dilueix els límits entre interior i exterior mitjançant plataformes contínues que busquen un horitzó sense fi.">
+                                    Infinita diluye los límites entre interior y exterior mediante plataformas continuas que buscan un horizonte sin fin.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/miranda-6/miranda-6.jpg" alt="Vista plataforma continua">
+                                </div>
                             </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/miranda-6/miranda-4.jpg" alt="Miranda 6 Exterior">
-                                <span class="story-caption">FIG 02. INTEGRACIÓN CON EL TERRENO </span>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">02 / CAPÍTULO II</span>
+                                <h4 data-es="Implantación" data-cat="Implantació">Implantación</h4>
+                                <p data-es="Integración absoluta con el terreno y la topografía natural del lugar." data-cat="Integració absoluta amb el terreny i la topografia natural del lloc.">
+                                    Integración absoluta con el terreno y la topografía natural del lugar.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/miranda-6/miranda-4.jpg" alt="Integración con el terreno">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-fluid-nav">
+                            <span class="story-slide-counter">1 / 2</span>
+                            <div class="story-nav-controls">
+                                <button class="story-nav-btn prev-slide-btn">&larr;</button>
+                                <button class="story-nav-btn next-slide-btn">&rarr;</button>
                             </div>
                         </div>
                     </div>
@@ -1004,33 +876,41 @@
                         <h3>PASSACAGLIA</h3>
                         <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
                     </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/passacaglia2.jpg" alt="Passacaglia Interior">
-                    </div>
 
-                    <p class="story-summary-text" data-es="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios.">
-                        Casa Passacaglia es un ejercicio de ritmo, luz y estructura.
+                    <p class="story-summary-text" data-es="Casa Passacaglia es un ejercicio riguroso de ritmo, luz y estructura." data-cat="Casa Passacaglia és un exercici rigorós de ritme, llum i estructura.">
+                        Casa Passacaglia es un ejercicio riguroso de ritmo, luz y estructura.
                     </p>
 
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Iluminación y contraste" data-cat="Il·luminació i contrast">Iluminación y contraste</h4>
-                            <p data-es="El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios."
-                               data-cat="El alzado serpenteante refuerza aquesta idea, jugant amb volums que semblan desplaçar-se en una seqüència pautada, mentre que les transicions entre interior i exterior es dilueixen mitjançant amplis finestres i espais intermedis.">
-                                Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.
-
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/havana48/havana3.jpg" alt="Passacaglia Exterior">
-                                <span class="story-caption">FIG 01. VISTA INTERIOR INTEGRADA CON EL PAISAJE</span>
+                    <div class="story-fluid-container">
+                        <div class="story-fluid-track">
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">01 / CAPÍTULO I</span>
+                                <h4 data-es="Iluminación y contraste" data-cat="Il·luminació i contrast">Iluminación y contraste</h4>
+                                <p data-es="Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día."
+                                   data-cat="Cada ple i cada buit estan calculats per captar i modelar la llum al llarg del dia.">
+                                    Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/havana48/havana3.jpg" alt="Vista interior">
+                                </div>
                             </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/havana48/havana4.jpg" alt="Passacaglia Exterior">
-                                <span class="story-caption">FIG 01. DETALLE LUZ INTERIOR</span>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">02 / CAPÍTULO II</span>
+                                <h4 data-es="Detalle material" data-cat="Detall material">Detalle material</h4>
+                                <p data-es="Estudio de la luz interior y su reflejo sobre las superficies depuradas." data-cat="Estudi de la llum interior i el seu reflex sobre les superfícies depurades.">
+                                    Estudio de la luz interior y su reflejo sobre las superficies depuradas.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/havana48/havana4.jpg" alt="Detalle luz interior">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-fluid-nav">
+                            <span class="story-slide-counter">1 / 2</span>
+                            <div class="story-nav-controls">
+                                <button class="story-nav-btn prev-slide-btn">&larr;</button>
+                                <button class="story-nav-btn next-slide-btn">&rarr;</button>
                             </div>
                         </div>
                     </div>
@@ -1040,35 +920,43 @@
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">REHABILITACIÓN  • BARCELONA</span>
-                    </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/JP/jp3.jpg" alt="CLAROSCURO">
+                        <span class="mono-tag">REHABILITACIÓN • BARCELONA</span>
                     </div>
 
                     <p class="story-summary-text" data-es="Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià." data-cat="Claroscuro és una reforma en planta baixa d'un edifici de 1920 a la plaça Joaquim Pena, a Sarrià.">
                         Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià.
                     </p>
 
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Conexión panorámica" data-cat="Connexió panoràmica">Conexión panorámica</h4>
-                            <p data-es="El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa."
-                               data-cat="El projecte part d'una operació estructural decisiva: un apeo que permet alliberar la planta i ampliar la sala d'estar i la cuina, transformant un espai fragmentat i fosc en una estancia continua, profunda i lluminosa.">
-                               El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.
-
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/JP/jp2.jpg" alt="Claroscuro Vista Exterior">
-                                <span class="story-caption">FIG 01. VISTA DEL INTERIOR</span>
+                    <div class="story-fluid-container">
+                        <div class="story-fluid-track">
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">01 / CAPÍTULO I</span>
+                                <h4 data-es="Conexión panorámica" data-cat="Connexió panoràmica">Conexión panorámica</h4>
+                                <p data-es="El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado en una estancia continua y profunda."
+                                   data-cat="El projecte part d'una operació estructural decisiva: un apeo que permet alliberar la planta i ampliar la sala d'estar i la cuina.">
+                                    El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/JP/jp2.jpg" alt="Vista interior">
+                                </div>
                             </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/JP/jp5.jpg" alt="Claroscuro Vista Exterior">
-                                <span class="story-caption">FIG 02. DETALLE EXTERIOR</span>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">02 / CAPÍTULO II</span>
+                                <h4 data-es="Materialidad histórica" data-cat="Materialitat històrica">Materialidad histórica</h4>
+                                <p data-es="Diálogo respetuoso entre la preexistencia de 1920 y la intervención contemporánea." data-cat="Diàleg respectuós entre la preexistència de 1920 i la intervenció contemporània.">
+                                    Diálogo respetuoso entre la preexistencia de 1920 y la intervención contemporánea.
+                                </p>
+                                <div class="story-slide-media">
+                                    <img src="./img/JP/jp5.jpg" alt="Detalle exterior">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-fluid-nav">
+                            <span class="story-slide-counter">1 / 2</span>
+                            <div class="story-nav-controls">
+                                <button class="story-nav-btn prev-slide-btn">&larr;</button>
+                                <button class="story-nav-btn next-slide-btn">&rarr;</button>
                             </div>
                         </div>
                     </div>
@@ -1076,107 +964,7 @@
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (GALERÍA MULTI-IMAGEN) -->
-            <div class="view-visuals-layout layout-block">
-                
-                <!-- PROYECTO 1 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="0">
-                            <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="1">
-                            <img src="img/miranda-6/miranda-2.jpg" alt="Casa Infinita Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="2">
-                            <img src="img/miranda-6/miranda-6.jpg" alt="Casa Infinita Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 2 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="0">
-                            <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="1">
-                            <img src="img/biguesiriells/bigues-2.jpg" alt="FUYU Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="2">
-                            <img src="img/biguesiriells/bigues-4.jpg" alt="FUYU Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 3 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>Claro de luz</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="0">
-                            <img src="img/clarodeluz/clarodeluz-1.jpg" alt="Miranda 6 Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="1">
-                            <img src="img/clarodeluz/clarodeluz-2.jpg" alt="Miranda 6 Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="2">
-                            <img src="img/clarodeluz/clarodeluz-3.jpg" alt="Miranda 6 Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 4 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                               </div>
-                   <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="0">
-                            <img src="img/havana48/havana1.jpg" alt="Havana 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="1">
-                            <img src="img/havana48/havana2.jpg" alt="Havana 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="2">
-                            <img src="img/havana48/havana3.jpg" alt="Havana 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 5 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="0">
-                            <img src="img/miranda4/miranda4-1.jpg" alt="Bigues 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="1">
-                            <img src="img/miranda4/miranda4-2.jpg" alt="Bigues 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="2">
-                            <img src="img/miranda4/miranda4-3.jpg" alt="Bigues 3">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- VISTA 3: SOBRE EL ESTUDIO -->
+            <!-- VISTA 2: ESTUDIO / SOBRE NOSOTROS -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
                     Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
@@ -1184,7 +972,7 @@
                 <div class="about-grid">
                     <div class="about-col">
                         <h4 data-es="FILOSOFÍA" data-cat="FILOSOFIA">FILOSOFÍA</h4>
-                        <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals.">En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva.</p>
+                        <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigurosa ejecución constructiva. Creemos en espacios donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais on la llum i l'ombra motllen atmosferes atemporals.">En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigurosa ejecución constructiva.</p>
                     </div>
                     <div class="about-col">
                         <h4 data-es="MÉTODO DE TRABAJO" data-cat="MÈTODE DE TREBALL">MÉTODO DE TRABAJO</h4>
@@ -1192,11 +980,11 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
+                    <img src="./img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
                 </div>
             </div>
 
-            <!-- VISTA 4: CONTACTO -->
+            <!-- VISTA 3: CONTACTO -->
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
                     <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
@@ -1218,7 +1006,7 @@
                         <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
-                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÓNICO</label>
+                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÒNIC</label>
                         <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
@@ -1232,27 +1020,9 @@
         </section>
     </main>
 
-    <!-- MODAL VISOR DE FOTOGRAFÍAS PROYECTOS -->
-    <div class="gallery-modal-container" id="visualModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title">OWN ARCHITECTURE</span>
-            <button class="gallery-modal-close" id="closeVisualModal">&times; CERRAR</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="prevGalleryImg">&larr;</button>
-            <img id="galleryModalImg" src="" alt="Fotografía ampliación">
-            <button class="gallery-nav-btn gallery-nav-next" id="nextGalleryImg">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="gallery-counter" id="galleryCounter">1 / 3</span>
-        </div>
-    </div>
-
-    <!-- SCRIPT INTERACTIVO INTEGRADO -->
     <script>
         let currentLang = 'es';
 
-        // CURSOR PERSONALIZADO
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -1260,13 +1030,12 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .grid-img-wrapper, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
 
-        // RETORNO AL INICIO (LOGO CLICK)
         const brandLogo = document.getElementById('brandLogo');
         const entrySplit = document.getElementById('entrySplit');
 
@@ -1276,9 +1045,9 @@
             document.body.classList.remove('content-active');
         });
 
-        // SPLIT INICIAL CLICK
         const selectStories = document.getElementById('selectStories');
-        const selectVisuals = document.getElementById('selectVisuals');
+        const selectMethod = document.getElementById('selectMethod');
+        const selectStudio = document.getElementById('selectStudio');
 
         function activateContent(mode) {
             entrySplit.classList.add('hidden');
@@ -1287,9 +1056,9 @@
         }
 
         selectStories.addEventListener('click', () => activateContent('stories'));
-        selectVisuals.addEventListener('click', () => activateContent('visuals'));
+        selectMethod.addEventListener('click', () => activateContent('stories'));
+        selectStudio.addEventListener('click', () => activateContent('about'));
 
-        // CAMBIO DE IDIOMA (ESPAÑOL / CATALÀ)
         const langEsBtn = document.getElementById('langEs');
         const langCatBtn = document.getElementById('langCat');
 
@@ -1311,9 +1080,7 @@
         langEsBtn.addEventListener('click', () => setLanguage('es'));
         langCatBtn.addEventListener('click', () => setLanguage('cat'));
 
-        // CONMUTACIÓN DE SECCIONES
         const btnStories = document.getElementById('btnModeStories');
-        const btnVisuals = document.getElementById('btnModeVisuals');
         const btnAbout = document.getElementById('btnModeAbout');
         const btnContact = document.getElementById('btnModeContact');
 
@@ -1321,92 +1088,60 @@
         const tagHeader = document.getElementById('galleryModeTag');
 
         function switchMode(mode) {
-            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-about-active', 'mode-contact-active');
+            document.body.classList.remove('mode-stories-active', 'mode-about-active', 'mode-contact-active');
             btnStories.classList.remove('active');
-            btnVisuals.classList.remove('active');
             btnAbout.classList.remove('active');
             btnContact.classList.remove('active');
 
             if (mode === 'stories') {
                 document.body.classList.add('mode-stories-active');
                 btnStories.classList.add('active');
-                titleHeader.setAttribute('data-es', 'MEMORIAS'); titleHeader.setAttribute('data-cat', 'MEMÒRIES');
-                tagHeader.setAttribute('data-es', 'RELATOS Y CONCEPTOS'); tagHeader.setAttribute('data-cat', 'RELATS I CONCEPTES');
-            } else if (mode === 'visuals') {
-                document.body.classList.add('mode-visual-active');
-                btnVisuals.classList.add('active');
-                titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
-                tagHeader.setAttribute('data-es', 'GALERÍA FOTOGRÁFICA'); tagHeader.setAttribute('data-cat', 'GALERIA FOTOGRÀFICA');
+                titleHeader.setAttribute('data-es', 'MEMORIAS Y PROYECTOS'); titleHeader.setAttribute('data-cat', 'MEMÒRIES I PROJECTES');
+                tagHeader.setAttribute('data-es', 'RELATOS Y FLUJO VISUAL'); tagHeader.setAttribute('data-cat', 'RELATS I FLUIX VISUAL');
             } else if (mode === 'about') {
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
                 titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y EQUIPO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I EQUIP');
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
                 titleHeader.setAttribute('data-es', 'CONTACTO'); titleHeader.setAttribute('data-cat', 'CONTACTE');
-                tagHeader.setAttribute('data-es', 'CONSULTAS Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'CONSULTES I PROJECTES');
+                tagHeader.setAttribute('data-es', 'CONSULTAS Y ENCARGOS'); tagHeader.setAttribute('data-cat', 'CONSULTES I ENCÀRRECS');
             }
             setLanguage(currentLang);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         btnStories.addEventListener('click', () => switchMode('stories'));
-        btnVisuals.addEventListener('click', () => switchMode('visuals'));
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // INTERACCIÓN DESPLEGABLE EN LA MISMA PÁGINA
-        document.querySelectorAll('.toggle-memory-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const details = btn.nextElementSibling;
-                details.classList.toggle('open');
-                
-                if (details.classList.contains('open')) {
-                    btn.textContent = currentLang === 'es' ? '- OCULTAR MEMORIA' : '- AMAGAR MEMÒRIA';
-                } else {
-                    btn.textContent = currentLang === 'es' ? '+ DESPLEGAR MEMORIA DESCRIPTIVA' : '+ DESPLEGAR MEMÒRIA DESCRIPTIVA';
-                }
+        document.querySelectorAll('.story-fluid-container').forEach(container => {
+            const track = container.querySelector('.story-fluid-track');
+            const slides = container.querySelectorAll('.story-fluid-slide');
+            const prevBtn = container.querySelector('.prev-slide-btn');
+            const nextBtn = container.querySelector('.next-slide-btn');
+            const counter = container.querySelector('.story-slide-counter');
+            
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            function updateSlide() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateSlide();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlide();
             });
         });
-
-        // MODAL VISOR FOTOGRÁFICO DE PROYECTOS
-        const visualModal = document.getElementById('visualModal');
-        const galleryModalImg = document.getElementById('galleryModalImg');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeVisualModal = document.getElementById('closeVisualModal');
-        const prevGalleryImg = document.getElementById('prevGalleryImg');
-        const nextGalleryImg = document.getElementById('nextGalleryImg');
-
-        let activeImageArray = [];
-        let activeImageIndex = 0;
-
-        document.querySelectorAll('.visual-modal-trigger').forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                activeImageArray = JSON.parse(trigger.getAttribute('data-images'));
-                activeImageIndex = parseInt(trigger.getAttribute('data-index'));
-                updateGalleryModal();
-                visualModal.classList.add('active');
-            });
-        });
-
-        function updateGalleryModal() {
-            galleryModalImg.src = activeImageArray[activeImageIndex];
-            galleryCounter.textContent = `${activeImageIndex + 1} / ${activeImageArray.length}`;
-        }
-
-        prevGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
-            updateGalleryModal();
-        });
-
-        nextGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
-            updateGalleryModal();
-        });
-
-        closeVisualModal.addEventListener('click', () => visualModal.classList.remove('active'));
     </script>
 </body>
 </html>
