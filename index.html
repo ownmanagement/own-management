@@ -100,9 +100,7 @@
             border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .split-pane:last-child {
-            border-right: none;
-        }
+        .split-pane:last-child { border-right: none; }
 
         .split-pane.pane-stories { background-color: #0d0d0d; color: #ffffff; }
         .split-pane.pane-method { background-color: #141414; color: #ffffff; }
@@ -436,67 +434,141 @@
             margin-bottom: 10px;
         }
 
-        /* VISTA 2: MÉTODO (NUEVO DISEÑO EN GRID DE ETAPAS / PILARES) */
+        /* VISTA 2: MÉTODO DINÁMICO (INTERACTIVO / ACORDEÓN DE FASES) */
         .view-method-layout {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 60px;
+            gap: 50px;
         }
 
-        .method-intro-banner {
-            font-size: clamp(1.5rem, 2.8vw, 2.4rem);
-            font-weight: 300;
-            line-height: 1.4;
-            letter-spacing: -1px;
-            color: #111111;
-            border-left: 3px solid #111111;
-            padding-left: 24px;
-            margin-bottom: 20px;
-        }
-
-        .method-steps-grid {
+        .method-interactive-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+            grid-template-columns: 1fr 1.4fr;
+            border: 1px solid #eaeaea;
+            background-color: #fcfcfc;
+            min-height: 500px;
         }
 
-        .method-step-card {
-            background-color: #fcfcfc;
-            border: 1px solid #eaeaea;
-            padding: 40px;
+        .method-nav-list {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            border-right: 1px solid #eaeaea;
         }
 
-        .method-step-card:hover {
-            transform: translateY(-4px);
-            border-color: #111111;
+        .method-tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #eaeaea;
+            padding: 35px 40px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%;
         }
 
-        .method-step-num {
+        .method-tab-btn:last-child { border-bottom: none; }
+
+        .method-tab-btn .tab-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .method-tab-btn .tab-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
             color: #888888;
         }
 
-        .method-step-card h3 {
-            font-size: 1.6rem;
-            font-weight: 800;
+        .method-tab-btn .tab-title {
+            font-size: 1.4rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: -0.5px;
             color: #111111;
         }
 
-        .method-step-card p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #555555;
+        .method-tab-btn .tab-arrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            color: #cccccc;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .method-tab-btn:hover {
+            background-color: #f4f4f4;
+        }
+
+        .method-tab-btn.active {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        .method-tab-btn.active .tab-num, 
+        .method-tab-btn.active .tab-title, 
+        .method-tab-btn.active .tab-arrow {
+            color: #ffffff;
+        }
+
+        .method-tab-btn.active .tab-arrow {
+            transform: translateX(6px);
+        }
+
+        .method-display-panel {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-content-pane {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeInMethod 0.5s ease forwards;
+        }
+
+        .method-content-pane.active {
+            display: flex;
+        }
+
+        @keyframes fadeInMethod {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .method-content-pane h3 {
+            font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #111111;
+        }
+
+        .method-content-pane p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #444444;
             font-weight: 300;
+        }
+
+        .method-highlight-quote {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #777777;
+            border-left: 2px solid #111111;
+            padding-left: 12px;
+            margin-top: 10px;
         }
 
         /* VISTA 3: ESTUDIO / SOBRE NOSOTROS */
@@ -661,7 +733,9 @@
             header { padding: 18px 5%; }
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 33vh; min-height: 33dvh; padding: 40px 8%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-            .method-steps-grid, .about-grid { grid-template-columns: 1fr; gap: 30px; }
+            .method-interactive-container { grid-template-columns: 1fr; }
+            .method-nav-list { border-right: none; border-bottom: 1px solid #eaeaea; }
+            .about-grid { grid-template-columns: 1fr; gap: 30px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
@@ -669,6 +743,8 @@
             header { flex-direction: column; gap: 12px; padding: 14px 5%; }
             .header-controls { width: 100%; justify-content: space-between; }
             .mode-switch-bar { flex: 1; justify-content: center; }
+            .method-tab-btn { padding: 20px 24px; }
+            .method-display-panel { padding: 30px 24px; }
         }
     </style>
 </head>
@@ -997,49 +1073,82 @@
 
             </div>
 
-            <!-- VISTA 2: MÉTODO (NUEVO FORMATO DE PILARES / PROCESO) -->
+            <!-- VISTA 2: MÉTODO DINÁMICO (INTERACTIVO / ACORDEÓN DE FASES) -->
             <div class="view-method-layout layout-block">
-                <p class="method-intro-banner" 
-                   data-es="Entendemos el proyecto como un proceso sistemático donde la teoría, la materia y el contexto convergen en una solución única." 
-                   data-cat="Entenem el projecte com un procés sistemàtic on la teoria, la matèria i el context convergeixen en una solució única.">
-                    Entendemos el proyecto como un proceso sistemático donde la teoría, la materia y el contexto convergen en una solución única.
-                </p>
-
-                <div class="method-steps-grid">
-                    <div class="method-step-card">
-                        <span class="method-step-num">01 / ANÁLISIS</span>
-                        <h3 data-es="Lectura del Lugar" data-cat="Lectura del Lloc">Lectura del Lugar</h3>
-                        <p data-es="Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño."
-                           data-cat="Cada intervenció neix d'una atenta escolta de l'entorn. Estudiem la topografia, les normatives urbanístiques i les preexistències per transformar les limitacions en els eixos principals del disseny.">
-                            Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño.
-                        </p>
+                <div class="method-interactive-container">
+                    <!-- Menú Lateral de Fases -->
+                    <div class="method-nav-list">
+                        <button class="method-tab-btn active" data-target="phase-1">
+                            <div class="tab-info">
+                                <span class="tab-num">01</span>
+                                <span class="tab-title" data-es="Análisis" data-cat="Anàlisi">Análisis</span>
+                            </div>
+                            <span class="tab-arrow">&rarr;</span>
+                        </button>
+                        <button class="method-tab-btn" data-target="phase-2">
+                            <div class="tab-info">
+                                <span class="tab-num">02</span>
+                                <span class="tab-title" data-es="Concepto" data-cat="Concepte">Concepto</span>
+                            </div>
+                            <span class="tab-arrow">&rarr;</span>
+                        </button>
+                        <button class="method-tab-btn" data-target="phase-3">
+                            <div class="tab-info">
+                                <span class="tab-num">03</span>
+                                <span class="tab-title" data-es="Materialidad" data-cat="Materialitat">Materialidad</span>
+                            </div>
+                            <span class="tab-arrow">&rarr;</span>
+                        </button>
+                        <button class="method-tab-btn" data-target="phase-4">
+                            <div class="tab-info">
+                                <span class="tab-num">04</span>
+                                <span class="tab-title" data-es="Ejecución" data-cat="Execució">Ejecución</span>
+                            </div>
+                            <span class="tab-arrow">&rarr;</span>
+                        </button>
                     </div>
 
-                    <div class="method-step-card">
-                        <span class="method-step-num">02 / CONCEPTO</span>
-                        <h3 data-es="Introspección Teórica" data-cat="Introspecció Teòrica">Introspección Teórica</h3>
-                        <p data-es="Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos."
-                           data-cat="Desenvolupament del relat conceptual de l'obra abans de traçar la primera línia. Busquem que la forma respongui a una necessitat espacial i atmosfèrica clara, fugint de artificis superfusos.">
-                            Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos.
-                        </p>
-                    </div>
+                    <!-- Panel Central Dinámico -->
+                    <div class="method-display-panel">
+                        <div class="method-content-pane active" id="phase-1">
+                            <span class="mono-tag" data-es="FASE 01 / LECTURA DEL ENTORNO" data-cat="FASE 01 / LECTURA DE L'ENTORN">FASE 01 / LECTURA DEL ENTORNO</span>
+                            <h3 data-es="Lectura del Lugar y Normativa" data-cat="Lectura del Lloc i Normativa">Lectura del Lugar y Normativa</h3>
+                            <p data-es="Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño."
+                               data-cat="Cada intervenció neix d'una atenta escolta de l'entorn. Estudiem la topografia, les normatives urbanístiques i les preexistències per transformar les limitacions en els eixos principals del disseny.">
+                                Cada intervención nace de una atenta escucha del entorno. Estudiamos la topografía, las normativas urbanísticas y las preexistencias para transformar las limitaciones en los ejes principales del diseño.
+                            </p>
+                            <div class="method-highlight-quote" data-es="El límite como motor creativo inicial." data-cat="El límit com a motor creatiu inicial.">El límite como motor creativo inicial.</div>
+                        </div>
 
-                    <div class="method-step-card">
-                        <span class="method-step-num">03 / MATERIALIDAD</span>
-                        <h3 data-es="Tectónica y Detalle" data-cat="Tectònica i Detall">Tectónica y Detalle</h3>
-                        <p data-es="La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales."
-                           data-cat="La materialitat defineix el caràcter de l'arquitectura. Seleccionem rigorosament cada element constructiu, textures i entrades de llum cenital per modelar espais atemporals.">
-                            La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales.
-                        </p>
-                    </div>
+                        <div class="method-content-pane" id="phase-2">
+                            <span class="mono-tag" data-es="FASE 02 / RELATO TEÓRICO" data-cat="FASE 02 / RELAT TEÒRIC">FASE 02 / RELATO TEÓRICO</span>
+                            <h3 data-es="Introspección Teórica" data-cat="Introspecció Teòrica">Introspección Teórica</h3>
+                            <p data-es="Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos."
+                               data-cat="Desenvolupament del relat conceptual de l'obra abans de traçar la primera línia. Busquem que la forma respongui a una necessitat espacial i atmosfèrica clara, fugint de artificis superfusos.">
+                                Desarrollamos el relato conceptual de la obra antes de trazar la primera línea. Buscamos que la forma responda a una necesidad espacial y atmosférica clara, huyendo de artificios superfluos.
+                            </p>
+                            <div class="method-highlight-quote" data-es="La idea rige la materia." data-cat="La idea regeix la matèria.">La idea rige la materia.</div>
+                        </div>
 
-                    <div class="method-step-card">
-                        <span class="method-step-num">04 / EJECUCIÓN</span>
-                        <h3 data-es="Dirección Técnica" data-cat="Direcció Tècnica">Dirección Técnica</h3>
-                        <p data-es="Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original."
-                           data-cat="Acompanyem el projecte des dels croquis inicials fins a la direcció tècnica d'obra, controlant de prop l'execució per garantir la màxima fidelitat al concepte original.">
-                            Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original.
-                        </p>
+                        <div class="method-content-pane" id="phase-3">
+                            <span class="mono-tag" data-es="FASE 03 / TECTÓNICA Y LUZ" data-cat="FASE 03 / TECTÒNICA I LLUM">FASE 03 / TECTÓNICA Y LUZ</span>
+                            <h3 data-es="Tectónica y Detalle" data-cat="Tectònica i Detall">Tectónica y Detalle</h3>
+                            <p data-es="La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales."
+                               data-cat="La materialitat defineix el caràcter de l'arquitectura. Seleccionem rigorosament cada element constructiu, textures i entrades de llum cenital per modelar espais atemporals.">
+                                La materialidad define el carácter de la arquitectura. Seleccionamos rigurosamente cada elemento constructivo, texturas y entradas de luz cenital para modelar espacios atemporales.
+                            </p>
+                            <div class="method-highlight-quote" data-es="Atmósferas modeladas por la sombra y el material." data-cat="Atmosferes modelades per l'ombra i el material.">Atmósferas modeladas por la sombra y el material.</div>
+                        </div>
+
+                        <div class="method-content-pane" id="phase-4">
+                            <span class="mono-tag" data-es="FASE 04 / CONTROL DE OBRA" data-cat="FASE 04 / CONTROL D'OBRA">FASE 04 / CONTROL DE OBRA</span>
+                            <h3 data-es="Dirección Técnica" data-cat="Direcció Tècnica">Dirección Técnica</h3>
+                            <p data-es="Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original."
+                               data-cat="Acompanyem el projecte des dels croquis inicials fins a la direcció tècnica d'obra, controlant de prop l'execució per garantir la màxima fidelitat al concepte original.">
+                                Acompañamos el proyecto desde los croquis iniciales hasta la dirección técnica de obra, controlando de cerca la ejecución para garantizar la máxima fidelidad al concepto original.
+                            </p>
+                            <div class="method-highlight-quote" data-es="De la teoría a la construcción real." data-cat="De la teoria a la construcció real.">De la teoría a la construcción real.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1110,7 +1219,7 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .method-step-card, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .method-tab-btn, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -1204,6 +1313,22 @@
         btnMethod.addEventListener('click', () => switchMode('method'));
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
+
+        // Lógica para las pestañas interactivas del Método
+        const methodTabs = document.querySelectorAll('.method-tab-btn');
+        const methodPanes = document.querySelectorAll('.method-content-pane');
+
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-target');
+
+                methodTabs.forEach(t => t.classList.remove('active'));
+                methodPanes.forEach(p => p.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
 
         document.querySelectorAll('.story-fluid-container').forEach(container => {
             const track = container.querySelector('.story-fluid-track');
