@@ -72,7 +72,7 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (ESTRICTAMENTE 2 COLUMNAS) */
+        /* PANTALLA INICIAL (3 COLUMNAS: PROYECTOS, ESTUDIO, CONTACTO) */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -99,7 +99,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(40px, 8vh, 100px) 6% clamp(30px, 6vh, 60px) 6%;
+            padding: clamp(40px, 8vh, 100px) 4% clamp(30px, 6vh, 60px) 4%;
             transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             overflow: hidden;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -108,7 +108,8 @@
 
         .split-pane:last-child { border-right: none; }
         .split-pane.pane-stories { background-color: #0d0d0d; color: #ffffff; }
-        .split-pane.pane-studio { background-color: #161616; color: #ffffff; }
+        .split-pane.pane-studio { background-color: #141414; color: #ffffff; }
+        .split-pane.pane-contact { background-color: #1a1a1a; color: #ffffff; }
 
         .pane-bg {
             position: absolute;
@@ -125,10 +126,11 @@
         
         .pane-stories .pane-bg { background-image: url('./img/croquis.jpg'); }
         .pane-studio .pane-bg { background-image: url('./img/HAVANA%2048.jpg'); }
+        .pane-contact .pane-bg { background-image: url('./img/JP/jp1.jpg'); }
 
         @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.85; filter: brightness(0.55); }
-            .entry-split-container .split-pane:hover { flex: 1.5; filter: brightness(1); }
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.5); }
+            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
             .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.45; }
         }
 
@@ -149,7 +151,7 @@
         }
 
         .split-title {
-            font-size: clamp(2.2rem, 4.5vw, 4rem);
+            font-size: clamp(2rem, 3.8vw, 3.4rem);
             font-weight: 800;
             line-height: 1.1;
             letter-spacing: -1px;
@@ -157,7 +159,7 @@
             margin-bottom: 12px;
         }
 
-        .split-desc { font-size: clamp(0.9rem, 1.3vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.8; }
+        .split-desc { font-size: clamp(0.85rem, 1.2vw, 1.05rem); line-height: 1.5; font-weight: 300; opacity: 0.8; }
 
         .split-action {
             display: inline-flex;
@@ -174,7 +176,7 @@
         .split-action svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
         .split-pane:hover .split-action svg { transform: translateX(6px); }
 
-        /* HEADER / NAVEGACIÓN PRINCIPAL */
+        /* HEADER / NAVEGACIÓN PRINCIPAL CON 3 BOTONES */
         header {
             position: fixed;
             top: 0;
@@ -224,7 +226,7 @@
         .mode-btn {
             background: none;
             border: none;
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
@@ -280,7 +282,7 @@
 
         .gallery-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1.5px; text-transform: uppercase; }
 
-        /* VISTA 1A: GRID DE PROYECTOS EN DOS COLUMNAS A MAXIMO ANCHO */
+        /* GRID DE PROYECTOS */
         .projects-fullwidth-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -360,7 +362,7 @@
             color: #ffffff;
         }
 
-        /* VISTA 1B: DETALLE INDIVIDUAL DE CADA PROYECTO */
+        /* DETALLE INDIVIDUAL DE CADA PROYECTO */
         .single-project-view {
             display: none;
             width: 100%;
@@ -448,7 +450,7 @@
             padding-left: 20px;
         }
 
-        /* CARRUSEL FLUIDO DENTRO DEL DETALLE DEL PROYECTO CON IMAGEN AMPLIABLE */
+        /* CARRUSEL FLUIDO */
         .story-fluid-container {
             position: relative;
             width: 100%;
@@ -552,7 +554,7 @@
             color: #666666;
         }
 
-        /* MODAL DE LIGHTBOX PARA AMPLIAR IMAGEN */
+        /* MODAL DE LIGHTBOX */
         #imageModal {
             position: fixed;
             top: 0;
@@ -599,7 +601,7 @@
             border-radius: 20px;
         }
 
-        /* VISTA 2: ESTUDIO (CON MÉTODO Y CONTACTO) */
+        /* VISTA 2: ESTUDIO (CON FILOSOFÍA, IDENTIDAD, IMAGEN Y MÉTODO) */
         .view-about-layout {
             max-width: 1100px;
             margin: 0 auto;
@@ -670,53 +672,67 @@
             font-weight: 300;
         }
 
-        /* SECCIÓN DE CONTACTO RESTAURADA */
-        .contact-section {
-            border-top: 1px solid #eaeaea;
-            padding-top: 50px;
+        /* VISTA 3: CONTACTO INDEPENDIENTE */
+        .view-contact-layout {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-section-standalone {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+            gap: 50px;
+            background: #f8f8f8;
+            padding: 50px;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
         }
+
         .contact-info-col h3 {
-            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
             font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 16px;
             letter-spacing: -0.5px;
         }
+
         .contact-info-col p {
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.7;
             color: #555;
             font-weight: 300;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+
         .contact-details {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #111;
         }
+
         .contact-details a {
             color: #111;
             text-decoration: none;
             transition: opacity 0.2s;
         }
+
         .contact-details a:hover { opacity: 0.6; }
 
         .contact-form-col form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
+
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
+
         .form-group label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
@@ -724,10 +740,11 @@
             letter-spacing: 1.5px;
             color: #777;
         }
+
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 16px;
-            background: #f8f8f8;
+            background: #ffffff;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-family: 'Inter', sans-serif;
@@ -736,9 +753,11 @@
             outline: none;
             transition: border-color 0.2s;
         }
+
         .form-group input:focus, .form-group textarea:focus {
             border-color: #111;
         }
+
         .form-submit-btn {
             background-color: #111;
             color: #fff;
@@ -754,12 +773,14 @@
             transition: background-color 0.2s;
             align-self: flex-start;
         }
+
         .form-submit-btn:hover { background-color: #333; }
 
         /* CONTROL DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: block; }
         body.mode-about-active .view-about-layout { display: flex; }
+        body.mode-contact-active .view-contact-layout { display: block; }
 
         /* OPTIMIZACIÓN TÁCTIL Y RESPONSIVE */
         @media (pointer: coarse), (hover: none) {
@@ -770,9 +791,9 @@
         @media (max-width: 1024px) {
             header { padding: 16px 4%; }
             .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50dvh; padding: 30px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+            .split-pane { min-height: 33dvh; padding: 25px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
             .projects-fullwidth-list { grid-template-columns: 1fr; }
-            .about-grid, .method-steps-grid, .contact-section { grid-template-columns: 1fr; gap: 24px; }
+            .about-grid, .method-steps-grid, .contact-section-standalone { grid-template-columns: 1fr; gap: 24px; padding: 30px; }
             .project-detail-meta-grid { grid-template-columns: 1fr; }
         }
 
@@ -788,13 +809,13 @@
 
     <div id="custom-cursor"></div>
 
-    <!-- MODAL DE AMPLIACIÓN DE IMAGEN (LIGHTBOX) -->
+    <!-- MODAL DE LIGHTBOX -->
     <div id="imageModal">
         <button class="close-modal" id="closeModalBtn" data-es="CERRAR [X]" data-cat="TANCAR [X]">CERRAR [X]</button>
         <img id="modalImage" src="" alt="Imagen Ampliada">
     </div>
 
-    <!-- PANTALLA INICIAL (ESTRICTAMENTE 2 SECCIONES / COLUMNAS) -->
+    <!-- PANTALLA INICIAL (3 COLUMNAS: PROYECTOS, ESTUDIO, CONTACTO) -->
     <section class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
@@ -814,22 +835,36 @@
             <div class="split-content-top"><span class="split-badge">02 / IDENTIDAD</span></div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDIO</h2>
-                <p class="split-desc" data-es="Filosofía, método, ubicación y contacto en Barcelona." data-cat="Filosofia, mètode, ubicació i contacte a Barcelona.">Filosofía, método, ubicación y contacto en Barcelona.</p>
+                <p class="split-desc" data-es="Filosofía, método y forma de pensar los proyectos en Barcelona." data-cat="Filosofia, mètode i manera de pensar els projectes a Barcelona.">Filosofía, método y forma de pensar los proyectos en Barcelona.</p>
                 <div class="split-action">
                     <span data-es="CONOCER" data-cat="CONÈIXER">CONOCER</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
         </div>
+
+        <div class="split-pane pane-contact" id="selectContact">
+            <div class="pane-bg"></div>
+            <div class="split-content-top"><span class="split-badge">03 / COMUNICACIÓN</span></div>
+            <div class="split-content-bottom">
+                <h2 class="split-title" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</h2>
+                <p class="split-desc" data-es="Hablemos sobre tu próxima obra o colaboración." data-cat="Parlem sobre la teva pròxima obra o col·laboració.">Hablemos sobre tu próxima obra o colaboración.</p>
+                <div class="split-action">
+                    <span data-es="ESCRIBIR" data-cat="ESCRIURE">ESCRIBIR</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- HEADER PRINCIPAL -->
+    <!-- HEADER PRINCIPAL CON 3 BOTONES -->
     <header id="mainHeader">
         <a class="logo" id="brandLogo">OWN ARCHITECTURE</a>
         <div class="header-controls">
             <div class="mode-switch-bar">
                 <button class="mode-btn active" id="btnModeStories" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
                 <button class="mode-btn" id="btnModeAbout" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDIO</button>
+                <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
             </div>
             <div class="lang-switch-bar">
                 <button class="lang-btn active" id="langEs">ES</button>
@@ -850,7 +885,6 @@
             <!-- VISTA 1: CONTENEDOR DE PROYECTOS -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- LISTADO EN DOS COLUMNAS A ANCHO MÁXIMO -->
                 <div class="projects-fullwidth-list" id="projectsList">
                     
                     <!-- Proyecto 1: Infinita -->
@@ -1272,7 +1306,7 @@
 
             </div>
 
-            <!-- VISTA 2: ESTUDIO (CON FILOSOFÍA, MÉTODO Y CONTACTO) -->
+            <!-- VISTA 2: ESTUDIO (CON FILOSOFÍA, IDENTIDAD, IMAGEN Y MÉTODO) -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz en Barcelona." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum a Barcelona.">Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz en Barcelona.</p>
                 <div class="about-grid">
@@ -1287,7 +1321,7 @@
                 </div>
                 <div class="about-image"><img src="./img/HAVANA%2048.jpg" alt="Estudio OWN Architecture"></div>
 
-                <!-- SECCIÓN DE MÉTODO NUEVA -->
+                <!-- SECCIÓN DE MÉTODO -->
                 <div class="method-section">
                     <h3 data-es="MÉTODO: CÓMO PENSAMOS LOS PROYECTOS" data-cat="MÈTODE: COM PENSEM ELS PROJECTES">MÉTODO: CÓMO PENSAMOS LOS PROYECTOS</h3>
                     <div class="method-steps-grid">
@@ -1308,9 +1342,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- SECCIÓN DE CONTACTO RESTAURADA -->
-                <div class="contact-section" id="contacto">
+            <!-- VISTA 3: CONTACTO INDEPENDIENTE -->
+            <div class="view-contact-layout layout-block">
+                <div class="contact-section-standalone">
                     <div class="contact-info-col">
                         <h3 data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</h3>
                         <p data-es="¿Tienes un proyecto en mente o quieres colaborar con nosotros? Escríbenos o visítanos en nuestro estudio de Barcelona." data-cat="Tens un projecte en ment o vols col·laborar amb nosaltres? Escriu-nos o visita'ns al nostre estudi de Barcelona.">¿Tienes un proyecto en mente o quieres colaborar con nosotros? Escríbenos o visítanos en nuestro estudio de Barcelona.</p>
@@ -1339,7 +1375,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
 
         </section>
@@ -1366,6 +1401,7 @@
 
         document.getElementById('selectStories').addEventListener('click', () => activateContent('stories'));
         document.getElementById('selectStudio').addEventListener('click', () => activateContent('about'));
+        document.getElementById('selectContact').addEventListener('click', () => activateContent('contact'));
 
         function activateContent(mode) {
             entrySplit.classList.add('hidden');
@@ -1393,14 +1429,16 @@
 
         const btnStories = document.getElementById('btnModeStories');
         const btnAbout = document.getElementById('btnModeAbout');
+        const btnContact = document.getElementById('btnModeContact');
 
         const titleHeader = document.getElementById('galleryModeTitle');
         const tagHeader = document.getElementById('galleryModeTag');
 
         function switchMode(mode) {
-            document.body.classList.remove('mode-stories-active', 'mode-about-active');
+            document.body.classList.remove('mode-stories-active', 'mode-about-active', 'mode-contact-active');
             btnStories.classList.remove('active');
             btnAbout.classList.remove('active');
+            btnContact.classList.remove('active');
 
             showProjectList();
 
@@ -1413,7 +1451,12 @@
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
                 titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA, MÉTODO Y CONTACTO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA, MÈTODE I CONTACTE');
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE');
+            } else if (mode === 'contact') {
+                document.body.classList.add('mode-contact-active');
+                btnContact.classList.add('active');
+                titleHeader.setAttribute('data-es', 'CONTACTO'); titleHeader.setAttribute('data-cat', 'CONTACTE');
+                tagHeader.setAttribute('data-es', 'ESTUDIO DE BARCELONA'); tagHeader.setAttribute('data-cat', 'ESTUDI DE BARCELONA');
             }
             setLanguage(currentLang);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1421,6 +1464,7 @@
 
         btnStories.addEventListener('click', () => switchMode('stories'));
         btnAbout.addEventListener('click', () => switchMode('about'));
+        btnContact.addEventListener('click', () => switchMode('contact'));
 
         // Sistema de navegación para listado e individuales
         const projectsList = document.getElementById('projectsList');
@@ -1448,8 +1492,10 @@
         function showProjectList() {
             detailViews.forEach(v => v.classList.remove('active'));
             projectsList.style.display = 'grid';
-            tagHeader.setAttribute('data-es', 'SELECCIÓN DE OBRAS');
-            tagHeader.setAttribute('data-cat', "SELECCIÓ D'OBRES");
+            if(document.body.classList.contains('mode-stories-active')) {
+                tagHeader.setAttribute('data-es', 'SELECCIÓN DE OBRAS');
+                tagHeader.setAttribute('data-cat', "SELECCIÓ D'OBRES");
+            }
             setLanguage(currentLang);
         }
 
