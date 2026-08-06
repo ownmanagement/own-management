@@ -42,7 +42,7 @@
         body.content-active {
             overflow-x: hidden;
             overflow-y: auto;
-            background-color: #ffffff;
+            background-color: #f7f7f5; /* Tono de fondo más cálido, estilo estudio de diseño */
         }
 
         /* CURSOR PERSONALIZADO (Escritorio) */
@@ -185,7 +185,7 @@
             align-items: center;
             padding: 20px 5%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(247, 247, 245, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -267,10 +267,10 @@
 
         body.content-active .main-view-container { opacity: 1; }
 
-        .gallery-section { padding: 130px 5% 80px 5%; background-color: #ffffff; min-height: 100vh; }
+        .gallery-section { padding: 140px 5% 100px 5%; min-height: 100vh; }
 
         .gallery-header {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -280,14 +280,23 @@
 
         .gallery-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1.5px; text-transform: uppercase; }
 
-        /* VISTA 1A: GRID DE PROYECTOS A ANCHO COMPLETO */
+        /* NUEVA DIAGRAMACIÓN: MASONRY / GRID ASIMÉTRICO MODERNO (Estilo Lionel Jadot) */
         .projects-fullwidth-list {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 40px 30px;
+            max-width: 1500px;
             margin: 0 auto;
         }
+
+        /* Desplazamientos asimétricos individuales en el grid para romper la simetría clásica */
+        .project-card:nth-child(1) { grid-column: span 7; }
+        .project-card:nth-child(2) { grid-column: span 5; margin-top: 80px; }
+        .project-card:nth-child(3) { grid-column: span 6; }
+        .project-card:nth-child(4) { grid-column: span 6; margin-top: -60px; }
+        .project-card:nth-child(5) { grid-column: span 5; }
+        .project-card:nth-child(6) { grid-column: span 7; margin-top: 40px; }
+        .project-card:nth-child(7) { grid-column: span 12; max-width: 900px; margin: 40px auto 0 auto; }
 
         .project-card {
             position: relative;
@@ -296,68 +305,92 @@
             color: inherit;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .project-card-thumb {
             position: relative;
             width: 100%;
-            height: clamp(450px, 60vw, 750px);
+            height: clamp(380px, 35vw, 600px);
             overflow: hidden;
-            background-color: #eaeaea;
-            border-radius: 6px;
+            background-color: #e5e5e2;
+            border-radius: 4px;
+        }
+
+        .project-card:nth-child(7) .project-card-thumb {
+            height: clamp(450px, 45vw, 700px);
         }
 
         .project-card-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
         }
 
         .project-card:hover .project-card-thumb img {
-            transform: scale(1.03);
+            transform: scale(1.04);
+        }
+
+        /* Etiqueta flotante minimalista sobre la imagen */
+        .project-badge-float {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 20px;
+            z-index: 2;
         }
 
         .project-card-info {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: flex-start;
             padding: 0 4px;
         }
 
         .project-card-titles h3 {
-            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+            font-size: clamp(1.3rem, 1.8vw, 1.7rem);
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
             color: #111111;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-card-titles h3 {
+            color: #555555;
         }
 
         .project-card-titles p {
-            font-size: 0.95rem;
-            color: #666666;
+            font-size: 0.88rem;
+            color: #777777;
             font-weight: 300;
         }
 
         .project-card-action {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 600;
             color: #111111;
-            padding: 12px 24px;
-            border: 1px solid #111111;
-            border-radius: 30px;
-            transition: all 0.25s ease;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.3s ease;
         }
 
         .project-card:hover .project-card-action {
-            background-color: #111111;
-            color: #ffffff;
+            transform: translateX(4px);
         }
 
         /* VISTA 1B: DETALLE INDIVIDUAL DE CADA PROYECTO */
@@ -417,7 +450,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            background: #f8f8f8;
+            background: #ffffff;
             padding: 20px;
             border-radius: 6px;
             border: 1px solid #eaeaea;
@@ -452,7 +485,7 @@
         .story-fluid-container {
             position: relative;
             width: 100%;
-            background-color: #f8f8f8;
+            background-color: #ffffff;
             border-radius: 6px;
             overflow: hidden;
             border: 1px solid #eaeaea;
@@ -518,7 +551,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 16px clamp(20px, 5vw, 60px);
-            background-color: #efefef;
+            background-color: #f7f7f5;
             border-top: 1px solid #e0e0e0;
         }
 
@@ -557,7 +590,7 @@
             display: grid;
             grid-template-columns: 1fr 1.4fr;
             border: 1px solid #eaeaea;
-            background-color: #fcfcfc;
+            background-color: #ffffff;
             min-height: 480px;
             border-radius: 6px;
             overflow: hidden;
@@ -589,7 +622,7 @@
         .method-tab-btn .tab-title { font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: #111111; }
         .method-tab-btn .tab-arrow { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: #cccccc; transition: transform 0.3s ease; }
         
-        .method-tab-btn:hover { background-color: #f4f4f4; }
+        .method-tab-btn:hover { background-color: #f7f7f5; }
         .method-tab-btn.active { background-color: #111111; color: #ffffff; }
         .method-tab-btn.active .tab-num, .method-tab-btn.active .tab-title, .method-tab-btn.active .tab-arrow { color: #ffffff; }
         .method-tab-btn.active .tab-arrow { transform: translateX(6px); }
@@ -716,6 +749,8 @@
             header { padding: 16px 4%; }
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 50dvh; padding: 30px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+            .projects-fullwidth-list { display: flex; flex-direction: column; gap: 50px; }
+            .project-card:nth-child(n) { grid-column: span 12; margin-top: 0 !important; }
             .method-interactive-container { grid-template-columns: 1fr; }
             .method-nav-list { border-right: none; border-bottom: 1px solid #eaeaea; }
             .about-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -792,15 +827,17 @@
                 <span class="mono-tag" id="galleryModeTag" data-es="SELECCIÓN DE OBRAS" data-cat="SELECCIÓ D'OBRES">SELECCIÓN DE OBRAS</span>
             </div>
             
-            <!-- VISTA 1: CONTENEDOR DE MEMORIAS -->
+            <!-- VISTA 1: CONTENEDOR DE MEMORIAS CON NUEVO GRID ASIMÉTRICO -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- LISTADO A ANCHO COMPLETO -->
                 <div class="projects-fullwidth-list" id="projectsList">
                     
                     <!-- Proyecto 1: Infinita -->
                     <div class="project-card" data-project="infinita">
-                        <div class="project-card-thumb"><img src="./img/miranda-6/miranda-1.jpg" alt="Infinita"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">01 / 2026</span>
+                            <img src="./img/miranda-6/miranda-1.jpg" alt="Infinita">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>INFINITA</h3>
@@ -812,7 +849,10 @@
 
                     <!-- Proyecto 2: Claro de luz -->
                     <div class="project-card" data-project="clarodeluz">
-                        <div class="project-card-thumb"><img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Casa Claro de Luz"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">02 / 2025</span>
+                            <img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Casa Claro de Luz">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>CLARO DE LUZ</h3>
@@ -824,11 +864,14 @@
 
                     <!-- Proyecto 3: Brisa de luz -->
                     <div class="project-card" data-project="brisadeluz">
-                        <div class="project-card-thumb"><img src="./img/biguesiriells/bigues-1.jpg" alt="Brisa de luz"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">03 / 2025</span>
+                            <img src="./img/biguesiriells/bigues-1.jpg" alt="Brisa de luz">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>BRISA DE LUZ</h3>
-                                <p>Residencial • Mas Alba, Sant Pere de Ribes</p>
+                                <p>Residencial • Sant Pere de Ribes</p>
                             </div>
                             <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
@@ -836,7 +879,10 @@
 
                     <!-- Proyecto 4: Brisa del alba -->
                     <div class="project-card" data-project="brisadelalba">
-                        <div class="project-card-thumb"><img src="./img/havana48/havana1.jpg" alt="Brisa del alba"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">04 / 2024</span>
+                            <img src="./img/havana48/havana1.jpg" alt="Brisa del alba">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>BRISA DEL ALBA</h3>
@@ -848,7 +894,10 @@
 
                     <!-- Proyecto 5: Vila Clara -->
                     <div class="project-card" data-project="vilaclara">
-                        <div class="project-card-thumb"><img src="./img/croquis.jpg" alt="Vila Clara"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">05 / 2024</span>
+                            <img src="./img/croquis.jpg" alt="Vila Clara">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>VILA CLARA</h3>
@@ -860,7 +909,10 @@
 
                     <!-- Proyecto 6: Passacaglia -->
                     <div class="project-card" data-project="passacaglia">
-                        <div class="project-card-thumb"><img src="./img/havana48/havana2.jpg" alt="Passacaglia"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">06 / 2023</span>
+                            <img src="./img/havana48/havana2.jpg" alt="Passacaglia">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>PASSACAGLIA</h3>
@@ -872,7 +924,10 @@
 
                     <!-- Proyecto 7: Claroscuro -->
                     <div class="project-card" data-project="claroscuro">
-                        <div class="project-card-thumb"><img src="./img/JP/jp1.jpg" alt="Claroscuro"></div>
+                        <div class="project-card-thumb">
+                            <span class="project-badge-float">07 / 2023</span>
+                            <img src="./img/JP/jp1.jpg" alt="Claroscuro">
+                        </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>CLAROSCURO</h3>
@@ -1414,7 +1469,7 @@
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // Sistema de navegación para listado a ancho completo e individuales
+        // Sistema de navegación para listado e individuales
         const projectsList = document.getElementById('projectsList');
         const projectCards = document.querySelectorAll('.project-card');
         const detailViews = document.querySelectorAll('.single-project-view');
@@ -1439,7 +1494,7 @@
 
         function showProjectList() {
             detailViews.forEach(v => v.classList.remove('active'));
-            projectsList.style.display = 'flex';
+            projectsList.style.display = 'grid';
             tagHeader.setAttribute('data-es', 'SELECCIÓN DE OBRAS');
             tagHeader.setAttribute('data-cat', "SELECCIÓ D'OBRES");
             setLanguage(currentLang);
