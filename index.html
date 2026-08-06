@@ -599,7 +599,7 @@
             border-radius: 20px;
         }
 
-        /* VISTA 2: ESTUDIO */
+        /* VISTA 2: ESTUDIO (CON MÉTODO Y CONTACTO) */
         .view-about-layout {
             max-width: 1100px;
             margin: 0 auto;
@@ -624,6 +624,138 @@
         .about-image { width: 100%; height: 45vh; background-color: #f0f0f0; overflow: hidden; border-radius: 6px; }
         .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
 
+        /* SECCIÓN DE MÉTODO DENTRO DE ESTUDIO */
+        .method-section {
+            border-top: 1px solid #eaeaea;
+            padding-top: 40px;
+        }
+        .method-section h3 {
+            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+        .method-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .method-step-card {
+            background: #f8f8f8;
+            padding: 24px;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+        }
+        .method-step-card span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #888888;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .method-step-card h5 {
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #111;
+        }
+        .method-step-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+            font-weight: 300;
+        }
+
+        /* SECCIÓN DE CONTACTO RESTAURADA */
+        .contact-section {
+            border-top: 1px solid #eaeaea;
+            padding-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        .contact-info-col h3 {
+            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .contact-info-col p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #111;
+        }
+        .contact-details a {
+            color: #111;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .contact-details a:hover { opacity: 0.6; }
+
+        .contact-form-col form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #777;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: #111;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #111;
+        }
+        .form-submit-btn {
+            background-color: #111;
+            color: #fff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            align-self: flex-start;
+        }
+        .form-submit-btn:hover { background-color: #333; }
+
         /* CONTROL DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: block; }
@@ -640,7 +772,7 @@
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 50dvh; padding: 30px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
             .projects-fullwidth-list { grid-template-columns: 1fr; }
-            .about-grid { grid-template-columns: 1fr; gap: 24px; }
+            .about-grid, .method-steps-grid, .contact-section { grid-template-columns: 1fr; gap: 24px; }
             .project-detail-meta-grid { grid-template-columns: 1fr; }
         }
 
@@ -682,7 +814,7 @@
             <div class="split-content-top"><span class="split-badge">02 / IDENTIDAD</span></div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDIO</h2>
-                <p class="split-desc" data-es="Filosofía, mirada y ubicación en Barcelona." data-cat="Filosofia, i ubicació a Barcelona.">Filosofía, mirada y ubicación en Barcelona.</p>
+                <p class="split-desc" data-es="Filosofía, método, ubicación y contacto en Barcelona." data-cat="Filosofia, mètode, ubicació i contacte a Barcelona.">Filosofía, método, ubicación y contacto en Barcelona.</p>
                 <div class="split-action">
                     <span data-es="CONOCER" data-cat="CONÈIXER">CONOCER</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -771,7 +903,7 @@
 
                     <!-- Proyecto 5: Vila Clara -->
                     <div class="project-card" data-project="vilaclara">
-                        <div class="project-card-thumb"><img src="./img/mirador-42/mirador-1.jpg" alt="Vila Clara"></div>
+                        <div class="project-card-thumb"><img src="./img/croquis.jpg" alt="Vila Clara"></div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
                                 <h3>VILA CLARA</h3>
@@ -1019,19 +1151,19 @@
                                 <span class="slide-step-tag">01 / NÚCLEO</span>
                                 <h4>Una casa que se ilumina desde dentro</h4>
                                 <p>Una casa que se ilumina desde dentro. Vilaclara es una pequeña vivienda en Canyelles organizada alrededor de una escalera central.</p>
-                                <div class="story-slide-media zoomable-img"><img src="./img/mirador-42/mirador-1.jpg" alt="Vila Clara 1"></div>
+                                <div class="story-slide-media zoomable-img"><img src="./img/croquis.jpg" alt="Vila Clara 1"></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / VERTICALIDAD</span>
                                 <h4>El hueco vertical</h4>
                                 <p>Más que un elemento de circulación, la escalera se convierte en un hueco vertical que introduce la luz natural.</p>
-                                <div class="story-slide-media zoomable-img"><img src="./img/mirador-42/mirador-2.jpg" alt="Vila Clara 2"></div>
+                                <div class="story-slide-media zoomable-img"><img src="./img/passacaglia2.jpg" alt="Vila Clara 2"></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">03 / EL VACÍO</span>
                                 <h4>Protagonismo absoluto del vacío</h4>
                                 <p>Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista.</p>
-                                <div class="story-slide-media zoomable-img"><img src="./img/mirador-42/mirador-3.jpg" alt="Vila Clara 3"></div>
+                                <div class="story-slide-media zoomable-img"><img src="./img/HAVANA%2048.jpg" alt="Vila Clara 3"></div>
                             </div>
                         </div>
                         <div class="story-fluid-nav">
@@ -1140,7 +1272,7 @@
 
             </div>
 
-            <!-- VISTA 2: ESTUDIO -->
+            <!-- VISTA 2: ESTUDIO (CON FILOSOFÍA, MÉTODO Y CONTACTO) -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz en Barcelona." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum a Barcelona.">Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz en Barcelona.</p>
                 <div class="about-grid">
@@ -1154,6 +1286,60 @@
                     </div>
                 </div>
                 <div class="about-image"><img src="./img/HAVANA%2048.jpg" alt="Estudio OWN Architecture"></div>
+
+                <!-- SECCIÓN DE MÉTODO NUEVA -->
+                <div class="method-section">
+                    <h3 data-es="MÉTODO: CÓMO PENSAMOS LOS PROYECTOS" data-cat="MÈTODE: COM PENSEM ELS PROJECTES">MÉTODO: CÓMO PENSAMOS LOS PROYECTOS</h3>
+                    <div class="method-steps-grid">
+                        <div class="method-step-card">
+                            <span data-es="01 / ANÁLISIS" data-cat="01 / ANÀLISI">01 / ANÁLISIS</span>
+                            <h5 data-es="LECTURA DEL LUGAR" data-cat="LECTURA DEL LLOC">LECTURA DEL LUGAR</h5>
+                            <p data-es="Estudiamos con profundidad la topografía, la orientación solar, el entorno urbano y las normativas para extraer el potencial oculto de cada emplazamiento." data-cat="Estudiem amb profunditat la topografia, l'orientació solar, l'entorn urbà i les normatives per extreure el potencial ocult de cada emplaçament.">Estudiamos con profundidad la topografía, la orientación solar, el entorno urbano y las normativas para extraer el potencial oculto de cada emplazamiento.</p>
+                        </div>
+                        <div class="method-step-card">
+                            <span data-es="02 / CONCEPTO" data-cat="02 / CONCEPTE">02 / CONCEPTO</span>
+                            <h5 data-es="GESTOR Y MATERIA" data-cat="GEST I MATÈRIA">GESTOR Y MATERIA</h5>
+                            <p data-es="Traducimos las necesidades del cliente en decisiones espaciales claras y rigurosas, donde la luz y los materiales definen la atmósfera y el carácter de la obra." data-cat="Traduïm les necessitats del client en decisions espacials clares i rigoroses, on la llum i els materials defineixen l'atmosfera i el caràcter de l'obra.">Traducimos las necesidades del cliente en decisiones espaciales claras y rigurosas, donde la luz y los materiales definen la atmósfera y el carácter de la obra.</p>
+                        </div>
+                        <div class="method-step-card">
+                            <span data-es="03 / EJECUCIÓN" data-cat="03 / EXECUCIÓ">03 / EJECUCIÓN</span>
+                            <h5 data-es="PRECISIÓN Y DETALLE" data-cat="PRECISIÓ I DETALL">PRECISIÓN Y DETALLE</h5>
+                            <p data-es="Acompañamos el proceso constructivo de principio a fin, cuidando cada detalle técnico y estricta selección material hasta hacer realidad la idea inicial." data-cat="Acompanyem el procés constructiu de principi a fi, cuidant cada detall tècnic i estricta selecció material fins a fer realitat la idea inicial.">Acompañamos el proceso constructivo de principio a fin, cuidando cada detalle técnico y estricta selección material hasta hacer realidad la idea inicial.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE CONTACTO RESTAURADA -->
+                <div class="contact-section" id="contacto">
+                    <div class="contact-info-col">
+                        <h3 data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</h3>
+                        <p data-es="¿Tienes un proyecto en mente o quieres colaborar con nosotros? Escríbenos o visítanos en nuestro estudio de Barcelona." data-cat="Tens un projecte en ment o vols col·laborar amb nosaltres? Escriu-nos o visita'ns al nostre estudi de Barcelona.">¿Tienes un proyecto en mente o quieres colaborar con nosotros? Escríbenos o visítanos en nuestro estudio de Barcelona.</p>
+                        <div class="contact-details">
+                            <span>OWN ARCHITECTURE</span>
+                            <span>Barcelona, España</span>
+                            <a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a>
+                            <a href="tel:+34930000000">+34 930 000 000</a>
+                        </div>
+                    </div>
+                    <div class="contact-form-col">
+                        <form onsubmit="event.preventDefault(); alert('Mensaje enviado correctamente.');">
+                            <div class="form-group">
+                                <label data-es="NOMBRE" data-cat="NOM">NOMBRE</label>
+                                <input type="text" required placeholder="Tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÓNICO</label>
+                                <input type="email" required placeholder="tu@correo.com">
+                            </div>
+                            <div class="form-group">
+                                <label data-es="MENSAJE" data-cat="MISSATGE">MENSAJE</label>
+                                <textarea rows="4" required placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                            </div>
+                            <button type="submit" class="form-submit-btn" data-es="ENVIAR MENSAJE" data-cat="ENVIAR MISSATGE">ENVIAR MENSAJE</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
 
         </section>
@@ -1227,7 +1413,7 @@
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
                 titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA E IDENTIDAD'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I IDENTITAT');
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA, MÉTODO Y CONTACTO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA, MÈTODE I CONTACTE');
             }
             setLanguage(currentLang);
             window.scrollTo({ top: 0, behavior: 'smooth' });
