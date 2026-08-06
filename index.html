@@ -23,7 +23,7 @@
         }
 
         body {
-            background-color: #f8f8f6; /* Fondo neutro cálido y limpio */
+            background-color: #f8f8f6;
             color: #1a1a1a;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow: hidden;
@@ -35,7 +35,6 @@
             overflow-y: auto;
         }
 
-        /* CURSOR */
         #custom-cursor {
             position: fixed;
             top: 0;
@@ -61,7 +60,7 @@
             color: #888888;
         }
 
-        /* PANTALLA INICIAL LIMPIA */
+        /* PANTALLA INICIAL */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -158,7 +157,7 @@
             font-weight: 500;
         }
 
-        /* HEADER / NAVEGACIÓN LIMPIA */
+        /* HEADER */
         header {
             position: fixed;
             top: 0;
@@ -260,7 +259,7 @@
 
         .gallery-header h2 { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 600; letter-spacing: -0.5px; text-transform: uppercase; }
 
-        /* NUEVO GRID ORDENADO Y LIMPIO (2 Columnas simétricas y equilibradas) */
+        /* GRID DE PROYECTOS LIMPIO */
         .projects-fullwidth-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -346,7 +345,7 @@
 
         .project-card:hover .project-card-action { opacity: 1; }
 
-        /* VISTA DETALLE DE PROYECTO LIMPIA */
+        /* VISTA DETALLE */
         .single-project-view {
             display: none;
             max-width: 1100px;
@@ -429,7 +428,7 @@
             max-width: 900px;
         }
 
-        /* CARRUSEL DE DETALLE */
+        /* CARRUSEL FLUIDO */
         .story-fluid-container {
             position: relative;
             width: 100%;
@@ -655,7 +654,7 @@
             <div class="pane-bg"></div>
             <div class="split-content-top"><span class="split-badge">02 / ESTUDIO</span></div>
             <div class="split-content-bottom">
-                <h2 class="split-title" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDIO</h2>
+                <h2 class="split-title" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDI</h2>
                 <p class="split-desc" data-es="Filosofía, método de trabajo y contacto en Barcelona." data-cat="Filosofia, mètode de treball i contacte a Barcelona.">Filosofía, método de trabajo y contacto en Barcelona.</p>
                 <div class="split-action">
                     <span data-es="CONOCER MÁS &rarr;" data-cat="CONÈIXER MÉS &rarr;">CONOCER MÁS &rarr;</span>
@@ -690,7 +689,7 @@
                 <span class="mono-tag" id="galleryModeTag" data-es="SELECCIÓN DE OBRAS" data-cat="SELECCIÓ D'OBRES">SELECCIÓN DE OBRAS</span>
             </div>
             
-            <!-- VISTA 1: LISTADO GRID ORDENADO -->
+            <!-- VISTA 1: LISTADO GRID -->
             <div class="view-stories-layout layout-block">
                 <div class="projects-fullwidth-list" id="projectsList">
                     
@@ -767,7 +766,7 @@
                     <div class="project-card" data-project="passacaglia">
                         <div class="project-card-thumb">
                             <span class="project-badge-float">2023</span>
-                            <img src="./img/havana48/havana2.jpg" alt="Passacaglia">
+                            <img src="./img/passacaglia2.jpg" alt="Passacaglia">
                         </div>
                         <div class="project-card-info">
                             <div class="project-card-titles">
@@ -806,24 +805,30 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Infinita nace del gesto claro de abrazar el paisaje a través de tres volúmenes escalonados que maximizan el jardín y la captación lumínica lateral.</p>
+                    <p class="project-long-description">Infinita nace del gesto claro de abrazar el paisaje a través de tres volúmenes escalonados que maximizan el jardín y la captación lumínica lateral, estableciendo una relación continua entre el interior y la topografía natural.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / VOLUMETRÍA</span>
                                 <h4>Abrazar el paisaje</h4>
-                                <p>Volúmenes escalonados para maximizar el espacio exterior.</p>
+                                <p>Volúmenes escalonados concebidos para maximizar el espacio exterior y fundirse con la pendiente del terreno.</p>
                                 <div class="story-slide-media"><img src="./img/miranda-6/miranda-1.jpg" alt=""></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / NORMATIVA</span>
                                 <h4>Plataforma continua</h4>
-                                <p>Plataforma intermedia fundida con jardín elevado.</p>
+                                <p>Plataforma intermedia fundida con el jardín elevado, resolviendo el acceso rodado y peatonal de manera fluida.</p>
                                 <div class="story-slide-media"><img src="./img/miranda-6/miranda-2.jpg" alt=""></div>
+                            </div>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">03 / INTERIORISMO</span>
+                                <h4>Vacíos habitados</h4>
+                                <p>Estancias principales orientadas a capturar la luz del sur y filtrar la brisa a través de patios interiores.</p>
+                                <div class="story-slide-media"><img src="./img/miranda-6/miranda-6.jpg" alt=""></div>
                             </div>
                         </div>
                         <div class="story-fluid-nav">
-                            <span class="story-slide-counter">1 / 2</span>
+                            <span class="story-slide-counter">1 / 3</span>
                             <div class="story-nav-controls">
                                 <button class="story-nav-btn prev-slide-btn">&larr;</button>
                                 <button class="story-nav-btn next-slide-btn">&rarr;</button>
@@ -844,24 +849,30 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Un refugio sereno donde la arquitectura se repliega en L para abrazar un jardín interior protegido y bañado de luz natural.</p>
+                    <p class="project-long-description">Un refugio sereno donde la arquitectura se repliega en L para abrazar un jardín interior protegido, tamizando la luz del sol mediante celosías y grandes planos acristalados orientados al sur.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / CONCEPTO</span>
                                 <h4>Refugio sereno</h4>
-                                <p>Espacio protegido abierto al cielo y al tiempo lento.</p>
-                                <div class="story-slide-media"><img src="./img/clarodeluz/clarodeluz-4.jpg" alt=""></div>
+                                <p>Espacio protegido y abierto al cielo, diseñado para habitar el tiempo lento en contacto con la naturaleza.</p>
+                                <div class="story-slide-media"><img src="./img/clarodeluz/clarodeluz-1.jpg" alt=""></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / PRIVACIDAD</span>
                                 <h4>Apertura interior</h4>
-                                <p>Fachadas sobrias al exterior y máxima apertura al jardín.</p>
+                                <p>Fachadas sobrias y opacas hacia el exterior urbano, y máxima apertura acristalada hacia el patio privado.</p>
                                 <div class="story-slide-media"><img src="./img/clarodeluz/clarodeluz-2.jpg" alt=""></div>
+                            </div>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">03 / MATERIALIDAD</span>
+                                <h4>Tonos neutros</h4>
+                                <p>Uso de hormigón abujardado, madera de roble natural y cal blanca en paredes interiores.</p>
+                                <div class="story-slide-media"><img src="./img/clarodeluz/clarodeluz-4.jpg" alt=""></div>
                             </div>
                         </div>
                         <div class="story-fluid-nav">
-                            <span class="story-slide-counter">1 / 2</span>
+                            <span class="story-slide-counter">1 / 3</span>
                             <div class="story-nav-controls">
                                 <button class="story-nav-btn prev-slide-btn">&larr;</button>
                                 <button class="story-nav-btn next-slide-btn">&rarr;</button>
@@ -882,24 +893,30 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Vivienda en pendiente orientada al nordeste, diseñada para optimizar el jardín inferior y coronada con una piscina elevada autónoma.</p>
+                    <p class="project-long-description">Vivienda en pendiente orientada al nordeste, diseñada para optimizar el jardín inferior, conectar las estancias de día en planta baja y coronarse con una piscina elevada autónoma.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / IMPLANTACIÓN</span>
                                 <h4>Disposición en L</h4>
-                                <p>Secuencia abierta al jardín y conectada mediante acristalamiento.</p>
+                                <p>Secuencia de espacios abiertos al jardín y conectados visualmente mediante carpinterías ocultas en muro.</p>
                                 <div class="story-slide-media"><img src="./img/biguesiriells/bigues-1.jpg" alt=""></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / RECORRIDO</span>
                                 <h4>Escalera principal</h4>
-                                <p>Descenso fluido desde el garaje hacia la zona de día.</p>
+                                <p>Descenso fluido desde el garaje superior hasta la zona de día principal en contacto directo con el terreno.</p>
                                 <div class="story-slide-media"><img src="./img/biguesiriells/bigues-2.jpg" alt=""></div>
+                            </div>
+                            <div class="story-fluid-slide">
+                                <span class="slide-step-tag">03 / CORONACIÓN</span>
+                                <h4>Piscina elevada</h4>
+                                <p>Plano de agua suspendido que actúa como espejo reflectante del cielo y barrera visual frente al entorno.</p>
+                                <div class="story-slide-media"><img src="./img/biguesiriells/bigues-3.jpg" alt=""></div>
                             </div>
                         </div>
                         <div class="story-fluid-nav">
-                            <span class="story-slide-counter">1 / 2</span>
+                            <span class="story-slide-counter">1 / 3</span>
                             <div class="story-nav-controls">
                                 <button class="story-nav-btn prev-slide-btn">&larr;</button>
                                 <button class="story-nav-btn next-slide-btn">&rarr;</button>
@@ -920,19 +937,19 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Ubicada en lo alto de una colina con vistas al mar y Sitges, diseñada para capturar la luz del amanecer.</p>
+                    <p class="project-long-description">Ubicada en lo alto de una colina con vistas panorámicas al mar y Sitges, esta vivienda se estructura en tres niveles adaptados a la topografía para capturar la luz del amanecer en cada estancia.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / ENTORNO</span>
                                 <h4>Vistas al mar</h4>
-                                <p>Volumetría orientada a enmarcar el paisaje costero.</p>
+                                <p>Volumetría principal orientada de forma estricta a enmarcar el horizonte costero y la vegetación de la colina.</p>
                                 <div class="story-slide-media"><img src="./img/havana48/havana1.jpg" alt=""></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / NIVELES</span>
                                 <h4>Organización fluida</h4>
-                                <p>Tres niveles adaptados a la topografía de la colina.</p>
+                                <p>Estructura escalonada que separa la zona de invitados, el núcleo familiar y la suite principal superior.</p>
                                 <div class="story-slide-media"><img src="./img/havana48/havana2.jpg" alt=""></div>
                             </div>
                         </div>
@@ -958,14 +975,14 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Una vivienda concebida alrededor de una escalera central que actúa como un hueco vertical lleno de luz.</p>
+                    <p class="project-long-description">Una vivienda concebida alrededor de una escalera central que actúa como un hueco vertical lleno de luz, conectando el nivel inferior de día con las habitaciones superiores mediante un haz cenital constante.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / NÚCLEO</span>
                                 <h4>Escalera central</h4>
-                                <p>Eje vertical que introduce luz natural al corazón de la casa.</p>
-                                <div class="story-slide-media"><img src="./img/mirador-42/mirador-1.jpg" alt=""></div>
+                                <p>Eje vertical de chapa plegada y madera que introduce luz natural al corazón absoluto de la planta baja.</p>
+                                <div class="story-slide-media"><img src="./img/croquis.jpg" alt=""></div>
                             </div>
                         </div>
                         <div class="story-fluid-nav">
@@ -990,13 +1007,13 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Un ejercicio de ritmo, luz y estructura basado en una cadencia precisa de llenos y vacíos.</p>
+                    <p class="project-long-description">Un ejercicio de ritmo, luz y estructura basado en una cadencia precisa de llenos y vacíos que articulan la transición entre la calle y la intimidad del hogar.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / RITMO</span>
                                 <h4>Cadencia espacial</h4>
-                                <p>Alternancia armónica entre luz y sombra.</p>
+                                <p>Alternancia armónica entre luz directa, luz reflejada y espacios de sombra controlada.</p>
                                 <div class="story-slide-media"><img src="./img/passacaglia2.jpg" alt=""></div>
                             </div>
                         </div>
@@ -1022,13 +1039,13 @@
                             <div class="meta-box"><label>ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
-                    <p class="project-long-description">Reforma en planta baja que libera el espacio mediante un apeo estructural, unificando sala y cocina.</p>
+                    <p class="project-long-description">Reforma en planta baja que libera el espacio mediante un apeo estructural de gran formato, unificando sala, comedor y cocina en un plano continuo bañado por patios de luces restaurados.</p>
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / ESTRUCTURA</span>
                                 <h4>Apeo estructural</h4>
-                                <p>Liberación de planta para lograr continuidad espacial.</p>
+                                <p>Liberación total de la crujía central para lograr continuidad espacial y recuperación de techos originales.</p>
                                 <div class="story-slide-media"><img src="./img/JP/jp1.jpg" alt=""></div>
                             </div>
                         </div>
@@ -1066,25 +1083,25 @@
                         <div class="method-content-pane active" id="phase-1">
                             <span class="mono-tag">FASE 01</span>
                             <h3>Lectura del Lugar</h3>
-                            <p>Estudio riguroso de la topografía, normativas y preexistencias del entorno.</p>
+                            <p>Estudio riguroso de la topografía, normativas urbanísticas y preexistencias del entorno para cada encargo.</p>
                             <div class="method-highlight-quote">El límite como motor creativo.</div>
                         </div>
                         <div class="method-content-pane" id="phase-2">
                             <span class="mono-tag">FASE 02</span>
                             <h3>Introspección Teórica</h3>
-                            <p>Desarrollo del relato conceptual antes de trazar la primera línea.</p>
+                            <p>Desarrollo del relato conceptual y la estrategia espacial antes de trazar la primera línea técnica.</p>
                             <div class="method-highlight-quote">La idea rige la materia.</div>
                         </div>
                         <div class="method-content-pane" id="phase-3">
                             <span class="mono-tag">FASE 03</span>
                             <h3>Tectónica y Detalle</h3>
-                            <p>Selección rigurosa de texturas y entradas de luz para espacios atemporales.</p>
+                            <p>Selección rigurosa de texturas, aislamientos y entradas de luz para conseguir espacios atemporales.</p>
                             <div class="method-highlight-quote">Atmósferas modeladas por la sombra.</div>
                         </div>
                         <div class="method-content-pane" id="phase-4">
                             <span class="mono-tag">FASE 04</span>
                             <h3>Dirección Técnica</h3>
-                            <p>Acompañamiento integral desde los croquis hasta la obra ejecutada.</p>
+                            <p>Acompañamiento integral desde los primeros croquis hasta la última partida de obra ejecutada in situ.</p>
                             <div class="method-highlight-quote">De la teoría a la realidad.</div>
                         </div>
                     </div>
@@ -1097,11 +1114,11 @@
                 <div class="about-grid">
                     <div class="about-col">
                         <h4>FILOSOFÍA</h4>
-                        <p>Abordamos el diseño desde la introspección teórica y la ejecución constructiva rigurosa.</p>
+                        <p>Abordamos el diseño desde la introspección teórica y la ejecución constructiva rigurosa, buscando la belleza en la simplicidad material.</p>
                     </div>
                     <div class="about-col">
                         <h4>IDENTIDAD</h4>
-                        <p>Una disciplina integral desde los primeros croquis hasta la dirección de obra final.</p>
+                        <p>Una disciplina integral que abarca desde los primeros croquis a mano hasta la dirección artística y de obra final.</p>
                     </div>
                 </div>
                 <div class="about-image"><img src="./img/HAVANA%2048.jpg" alt=""></div>
@@ -1111,7 +1128,7 @@
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
                     <h3>HABLEMOS</h3>
-                    <p>Disponible para encargos residenciales, reformas e interiorismo en Barcelona.</p>
+                    <p>Disponible para encargos residenciales, reformas de carácter e interiorismo en Barcelona y alrededores.</p>
                     <div class="contact-detail-item">
                         <label>UBICACIÓN</label>
                         <p>Barcelona, España</p>
