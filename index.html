@@ -72,7 +72,7 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (SPLIT EN 2 COLUMNAS) */
+        /* PANTALLA INICIAL (SPLIT EN 2 COLUMNAS EXACTAS) */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -737,7 +737,7 @@
 
     <div id="custom-cursor"></div>
 
-    <!-- PANTALLA INICIAL (SPLIT EN 2 COLUMNAS) -->
+    <!-- PANTALLA INICIAL (DIVIDIDA EXACTAMENTE EN 2 COLUMNAS) -->
     <section class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
@@ -895,31 +895,31 @@
                         <h2>INFINITA</h2>
                         <div class="project-detail-meta-grid">
                             <div class="meta-box"><label data-es="TIPO" data-cat="TIPUS">TIPO</label><span>Residencial unifamiliar</span></div>
-                            <div class="meta-box"><label data-es="UBICACIÓN" data-cat="UBICACIÓ">UBICACIÓN</label><span>Parcela con fuerte desnivel (nordeste)[cite: 1]</span></div>
+                            <div class="meta-box"><label data-es="UBICACIÓN" data-cat="UBICACIÓ">UBICACIÓN</label><span>Parcela con fuerte desnivel (nordeste)</span></div>
                             <div class="meta-box"><label data-es="ESTADO" data-cat="ESTAT">ESTADO</label><span>Completado</span></div>
                         </div>
                     </div>
 
-                    <p class="project-long-description">Infinita nace del gesto claro de abrazar el paisaje. Situada sobre una parcela con fuerte desnivel y orientada al nordeste, la casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores[cite: 1].</p>
+                    <p class="project-long-description">Infinita nace del gesto claro de abrazar el paisaje. Situada sobre una parcela con fuerte desnivel y orientada al nordeste, la casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores.</p>
 
                     <div class="story-fluid-container">
                         <div class="story-fluid-track">
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">01 / VOLUMETRÍA</span>
                                 <h4>Abrazar el paisaje</h4>
-                                <p>La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores[cite: 1].</p>
+                                <p>La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores.</p>
                                 <div class="story-slide-media"><img src="./img/miranda-6/miranda-1.jpg" alt="Infinita 1"></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">02 / NORMATIVA</span>
                                 <h4>Plataforma continua</h4>
-                                <p>La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida para generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior[cite: 1].</p>
+                                <p>La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida para generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior.</p>
                                 <div class="story-slide-media"><img src="./img/miranda-6/miranda-2.jpg" alt="Infinita 2"></div>
                             </div>
                             <div class="story-fluid-slide">
                                 <span class="slide-step-tag">03 / HORIZONTE</span>
                                 <h4>Un horizonte sin fin</h4>
-                                <p>Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin[cite: 1].</p>
+                                <p>Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin.</p>
                                 <div class="story-slide-media"><img src="./img/miranda-6/miranda-3.jpg" alt="Infinita 3"></div>
                             </div>
                         </div>
@@ -1336,7 +1336,7 @@
             document.body.classList.remove('content-active');
         });
 
-        // Pantalla inicial en 2 columnas: Proyectos vs Estudio/Método/Contacto
+        // Pantalla inicial en 2 columnas exactas
         document.getElementById('selectStories').addEventListener('click', () => {
             entrySplit.classList.add('hidden');
             document.body.classList.add('content-active');
