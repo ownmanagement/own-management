@@ -1,25 +1,20 @@
-<!DOCTYPE html>
+# Let's write out a python script that will generate a comprehensive, highly polished HTML file
+# emulating the layout style of Lionel Jadot's studio portfolio (https://studio.lioneljadot.com/home)
+# with a split intro page (Projects vs. Studio) and an immersive masonry/grid or full-bleed project showcase.
+
+html_content = """<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     
-    <!-- SEO & META TAGS OPTIMIZADOS -->
     <title>OWN ARCHITECTURE | Estudio de Arquitectura en Barcelona</title>
-    <meta name="description" content="Estudio de arquitectura contemporánea y sostenible en Barcelona. Proyectos residenciales, rehabilitación e interiorismo con un enfoque integral.">
-    <meta name="keywords" content="arquitectura barcelona, estudio arquitectura, casas de autor, diseño sostenible, rehabilitación barcelona, own architecture">
-    <meta name="author" content="OWN Architecture">
+    <meta name="description" content="Estudio de arquitectura contemporánea y sostenible en Barcelona. Proyectos residenciales, rehabilitación e interiorismo.">
     
-    <!-- Open Graph / Redes Sociales -->
-    <meta property="og:title" content="OWN ARCHITECTURE | Estudio de Arquitectura">
-    <meta property="og:description" content="Diseño arquitectónico innovador, sostenible y residencial en Barcelona.">
-    <meta property="og:type" content="website">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
-        /* RESET & BASES */
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -32,8 +27,8 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #111111;
+            background-color: #0b0b0b;
+            color: #f0f0f0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
@@ -42,37 +37,37 @@
         body.content-active {
             overflow-x: hidden;
             overflow-y: auto;
-            background-color: #ffffff;
+            background-color: #0b0b0b;
         }
 
-        /* CURSOR PERSONALIZADO (Escritorio) */
+        /* CURSOR */
         #custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
-            width: 10px;
-            height: 10px;
-            background-color: #000000;
+            width: 8px;
+            height: 8px;
+            background-color: #ffffff;
             border-radius: 50%;
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
             opacity: 0;
+            mix-blend-mode: difference;
         }
-
         #custom-cursor.visible { opacity: 1; }
-        #custom-cursor.hovered { width: 22px; height: 22px; }
+        #custom-cursor.hovered { width: 50px; height: 50px; background-color: #ffffff; }
 
         .mono-tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #777777;
+            letter-spacing: 2px;
+            color: #888888;
         }
 
-        /* PANTALLA INICIAL (SPLIT EN 2 COLUMNAS EXACTAS) */
+        /* SPLIT SCREEN INICIAL (2 Columnas) */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -82,8 +77,8 @@
             height: 100dvh;
             display: flex;
             z-index: 2000;
-            background-color: #0d0d0d;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+            background-color: #0b0b0b;
+            transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
         }
 
         .entry-split-container.hidden {
@@ -99,7 +94,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(40px, 8vh, 100px) 6% clamp(30px, 6vh, 60px) 6%;
+            padding: clamp(40px, 8vh, 100px) 5% clamp(30px, 6vh, 60px) 5%;
             transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             overflow: hidden;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -107,8 +102,8 @@
         }
 
         .split-pane:last-child { border-right: none; }
-        .split-pane.pane-stories { background-color: #0d0d0d; color: #ffffff; }
-        .split-pane.pane-studio { background-color: #161616; color: #ffffff; }
+        .pane-stories { background-color: #0d0d0d; color: #ffffff; }
+        .pane-studio { background-color: #141414; color: #ffffff; }
 
         .pane-bg {
             position: absolute;
@@ -118,18 +113,18 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.25;
+            opacity: 0.3;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
             z-index: 1;
         }
         
-        .pane-stories .pane-bg { background-image: url('./img/croquis.jpg'); }
+        .pane-stories .pane-bg { background-image: url('./img/miranda-6/miranda-1.jpg'); }
         .pane-studio .pane-bg { background-image: url('./img/HAVANA%2048.jpg'); }
 
         @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.85; filter: brightness(0.55); }
-            .entry-split-container .split-pane:hover { flex: 1.45; filter: brightness(1); }
-            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.45; }
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.4); }
+            .entry-split-container .split-pane:hover { flex: 1.5; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
         }
 
         .split-content-top, .split-content-bottom { position: relative; z-index: 2; }
@@ -140,30 +135,30 @@
             font-size: 0.65rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
-            margin-bottom: 16px;
             background-color: rgba(255, 255, 255, 0.1); 
             color: #ffffff; 
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .split-title {
-            font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+            font-size: clamp(2.5ul, 4.5vw, 4rem);
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
             font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1px;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
             text-transform: uppercase;
             margin-bottom: 12px;
         }
 
-        .split-desc { font-size: clamp(0.9rem, 1.3vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.8; }
+        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.75; max-width: 450px; }
 
         .split-action {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-top: 22px;
+            margin-top: 24px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             letter-spacing: 2px;
@@ -174,7 +169,7 @@
         .split-action svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
         .split-pane:hover .split-action svg { transform: translateX(6px); }
 
-        /* HEADER / NAVEGACIÓN PRINCIPAL */
+        /* HEADER */
         header {
             position: fixed;
             top: 0;
@@ -183,12 +178,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 24px 5%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: rgba(11, 11, 11, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
@@ -201,7 +196,7 @@
             font-weight: 800; 
             letter-spacing: 3px; 
             text-transform: uppercase; 
-            color: #111111; 
+            color: #ffffff; 
             text-decoration: none;
             cursor: pointer;
         }
@@ -209,55 +204,55 @@
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
 
         .mode-switch-bar {
             display: flex;
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.05);
             padding: 3px;
             border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             gap: 2px;
         }
 
         .mode-btn {
             background: none;
             border: none;
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: 600;
-            color: #666666;
+            color: #999999;
             transition: all 0.25s ease;
             cursor: pointer;
         }
 
         .mode-btn.active {
-            background-color: #111111;
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            color: #0b0b0b;
         }
 
         .lang-switch-bar {
             display: flex;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 4px 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
             border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 6px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
+            color: #888888;
         }
 
-        .lang-btn { background: none; border: none; padding: 2px 6px; border-radius: 10px; font-weight: 600; color: #777777; cursor: pointer; }
-        .lang-btn.active { background-color: #111111; color: #ffffff; }
+        .lang-btn { background: none; border: none; padding: 2px 4px; font-weight: 600; color: #888888; cursor: pointer; }
+        .lang-btn.active { color: #ffffff; }
 
-        /* CONTENEDOR PRINCIPAL DE VISTAS */
+        /* MAIN CONTAINER */
         .main-view-container {
             position: relative;
             width: 100%;
@@ -267,103 +262,131 @@
 
         body.content-active .main-view-container { opacity: 1; }
 
-        .gallery-section { padding: 130px 5% 80px 5%; background-color: #ffffff; min-height: 100vh; }
+        /* ESTILO LIONEL JADOT: MASONRY / GRID ASIMÉTRICO DINÁMICO */
+        .gallery-section { 
+            padding: 140px 4% 100px 4%; 
+            background-color: #0b0b0b; 
+            min-height: 100vh; 
+        }
 
-        .gallery-header {
-            margin-bottom: 50px;
+        .gallery-header-info {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            border-bottom: 2px solid #111111;
-            padding-bottom: 16px;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 20px;
         }
 
-        .gallery-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1.5px; text-transform: uppercase; }
-
-        /* VISTA 1A: GRID DE PROYECTOS A ANCHO COMPLETO */
-        .projects-fullwidth-list {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .project-card {
-            position: relative;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .project-card-thumb {
-            position: relative;
-            width: 100%;
-            height: clamp(450px, 60vw, 750px);
-            overflow: hidden;
-            background-color: #eaeaea;
-            border-radius: 6px;
-        }
-
-        .project-card-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .project-card:hover .project-card-thumb img {
-            transform: scale(1.03);
-        }
-
-        .project-card-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding: 0 4px;
-        }
-
-        .project-card-titles h3 {
-            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        .gallery-header-info h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 800;
+            letter-spacing: -1.5px;
             text-transform: uppercase;
-            letter-spacing: -1px;
-            color: #111111;
-            margin-bottom: 6px;
-        }
-
-        .project-card-titles p {
-            font-size: 0.95rem;
-            color: #666666;
-            font-weight: 300;
-        }
-
-        .project-card-action {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #111111;
-            padding: 12px 24px;
-            border: 1px solid #111111;
-            border-radius: 30px;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-        }
-
-        .project-card:hover .project-card-action {
-            background-color: #111111;
             color: #ffffff;
         }
 
-        /* VISTA 1B: DETALLE INDIVIDUAL DE CADA PROYECTO */
+        /* JADOT GRID ASYMMETRIC LAYOUT */
+        .jadot-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .jadot-item {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #161616;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Asignación de tamaños de columna estilo grid asimétrico libre */
+        .jadot-item:nth-child(1) { grid-column: span 8; grid-row: span 2; }
+        .jadot-item:nth-child(2) { grid-column: span 4; }
+        .jadot-item:nth-child(3) { grid-column: span 4; }
+        .jadot-item:nth-child(4) { grid-column: span 6; }
+        .jadot-item:nth-child(5) { grid-column: span 6; }
+        .jadot-item:nth-child(6) { grid-column: span 5; }
+        .jadot-item:nth-child(7) { grid-column: span 7; }
+
+        .jadot-thumb {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 380px;
+            overflow: hidden;
+        }
+
+        .jadot-item:nth-child(1) .jadot-thumb { min-height: 600px; }
+        .jadot-item:nth-child(4) .jadot-thumb, .jadot-item:nth-child(5) .jadot-thumb { min-height: 480px; }
+        .jadot-item:nth-child(6) .jadot-thumb, .jadot-item:nth-child(7) .jadot-thumb { min-height: 450px; }
+
+        .jadot-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+            filter: brightness(0.9);
+        }
+
+        .jadot-item:hover .jadot-thumb img {
+            transform: scale(1.04);
+            filter: brightness(1);
+        }
+
+        .jadot-overlay-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            z-index: 2;
+        }
+
+        .jadot-titles h3 {
+            font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .jadot-titles p {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            font-weight: 300;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .jadot-badge-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* VISTA DETALLE INDIVIDUAL DE PROYECTO */
         .single-project-view {
             display: none;
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             flex-direction: column;
             gap: 50px;
@@ -373,22 +396,22 @@
         .single-project-view.active { display: flex; }
 
         @keyframes fadeInProject {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .back-to-list-btn {
             align-self: flex-start;
             background: none;
-            border: 1px solid #cccccc;
-            padding: 8px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
             border-radius: 30px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.68rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             font-weight: 600;
-            color: #333333;
+            color: #cccccc;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
@@ -396,31 +419,32 @@
             gap: 8px;
         }
 
-        .back-to-list-btn:hover { background-color: #111111; color: #ffffff; border-color: #111111; }
+        .back-to-list-btn:hover { background-color: #ffffff; color: #0b0b0b; border-color: #ffffff; }
 
         .project-detail-header {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            border-bottom: 2px solid #111111;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             padding-bottom: 24px;
         }
 
         .project-detail-header h2 {
-            font-size: clamp(2rem, 3.5vw, 3.2rem);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
             font-weight: 800;
             letter-spacing: -1.5px;
             text-transform: uppercase;
+            color: #ffffff;
         }
 
         .project-detail-meta-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            background: #f8f8f8;
-            padding: 20px;
+            background: #141414;
+            padding: 24px;
             border-radius: 6px;
-            border: 1px solid #eaeaea;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .meta-box label {
@@ -436,26 +460,26 @@
         .meta-box span {
             font-size: 1rem;
             font-weight: 600;
-            color: #111111;
+            color: #ffffff;
         }
 
         .project-long-description {
             font-size: clamp(1.1rem, 1.6vw, 1.3rem);
             line-height: 1.7;
             font-weight: 300;
-            color: #222;
-            border-left: 3px solid #111111;
-            padding-left: 20px;
+            color: #d0d0d0;
+            border-left: 3px solid #ffffff;
+            padding-left: 24px;
         }
 
-        /* CARRUSEL FLUIDO DENTRO DEL DETALLE DEL PROYECTO */
+        /* CARRUSEL FLUIDO DENTRO DEL DETALLE */
         .story-fluid-container {
             position: relative;
             width: 100%;
-            background-color: #f8f8f8;
+            background-color: #141414;
             border-radius: 6px;
             overflow: hidden;
-            border: 1px solid #eaeaea;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .story-fluid-track {
@@ -487,23 +511,23 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.5px;
-            color: #111111;
+            color: #ffffff;
         }
 
         .story-fluid-slide p {
             font-size: 1.05rem;
             line-height: 1.7;
-            color: #444444;
+            color: #cccccc;
             font-weight: 300;
             max-width: 850px;
         }
 
         .story-slide-media {
             width: 100%;
-            height: clamp(300px, 45vw, 520px);
+            height: clamp(320px, 48vw, 550px);
             overflow: hidden;
             margin-top: 8px;
-            background-color: #eaeaea;
+            background-color: #1a1a1a;
             border-radius: 4px;
         }
 
@@ -518,15 +542,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 16px clamp(20px, 5vw, 60px);
-            background-color: #efefef;
-            border-top: 1px solid #e0e0e0;
+            background-color: #111111;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .story-nav-controls { display: flex; gap: 10px; }
 
         .story-nav-btn {
-            background: #111111;
-            color: #ffffff;
+            background: #ffffff;
+            color: #0b0b0b;
             border: none;
             width: 38px;
             height: 38px;
@@ -536,13 +560,16 @@
             justify-content: center;
             font-size: 1rem;
             cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
         }
+        .story-nav-btn:hover { transform: scale(1.08); }
 
         .story-slide-counter {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             letter-spacing: 2px;
-            color: #666666;
+            color: #888888;
         }
 
         /* VISTA 2: MÉTODO DINÁMICO */
@@ -556,8 +583,8 @@
         .method-interactive-container {
             display: grid;
             grid-template-columns: 1fr 1.4fr;
-            border: 1px solid #eaeaea;
-            background-color: #fcfcfc;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: #141414;
             min-height: 480px;
             border-radius: 6px;
             overflow: hidden;
@@ -566,13 +593,13 @@
         .method-nav-list {
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #eaeaea;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .method-tab-btn {
             background: transparent;
             border: none;
-            border-bottom: 1px solid #eaeaea;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 28px 32px;
             text-align: left;
             display: flex;
@@ -586,12 +613,12 @@
         .method-tab-btn:last-child { border-bottom: none; }
         .method-tab-btn .tab-info { display: flex; flex-direction: column; gap: 4px; }
         .method-tab-btn .tab-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 2px; color: #888888; }
-        .method-tab-btn .tab-title { font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: #111111; }
-        .method-tab-btn .tab-arrow { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: #cccccc; transition: transform 0.3s ease; }
+        .method-tab-btn .tab-title { font-size: 1.25rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; color: #ffffff; }
+        .method-tab-btn .tab-arrow { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: #666666; transition: transform 0.3s ease; }
         
-        .method-tab-btn:hover { background-color: #f4f4f4; }
-        .method-tab-btn.active { background-color: #111111; color: #ffffff; }
-        .method-tab-btn.active .tab-num, .method-tab-btn.active .tab-title, .method-tab-btn.active .tab-arrow { color: #ffffff; }
+        .method-tab-btn:hover { background-color: rgba(255, 255, 255, 0.03); }
+        .method-tab-btn.active { background-color: #ffffff; color: #0b0b0b; }
+        .method-tab-btn.active .tab-num, .method-tab-btn.active .tab-title, .method-tab-btn.active .tab-arrow { color: #0b0b0b; }
         .method-tab-btn.active .tab-arrow { transform: translateX(6px); }
 
         .method-display-panel {
@@ -599,7 +626,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background-color: #ffffff;
+            background-color: #111111;
         }
 
         .method-content-pane {
@@ -616,15 +643,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .method-content-pane h3 { font-size: clamp(1.6rem, 2.2vw, 2.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -1px; }
-        .method-content-pane p { font-size: 1.1rem; line-height: 1.7; color: #444444; font-weight: 300; }
+        .method-content-pane h3 { font-size: clamp(1.6rem, 2.2vw, 2.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -1px; color: #ffffff; }
+        .method-content-pane p { font-size: 1.1rem; line-height: 1.7; color: #cccccc; font-weight: 300; }
         .method-highlight-quote {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.72rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #777777;
-            border-left: 2px solid #111111;
+            color: #888888;
+            border-left: 2px solid #ffffff;
             padding-left: 12px;
         }
 
@@ -642,16 +669,16 @@
             font-weight: 300;
             line-height: 1.35;
             letter-spacing: -0.5px;
-            color: #111111;
-            border-left: 3px solid #111111;
+            color: #ffffff;
+            border-left: 3px solid #ffffff;
             padding-left: 24px;
         }
 
         .about-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
-        .about-col h4 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
-        .about-col p { font-size: 1rem; line-height: 1.7; color: #555555; font-weight: 300; }
-        .about-image { width: 100%; height: 45vh; background-color: #f0f0f0; overflow: hidden; border-radius: 6px; }
-        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .about-col h4 { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; color: #ffffff; }
+        .about-col p { font-size: 1rem; line-height: 1.7; color: #aaaaaa; font-weight: 300; }
+        .about-image { width: 100%; height: 45vh; background-color: #161616; overflow: hidden; border-radius: 6px; }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.9); }
 
         /* VISTA 4: CONTACTO */
         .view-contact-layout {
@@ -662,32 +689,32 @@
             gap: 60px;
         }
 
-        .contact-info-block h3 { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; text-transform: uppercase; }
-        .contact-info-block p { font-size: 1.05rem; line-height: 1.6; color: #555555; font-weight: 300; margin-bottom: 30px; }
+        .contact-info-block h3 { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; text-transform: uppercase; color: #ffffff; }
+        .contact-info-block p { font-size: 1.05rem; line-height: 1.6; color: #aaaaaa; font-weight: 300; margin-bottom: 30px; }
         .contact-detail-item { margin-bottom: 24px; }
         .contact-detail-item label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #888888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .contact-detail-item p, .contact-detail-item a { font-size: 1.1rem; font-weight: 600; color: #111111; text-decoration: none; }
+        .contact-detail-item p, .contact-detail-item a { font-size: 1.1rem; font-weight: 600; color: #ffffff; text-decoration: none; }
 
         .contact-form { display: flex; flex-direction: column; gap: 24px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: #666666; }
+        .form-group label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: #888888; }
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 14px 0;
             border: none;
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             background: transparent;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
-            color: #111111;
+            color: #ffffff;
             outline: none;
         }
-        .form-group input:focus, .form-group textarea:focus { border-bottom-color: #111111; }
+        .form-group input:focus, .form-group textarea:focus { border-bottom-color: #ffffff; }
 
         .submit-btn {
             align-self: flex-start;
-            background-color: #111111;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #0b0b0b;
             border: none;
             padding: 14px 36px;
             border-radius: 40px;
@@ -697,16 +724,16 @@
             text-transform: uppercase;
             font-weight: 700;
             cursor: pointer;
+            transition: transform 0.2s ease;
         }
+        .submit-btn:hover { transform: scale(1.03); }
 
-        /* CONTROL DE VISTAS */
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: block; }
         body.mode-method-active .view-method-layout { display: flex; }
         body.mode-about-active .view-about-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
 
-        /* OPTIMIZACIÓN TÁCTIL Y RESPONSIVE */
         @media (pointer: coarse), (hover: none) {
             * { cursor: auto !important; }
             #custom-cursor { display: none !important; }
@@ -716,8 +743,11 @@
             header { padding: 16px 4%; }
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 50dvh; padding: 30px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+            .jadot-grid { grid-template-columns: 1fr; }
+            .jadot-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+            .jadot-item .jadot-thumb { min-height: 400px !important; }
             .method-interactive-container { grid-template-columns: 1fr; }
-            .method-nav-list { border-right: none; border-bottom: 1px solid #eaeaea; }
+            .method-nav-list { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
             .about-grid { grid-template-columns: 1fr; gap: 24px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 40px; }
             .project-detail-meta-grid { grid-template-columns: 1fr; }
@@ -729,7 +759,6 @@
             .mode-switch-bar { flex: 1; justify-content: center; }
             .method-tab-btn { padding: 16px 20px; }
             .method-display-panel { padding: 30px 20px; }
-            .gallery-section { padding-top: 130px; }
         }
     </style>
 </head>
@@ -737,14 +766,14 @@
 
     <div id="custom-cursor"></div>
 
-    <!-- PANTALLA INICIAL (DIVIDIDA EXACTAMENTE EN 2 COLUMNAS) -->
+    <!-- PANTALLA INICIAL (DIVIDIDA EN 2 COLUMNAS) -->
     <section class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top"><span class="split-badge">01 / PORTAFOLIO</span></div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
-                <p class="split-desc" data-es="Explora las memorias técnicas, conceptuales y visuales de cada obra." data-cat="Explora les memòries tècniques, conceptuals i visuals de cada obra.">Explora las memorias técnicas, conceptuales y visuales de cada obra.</p>
+                <p class="split-desc" data-es="Explora las memorias técnicas y visuales en formato inmersivo." data-cat="Explora les memòries tècniques i visuals en format immersiu.">Explora las memorias técnicas y visuales en formato inmersivo.</p>
                 <div class="split-action">
                     <span data-es="VER OBRAS" data-cat="VEURE OBRES">VER OBRAS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -759,7 +788,7 @@
                 <h2 class="split-title" data-es="EL ESTUDIO" data-cat="L'ESTUDI">EL ESTUDIO</h2>
                 <p class="split-desc" data-es="Filosofía, método de trabajo, identidad y contacto en Barcelona." data-cat="Filosofia, mètode de treball, identitat i contacte a Barcelona.">Filosofía, método de trabajo, identidad y contacto en Barcelona.</p>
                 <div class="split-action">
-                    <span data-es="CONOCER MÁS" data-cat="CONÈIXER MÉS">CONOCER MÁS</span>
+                    <span data-es="CONOCER MÁS" data-cat="CONÈIXER MÉS">CONOCER MÉS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
@@ -787,98 +816,111 @@
     <!-- CONTENIDO GENERAL -->
     <main class="main-view-container">
         <section class="gallery-section">
-            <div class="gallery-header">
+            <div class="gallery-header-info">
                 <h2 id="galleryModeTitle" data-es="MEMORIAS Y PROYECTOS" data-cat="MEMÒRIES I PROJECTES">MEMORIAS Y PROYECTOS</h2>
                 <span class="mono-tag" id="galleryModeTag" data-es="SELECCIÓN DE OBRAS" data-cat="SELECCIÓ D'OBRES">SELECCIÓN DE OBRAS</span>
             </div>
             
-            <!-- VISTA 1: CONTENEDOR DE MEMORIAS -->
+            <!-- VISTA 1: GRID ASIMÉTRICO ESTILO LIONEL JADOT -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- LISTADO A ANCHO COMPLETO -->
-                <div class="projects-fullwidth-list" id="projectsList">
+                <div class="jadot-grid" id="projectsList">
                     
-                    <!-- Proyecto 1: Infinita -->
-                    <div class="project-card" data-project="infinita">
-                        <div class="project-card-thumb"><img src="./img/miranda-6/miranda-1.jpg" alt="Infinita"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>INFINITA</h3>
-                                <p>Residencial • Parcela con fuerte desnivel</p>
+                    <!-- Proyecto 1 -->
+                    <div class="jadot-item" data-project="infinita">
+                        <div class="jadot-thumb">
+                            <img src="./img/miranda-6/miranda-1.jpg" alt="Infinita">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>INFINITA</h3>
+                                    <p>Residencial • Fuerte desnivel</p>
+                                </div>
+                                <span class="jadot-badge-tag">01</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 2: Claro de luz -->
-                    <div class="project-card" data-project="clarodeluz">
-                        <div class="project-card-thumb"><img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Casa Claro de Luz"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>CLARO DE LUZ</h3>
-                                <p>Residencial • Barcelona</p>
+                    <!-- Proyecto 2 -->
+                    <div class="jadot-item" data-project="clarodeluz">
+                        <div class="jadot-thumb">
+                            <img src="./img/clarodeluz/clarodeluz-1.jpg" alt="Claro de luz">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>CLARO DE LUZ</h3>
+                                    <p>Barcelona</p>
+                                </div>
+                                <span class="jadot-badge-tag">02</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 3: Brisa de luz -->
-                    <div class="project-card" data-project="brisadeluz">
-                        <div class="project-card-thumb"><img src="./img/biguesiriells/bigues-1.jpg" alt="Brisa de luz"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>BRISA DE LUZ</h3>
-                                <p>Residencial • Mas Alba, Sant Pere de Ribes</p>
+                    <!-- Proyecto 3 -->
+                    <div class="jadot-item" data-project="brisadeluz">
+                        <div class="jadot-thumb">
+                            <img src="./img/biguesiriells/bigues-1.jpg" alt="Brisa de luz">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>BRISA DE LUZ</h3>
+                                    <p>Mas Alba, Sant Pere de Ribes</p>
+                                </div>
+                                <span class="jadot-badge-tag">03</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 4: Brisa del alba -->
-                    <div class="project-card" data-project="brisadelalba">
-                        <div class="project-card-thumb"><img src="./img/havana48/havana1.jpg" alt="Brisa del alba"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>BRISA DEL ALBA</h3>
-                                <p>Residencial • Canyelles</p>
+                    <!-- Proyecto 4 -->
+                    <div class="jadot-item" data-project="brisadelalba">
+                        <div class="jadot-thumb">
+                            <img src="./img/havana48/havana1.jpg" alt="Brisa del alba">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>BRISA DEL ALBA</h3>
+                                    <p>Canyelles</p>
+                                </div>
+                                <span class="jadot-badge-tag">04</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 5: Vila Clara -->
-                    <div class="project-card" data-project="vilaclara">
-                        <div class="project-card-thumb"><img src="./img/croquis.jpg" alt="Vila Clara"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>VILA CLARA</h3>
-                                <p>Residencial • Canyelles</p>
+                    <!-- Proyecto 5 -->
+                    <div class="jadot-item" data-project="vilaclara">
+                        <div class="jadot-thumb">
+                            <img src="./img/croquis.jpg" alt="Vila Clara">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>VILA CLARA</h3>
+                                    <p>Canyelles</p>
+                                </div>
+                                <span class="jadot-badge-tag">05</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 6: Passacaglia -->
-                    <div class="project-card" data-project="passacaglia">
-                        <div class="project-card-thumb"><img src="./img/havana48/havana2.jpg" alt="Passacaglia"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>PASSACAGLIA</h3>
-                                <p>Residencial • Barcelona</p>
+                    <!-- Proyecto 6 -->
+                    <div class="jadot-item" data-project="passacaglia">
+                        <div class="jadot-thumb">
+                            <img src="./img/passacaglia2.jpg" alt="Passacaglia">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>PASSACAGLIA</h3>
+                                    <p>Barcelona</p>
+                                </div>
+                                <span class="jadot-badge-tag">06</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
-                    <!-- Proyecto 7: Claroscuro -->
-                    <div class="project-card" data-project="claroscuro">
-                        <div class="project-card-thumb"><img src="./img/JP/jp1.jpg" alt="Claroscuro"></div>
-                        <div class="project-card-info">
-                            <div class="project-card-titles">
-                                <h3>CLAROSCURO</h3>
-                                <p>Rehabilitación • Sarrià, Barcelona</p>
+                    <!-- Proyecto 7 -->
+                    <div class="jadot-item" data-project="claroscuro">
+                        <div class="jadot-thumb">
+                            <img src="./img/JP/jp1.jpg" alt="Claroscuro">
+                            <div class="jadot-overlay-info">
+                                <div class="jadot-titles">
+                                    <h3>CLAROSCURO</h3>
+                                    <p>Rehabilitación • Sarrià</p>
+                                </div>
+                                <span class="jadot-badge-tag">07</span>
                             </div>
-                            <div class="project-card-action" data-es="VER MEMORIA &rarr;" data-cat="VEURE MEMÒRIA &rarr;">VER MEMORIA &rarr;</div>
                         </div>
                     </div>
 
@@ -1336,7 +1378,6 @@
             document.body.classList.remove('content-active');
         });
 
-        // Pantalla inicial en 2 columnas exactas
         document.getElementById('selectStories').addEventListener('click', () => {
             entrySplit.classList.add('hidden');
             document.body.classList.add('content-active');
@@ -1414,14 +1455,13 @@
         btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // Sistema de navegación para listado a ancho completo e individuales
         const projectsList = document.getElementById('projectsList');
-        const projectCards = document.querySelectorAll('.project-card');
+        const jadotItems = document.querySelectorAll('.jadot-item');
         const detailViews = document.querySelectorAll('.single-project-view');
 
-        projectCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const targetProj = card.getAttribute('data-project');
+        jadotItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetProj = item.getAttribute('data-project');
                 projectsList.style.display = 'none';
                 
                 detailViews.forEach(v => v.classList.remove('active'));
@@ -1439,7 +1479,7 @@
 
         function showProjectList() {
             detailViews.forEach(v => v.classList.remove('active'));
-            projectsList.style.display = 'flex';
+            projectsList.style.display = 'grid';
             tagHeader.setAttribute('data-es', 'SELECCIÓN DE OBRAS');
             tagHeader.setAttribute('data-cat', "SELECCIÓ D'OBRES");
             setLanguage(currentLang);
@@ -1452,7 +1492,6 @@
             });
         });
 
-        // Lógica de pestañas del Método
         const methodTabs = document.querySelectorAll('.method-tab-btn');
         const methodPanes = document.querySelectorAll('.method-content-pane');
 
@@ -1466,7 +1505,6 @@
             });
         });
 
-        // Lógica de carruseles múltiples por proyecto
         document.querySelectorAll('.story-fluid-container').forEach(container => {
             const track = container.querySelector('.story-fluid-track');
             const slides = container.querySelectorAll('.story-fluid-slide');
@@ -1495,3 +1533,9 @@
     </script>
 </body>
 </html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("HTML generado correctamente con el estilo asimétrico inspirada en Lionel Jadot.")
