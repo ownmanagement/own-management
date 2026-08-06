@@ -72,7 +72,7 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (3 COLUMNAS: PROYECTOS, ESTUDIO, CONTACTO) */
+        /* PANTALLA INICIAL (2 COLUMNAS: PROYECTOS, ESTUDIO) */
         .entry-split-container {
             position: fixed;
             top: 0;
@@ -109,7 +109,6 @@
         .split-pane:last-child { border-right: none; }
         .split-pane.pane-stories { background-color: #0d0d0d; color: #ffffff; }
         .split-pane.pane-studio { background-color: #141414; color: #ffffff; }
-        .split-pane.pane-contact { background-color: #1a1a1a; color: #ffffff; }
 
         .pane-bg {
             position: absolute;
@@ -126,11 +125,10 @@
         
         .pane-stories .pane-bg { background-image: url('./img/croquis.jpg'); }
         .pane-studio .pane-bg { background-image: url('./img/HAVANA%2048.jpg'); }
-        .pane-contact .pane-bg { background-image: url('./img/JP/jp1.jpg'); }
 
         @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.5); }
-            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+            .entry-split-container:hover .split-pane { flex: 0.85; filter: brightness(0.5); }
+            .entry-split-container .split-pane:hover { flex: 1.15; filter: brightness(1); }
             .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.45; }
         }
 
@@ -791,7 +789,7 @@
         @media (max-width: 1024px) {
             header { padding: 16px 4%; }
             .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 33dvh; padding: 25px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+            .split-pane { min-height: 50dvh; padding: 25px 6%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
             .projects-fullwidth-list { grid-template-columns: 1fr; }
             .about-grid, .method-steps-grid, .contact-section-standalone { grid-template-columns: 1fr; gap: 24px; padding: 30px; }
             .project-detail-meta-grid { grid-template-columns: 1fr; }
@@ -815,7 +813,7 @@
         <img id="modalImage" src="" alt="Imagen Ampliada">
     </div>
 
-    <!-- PANTALLA INICIAL (3 COLUMNAS: PROYECTOS, ESTUDIO, CONTACTO) -->
+    <!-- PANTALLA INICIAL (2 COLUMNAS: PROYECTOS, ESTUDIO) -->
     <section class="entry-split-container" id="entrySplit">
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
@@ -838,19 +836,6 @@
                 <p class="split-desc" data-es="Filosofía, método y forma de pensar los proyectos en Barcelona." data-cat="Filosofia, mètode i manera de pensar els projectes a Barcelona.">Filosofía, método y forma de pensar los proyectos en Barcelona.</p>
                 <div class="split-action">
                     <span data-es="CONOCER" data-cat="CONÈIXER">CONOCER</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
-        </div>
-
-        <div class="split-pane pane-contact" id="selectContact">
-            <div class="pane-bg"></div>
-            <div class="split-content-top"><span class="split-badge">03 / COMUNICACIÓN</span></div>
-            <div class="split-content-bottom">
-                <h2 class="split-title" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</h2>
-                <p class="split-desc" data-es="Hablemos sobre tu próxima obra o colaboración." data-cat="Parlem sobre la teva pròxima obra o col·laboració.">Hablemos sobre tu próxima obra o colaboración.</p>
-                <div class="split-action">
-                    <span data-es="ESCRIBIR" data-cat="ESCRIURE">ESCRIBIR</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
@@ -1401,7 +1386,6 @@
 
         document.getElementById('selectStories').addEventListener('click', () => activateContent('stories'));
         document.getElementById('selectStudio').addEventListener('click', () => activateContent('about'));
-        document.getElementById('selectContact').addEventListener('click', () => activateContent('contact'));
 
         function activateContent(mode) {
             entrySplit.classList.add('hidden');
