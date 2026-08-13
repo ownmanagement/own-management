@@ -296,7 +296,7 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN ESTUDIO (EDITORIAL Y COMPLETA) */
+        /* SECCIÓN ESTUDIO (EDITORIAL Y COMPLETA, INCLUYE SOBRE MÍ) */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
@@ -336,7 +336,7 @@
             background-color: #f5f5f5;
         }
 
-        .story-hero-media img {
+        .story-hero-media img, .story-hero-media video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -344,7 +344,8 @@
             transition: transform 0.6s ease;
         }
 
-        .story-item-card:hover .story-hero-media img {
+        .story-item-card:hover .story-hero-media img,
+        .story-item-card:hover .story-hero-media video {
             transform: scale(1.02);
             filter: grayscale(0%);
         }
@@ -511,62 +512,6 @@
             filter: grayscale(0%);
         }
 
-        /* SECCIÓN ESTUDIO (SOBRE NOSOTROS) */
-        .view-about-layout {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 80px;
-        }
-
-        .about-statement {
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 300;
-            line-height: 1.35;
-            letter-spacing: -1px;
-            color: #111111;
-            border-left: 3px solid #111111;
-            padding-left: 30px;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 60px;
-            margin-top: 20px;
-        }
-
-        .about-col h4 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .about-col p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #555555;
-            font-weight: 300;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 50vh;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-        }
-
         /* SECCIÓN CONTACTO */
         .view-contact-layout {
             max-width: 1100px;
@@ -675,7 +620,6 @@
         .layout-block { display: none; }
         body.mode-stories-active .view-stories-layout { display: flex; }
         body.mode-visual-active .view-visuals-layout { display: flex; }
-        body.mode-about-active .view-about-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
 
         /* MODAL GALERÍA FOTOGRÁFICA DE PROYECTOS */
@@ -795,7 +739,6 @@
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
             .project-multi-grid { grid-template-columns: 1fr; height: auto; }
             .grid-img-wrapper { height: 350px; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
@@ -820,7 +763,7 @@
             </div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h2>
-                <p class="split-desc" data-es="El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, els fonaments i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
+                <p class="split-desc" data-es="El desarrollo teórico, la filosofía y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, la filosofia i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, la filosofía y el lenguaje conceptual detrás de cada diseño.</p>
                 <div class="split-action">
                     <span data-es="VER ESTUDIO" data-cat="VEURE ESTUDI">VER ESTUDIO</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -851,7 +794,6 @@
             <div class="mode-switch-bar">
                 <button class="mode-btn active" id="btnModeStories" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
                 <button class="mode-btn" id="btnModeVisuals" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
-                <button class="mode-btn" id="btnModeAbout" data-es="SOBRE MÍ" data-cat="QUINS SOM">SOBRE MÍ</button>
                 <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
             </div>
             <div class="lang-switch-bar">
@@ -867,12 +809,55 @@
         <section class="gallery-section">
             <div class="gallery-header">
                 <h2 id="galleryModeTitle" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h2>
-                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y CONCEPTOS" data-cat="RELATS I CONCEPTES">RELATOS Y CONCEPTOS</span>
+                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS, FILOSOFÍA Y PROYECTOS" data-cat="RELATS, FILOSOFIA I PROJECTES">RELATOS, FILOSOFÍA Y PROYECTOS</span>
             </div>
             
-            <!-- VISTA 1: ESTUDIO (ESTRUCTURA EDITORIAL CONTEXTUALIZADA) -->
+            <!-- VISTA 1: ESTUDIO (INCLUYE SOBRE MÍ COMO PRIMER BLOQUE / MANIFIESTO) -->
             <div class="view-stories-layout layout-block">
                 
+                <!-- BLOQUE SOBRE MÍ / FILOSOFÍA (AHORA DENTRO DE ESTUDIO) -->
+                <article class="story-item-card">
+                    <div class="story-meta-header">
+                        <h3 data-es="SOBRE MÍ" data-cat="SOBRE MI">SOBRE MÍ</h3>
+                        <span class="mono-tag">FILOSOFÍA Y MÉTODO</span>
+                    </div>
+                    
+                    <div class="story-hero-media">
+                        <!-- ESPACIO O VÍDEO PROVISIONAL -->
+                        <video autoplay muted loop playsinline poster="img/HAVANA%2048.jpg">
+                            <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+
+                    <p class="story-summary-text" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
+                        Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
+                    </p>
+
+                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MANIFIESTO" data-cat="+ DESPLEGAR MANIFEST">+ DESPLEGAR MANIFIESTO</button>
+                    
+                    <div class="story-full-details">
+                        <div class="story-detail-block">
+                            <span class="story-chapter-num">01 / FILOSOFÍA</span>
+                            <h4 data-es="Introspección y rigor" data-cat="Introspecció i rigor">Introspección y rigor</h4>
+                            <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals.">
+                                En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.
+                            </p>
+                        </div>
+                        <div class="story-detail-block">
+                            <span class="story-chapter-num">02 / MÉTODO</span>
+                            <h4 data-es="Proceso integral" data-cat="Procés integral">Proceso integral</h4>
+                            <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">
+                                Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.
+                            </p>
+                            <div class="story-figure-wrapper">
+                                <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
+                                <span class="story-caption">FIG 01. ESPACIO DE TRABAJO Y ESTUDIO</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
                 <!-- PROYECTO 1: CASA INFINITA -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
@@ -881,7 +866,7 @@
                     </div>
                     
                     <div class="story-hero-media">
-                    <img src="img/croquis.jpg" alt="Casa Claro de luz Croquis">
+                        <img src="img/croquis.jpg" alt="Casa Claro de luz Croquis">
                     </div>
 
                     <p class="story-summary-text" data-es="Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro." data-cat="Es un refugi sereno, una vivienda que es repliega para que la luz y la calma ocupen el centro.">
@@ -891,7 +876,6 @@
                     <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
                     
                     <div class="story-full-details">
-                        
                         <div class="story-detail-block">
                             <span class="story-chapter-num">01 / CAPÍTULO I</span>
                             <h4 data-es="Diálogo con la topografía" data-cat="Diàleg amb la topografia">Diálogo con la topografía</h4>
@@ -917,7 +901,6 @@
                                 <span class="story-caption">FIG 02. DETALLE DE LUZ DIFUSA Y TEXTURA</span>
                             </div>
                         </div>
-
                     </div>
                 </article>
 
@@ -958,7 +941,7 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 3: INFINITA-->
+                <!-- PROYECTO 3: INFINITA -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>INFINITA</h3>
@@ -1172,27 +1155,7 @@
 
             </div>
 
-            <!-- VISTA 3: SOBRE EL ESTUDIO -->
-            <div class="view-about-layout layout-block">
-                <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
-                    Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
-                </p>
-                <div class="about-grid">
-                    <div class="about-col">
-                        <h4 data-es="FILOSOFÍA" data-cat="FILOSOFIA">FILOSOFÍA</h4>
-                        <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals.">En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva.</p>
-                    </div>
-                    <div class="about-col">
-                        <h4 data-es="MÉTODO DE TRABAJO" data-cat="MÈTODE DE TREBALL">MÉTODO DE TRABAJO</h4>
-                        <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
-                </div>
-            </div>
-
-            <!-- VISTA 4: CONTACTO -->
+            <!-- VISTA 3: CONTACTO -->
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
                     <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
@@ -1307,37 +1270,30 @@
         langEsBtn.addEventListener('click', () => setLanguage('es'));
         langCatBtn.addEventListener('click', () => setLanguage('cat'));
 
-        // CONMUTACIÓN DE SECCIONES
+        // CONMUTACIÓN DE SECCIONES (ACTUALIZADO: Eliminado 'about' independiente)
         const btnStories = document.getElementById('btnModeStories');
         const btnVisuals = document.getElementById('btnModeVisuals');
-        const btnAbout = document.getElementById('btnModeAbout');
         const btnContact = document.getElementById('btnModeContact');
 
         const titleHeader = document.getElementById('galleryModeTitle');
         const tagHeader = document.getElementById('galleryModeTag');
 
         function switchMode(mode) {
-            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-about-active', 'mode-contact-active');
+            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-contact-active');
             btnStories.classList.remove('active');
             btnVisuals.classList.remove('active');
-            btnAbout.classList.remove('active');
             btnContact.classList.remove('active');
 
             if (mode === 'stories') {
                 document.body.classList.add('mode-stories-active');
                 btnStories.classList.add('active');
                 titleHeader.setAttribute('data-es', 'ESTUDIO'); titleHeader.setAttribute('data-cat', 'ESTUDI');
-                tagHeader.setAttribute('data-es', 'RELATOS Y CONCEPTOS'); tagHeader.setAttribute('data-cat', 'RELATS I CONCEPTES');
+                tagHeader.setAttribute('data-es', 'RELATOS, FILOSOFÍA Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'RELATS, FILOSOFIA I PROJECTES');
             } else if (mode === 'visuals') {
                 document.body.classList.add('mode-visual-active');
                 btnVisuals.classList.add('active');
                 titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
                 tagHeader.setAttribute('data-es', 'GALERÍA FOTOGRÁFICA'); tagHeader.setAttribute('data-cat', 'GALERIA FOTOGRÀFICA');
-            } else if (mode === 'about') {
-                document.body.classList.add('mode-about-active');
-                btnAbout.classList.add('active');
-                titleHeader.setAttribute('data-es', 'SOBRE MÍ'); titleHeader.setAttribute('data-cat', "QUINS SOM");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y EQUIPO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I EQUIP');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
@@ -1350,7 +1306,6 @@
 
         btnStories.addEventListener('click', () => switchMode('stories'));
         btnVisuals.addEventListener('click', () => switchMode('visuals'));
-        btnAbout.addEventListener('click', () => switchMode('about'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
         // INTERACCIÓN DESPLEGABLE EN LA MISMA PÁGINA
@@ -1360,9 +1315,9 @@
                 details.classList.toggle('open');
                 
                 if (details.classList.contains('open')) {
-                    btn.textContent = currentLang === 'es' ? '- OCULTAR MEMORIA' : '- AMAGAR MEMÒRIA';
+                    btn.textContent = currentLang === 'es' ? '- OCULTAR' : '- AMAGAR';
                 } else {
-                    btn.textContent = currentLang === 'es' ? '+ DESPLEGAR MEMORIA DESCRIPTIVA' : '+ DESPLEGAR MEMÒRIA DESCRIPTIVA';
+                    btn.textContent = currentLang === 'es' ? '+ DESPLEGAR' : '+ DESPLEGAR';
                 }
             });
         });
@@ -1393,7 +1348,7 @@
         }
 
         prevGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
+            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) + activeImageArray.length % activeImageArray.length;
             updateGalleryModal();
         });
 
