@@ -59,6 +59,16 @@
             background-color: #000000;
         }
 
+        /* Cursor adaptado para fondos oscuros/modal */
+        body.dark-cursor-active #custom-cursor {
+            background-color: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+        body.dark-cursor-active #custom-cursor.hovered {
+            background-color: #ffffff;
+            border-color: #000000;
+        }
+
         .mono-tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.72rem;
@@ -1339,6 +1349,7 @@
                 activeImageIndex = parseInt(trigger.getAttribute('data-index'));
                 updateGalleryModal();
                 visualModal.classList.add('active');
+                document.body.classList.add('dark-cursor-active'); // Activa cursor visible en fondo negro
             });
         });
 
@@ -1348,7 +1359,7 @@
         }
 
         prevGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) + activeImageArray.length % activeImageArray.length;
+            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
             updateGalleryModal();
         });
 
@@ -1357,7 +1368,27 @@
             updateGalleryModal();
         });
 
-        closeVisualModal.addEventListener('click', () => visualModal.classList.remove('active'));
+        function closeGalleryModal() {
+            visualModal.classList.remove('active');
+            document.body.classList.remove('dark-cursor-active'); // Restaura cursor normal
+        }
+
+        closeVisualModal.addEventListener('click', closeGalleryModal);
+
+        // Control de teclado para cambiar imágenes con las flechas
+        document.addEventListener('keydown', (e) => {
+            if (!visualModal.classList.contains('active')) return;
+
+            if (e.key === 'ArrowLeft') {
+                activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
+                updateGalleryModal();
+            } else if (e.key === 'ArrowRight') {
+                activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
+                updateGalleryModal();
+            } else if (e.key === 'Escape') {
+                closeGalleryModal();
+            }
+        });
     </script>
 </body>
 </html>
