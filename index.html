@@ -94,7 +94,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+            padding: clamp(40px, 6vh, 90px) 6% clamp(30px, 6vh, 60px) 6%;
             transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             overflow: hidden;
         }
@@ -123,7 +123,6 @@
             z-index: 1;
         }
         
-        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
         .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
 
         @media (hover: hover) {
@@ -143,28 +142,50 @@
             text-transform: uppercase;
             padding: 6px 14px;
             border-radius: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
         .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
 
         .split-title {
-            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-size: clamp(1.8rem, 3.8vw, 3.5rem);
             font-weight: 800;
             line-height: 1;
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
-        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
+        .split-desc { font-size: clamp(0.85rem, 1.1vw, 0.95rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 12px; }
+
+        /* CONTENEDOR DEL VIDEO EN EL ESTUDIO (HOME) */
+        .split-video-container {
+            position: relative;
+            width: 100%;
+            height: 22vh;
+            min-height: 150px;
+            max-height: 240px;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        .split-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+        }
 
         .split-action {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-top: 28px;
+            margin-top: 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             letter-spacing: 2px;
@@ -791,7 +812,7 @@
         @media (max-width: 1024px) {
             header { padding: 18px 5%; }
             .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
+            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 40px 8%; }
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
             .project-multi-grid { grid-template-columns: 1fr; height: auto; }
             .grid-img-wrapper { height: 350px; }
@@ -816,11 +837,20 @@
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
+                <span class="split-badge">01 / PROYECTOS Y ESTUDIO</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
-                <p class="split-desc" data-es="El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, els fonaments i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
+                <h2 class="split-title" data-es="PROYECTOS / ESTUDIO" data-cat="PROJECTES / ESTUDI">PROYECTOS / ESTUDIO</h2>
+                <p class="split-desc" data-es="Explora nuestros proyectos y conoce la visión esencial del estudio a través de este recorrido audiovisual." data-cat="Explora els nostres projectes i coneix la visió essencial de l'estudi a través d'aquest recorregut audiovisual.">Explora nuestros proyectos y conoce la visión esencial del estudio a través de este recorrido audiovisual.</p>
+                
+                <!-- VIDEO QUE MUESTRA LOS PROYECTOS Y EXPLICA LA VISIÓN DEL ESTUDIO -->
+                <div class="split-video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="img/video-estudio.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de video.
+                    </video>
+                </div>
+
                 <div class="split-action">
                     <span data-es="VER MEMORIAS" data-cat="VEURE MEMÒRIES">VER MEMORIAS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -881,14 +911,11 @@
                     </div>
                     
                     <div class="story-hero-media">
-                    <img src="img/croquis.jpg" 
-                            
-                            "alt="Casa Claro de luz Croquis">
+                    <img src="img/croquis.jpg" alt="Casa Claro de luz Croquis">
                     </div>
 
                     <p class="story-summary-text" data-es="Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro." data-cat="Es un refugi sereno, una vivienda que es repliega para que la luz y la calma ocupen el centro.">
                         Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro.
-
                     </p>
 
                     <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
@@ -1022,7 +1049,6 @@
                             <p data-es="El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios."
                                data-cat="El alzado serpenteante refuerza aquesta idea, jugant amb volums que semblan desplaçar-se en una seqüència pautada, mentre que les transicions entre interior i exterior es dilueixen mitjançant amplis finestres i espais intermedis.">
                                 Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.
-
                             </p>
                             <div class="story-figure-wrapper">
                                 <img src="img/havana48/havana3.jpg" alt="Passacaglia Exterior">
@@ -1060,7 +1086,6 @@
                             <p data-es="El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa."
                                data-cat="El projecte part d'una operació estructural decisiva: un apeo que permet alliberar la planta i ampliar la sala d'estar i la cuina, transformant un espai fragmentat i fosc en una estancia continua, profunda i lluminosa.">
                                El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.
-
                             </p>
                             <div class="story-figure-wrapper">
                                 <img src="img/JP/jp2.jpg" alt="Claroscuro Vista Exterior">
@@ -1141,12 +1166,12 @@
                     <div class="visual-project-header">
                         <h3>PASSACAGLIA</h3>
                         <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                               </div>
-                   <div class="project-multi-grid">
+                    </div>
+                    <div class="project-multi-grid">
                         <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="0">
                             <img src="img/havana48/havana1.jpg" alt="Havana 1">
                         </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="1">
+                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="1">
                             <img src="img/havana48/havana2.jpg" alt="Havana 2">
                         </div>
                         <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="2">
