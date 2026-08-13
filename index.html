@@ -157,35 +157,12 @@
             margin-bottom: 10px;
         }
 
-        .split-desc { font-size: clamp(0.85rem, 1.1vw, 0.95rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 12px; }
-
-        /* CONTENEDOR DEL VIDEO EN EL ESTUDIO (HOME) */
-        .split-video-container {
-            position: relative;
-            width: 100%;
-            height: 22vh;
-            min-height: 150px;
-            max-height: 240px;
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            margin-top: 10px;
-            z-index: 2;
-        }
-
-        .split-video-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%);
-        }
+        .split-desc { font-size: clamp(0.85rem, 1.1vw, 0.95rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 24px; }
 
         .split-action {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-top: 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             letter-spacing: 2px;
@@ -532,13 +509,13 @@
             filter: grayscale(0%);
         }
 
-        /* SECCIÓN ESTUDIO */
+        /* SECCIÓN ESTUDIO CON VIDEO DE VISIÓN EXPANDIBLE */
         .view-about-layout {
             max-width: 1100px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 80px;
+            gap: 60px;
         }
 
         .about-statement {
@@ -551,11 +528,30 @@
             padding-left: 30px;
         }
 
+        /* CONTENEDOR VIDEO PRINCIPAL DEL ESTUDIO */
+        .about-main-video-container {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 380px;
+            background-color: #000000;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .about-main-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%);
+        }
+
         .about-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 60px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .about-col h4 {
@@ -571,21 +567,6 @@
             line-height: 1.8;
             color: #555555;
             font-weight: 300;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 50vh;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
         }
 
         /* SECCIÓN CONTACTO */
@@ -837,20 +818,11 @@
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">01 / PROYECTOS Y ESTUDIO</span>
+                <span class="split-badge">01 / MEMORIAS</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title" data-es="PROYECTOS / ESTUDIO" data-cat="PROJECTES / ESTUDI">PROYECTOS / ESTUDIO</h2>
-                <p class="split-desc" data-es="Explora nuestros proyectos y conoce la visión esencial del estudio a través de este recorrido audiovisual." data-cat="Explora els nostres projectes i coneix la visió essencial de l'estudi a través d'aquest recorregut audiovisual.">Explora nuestros proyectos y conoce la visión esencial del estudio a través de este recorrido audiovisual.</p>
-                
-                <!-- VIDEO QUE MUESTRA LOS PROYECTOS Y EXPLICA LA VISIÓN DEL ESTUDIO -->
-                <div class="split-video-container">
-                    <video autoplay muted loop playsinline>
-                        <source src="img/video-estudio.mp4" type="video/mp4">
-                        Tu navegador no soporta la reproducción de video.
-                    </video>
-                </div>
-
+                <h2 class="split-title" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
+                <p class="split-desc" data-es="Relatos detallados, conceptos teóricos y procesos detrás de cada obra arquitectónica." data-cat="Relats detallats, conceptes teòrics i processos darrere de cada obra arquitectònica.">Relatos detallados, conceptos teóricos y procesos detrás de cada obra arquitectónica.</p>
                 <div class="split-action">
                     <span data-es="VER MEMORIAS" data-cat="VEURE MEMÒRIES">VER MEMORIAS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -861,13 +833,13 @@
         <div class="split-pane pane-visuals" id="selectVisuals">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
+                <span class="split-badge">02 / PROYECTOS & ESTUDIO</span>
             </div>
             <div class="split-content-bottom">
-                <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
-                <p class="split-desc" data-es="Una experiencia limpia, directa y contemplativa a través de la fotografía final." data-cat="Una experiència neta, directa i contemplativa a través de la fotografia final.">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
+                <h2 class="split-title" data-es="ESTUDIO / PROYECTOS" data-cat="ESTUDI / PROJECTES">ESTUDIO / PROYECTOS</h2>
+                <p class="split-desc" data-es="Explora la galería visual y conoce la visión y el manifiesto audiovisual del estudio." data-cat="Explora la galeria visual i coneix la visió i el manifest audiovisual de l'estudi.">Explora la galería visual y conoce la visión y el manifiesto audiovisual del estudio.</p>
                 <div class="split-action">
-                    <span data-es="EXPLORAR GALERÍA" data-cat="EXPLORAR GALERIA">EXPLORAR GALERÍA</span>
+                    <span data-es="EXPLORAR ESTUDIO" data-cat="EXPLORAR ESTUDI">EXPLORAR ESTUDIO</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </div>
             </div>
@@ -900,7 +872,7 @@
                 <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y CONCEPTOS" data-cat="RELATS I CONCEPTES">RELATOS Y CONCEPTOS</span>
             </div>
             
-            <!-- VISTA 1: MEMORIAS (ESTRUCTURA EDITORIAL CONTEXTUALIZADA) -->
+            <!-- VISTA 1: MEMORIAS -->
             <div class="view-stories-layout layout-block">
                 
                 <!-- PROYECTO 1: CASA INFINITA -->
@@ -911,7 +883,7 @@
                     </div>
                     
                     <div class="story-hero-media">
-                    <img src="img/croquis.jpg" alt="Casa Claro de luz Croquis">
+                        <img src="img/croquis.jpg" alt="Casa Claro de luz Croquis">
                     </div>
 
                     <p class="story-summary-text" data-es="Es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro." data-cat="Es un refugi sereno, una vivienda que es repliega para que la luz y la calma ocupen el centro.">
@@ -921,11 +893,10 @@
                     <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
                     
                     <div class="story-full-details">
-                        
                         <div class="story-detail-block">
                             <span class="story-chapter-num">01 / CAPÍTULO I</span>
                             <h4 data-es="Diálogo con la topografía" data-cat="Diàleg amb la topografia">Diálogo con la topografía</h4>
-                            <p data-es="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
+                            <p data-es="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, basada con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior."
                                data-cat="La normativa urbanística, molt restrictiva quant a moviments de terra i creació de desnivells, va ser el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma contínua a la planta intermèdia, on s'ubica la zona de dia, basada amb un jardí elevat i una piscina infinita que s'estén sobre la coberta del nivell inferior.">
                                 La normativa urbanística, molt restrictiva quant a moviments de terra i creació de desnivells, va ser el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma contínua a la planta intermèdia, on s'ubica la zona de dia, basada amb un jardí elevat i una piscina infinita que s'estén sobre la coberta del nivell inferior.
                             </p>
@@ -947,7 +918,6 @@
                                 <span class="story-caption">FIG 02. DETALLE DE LUZ DIFUSA Y TEXTURA</span>
                             </div>
                         </div>
-
                     </div>
                 </article>
 
@@ -980,121 +950,6 @@
                                 <img src="img/biguesiriells/bigues-1.jpg" alt="Fachada exterior">
                                 <span class="story-caption">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span>
                             </div>
-                             <div class="story-figure-wrapper">
-                                <img src="img/biguesiriells/bigues-3.jpg" alt="Fachada exterior">
-                                <span class="story-caption">FIG 02. DETALLE ARQUITECTURA SUSPENDIDA</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROYECTO 3: INFINITA-->
-                <article class="story-item-card">
-                    <div class="story-meta-header">
-                        <h3>INFINITA</h3>
-                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                    </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Infinita Detail">
-                    </div>
-
-                    <p class="story-summary-text" data-es="Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Una casa on la arquitectura es converteix en paisatge, i el paisatge en part essencial de l'habitar.">
-                        La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado.
-                    </p>
-
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Sutileza en la materia" data-cat="Subtilesa en la matèria">Sutileza en la materia</h4>
-                            <p data-es="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia."
-                               data-cat="La normativa urbanística, molt restrictiva en quant a moviments de terra i creació de desnivells, era el punt de partida de la proposta. De la necessitat de resoldre aquest condicionant va sorgir la idea fonamental del projecte: generar una gran plataforma continua en la planta intermedia.">
-                                Infinita diluye los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/miranda-6/miranda-6.jpg" alt="Miranda 6 Exterior">
-                                <span class="story-caption">FIG 01. VISTA PLATAFORMA CONTÍNUA</span>
-                            </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/miranda-6/miranda-4.jpg" alt="Miranda 6 Exterior">
-                                <span class="story-caption">FIG 02. INTEGRACIÓN CON EL TERRENO </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROYECTO 4: PASSACAGLIA -->
-                <article class="story-item-card">
-                    <div class="story-meta-header">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                    </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/passacaglia2.jpg" alt="Passacaglia Interior">
-                    </div>
-
-                    <p class="story-summary-text" data-es="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios.">
-                        Casa Passacaglia es un ejercicio de ritmo, luz y estructura.
-                    </p>
-
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Iluminación y contraste" data-cat="Il·luminació i contrast">Iluminación y contraste</h4>
-                            <p data-es="El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios."
-                               data-cat="El alzado serpenteante refuerza aquesta idea, jugant amb volums que semblan desplaçar-se en una seqüència pautada, mentre que les transicions entre interior i exterior es dilueixen mitjançant amplis finestres i espais intermedis.">
-                                Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/havana48/havana3.jpg" alt="Passacaglia Exterior">
-                                <span class="story-caption">FIG 01. VISTA INTERIOR INTEGRADA CON EL PAISAJE</span>
-                            </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/havana48/havana4.jpg" alt="Passacaglia Exterior">
-                                <span class="story-caption">FIG 01. DETALLE LUZ INTERIOR</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- PROYECTO 5: CLAROSCURO -->
-                <article class="story-item-card">
-                    <div class="story-meta-header">
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">REHABILITACIÓN  • BARCELONA</span>
-                    </div>
-                    
-                    <div class="story-hero-media">
-                        <img src="img/JP/jp3.jpg" alt="CLAROSCURO">
-                    </div>
-
-                    <p class="story-summary-text" data-es="Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià." data-cat="Claroscuro és una reforma en planta baixa d'un edifici de 1920 a la plaça Joaquim Pena, a Sarrià.">
-                        Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià.
-                    </p>
-
-                    <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
-                    
-                    <div class="story-full-details">
-                        <div class="story-detail-block">
-                            <span class="story-chapter-num">01 / CAPÍTULO I</span>
-                            <h4 data-es="Conexión panorámica" data-cat="Connexió panoràmica">Conexión panorámica</h4>
-                            <p data-es="El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa."
-                               data-cat="El projecte part d'una operació estructural decisiva: un apeo que permet alliberar la planta i ampliar la sala d'estar i la cuina, transformant un espai fragmentat i fosc en una estancia continua, profunda i lluminosa.">
-                               El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.
-                            </p>
-                            <div class="story-figure-wrapper">
-                                <img src="img/JP/jp2.jpg" alt="Claroscuro Vista Exterior">
-                                <span class="story-caption">FIG 01. VISTA DEL INTERIOR</span>
-                            </div>
-                            <div class="story-figure-wrapper">
-                                <img src="img/JP/jp5.jpg" alt="Claroscuro Vista Exterior">
-                                <span class="story-caption">FIG 02. DETALLE EXTERIOR</span>
-                            </div>
                         </div>
                     </div>
                 </article>
@@ -1103,8 +958,6 @@
 
             <!-- VISTA 2: PROYECTOS (GALERÍA MULTI-IMAGEN) -->
             <div class="view-visuals-layout layout-block">
-                
-                <!-- PROYECTO 1 -->
                 <div class="visual-project-block">
                     <div class="visual-project-header">
                         <h3>CASA INFINITA</h3>
@@ -1123,7 +976,6 @@
                     </div>
                 </div>
 
-                <!-- PROYECTO 2 -->
                 <div class="visual-project-block">
                     <div class="visual-project-header">
                         <h3>FUYU</h3>
@@ -1141,71 +993,22 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- PROYECTO 3 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>Claro de luz</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="0">
-                            <img src="img/clarodeluz/clarodeluz-1.jpg" alt="Miranda 6 Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="1">
-                            <img src="img/clarodeluz/clarodeluz-2.jpg" alt="Miranda 6 Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/clarodeluz/clarodeluz-1.jpg", "img/clarodeluz/clarodeluz-2.jpg", "img/clarodeluz/clarodeluz-3.jpg"]' data-index="2">
-                            <img src="img/clarodeluz/clarodeluz-3.jpg" alt="Miranda 6 Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 4 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="0">
-                            <img src="img/havana48/havana1.jpg" alt="Havana 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="1">
-                            <img src="img/havana48/havana2.jpg" alt="Havana 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="2">
-                            <img src="img/havana48/havana3.jpg" alt="Havana 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 5 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="0">
-                            <img src="img/miranda4/miranda4-1.jpg" alt="Bigues 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="1">
-                            <img src="img/miranda4/miranda4-2.jpg" alt="Bigues 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="2">
-                            <img src="img/miranda4/miranda4-3.jpg" alt="Bigues 3">
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
-            <!-- VISTA 3: SOBRE EL ESTUDIO -->
+            <!-- VISTA 3: SOBRE EL ESTUDIO (CON VIDEO EXPANDIDO DE LA VISIÓN) -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
                     Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
                 </p>
+                
+                <!-- VIDEO PRINCIPAL QUE EXPLICA LA VISIÓN DEL ESTUDIO -->
+                <div class="about-main-video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="img/video-estudio.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de video.
+                    </video>
+                </div>
+
                 <div class="about-grid">
                     <div class="about-col">
                         <h4 data-es="FILOSOFÍA" data-cat="FILOSOFIA">FILOSOFÍA</h4>
@@ -1215,9 +1018,6 @@
                         <h4 data-es="MÉTODO DE TRABAJO" data-cat="MÈTODE DE TREBALL">MÉTODO DE TRABAJO</h4>
                         <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
                     </div>
-                </div>
-                <div class="about-image">
-                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
                 </div>
             </div>
 
@@ -1243,7 +1043,7 @@
                         <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
-                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÓNICO</label>
+                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÒNIC</label>
                         <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
@@ -1311,8 +1111,9 @@
             switchMode(mode);
         }
 
+        // El panel derecho ahora activa directamente la sección de "ESTUDIO" con su respectivo video
         selectStories.addEventListener('click', () => activateContent('stories'));
-        selectVisuals.addEventListener('click', () => activateContent('visuals'));
+        selectVisuals.addEventListener('click', () => activateContent('about'));
 
         // CAMBIO DE IDIOMA (ESPAÑOL / CATALÀ)
         const langEsBtn = document.getElementById('langEs');
@@ -1366,7 +1167,7 @@
                 document.body.classList.add('mode-about-active');
                 btnAbout.classList.add('active');
                 titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
-                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y EQUIPO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I EQUIP');
+                tagHeader.setAttribute('data-es', 'VISIÓN Y FILOSOFÍA'); tagHeader.setAttribute('data-cat', 'VISIÓ I FILOSOFIA');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
