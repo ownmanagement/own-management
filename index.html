@@ -306,7 +306,7 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN ESTUDIO (EDITORIAL Y COMPLETA, INCLUYE SOBRE MÍ) */
+        /* SECCIÓN ESTUDIO (SOLO SOBRE MÍ / MANIFIESTO) */
         .view-stories-layout {
             display: flex;
             flex-direction: column;
@@ -460,66 +460,13 @@
             letter-spacing: 1.5px;
         }
 
-        /* SECCIÓN PROYECTOS (VISUAL) */
+        /* SECCIÓN PROYECTOS (CONTIENE MEMORIAS Y FOTOGRAFÍAS) */
         .view-visuals-layout {
             display: flex;
             flex-direction: column;
-            gap: 100px;
-            max-width: 1400px;
+            gap: 120px;
+            max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .visual-project-block {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 80px;
-        }
-
-        .visual-project-block:last-child { border-bottom: none; }
-
-        .visual-project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .visual-project-header h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-        }
-
-        .project-multi-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-            height: 55vh;
-            min-height: 400px;
-        }
-
-        .grid-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #f2f2f2;
-        }
-
-        .grid-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
-            filter: grayscale(20%);
-        }
-
-        .grid-img-wrapper:hover img {
-            transform: scale(1.04);
-            filter: grayscale(0%);
         }
 
         /* SECCIÓN CONTACTO */
@@ -747,8 +694,6 @@
             .entry-split-container { flex-direction: column; }
             .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
             .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-            .project-multi-grid { grid-template-columns: 1fr; height: auto; }
-            .grid-img-wrapper { height: 350px; }
             .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
         }
 
@@ -769,11 +714,11 @@
         <div class="split-pane pane-stories" id="selectStories">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
+                <span class="split-badge">01 / FILOSOFÍA Y CONCEPTO</span>
             </div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h2>
-                <p class="split-desc" data-es="El desarrollo teórico, la filosofía y el lenguaje conceptual detrás de cada diseño." data-cat="El desenvolupament teòric, la filosofia i el llenguatge conceptual darrere de cada disseny.">El desarrollo teórico, la filosofía y el lenguaje conceptual detrás de cada diseño.</p>
+                <p class="split-desc" data-es="El desarrollo teórico, la filosofía y el lenguaje conceptual del estudio." data-cat="El desenvolupament teòric, la filosofia i el llenguatge conceptual de l'estudi.">El desarrollo teórico, la filosofía y el lenguaje conceptual del estudio.</p>
                 <div class="split-action">
                     <span data-es="VER ESTUDIO" data-cat="VEURE ESTUDI">VER ESTUDIO</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -784,11 +729,11 @@
         <div class="split-pane pane-visuals" id="selectVisuals">
             <div class="pane-bg"></div>
             <div class="split-content-top">
-                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
+                <span class="split-badge">02 / ARQUITECTURA Y RELATOS</span>
             </div>
             <div class="split-content-bottom">
                 <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
-                <p class="split-desc" data-es="Una experiencia limpia, directa y contemplativa a través de la fotografía final." data-cat="Una experiència neta, directa i contemplativa a través de la fotografia final.">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
+                <p class="split-desc" data-es="Memoria descriptiva, capítulos y experiencia fotográfica de cada obra." data-cat="Memòria descriptiva, capítols i experiència fotogràfica de cada obra.">Memoria descriptiva, capítulos y experiencia fotográfica de cada obra.</p>
                 <div class="split-action">
                     <span data-es="EXPLORAR PROYECTOS" data-cat="EXPLORAR PROJECTES">EXPLORAR PROYECTOS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -819,13 +764,12 @@
         <section class="gallery-section">
             <div class="gallery-header">
                 <h2 id="galleryModeTitle" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h2>
-                <span class="mono-tag" id="galleryModeTag" data-es="RELATOS, FILOSOFÍA Y PROYECTOS" data-cat="RELATS, FILOSOFIA I PROJECTES">RELATOS, FILOSOFÍA Y PROYECTOS</span>
+                <span class="mono-tag" id="galleryModeTag" data-es="FILOSOFÍA Y MÉTODO" data-cat="FILOSOFIA I MÈTODE">FILOSOFÍA Y MÉTODO</span>
             </div>
             
-            <!-- VISTA 1: ESTUDIO (INCLUYE SOBRE MÍ COMO PRIMER BLOQUE / MANIFIESTO) -->
+            <!-- VISTA 1: ESTUDIO (SOLO SOBRE MÍ / MANIFIESTO) -->
             <div class="view-stories-layout layout-block">
                 
-                <!-- BLOQUE SOBRE MÍ / FILOSOFÍA (AHORA DENTRO DE ESTUDIO) -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3 data-es="SOBRE MÍ" data-cat="SOBRE MI">SOBRE MÍ</h3>
@@ -833,7 +777,6 @@
                     </div>
                     
                     <div class="story-hero-media">
-                        <!-- ESPACIO O VÍDEO PROVISIONAL -->
                         <video autoplay muted loop playsinline poster="img/HAVANA%2048.jpg">
                             <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4" type="video/mp4">
                             Tu navegador no soporta video HTML5.
@@ -868,7 +811,12 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 1: CASA INFINITA -->
+            </div>
+
+            <!-- VISTA 2: PROYECTOS (CONTIENE LAS MEMORIAS DE CADA PROYECTO) -->
+            <div class="view-visuals-layout layout-block">
+                
+                <!-- PROYECTO 1: CASA CLARO DE LUZ -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>CASA CLARO DE LUZ</h3>
@@ -1065,106 +1013,6 @@
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (GALERÍA MULTI-IMAGEN) -->
-            <div class="view-visuals-layout layout-block">
-                
-                <!-- PROYECTO 1 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/INFINITA/infinita-3.jpg", "img/INFINITA/infinita-3.jpg", "img/INFINITA/infinita-3.jpg"]' data-index="0">
-                            <img src="img/INFINITA/infinita-3.jpg" alt="Casa Infinita Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/INFINITA/infinita-2.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-2.jpg"]' data-index="1">
-                            <img src="img/INFINITA/infinita-1.jpg" alt="Casa Infinita Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-1.jpg"]' data-index="2">
-                            <img src="img/INFINITA/infinita-2.jpg" alt="Casa Infinita Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 2 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="0">
-                            <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="1">
-                            <img src="img/biguesiriells/bigues-2.jpg" alt="FUYU Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="2">
-                            <img src="img/biguesiriells/bigues-4.jpg" alt="FUYU Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 3 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>Claro de luz</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/CLARODELUZ/clarodeluz-1.jpg", "img/CLARODELUZ/clarodeluz-2.jpg", "img/CLARODELUZ/clarodeluz-3.jpg"]' data-index="0">
-                            <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Miranda 6 Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/CLARODELUZ/clarodeluz-1.jpg", "img/CLARODELUZ/clarodeluz-2.jpg", "img/CLARODELUZ/clarodeluz-3.jpg"]' data-index="1">
-                            <img src="img/CLARODELUZ/clarodeluz-2.jpg" alt="Miranda 6 Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/CLARODELUZ/clarodeluz-1.jpg", "img/CLARODELUZ/clarodeluz-2.jpg", "img/CLARODELUZ/clarodeluz-3.jpg"]' data-index="2">
-                            <img src="img/CLARODELUZ/clarodeluz-3.jpg" alt="Miranda 6 Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 4 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                   <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="0">
-                            <img src="img/havana48/havana1.jpg" alt="Havana 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="1">
-                            <img src="img/havana48/havana2.jpg" alt="Havana 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/havana48/havana1.jpg", "img/havana48/havana2.jpg", "img/havana48/havana3.jpg"]' data-index="2">
-                            <img src="img/havana48/havana3.jpg" alt="Havana 3">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROYECTO 5 -->
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="0">
-                            <img src="img/miranda4/miranda4-1.jpg" alt="Bigues 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="1">
-                            <img src="img/miranda4/miranda4-2.jpg" alt="Bigues 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda4/miranda4-1.jpg", "img/miranda4/miranda4-2.jpg", "img/miranda4/miranda4-3.jpg"]' data-index="2">
-                            <img src="img/miranda4/miranda4-3.jpg" alt="Bigues 3">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
             <!-- VISTA 3: CONTACTO -->
             <div class="view-contact-layout layout-block">
                 <div class="contact-info-block">
@@ -1280,7 +1128,7 @@
         langEsBtn.addEventListener('click', () => setLanguage('es'));
         langCatBtn.addEventListener('click', () => setLanguage('cat'));
 
-        // CONMUTACIÓN DE SECCIONES (ACTUALIZADO: Eliminado 'about' independiente)
+        // CONMUTACIÓN DE SECCIONES
         const btnStories = document.getElementById('btnModeStories');
         const btnVisuals = document.getElementById('btnModeVisuals');
         const btnContact = document.getElementById('btnModeContact');
@@ -1298,12 +1146,12 @@
                 document.body.classList.add('mode-stories-active');
                 btnStories.classList.add('active');
                 titleHeader.setAttribute('data-es', 'ESTUDIO'); titleHeader.setAttribute('data-cat', 'ESTUDI');
-                tagHeader.setAttribute('data-es', 'RELATOS, FILOSOFÍA Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'RELATS, FILOSOFIA I PROJECTES');
+                tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE');
             } else if (mode === 'visuals') {
                 document.body.classList.add('mode-visual-active');
                 btnVisuals.classList.add('active');
                 titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
-                tagHeader.setAttribute('data-es', 'GALERÍA FOTOGRÁFICA'); tagHeader.setAttribute('data-cat', 'GALERIA FOTOGRÀFICA');
+                tagHeader.setAttribute('data-es', 'MEMORIAS Y OBRA'); tagHeader.setAttribute('data-cat', 'MEMÒRIES I OBRA');
             } else if (mode === 'contact') {
                 document.body.classList.add('mode-contact-active');
                 btnContact.classList.add('active');
@@ -1327,12 +1175,12 @@
                 if (details.classList.contains('open')) {
                     btn.textContent = currentLang === 'es' ? '- OCULTAR' : '- AMAGAR';
                 } else {
-                    btn.textContent = currentLang === 'es' ? '+ DESPLEGAR' : '+ DESPLEGAR';
+                    btn.textContent = currentLang === 'es' ? '+ DESPLEGAR MEMORIA DESCRIPTIVA' : '+ DESPLEGAR MEMÒRIA DESCRIPTIVA';
                 }
             });
         });
 
-        // MODAL VISOR FOTOGRÁFICO DE PROYECTOS
+        // MODAL VISOR FOTOGRÁFICO DE PROYECTOS (SI APLICASE)
         const visualModal = document.getElementById('visualModal');
         const galleryModalImg = document.getElementById('galleryModalImg');
         const galleryCounter = document.getElementById('galleryCounter');
@@ -1349,7 +1197,7 @@
                 activeImageIndex = parseInt(trigger.getAttribute('data-index'));
                 updateGalleryModal();
                 visualModal.classList.add('active');
-                document.body.classList.add('dark-cursor-active'); // Activa cursor visible en fondo negro
+                document.body.classList.add('dark-cursor-active');
             });
         });
 
@@ -1358,24 +1206,29 @@
             galleryCounter.textContent = `${activeImageIndex + 1} / ${activeImageArray.length}`;
         }
 
-        prevGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
-            updateGalleryModal();
-        });
+        if(prevGalleryImg) {
+            prevGalleryImg.addEventListener('click', () => {
+                activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
+                updateGalleryModal();
+            });
+        }
 
-        nextGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
-            updateGalleryModal();
-        });
+        if(nextGalleryImg) {
+            nextGalleryImg.addEventListener('click', () => {
+                activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
+                updateGalleryModal();
+            });
+        }
 
         function closeGalleryModal() {
             visualModal.classList.remove('active');
-            document.body.classList.remove('dark-cursor-active'); // Restaura cursor normal
+            document.body.classList.remove('dark-cursor-active');
         }
 
-        closeVisualModal.addEventListener('click', closeGalleryModal);
+        if(closeVisualModal) {
+            closeVisualModal.addEventListener('click', closeGalleryModal);
+        }
 
-        // Control de teclado para cambiar imágenes con las flechas
         document.addEventListener('keydown', (e) => {
             if (!visualModal.classList.contains('active')) return;
 
