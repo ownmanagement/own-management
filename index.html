@@ -67,8 +67,8 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (SPLIT LANDING) */
-        .entry-split-container {
+        /* PANTALLA INICIAL (FULLSCREEN / PANTALLA ÚNICA) */
+        .entry-fullscreen-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -76,41 +76,23 @@
             height: 100vh;
             height: 100dvh;
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             z-index: 2000;
             background-color: #0d0d0d;
+            color: #ffffff;
+            padding: clamp(40px, 6vh, 90px) 6% clamp(30px, 6vh, 60px) 6%;
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+            overflow: hidden;
         }
 
-        .entry-split-container.hidden {
+        .entry-fullscreen-container.hidden {
             transform: translateY(-100%);
             opacity: 0;
             pointer-events: none;
         }
 
-        .split-pane {
-            position: relative;
-            flex: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: clamp(40px, 6vh, 90px) 6% clamp(30px, 6vh, 60px) 6%;
-            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-            overflow: hidden;
-        }
-
-        .split-pane.pane-stories {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .split-pane.pane-visuals {
-            background-color: #f7f7f7;
-            color: #111111;
-        }
-
-        .pane-bg {
+        .entry-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -118,23 +100,20 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.3;
+            background-image: url('img/HAVANA%2048.jpg');
+            opacity: 0.25;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
             z-index: 1;
         }
-        
-        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
 
         @media (hover: hover) {
-            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
-            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
-            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+            .entry-fullscreen-container:hover .entry-bg { transform: scale(1.03); opacity: 0.35; }
         }
 
-        .split-content-top { position: relative; z-index: 2; }
-        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+        .entry-content-top { position: relative; z-index: 2; }
+        .entry-content-bottom { position: relative; z-index: 2; max-width: 700px; cursor: pointer; }
 
-        .split-badge {
+        .entry-badge {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -143,23 +122,23 @@
             padding: 6px 14px;
             border-radius: 30px;
             margin-bottom: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
-        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
-
-        .split-title {
-            font-size: clamp(1.8rem, 3.8vw, 3.5rem);
+        .entry-title {
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
             font-weight: 800;
             line-height: 1;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
-        .split-desc { font-size: clamp(0.85rem, 1.1vw, 0.95rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 24px; }
+        .entry-desc { font-size: clamp(0.9rem, 1.3vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 28px; }
 
-        .split-action {
+        .entry-action {
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -170,8 +149,8 @@
             font-weight: 700;
         }
 
-        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-        .split-pane:hover .split-action svg { transform: translateX(8px); }
+        .entry-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .entry-content-bottom:hover .entry-action svg { transform: translateX(8px); }
 
         /* HEADER / NAVEGACIÓN */
         header {
@@ -792,9 +771,6 @@
 
         @media (max-width: 1024px) {
             header { padding: 18px 5%; }
-            .entry-split-container { flex-direction: column; }
-            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 40px 8%; }
-            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
             .project-multi-grid { grid-template-columns: 1fr; height: auto; }
             .grid-img-wrapper { height: 350px; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -813,35 +789,18 @@
     <!-- CURSOR PERSONALIZADO -->
     <div id="custom-cursor"></div>
 
-    <!-- PANTALLA INICIAL (SPLIT LANDING) -->
-    <section class="entry-split-container" id="entrySplit">
-        <div class="split-pane pane-stories" id="selectStories">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">01 / MEMORIAS</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
-                <p class="split-desc" data-es="Relatos detallados, conceptos teóricos y procesos detrás de cada obra arquitectónica." data-cat="Relats detallats, conceptes teòrics i processos darrere de cada obra arquitectònica.">Relatos detallados, conceptos teóricos y procesos detrás de cada obra arquitectónica.</p>
-                <div class="split-action">
-                    <span data-es="VER MEMORIAS" data-cat="VEURE MEMÒRIES">VER MEMORIAS</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </div>
+    <!-- PANTALLA INICIAL (HOME ÚNICO: PROYECTOS / ESTUDIO) -->
+    <section class="entry-fullscreen-container" id="entryFullscreen">
+        <div class="entry-bg"></div>
+        <div class="entry-content-top">
+            <span class="entry-badge">OWN ARCHITECTURE</span>
         </div>
-
-        <div class="split-pane pane-visuals" id="selectVisuals">
-            <div class="pane-bg"></div>
-            <div class="split-content-top">
-                <span class="split-badge">02 / PROYECTOS & ESTUDIO</span>
-            </div>
-            <div class="split-content-bottom">
-                <h2 class="split-title" data-es="ESTUDIO / PROYECTOS" data-cat="ESTUDI / PROJECTES">ESTUDIO / PROYECTOS</h2>
-                <p class="split-desc" data-es="Explora la galería visual y conoce la visión y el manifiesto audiovisual del estudio." data-cat="Explora la galeria visual i coneix la visió i el manifest audiovisual de l'estudi.">Explora la galería visual y conoce la visión y el manifiesto audiovisual del estudio.</p>
-                <div class="split-action">
-                    <span data-es="EXPLORAR ESTUDIO" data-cat="EXPLORAR ESTUDI">EXPLORAR ESTUDIO</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
+        <div class="entry-content-bottom" id="enterSiteBtn">
+            <h1 class="entry-title" data-es="PROYECTOS / ESTUDIO" data-cat="PROJECTES / ESTUDI">PROYECTOS / ESTUDIO</h1>
+            <p class="entry-desc" data-es="Explora las memorias, la galería visual y descubre la visión y el manifiesto audiovisual del estudio." data-cat="Explora les memòries, la galeria visual i descobreix la visió i el manifest audiovisual de l'estudi.">Explora las memorias, la galería visual y descubre la visión y el manifiesto audiovisual del estudio.</p>
+            <div class="entry-action">
+                <span data-es="ENTRAR" data-cat="ENTRAR">ENTRAR</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </div>
         </div>
     </section>
@@ -1043,7 +1002,7 @@
                         <input type="text" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
-                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÒNIC</label>
+                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREU ELECTRÒNIC</label>
                         <input type="email" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
@@ -1085,7 +1044,7 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .grid-img-wrapper, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .entry-content-bottom, .story-item-card, .grid-img-wrapper, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -1093,27 +1052,21 @@
 
         // RETORNO AL INICIO (LOGO CLICK)
         const brandLogo = document.getElementById('brandLogo');
-        const entrySplit = document.getElementById('entrySplit');
+        const entryFullscreen = document.getElementById('entryFullscreen');
 
         brandLogo.addEventListener('click', (e) => {
             e.preventDefault();
-            entrySplit.classList.remove('hidden');
+            entryFullscreen.classList.remove('hidden');
             document.body.classList.remove('content-active');
         });
 
-        // SPLIT INICIAL CLICK
-        const selectStories = document.getElementById('selectStories');
-        const selectVisuals = document.getElementById('selectVisuals');
-
-        function activateContent(mode) {
-            entrySplit.classList.add('hidden');
+        // ACCIÓN DE ENTRADA DESDE EL HOME ÚNICO
+        const enterSiteBtn = document.getElementById('enterSiteBtn');
+        enterSiteBtn.addEventListener('click', () => {
+            entryFullscreen.classList.add('hidden');
             document.body.classList.add('content-active');
-            switchMode(mode);
-        }
-
-        // El panel derecho ahora activa directamente la sección de "ESTUDIO" con su respectivo video
-        selectStories.addEventListener('click', () => activateContent('stories'));
-        selectVisuals.addEventListener('click', () => activateContent('about'));
+            switchMode('stories');
+        });
 
         // CAMBIO DE IDIOMA (ESPAÑOL / CATALÀ)
         const langEsBtn = document.getElementById('langEs');
