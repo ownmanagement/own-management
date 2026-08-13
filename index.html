@@ -67,7 +67,7 @@
             color: #777777;
         }
 
-        /* PANTALLA INICIAL (FULLSCREEN / PANTALLA ÚNICA) */
+        /* PANTALLA INICIAL (HOME ÚNICO CON DOS OPCIONES: PROYECTOS / ESTUDIO) */
         .entry-fullscreen-container {
             position: fixed;
             top: 0;
@@ -111,7 +111,15 @@
         }
 
         .entry-content-top { position: relative; z-index: 2; }
-        .entry-content-bottom { position: relative; z-index: 2; max-width: 700px; cursor: pointer; }
+        
+        /* CONTENEDOR INFERIOR CON LOS DOS ENLACES PRINCIPALES */
+        .entry-content-bottom { 
+            position: relative; 
+            z-index: 2; 
+            display: flex;
+            gap: clamp(40px, 8vw, 100px);
+            align-items: flex-start;
+        }
 
         .entry-badge {
             display: inline-block;
@@ -127,6 +135,16 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        .entry-nav-option {
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .entry-nav-option:hover {
+            opacity: 0.7;
+            transform: translateY(-4px);
+        }
+
         .entry-title {
             font-size: clamp(2.2rem, 5vw, 4.5rem);
             font-weight: 800;
@@ -136,7 +154,7 @@
             margin-bottom: 14px;
         }
 
-        .entry-desc { font-size: clamp(0.9rem, 1.3vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 28px; }
+        .entry-desc { font-size: clamp(0.9rem, 1.3vw, 1.1rem); line-height: 1.5; font-weight: 300; opacity: 0.85; margin-bottom: 28px; max-width: 500px; }
 
         .entry-action {
             display: inline-flex;
@@ -150,7 +168,7 @@
         }
 
         .entry-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-        .entry-content-bottom:hover .entry-action svg { transform: translateX(8px); }
+        .entry-nav-option:hover .entry-action svg { transform: translateX(8px); }
 
         /* HEADER / NAVEGACIÓN */
         header {
@@ -426,68 +444,6 @@
             letter-spacing: 1.5px;
         }
 
-        /* SECCIÓN PROYECTOS (VISUAL) */
-        .view-visuals-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .visual-project-block {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 80px;
-        }
-
-        .visual-project-block:last-child { border-bottom: none; }
-
-        .visual-project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .visual-project-header h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-        }
-
-        .project-multi-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-            height: 55vh;
-            min-height: 400px;
-        }
-
-        .grid-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #f2f2f2;
-        }
-
-        .grid-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
-            filter: grayscale(20%);
-        }
-
-        .grid-img-wrapper:hover img {
-            transform: scale(1.04);
-            filter: grayscale(0%);
-        }
-
         /* SECCIÓN ESTUDIO CON VIDEO DE VISIÓN EXPANDIBLE */
         .view-about-layout {
             max-width: 1100px;
@@ -548,116 +504,10 @@
             font-weight: 300;
         }
 
-        /* SECCIÓN CONTACTO */
-        .view-contact-layout {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 80px;
-        }
-
-        .contact-info-block h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .contact-info-block p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #555555;
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
-
-        .contact-detail-item {
-            margin-bottom: 30px;
-        }
-
-        .contact-detail-item label {
-            display: block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: #888888;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
-        }
-
-        .contact-detail-item p, .contact-detail-item a {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #111111;
-            text-decoration: none;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #666666;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 16px 0;
-            border: none;
-            border-bottom: 1px solid #cccccc;
-            background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            color: #111111;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            border-bottom-color: #111111;
-        }
-
-        .submit-btn {
-            align-self: flex-start;
-            background-color: #111111;
-            color: #ffffff;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 40px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-top: 10px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .submit-btn:hover {
-            background-color: #000000;
-            transform: scale(1.02);
-        }
-
         /* CONTROL DE VISIBILIDAD DE VISTAS */
         .layout-block { display: none; }
-        body.mode-stories-active .view-stories-layout { display: flex; }
-        body.mode-visual-active .view-visuals-layout { display: flex; }
-        body.mode-about-active .view-about-layout { display: flex; }
-        body.mode-contact-active .view-contact-layout { display: grid; }
+        body.mode-projects-active .view-stories-layout { display: flex; }
+        body.mode-study-active .view-about-layout { display: flex; }
 
         /* MODAL GALERÍA FOTOGRÁFICA DE PROYECTOS */
         .gallery-modal-container {
@@ -771,10 +621,8 @@
 
         @media (max-width: 1024px) {
             header { padding: 18px 5%; }
-            .project-multi-grid { grid-template-columns: 1fr; height: auto; }
-            .grid-img-wrapper { height: 350px; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
+            .entry-content-bottom { flex-direction: column; gap: 30px; }
         }
 
         @media (max-width: 768px) {
@@ -784,23 +632,36 @@
         }
     </style>
 </head>
-<body class="mode-stories-active">
+<body class="mode-projects-active">
 
     <!-- CURSOR PERSONALIZADO -->
     <div id="custom-cursor"></div>
 
-    <!-- PANTALLA INICIAL (HOME ÚNICO: PROYECTOS / ESTUDIO) -->
+    <!-- PANTALLA INICIAL (HOME CON DOS OPCIONES: PROYECTOS / ESTUDIO) -->
     <section class="entry-fullscreen-container" id="entryFullscreen">
         <div class="entry-bg"></div>
         <div class="entry-content-top">
             <span class="entry-badge">OWN ARCHITECTURE</span>
         </div>
-        <div class="entry-content-bottom" id="enterSiteBtn">
-            <h1 class="entry-title" data-es="PROYECTOS / ESTUDIO" data-cat="PROJECTES / ESTUDI">PROYECTOS / ESTUDIO</h1>
-            <p class="entry-desc" data-es="Explora las memorias, la galería visual y descubre la visión y el manifiesto audiovisual del estudio." data-cat="Explora les memòries, la galeria visual i descobreix la visió i el manifest audiovisual de l'estudi.">Explora las memorias, la galería visual y descubre la visión y el manifiesto audiovisual del estudio.</p>
-            <div class="entry-action">
-                <span data-es="ENTRAR" data-cat="ENTRAR">ENTRAR</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <div class="entry-content-bottom">
+            <!-- OPCIÓN 1: PROYECTOS -->
+            <div class="entry-nav-option" id="enterProjectsBtn">
+                <h1 class="entry-title" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h1>
+                <p class="entry-desc" data-es="Explora las obras y memorias constructivas del estudio." data-cat="Explora les obres i memòries constructives de l'estudi.">Explora las obras y memorias constructivas del estudio.</p>
+                <div class="entry-action">
+                    <span data-es="VER PROYECTOS" data-cat="VEURE PROJECTES">VER PROYECTOS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+
+            <!-- OPCIÓN 2: ESTUDIO -->
+            <div class="entry-nav-option" id="enterStudyBtn">
+                <h1 class="entry-title" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</h1>
+                <p class="entry-desc" data-es="Descubre la visión, filosofía y manifiesto audiovisual." data-cat="Descobreix la visió, filosofia i manifest audiovisual.">Descubre la visión, filosofía y manifiesto audiovisual.</p>
+                <div class="entry-action">
+                    <span data-es="VER ESTUDIO" data-cat="VEURE ESTUDI">VER ESTUDIO</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
             </div>
         </div>
     </section>
@@ -810,10 +671,8 @@
         <a href="#" class="logo" id="brandLogo">OWN ARCHITECTURE</a>
         <div class="header-controls">
             <div class="mode-switch-bar">
-                <button class="mode-btn active" id="btnModeStories" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</button>
-                <button class="mode-btn" id="btnModeVisuals" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
-                <button class="mode-btn" id="btnModeAbout" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
-                <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE">CONTACTO</button>
+                <button class="mode-btn active" id="btnModeProjects" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</button>
+                <button class="mode-btn" id="btnModeStudy" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
             </div>
             <div class="lang-switch-bar">
                 <button class="lang-btn active" id="langEs">ES</button>
@@ -827,11 +686,11 @@
     <main class="main-view-container">
         <section class="gallery-section">
             <div class="gallery-header">
-                <h2 id="galleryModeTitle" data-es="MEMORIAS" data-cat="MEMÒRIES">MEMORIAS</h2>
+                <h2 id="galleryModeTitle" data-es="PROYECTOS" data-cat="PROJECTES">PROYECTOS</h2>
                 <span class="mono-tag" id="galleryModeTag" data-es="RELATOS Y CONCEPTOS" data-cat="RELATS I CONCEPTES">RELATOS Y CONCEPTOS</span>
             </div>
             
-            <!-- VISTA 1: MEMORIAS -->
+            <!-- VISTA 1: PROYECTOS (MEMORIAS) -->
             <div class="view-stories-layout layout-block">
                 
                 <!-- PROYECTO 1: CASA INFINITA -->
@@ -915,46 +774,7 @@
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (GALERÍA MULTI-IMAGEN) -->
-            <div class="view-visuals-layout layout-block">
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="0">
-                            <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="1">
-                            <img src="img/miranda-6/miranda-2.jpg" alt="Casa Infinita Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/miranda-6/miranda-1.jpg", "img/miranda-6/miranda-2.jpg", "img/miranda-6/miranda-6.jpg"]' data-index="2">
-                            <img src="img/miranda-6/miranda-6.jpg" alt="Casa Infinita Vista 3">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="visual-project-block">
-                    <div class="visual-project-header">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA • 3 FOTOGRAFÍAS</span>
-                    </div>
-                    <div class="project-multi-grid">
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="0">
-                            <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU Vista 1">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="1">
-                            <img src="img/biguesiriells/bigues-2.jpg" alt="FUYU Vista 2">
-                        </div>
-                        <div class="grid-img-wrapper visual-modal-trigger" data-images='["img/biguesiriells/bigues-1.jpg", "img/biguesiriells/bigues-2.jpg", "img/biguesiriells/bigues-4.jpg"]' data-index="2">
-                            <img src="img/biguesiriells/bigues-4.jpg" alt="FUYU Vista 3">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- VISTA 3: SOBRE EL ESTUDIO (CON VIDEO EXPANDIDO DE LA VISIÓN) -->
+            <!-- VISTA 2: ESTUDIO (CON VIDEO EXPANDIDO DE LA VISIÓN) -->
             <div class="view-about-layout layout-block">
                 <p class="about-statement" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
                     Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
@@ -980,57 +800,8 @@
                 </div>
             </div>
 
-            <!-- VISTA 4: CONTACTO -->
-            <div class="view-contact-layout layout-block">
-                <div class="contact-info-block">
-                    <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
-                    <p data-es="Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales." data-cat="Estem disponibles per a encàrrecs, col·laboracions i consultes arquitectòniques internacionals.">Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
-                    
-                    <div class="contact-detail-item">
-                        <label data-es="UBICACIÓN" data-cat="UBICACIÓ">UBICACIÓN</label>
-                        <p>Barcelona, España</p>
-                    </div>
-                    <div class="contact-detail-item">
-                        <label>EMAIL</label>
-                        <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
-                    </div>
-                </div>
-
-                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado.');">
-                    <div class="form-group">
-                        <label data-es="NOMBRE COMPLETO" data-cat="NOM SENCER">NOMBRE COMPLETO</label>
-                        <input type="text" placeholder="Ej. Sofia Alarcón" required>
-                    </div>
-                    <div class="form-group">
-                        <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREU ELECTRÒNIC</label>
-                        <input type="email" placeholder="ejemplo@dominio.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label data-es="MENSAJE" data-cat="MISSATGE">MENSAJE</label>
-                        <textarea rows="4" placeholder="..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" data-es="ENVIAR MENSAJE" data-cat="ENVIAR MISSATGE">ENVIAR MENSAJE</button>
-                </form>
-            </div>
-
         </section>
     </main>
-
-    <!-- MODAL VISOR DE FOTOGRAFÍAS PROYECTOS -->
-    <div class="gallery-modal-container" id="visualModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title">OWN ARCHITECTURE</span>
-            <button class="gallery-modal-close" id="closeVisualModal">&times; CERRAR</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="prevGalleryImg">&larr;</button>
-            <img id="galleryModalImg" src="" alt="Fotografía ampliación">
-            <button class="gallery-nav-btn gallery-nav-next" id="nextGalleryImg">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="gallery-counter" id="galleryCounter">1 / 3</span>
-        </div>
-    </div>
 
     <!-- SCRIPT INTERACTIVO INTEGRADO -->
     <script>
@@ -1044,7 +815,7 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .entry-content-bottom, .story-item-card, .grid-img-wrapper, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .entry-nav-option, .story-item-card');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -1060,12 +831,19 @@
             document.body.classList.remove('content-active');
         });
 
-        // ACCIÓN DE ENTRADA DESDE EL HOME ÚNICO
-        const enterSiteBtn = document.getElementById('enterSiteBtn');
-        enterSiteBtn.addEventListener('click', () => {
+        // ACCIONES DE ENTRADA DESDE EL HOME
+        const enterProjectsBtn = document.getElementById('enterProjectsBtn');
+        enterProjectsBtn.addEventListener('click', () => {
             entryFullscreen.classList.add('hidden');
             document.body.classList.add('content-active');
-            switchMode('stories');
+            switchMode('projects');
+        });
+
+        const enterStudyBtn = document.getElementById('enterStudyBtn');
+        enterStudyBtn.addEventListener('click', () => {
+            entryFullscreen.classList.add('hidden');
+            document.body.classList.add('content-active');
+            switchMode('study');
         });
 
         // CAMBIO DE IDIOMA (ESPAÑOL / CATALÀ)
@@ -1090,51 +868,35 @@
         langEsBtn.addEventListener('click', () => setLanguage('es'));
         langCatBtn.addEventListener('click', () => setLanguage('cat'));
 
-        // CONMUTACIÓN DE SECCIONES
-        const btnStories = document.getElementById('btnModeStories');
-        const btnVisuals = document.getElementById('btnModeVisuals');
-        const btnAbout = document.getElementById('btnModeAbout');
-        const btnContact = document.getElementById('btnModeContact');
+        // CONMUTACIÓN DE SECCIONES (PROYECTOS / ESTUDIO)
+        const btnProjects = document.getElementById('btnModeProjects');
+        const btnStudy = document.getElementById('btnModeStudy');
 
         const titleHeader = document.getElementById('galleryModeTitle');
         const tagHeader = document.getElementById('galleryModeTag');
 
         function switchMode(mode) {
-            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-about-active', 'mode-contact-active');
-            btnStories.classList.remove('active');
-            btnVisuals.classList.remove('active');
-            btnAbout.classList.remove('active');
-            btnContact.classList.remove('active');
+            document.body.classList.remove('mode-projects-active', 'mode-study-active');
+            btnProjects.classList.remove('active');
+            btnStudy.classList.remove('active');
 
-            if (mode === 'stories') {
-                document.body.classList.add('mode-stories-active');
-                btnStories.classList.add('active');
-                titleHeader.setAttribute('data-es', 'MEMORIAS'); titleHeader.setAttribute('data-cat', 'MEMÒRIES');
-                tagHeader.setAttribute('data-es', 'RELATOS Y CONCEPTOS'); tagHeader.setAttribute('data-cat', 'RELATS I CONCEPTES');
-            } else if (mode === 'visuals') {
-                document.body.classList.add('mode-visual-active');
-                btnVisuals.classList.add('active');
+            if (mode === 'projects') {
+                document.body.classList.add('mode-projects-active');
+                btnProjects.classList.add('active');
                 titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
-                tagHeader.setAttribute('data-es', 'GALERÍA FOTOGRÁFICA'); tagHeader.setAttribute('data-cat', 'GALERIA FOTOGRÀFICA');
-            } else if (mode === 'about') {
-                document.body.classList.add('mode-about-active');
-                btnAbout.classList.add('active');
-                titleHeader.setAttribute('data-es', 'EL ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
+                tagHeader.setAttribute('data-es', 'RELATOS Y CONCEPTOS'); tagHeader.setAttribute('data-cat', 'RELATS I CONCEPTES');
+            } else if (mode === 'study') {
+                document.body.classList.add('mode-study-active');
+                btnStudy.classList.add('active');
+                titleHeader.setAttribute('data-es', 'ESTUDIO'); titleHeader.setAttribute('data-cat', "L'ESTUDI");
                 tagHeader.setAttribute('data-es', 'VISIÓN Y FILOSOFÍA'); tagHeader.setAttribute('data-cat', 'VISIÓ I FILOSOFIA');
-            } else if (mode === 'contact') {
-                document.body.classList.add('mode-contact-active');
-                btnContact.classList.add('active');
-                titleHeader.setAttribute('data-es', 'CONTACTO'); titleHeader.setAttribute('data-cat', 'CONTACTE');
-                tagHeader.setAttribute('data-es', 'CONSULTAS Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'CONSULTES I PROJECTES');
             }
             setLanguage(currentLang);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        btnStories.addEventListener('click', () => switchMode('stories'));
-        btnVisuals.addEventListener('click', () => switchMode('visuals'));
-        btnAbout.addEventListener('click', () => switchMode('about'));
-        btnContact.addEventListener('click', () => switchMode('contact'));
+        btnProjects.addEventListener('click', () => switchMode('projects'));
+        btnStudy.addEventListener('click', () => switchMode('study'));
 
         // INTERACCIÓN DESPLEGABLE EN LA MISMA PÁGINA
         document.querySelectorAll('.toggle-memory-btn').forEach(btn => {
@@ -1149,43 +911,6 @@
                 }
             });
         });
-
-        // MODAL VISOR FOTOGRÁFICO DE PROYECTOS
-        const visualModal = document.getElementById('visualModal');
-        const galleryModalImg = document.getElementById('galleryModalImg');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeVisualModal = document.getElementById('closeVisualModal');
-        const prevGalleryImg = document.getElementById('prevGalleryImg');
-        const nextGalleryImg = document.getElementById('nextGalleryImg');
-
-        let activeImageArray = [];
-        let activeImageIndex = 0;
-
-        document.querySelectorAll('.visual-modal-trigger').forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                activeImageArray = JSON.parse(trigger.getAttribute('data-images'));
-                activeImageIndex = parseInt(trigger.getAttribute('data-index'));
-                updateGalleryModal();
-                visualModal.classList.add('active');
-            });
-        });
-
-        function updateGalleryModal() {
-            galleryModalImg.src = activeImageArray[activeImageIndex];
-            galleryCounter.textContent = `${activeImageIndex + 1} / ${activeImageArray.length}`;
-        }
-
-        prevGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
-            updateGalleryModal();
-        });
-
-        nextGalleryImg.addEventListener('click', () => {
-            activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
-            updateGalleryModal();
-        });
-
-        closeVisualModal.addEventListener('click', () => visualModal.classList.remove('active'));
     </script>
 </body>
 </html>
