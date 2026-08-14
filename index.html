@@ -59,7 +59,6 @@
             background-color: #000000;
         }
 
-        /* Cursor adaptado para fondos oscuros/modal */
         body.dark-cursor-active #custom-cursor {
             background-color: #ffffff;
             border: 1px solid rgba(0, 0, 0, 0.3);
@@ -306,21 +305,23 @@
 
         .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
-        /* SECCIÓN ESTUDIO (SOLO SOBRE MÍ / MANIFIESTO) */
-        .view-stories-layout {
+        /* SECCIÓN ESTUDIO / PROYECTOS (ESTILO EDITORIAL MINIMALISTA) */
+        .view-stories-layout,
+        .view-visuals-layout {
             display: flex;
             flex-direction: column;
-            gap: 120px;
-            max-width: 1200px;
+            gap: 100px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .story-item-card {
             display: flex;
             flex-direction: column;
-            gap: 32px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 100px;
+            gap: 28px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 80px;
+            transition: transform 0.4s ease;
         }
 
         .story-item-card:last-child { border-bottom: none; }
@@ -332,58 +333,66 @@
         }
 
         .story-meta-header h3 {
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
             font-weight: 800;
-            letter-spacing: -2px;
+            letter-spacing: -1.5px;
             text-transform: uppercase;
         }
 
+        /* MEJORA DE PROPORCIÓN DE IMAGEN PRINCIPAL (NO RECORTA INFORMACIÓN) */
         .story-hero-media {
             width: 100%;
-            height: 65vh;
-            min-height: 400px;
+            aspect-ratio: 16 / 10;
+            max-height: 70vh;
             overflow: hidden;
-            background-color: #f5f5f5;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .story-hero-media img, .story-hero-media video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(15%);
-            transition: transform 0.6s ease;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
         }
 
         .story-item-card:hover .story-hero-media img,
         .story-item-card:hover .story-hero-media video {
-            transform: scale(1.02);
-            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        /* EFECTO EXPANDIDO AL ABRIR LA MEMORIA */
+        .story-item-card.expanded .story-hero-media {
+            aspect-ratio: 16 / 9;
+            max-height: 85vh;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         .story-summary-text {
-            font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-            line-height: 1.5;
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            line-height: 1.6;
             font-weight: 300;
-            color: #111111;
-            border-left: 3px solid #111111;
-            padding-left: 28px;
-            max-width: 950px;
+            color: #333333;
+            max-width: 900px;
         }
 
         .toggle-memory-btn {
             align-self: flex-start;
             background: none;
             border: 1px solid #111111;
-            padding: 14px 32px;
+            padding: 12px 28px;
             border-radius: 30px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
             color: #111111;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 4px;
         }
 
         .toggle-memory-btn:hover {
@@ -396,25 +405,25 @@
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, padding 0.5s ease;
             display: flex;
             flex-direction: column;
-            gap: 60px;
+            gap: 50px;
             background-color: #fafafa;
             border-radius: 4px;
         }
 
         .story-full-details.open {
-            max-height: 6000px;
+            max-height: 8000px;
             opacity: 1;
-            padding: 60px clamp(20px, 5vw, 60px);
-            margin-top: 20px;
+            padding: 50px clamp(20px, 4vw, 50px);
+            margin-top: 16px;
             border: 1px solid #eeeeee;
         }
 
         .story-chapter-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #888888;
             margin-bottom: 8px;
             display: block;
@@ -422,35 +431,36 @@
         }
 
         .story-detail-block h4 {
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-size: clamp(1.2rem, 2vw, 1.7rem);
             font-weight: 800;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
             color: #111111;
         }
 
         .story-detail-block p {
-            font-size: 1.1rem;
-            line-height: 1.85;
-            color: #333333;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #444444;
             font-weight: 300;
-            max-width: 900px;
+            max-width: 850px;
         }
 
         .story-figure-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-top: 24px;
         }
 
         .story-figure-wrapper img {
             width: 100%;
-            max-height: 550px;
+            max-height: 600px;
             object-fit: cover;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            border-radius: 2px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            transition: transform 0.4s ease;
         }
         
         .story-figure-wrapper img:hover {
@@ -459,19 +469,10 @@
 
         .story-caption {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: #777777;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-        }
-
-        /* SECCIÓN PROYECTOS (CONTIENE MEMORIAS Y FOTOGRAFÍAS) */
-        .view-visuals-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         /* SECCIÓN CONTACTO */
@@ -584,110 +585,6 @@
         body.mode-visual-active .view-visuals-layout { display: flex; }
         body.mode-contact-active .view-contact-layout { display: grid; }
 
-        /* MODAL GALERÍA FOTOGRÁFICA DE PROYECTOS */
-        .gallery-modal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background-color: #0d0d0d;
-            z-index: 7000;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery-modal-container.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .gallery-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 6%;
-            z-index: 7001;
-            color: #ffffff;
-        }
-
-        .gallery-modal-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
-
-        .gallery-modal-close {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 22px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            border-radius: 30px;
-            transition: background 0.2s ease;
-        }
-
-        .gallery-modal-close:hover { background: #ffffff; color: #000000; }
-
-        .gallery-modal-stage {
-            position: relative;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 6%;
-            overflow: hidden;
-        }
-
-        .gallery-modal-stage img {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background 0.2s ease;
-            z-index: 7002;
-        }
-
-        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
-        .gallery-nav-prev { left: 4%; }
-        .gallery-nav-next { right: 4%; }
-
-        .gallery-modal-footer {
-            padding: 24px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #ffffff;
-            z-index: 7001;
-        }
-
-        .gallery-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #888888;
-        }
-
         /* RESPONSIVE DESIGN */
         @media (pointer: coarse), (hover: none) {
             * { cursor: auto !important; }
@@ -772,7 +669,7 @@
                 <span class="mono-tag" id="galleryModeTag" data-es="FILOSOFÍA Y MÉTODO" data-cat="FILOSOFIA I MÈTODE">FILOSOFÍA Y MÉTODO</span>
             </div>
             
-            <!-- VISTA 1: ESTUDIO (SOLO SOBRE MÍ / MANIFIESTO) -->
+            <!-- VISTA 1: ESTUDIO (MANIFIESTO) -->
             <div class="view-stories-layout layout-block">
                 
                 <article class="story-item-card">
@@ -818,10 +715,10 @@
 
             </div>
 
-            <!-- VISTA 2: PROYECTOS (CONTIENE LAS MEMORIAS Y FOTOGRAFÍAS AMPLIADAS A 7+ POR PROYECTO) -->
+            <!-- VISTA 2: PROYECTOS (CON MEMORIAS INTERACTIVAS Y NUEVA PROPORCIÓN DE IMAGEN) -->
             <div class="view-visuals-layout layout-block">
                 
-                <!-- PROYECTO 1: CASA CLARO DE LUZ (7 fotos) -->
+                <!-- PROYECTO 1 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>CASA CLARO DE LUZ</h3>
@@ -857,7 +754,7 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 2: FUYU (7 fotos) -->
+                <!-- PROYECTO 2 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>FUYU</h3>
@@ -879,21 +776,21 @@
                             <span class="story-chapter-num">01 / CAPÍTULO I</span>
                             <h4 data-es="La fachada como refugio y patios" data-cat="La façana com a refugi i patis">La fachada como refugio y patios</h4>
                             <p data-es="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado."
-                               data-cat="En un entorn urbà saturat, FUYU actua com un monòlit introspectiu.">
+                               data-cat="En un entorn urbà saturat, FUYU actua com a monòlit introspectiu.">
                                 En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado.
                             </p>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1"><span class="story-caption">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span></div>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-2.jpg" alt="Fuyu 2"><span class="story-caption">FIG 02. PATIO INTERIOR DE LUZ</span></div>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-3.jpg" alt="Fuyu 3"><span class="story-caption">FIG 03. DETALLE ARQUITECTURA SUSPENDIDA</span></div>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-4.jpg" alt="Fuyu 4"><span class="story-caption">FIG 04. ZONA DE DÍA MONOLÍTICA</span></div>
-                            <div class="story-figure-wrapper"><img src="iimg/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption">FIG 05. PASARELAS Y CONEXIONES</span></div>
+                            <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption">FIG 05. PASARELAS Y CONEXIONES</span></div>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-6.jpg" alt="Fuyu 6"><span class="story-caption">FIG 06. MATERIALIDAD PÉTREA</span></div>
                             <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-7.jpg" alt="Fuyu 7"><span class="story-caption">FIG 07. ESCALA Y SOMBRAS ARROJADAS</span></div>
                         </div>
                     </div>
                 </article>
 
-                <!-- PROYECTO 3: INFINITA (7 fotos) -->
+                <!-- PROYECTO 3 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>INFINITA</h3>
@@ -905,7 +802,7 @@
                     </div>
 
                     <p class="story-summary-text" data-es="Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Una casa on la arquitectura es converteix en paisatge, i el paisatge en part essencial de l'habitar.">
-                        La casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado.
+                        Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.
                     </p>
 
                     <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
@@ -929,7 +826,7 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 4: PASSACAGLIA (7 fotos) -->
+                <!-- PROYECTO 4 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>PASSACAGLIA</h3>
@@ -942,7 +839,7 @@
 
                     <p class="story-summary-text" data-es="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía."
                        data-cat="El seu disseny segueix una cadència precisa de plens i buits, generant una composició arquitectònica on la llum i l'ombra alternen en perfecta harmonia.">
-                        Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial.
+                        Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía.
                     </p>
 
                     <button class="toggle-memory-btn" data-es="+ DESPLEGAR MEMORIA DESCRIPTIVA" data-cat="+ DESPLEGAR MEMÒRIA DESCRIPTIVA">+ DESPLEGAR MEMORIA DESCRIPTIVA</button>
@@ -966,7 +863,7 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 5: CLAROSCURO (7 fotos) -->
+                <!-- PROYECTO 5 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>CLAROSCURO</h3>
@@ -1002,7 +899,7 @@
                     </div>
                 </article>
 
-                <!-- PROYECTO 6: BRISA DE LUZ (7 fotos) -->
+                <!-- PROYECTO 6 -->
                 <article class="story-item-card">
                     <div class="story-meta-header">
                         <h3>BRISA DE LUZ</h3>
@@ -1076,22 +973,6 @@
         </section>
     </main>
 
-    <!-- MODAL VISOR DE FOTOGRAFÍAS PROYECTOS -->
-    <div class="gallery-modal-container" id="visualModal">
-        <div class="gallery-modal-header">
-            <span class="gallery-modal-title">OWN ARCHITECTURE</span>
-            <button class="gallery-modal-close" id="closeVisualModal">&times; CERRAR</button>
-        </div>
-        <div class="gallery-modal-stage">
-            <button class="gallery-nav-btn gallery-nav-prev" id="prevGalleryImg">&larr;</button>
-            <img id="galleryModalImg" src="" alt="Fotografía ampliación">
-            <button class="gallery-nav-btn gallery-nav-next" id="nextGalleryImg">&rarr;</button>
-        </div>
-        <div class="gallery-modal-footer">
-            <span class="gallery-counter" id="galleryCounter">1 / 3</span>
-        </div>
-    </div>
-
     <!-- SCRIPT INTERACTIVO INTEGRADO -->
     <script>
         let currentLang = 'es';
@@ -1104,7 +985,7 @@
             if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
         });
 
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, .grid-img-wrapper, input, textarea');
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -1193,80 +1074,26 @@
         btnVisuals.addEventListener('click', () => switchMode('visuals'));
         btnContact.addEventListener('click', () => switchMode('contact'));
 
-        // INTERACCIÓN DESPLEGABLE EN LA MISMA PÁGINA
-        document.querySelectorAll('.toggle-memory-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const details = btn.nextElementSibling;
+        // INTERACCIÓN DESPLEGABLE DE MEMORIA Y EXPANSIÓN DE IMAGEN
+        document.querySelectorAll('.story-item-card').forEach(card => {
+            const btn = card.querySelector('.toggle-memory-btn');
+            const details = card.querySelector('.story-full-details');
+            const heroMedia = card.querySelector('.story-hero-media');
+
+            const toggleAction = () => {
                 details.classList.toggle('open');
+                card.classList.toggle('expanded');
                 
                 if (details.classList.contains('open')) {
-                    btn.textContent = currentLang === 'es' ? '- OCULTAR' : '- AMAGAR';
+                    btn.textContent = currentLang === 'es' ? '- OCULTAR MEMORIA' : '- AMAGAR MEMÒRIA';
                 } else {
                     btn.textContent = currentLang === 'es' ? '+ DESPLEGAR MEMORIA DESCRIPTIVA' : '+ DESPLEGAR MEMÒRIA DESCRIPTIVA';
                 }
-            });
-        });
+            };
 
-        // MODAL VISOR FOTOGRÁFICO DE PROYECTOS (SI APLICASE)
-        const visualModal = document.getElementById('visualModal');
-        const galleryModalImg = document.getElementById('galleryModalImg');
-        const galleryCounter = document.getElementById('galleryCounter');
-        const closeVisualModal = document.getElementById('closeVisualModal');
-        const prevGalleryImg = document.getElementById('prevGalleryImg');
-        const nextGalleryImg = document.getElementById('nextGalleryImg');
-
-        let activeImageArray = [];
-        let activeImageIndex = 0;
-
-        document.querySelectorAll('.visual-modal-trigger').forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                activeImageArray = JSON.parse(trigger.getAttribute('data-images'));
-                activeImageIndex = parseInt(trigger.getAttribute('data-index'));
-                updateGalleryModal();
-                visualModal.classList.add('active');
-                document.body.classList.add('dark-cursor-active');
-            });
-        });
-
-        function updateGalleryModal() {
-            galleryModalImg.src = activeImageArray[activeImageIndex];
-            galleryCounter.textContent = `${activeImageIndex + 1} / ${activeImageArray.length}`;
-        }
-
-        if(prevGalleryImg) {
-            prevGalleryImg.addEventListener('click', () => {
-                activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
-                updateGalleryModal();
-            });
-        }
-
-        if(nextGalleryImg) {
-            nextGalleryImg.addEventListener('click', () => {
-                activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
-                updateGalleryModal();
-            });
-        }
-
-        function closeGalleryModal() {
-            visualModal.classList.remove('active');
-            document.body.classList.remove('dark-cursor-active');
-        }
-
-        if(closeVisualModal) {
-            closeVisualModal.addEventListener('click', closeGalleryModal);
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (!visualModal.classList.contains('active')) return;
-
-            if (e.key === 'ArrowLeft') {
-                activeImageIndex = (activeImageIndex - 1 + activeImageArray.length) % activeImageArray.length;
-                updateGalleryModal();
-            } else if (e.key === 'ArrowRight') {
-                activeImageIndex = (activeImageIndex + 1) % activeImageArray.length;
-                updateGalleryModal();
-            } else if (e.key === 'Escape') {
-                closeGalleryModal();
+            btn.addEventListener('click', toggleAction);
+            if(heroMedia) {
+                heroMedia.addEventListener('click', toggleAction);
             }
         });
     </script>
