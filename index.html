@@ -1,163 +1,1087 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyectos de Arquitectura</title>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        .project-section {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 80px;
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        /* Alternar la dirección de los proyectos */
-        .project-section:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-        .project-image {
-            flex: 1;
-        }
-        .project-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 6px;
-            object-fit: cover;
-            display: block;
-        }
-        .project-content {
-            flex: 1;
-        }
-        .project-content h2 {
-            font-size: 2rem;
-            margin-top: 0;
-            color: #111;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .project-content p {
-            margin-bottom: 15px;
-            text-align: justify;
-            color: #555;
-        }
-        @media (max-width: 768px) {
-            .project-section, .project-section:nth-child(even) {
-                flex-direction: column;
-                padding: 20px;
-            }
-        }
-    </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+ <title>OWN ARCHITECTURE</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+ <style>
+ /* RESET & BASES */
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ cursor: none !important;
+ -webkit-tap-highlight-color: transparent;
+ }
+ html { 
+ scroll-behavior: smooth;
+ font-size: 16px;
+ }
+ body {
+ background-color: #0d0d0d;
+ color: #111111;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+ overflow: hidden;
+ -webkit-font-smoothing: antialiased;
+ }
+ body.content-active {
+ overflow-x: hidden;
+ overflow-y: auto;
+ background-color: #ffffff;
+ }
+ /* CURSOR PERSONALIZADO */
+ #custom-cursor {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 10px;
+ height: 10px;
+ background-color: #000000;
+ border: none;
+ border-radius: 50%;
+ pointer-events: none;
+ z-index: 99999;
+ transform: translate(-50%, -50%);
+ transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+ opacity: 0;
+ }
+ #custom-cursor.visible { opacity: 1; }
+ #custom-cursor.hovered {
+ width: 22px;
+ height: 22px;
+ background-color: #000000;
+ }
+ .mono-tag {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.72rem;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ color: #777777;
+ }
+ /* PANTALLA INICIAL (SPLIT LANDING) */
+ .entry-split-container {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100vw;
+ height: 100vh;
+ height: 100dvh;
+ display: flex;
+ z-index: 2000;
+ background-color: #0d0d0d;
+ transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+ }
+ .entry-split-container.hidden { 
+ transform: translateY(-100%);
+ opacity: 0;
+ pointer-events: none;
+ }
+ .split-pane {
+ position: relative;
+ flex: 1;
+ height: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+ transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+ overflow: hidden;
+ }
+ .split-pane.pane-stories {
+ background-color: #0d0d0d;
+ color: #ffffff;
+ border-right: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ .split-pane.pane-visuals {
+ background-color: #f7f7f7;
+ color: #111111;
+ }
+ .pane-bg {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background-size: cover;
+ background-position: center;
+ opacity: 0.3;
+ transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+ z-index: 1;
+ }
+ 
+ .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
+ .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); } 
+ @media (hover: hover) {
+ .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
+ .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+ .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+ }
+ .split-content-top { position: relative; z-index: 2; }
+ .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+ .split-badge {
+ display: inline-block;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.7rem;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ padding: 6px 14px;
+ border-radius: 30px;
+ margin-bottom: 20px;
+ }
+ .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+ .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
+ .split-title {
+ font-size: clamp(2rem, 5vw, 4.5rem);
+ font-weight: 800;
+ line-height: 1;
+ letter-spacing: -1.5px;
+ text-transform: uppercase;
+ margin-bottom: 16px;
+ }
+ .split-desc { 
+ font-size: clamp(0.9rem, 1.2vw, 1.05rem); 
+ line-height: 1.6; 
+ font-weight: 300; 
+ opacity: 0.85; 
+ }
+ .split-action {
+ display: inline-flex;
+ align-items: center;
+ gap: 12px;
+ margin-top: 28px; 
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.75rem;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ font-weight: 700;
+ }
+ .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+ .split-pane:hover .split-action svg { transform: translateX(8px); }
+ /* HEADER / NAVEGACIÓN */
+ header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 24px 6%;
+ z-index: 1000;
+ background-color: rgba(255, 255, 255, 0.9);
+ backdrop-filter: blur(12px);
+ -webkit-backdrop-filter: blur(12px);
+ border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+ opacity: 0;
+ transform: translateY(-20px);
+ transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+ }
+ body.content-active header {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ .logo { 
+ font-size: 0.95rem; 
+ font-weight: 800; 
+ letter-spacing: 4px; 
+ text-transform: uppercase; 
+ color: #111111; 
+ text-decoration: none;
+ transition: opacity 0.2s ease;
+ } 
+ .logo:hover { opacity: 0.6; }
+ .header-controls {
+ display: flex;
+ align-items: center;
+ gap: 16px;
+ }
+ .mode-switch-bar {
+ display: flex;
+ background-color: rgba(0, 0, 0, 0.05);
+ padding: 4px;
+ border-radius: 30px;
+ border: 1px solid rgba(0, 0, 0, 0.08);
+ gap: 4px;
+ }
+ .mode-btn {
+ background: none;
+ border: none;
+ padding: 8px 18px;
+ border-radius: 20px;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.68rem;
+ letter-spacing: 1.5px;
+ text-transform: uppercase;
+ font-weight: 600;
+ color: #666666;
+ transition: all 0.25s ease;
+ }
+ .mode-btn.active {
+ background-color: #111111;
+ color: #ffffff;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+ }
+ .lang-switch-bar {
+ display: flex;
+ align-items: center;
+ background-color: rgba(0, 0, 0, 0.05);
+ padding: 4px 8px;
+ border-radius: 30px;
+ border: 1px solid rgba(0, 0, 0, 0.08); 
+ gap: 4px;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.68rem;
+ }
+ .lang-btn {
+ background: none;
+ border: none;
+ padding: 4px 8px;
+ border-radius: 12px;
+ font-weight: 600;
+ color: #777777;
+ transition: all 0.2s ease;
+ }
+ .lang-btn.active {
+ background-color: #111111;
+ color: #ffffff;
+ }
+ /* VISTAS PRINCIPALES */
+ .main-view-container {
+ position: relative;
+ width: 100%;
+ opacity: 0;
+ transition: opacity 0.6s ease 0.3s;
+ }
+ body.content-active .main-view-container { opacity: 1; }
+ .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; min-height: 100vh; }
+ .gallery-header {
+ margin-bottom: 60px;
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-end;
+ border-bottom: 2px solid #111111;
+ padding-bottom: 20px;
+ }
+ .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; } 
+ .view-stories-layout,
+ .view-visuals-layout {
+ display: flex;
+ flex-direction: column;
+ gap: 100px;
+ max-width: 1100px;
+ margin: 0 auto;
+ }
+ .story-item-card {
+ display: flex;
+ flex-direction: column;
+ gap: 28px;
+ border-bottom: 1px solid #eaeaea;
+ padding-bottom: 80px;
+ transition: transform 0.4s ease;
+ }
+ .story-item-card:last-child { border-bottom: none; }
+ .story-meta-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: baseline;
+ }
+ .story-meta-header h3 {
+ font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+ font-weight: 800;
+ letter-spacing: -1.5px;
+ text-transform: uppercase;
+ }
+ .story-hero-media {
+ width: 100%;
+ aspect-ratio: 16 / 10;
+ max-height: 70vh;
+ overflow: hidden;
+ background-color: #f2f2f2;
+ border-radius: 4px;
+ cursor: pointer;
+ position: relative;
+ transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+ }
+ .story-hero-media img, .story-hero-media video {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+ }
+ .story-item-card:hover .story-hero-media img,
+ .story-item-card:hover .story-hero-media video {
+ transform: scale(1.03);
+ }
+ .story-summary-text {
+ font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+ line-height: 1.6;
+ font-weight: 300;
+ color: #333333;
+ max-width: 900px;
+ }
+ .toggle-memory-btn {
+ align-self: flex-start;
+ background: none;
+ border: 1px solid #111111;
+ padding: 12px 28px;
+ border-radius: 30px;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.7rem;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ font-weight: 700;
+ color: #111111;
+ transition: all 0.3s ease;
+ margin-top: 4px;
+ }
+ .toggle-memory-btn:hover {
+ background-color: #111111;
+ color: #ffffff;
+ }
+ /* VENTANA FLOTANTE MODAL PARA EL DETALLE DEL PROYECTO */ 
+ .project-modal-overlay {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100vw;
+ height: 100vh;
+ background-color: rgba(0, 0, 0, 0.75);
+ backdrop-filter: blur(8px);
+ -webkit-backdrop-filter: blur(8px);
+ z-index: 3000;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ opacity: 0;
+ visibility: hidden;
+ transition: opacity 0.4s ease, visibility 0.4s ease;
+ }
+ .project-modal-overlay.active {
+ opacity: 1;
+ visibility: visible;
+ }
+ .project-modal-container {
+ background-color: #ffffff;
+ width: 90vw;
+ max-width: 1000px;
+ height: 85vh;
+ border-radius: 6px;
+ overflow-y: auto;
+ position: relative;
+ padding: clamp(30px, 5vw, 60px);
+ transform: translateY(30px);
+ transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+ box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+ }
+ .project-modal-overlay.active .project-modal-container {
+ transform: translateY(0);
+ }
+ .modal-close-btn {
+ position: absolute;
+ top: 25px; 
+ right: 30px;
+ background: none;
+ border: none;
+ font-size: 1.8rem;
+ font-weight: 300;
+ color: #111111;
+ cursor: pointer;
+ z-index: 10;
+ transition: opacity 0.2s ease;
+ }
+ .modal-close-btn:hover { opacity: 0.5; }
+ .modal-content-inner {
+ display: flex;
+ flex-direction: column;
+ gap: 40px;
+ }
+ .story-chapter-num {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.7rem;
+ color: #888888;
+ margin-bottom: 8px;
+ display: block;
+ letter-spacing: 1.5px;
+ }
+ .story-detail-block h4 {
+ font-size: clamp(1.2rem, 2vw, 1.7rem);
+ font-weight: 800;
+ margin-bottom: 14px;
+ text-transform: uppercase;
+ letter-spacing: -0.5px;
+ color: #111111;
+ }
+ .story-detail-block p {
+ font-size: 1.05rem;
+ line-height: 1.8;
+ color: #444444;
+ font-weight: 300;
+ max-width: 850px;
+ margin-bottom: 16px;
+ } 
+ .story-figure-wrapper {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ margin-top: 24px;
+ margin-bottom: 24px;
+ }
+ .story-figure-wrapper img {
+ width: 100%;
+ max-height: 600px;
+ object-fit: cover;
+ border-radius: 2px;
+ box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+ }
+ .story-caption {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.68rem;
+ color: #777777;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ }
+ /* SECCIÓN CONTACTO */
+ .view-contact-layout {
+ max-width: 1100px;
+ margin: 0 auto;
+ display: grid;
+ grid-template-columns: 1fr 1.2fr;
+ gap: 80px;
+ }
+ .contact-info-block h3 {
+ font-size: 2rem;
+ font-weight: 800;
+ letter-spacing: -1px;
+ margin-bottom: 24px;
+ text-transform: uppercase;
+ }
+ .contact-info-block p {
+ font-size: 1.1rem; 
+ line-height: 1.7;
+ color: #555555;
+ font-weight: 300;
+ margin-bottom: 40px;
+ }
+ .contact-detail-item {
+ margin-bottom: 30px;
+ }
+ .contact-detail-item label {
+ display: block;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.7rem;
+ color: #888888;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ margin-bottom: 6px;
+ }
+ .contact-detail-item p, .contact-detail-item a {
+ font-size: 1.2rem;
+ font-weight: 600;
+ color: #111111;
+ text-decoration: none;
+ }
+ .contact-form {
+ display: flex;
+ flex-direction: column;
+ gap: 30px;
+ }
+ .form-group {
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+ }
+ .form-group label {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.7rem;
+ text-transform: uppercase;
+ letter-spacing: 1.5px; 
+ color: #666666;
+ }
+ .form-group input, .form-group textarea {
+ width: 100%;
+ padding: 16px 0;
+ border: none;
+ border-bottom: 1px solid #cccccc;
+ background: transparent;
+ font-family: 'Inter', sans-serif;
+ font-size: 1rem;
+ color: #111111;
+ outline: none;
+ transition: border-color 0.3s ease;
+ }
+ .form-group input:focus, .form-group textarea:focus {
+ border-bottom-color: #111111;
+ }
+ .submit-btn {
+ align-self: flex-start;
+ background-color: #111111;
+ color: #ffffff;
+ border: none;
+ padding: 16px 40px;
+ border-radius: 40px;
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 0.75rem;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ font-weight: 700;
+ margin-top: 10px;
+ transition: background-color 0.3s ease, transform 0.2s ease;
+ }
+ .submit-btn:hover {
+ background-color: #000000;
+ transform: scale(1.02);
+ }
+ .layout-block { display: none; }
+ body.mode-stories-active .view-stories-layout { display: flex; }
+ body.mode-visual-active .view-visuals-layout { display: flex; } 
+ body.mode-contact-active .view-contact-layout { display: grid; }
+ @media (pointer: coarse), (hover: none) {
+ * { cursor: auto !important; }
+ #custom-cursor { display: none !important; }
+ }
+ @media (max-width: 1024px) {
+ header { padding: 18px 5%; }
+ .entry-split-container { flex-direction: column; }
+ .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
+ .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+ .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
+ }
+ @media (max-width: 768px) {
+ header { flex-direction: column; gap: 12px; padding: 14px 5%; }
+ .header-controls { width: 100%; justify-content: space-between; }
+ .mode-switch-bar { flex: 1; justify-content: center; }
+ }
+ </style>
 </head>
-<body>
+<body class="mode-stories-active">
+ <!-- CURSOR PERSONALIZADO -->
+ <div id="custom-cursor"></div>
+ <!-- PANTALLA INICIAL (SPLIT LANDING) -->
+ <section class="entry-split-container" id="entrySplit">
+ <div class="split-pane pane-stories" id="selectStories">
+ <div class="pane-bg"></div>
+ <div class="split-content-top">
+ <span class="split-badge" data-es="01 / FILOSOFÍA Y CONCEPTO" data-cat="01 / FILOSOFIA I CONCEPTE" data-eng="01 / PHILOSOPHY & CONCEPT">01 / FILOSOFÍA Y CONCEPTO</span>
+ </div>
+ <div class="split-content-bottom">
+ <h2 class="split-title" data-es="ESTUDIO" data-cat="ESTUDI" data-eng="STUDIO">ESTUDIO</h2>
+ <p class="split-desc" data-es="El desarrollo teórico, la filosofía y el lenguaje conceptual del estudio." data-cat="El desenvolupament teòric, la filosofia i el llenguatge conceptual de l'estudi." data-eng="The theoretical development, philosophy, and conceptual language of the studio.">El desarrollo teórico, la filosofía y el lenguaje conceptual del estudio.</p>
+ <div class="split-action">
+ <span data-es="VER ESTUDIO" data-cat="VEURE ESTUDI" data-eng="VIEW STUDIO">VER ESTUDIO</span>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+ </div>
+ </div>
+ </div>
+ <div class="split-pane pane-visuals" id="selectVisuals">
+ <div class="pane-bg"></div>
+ <div class="split-content-top">
+ <span class="split-badge" data-es="02 / ARQUITECTURA Y RELATOS" data-cat="02 / ARQUITECTURA I RELATS" data-eng="02 / ARCHITECTURE & STORIES">02 / ARQUITECTURA Y RELATOS</span>
+ </div>
+ <div class="split-content-bottom">
+ <h2 class="split-title" data-es="PROYECTOS" data-cat="PROJECTES" data-eng="PROJECTS">PROYECTOS</h2>
+ <p class="split-desc" data-es="Memoria descriptiva, capítulos y experiencia fotográfica de cada obra." data-cat="Memòria descriptiva, capítols i experiència fotogràfica de cada obra." data-eng="Descriptive memory, chapters, and photographic experience of each work.">Memoria descriptiva, capítulos y experiencia fotográfica de cada obra.</p>
+ <div class="split-action">
+ <span data-es="EXPLORAR PROYECTOS" data-cat="EXPLORAR PROJECTES" data-eng="EXPLORE PROJECTS">EXPLORAR PROYECTOS</span>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+ </div>
+ </div>
+ </div>
+ </section>
+ <!-- HEADER -->
+ <header id="mainHeader">
+ <a href="#" class="logo" id="brandLogo">OWN ARCHITECTURE</a>
+ <div class="header-controls">
+ <div class="mode-switch-bar">
+ <button class="mode-btn active" id="btnModeStories" data-es="ESTUDIO" data-cat="ESTUDI" data-eng="STUDIO">ESTUDIO</button>
+ <button class="mode-btn" id="btnModeVisuals" data-es="PROYECTOS" data-cat="PROJECTES" data-eng="PROJECTS">PROYECTOS</button>
+ <button class="mode-btn" id="btnModeContact" data-es="CONTACTO" data-cat="CONTACTE" data-eng="CONTACT">CONTACTO</button>
+ </div>
+ <div class="lang-switch-bar">
+ <button class="lang-btn active" id="langEs">ES</button>
+ <span>|</span>
+ <button class="lang-btn" id="langCat">CAT</button>
+ <span>|</span>
+ <button class="lang-btn" id="langEng">ENG</button>
+ </div>
+ </div>
+ </header>
+ <!-- CONTENIDO PRINCIPAL -->
+ <main class="main-view-container">
+ <section class="gallery-section">
+ <div class="gallery-header">
+ <h2 id="galleryModeTitle" data-es="ESTUDIO" data-cat="ESTUDI" data-eng="STUDIO">ESTUDIO</h2>
+ <span class="mono-tag" id="galleryModeTag" data-es="FILOSOFÍA Y MÉTODO" data-cat="FILOSOFIA I MÈTODE" data-eng="PHILOSOPHY & METHOD">FILOSOFÍA Y MÉTODO</span>
+ </div>
+ 
+ <!-- VISTA 1: ESTUDIO -->
+ <div class="view-stories-layout layout-block">
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3 data-es="SOBRE MÍ" data-cat="SOBRE MI" data-eng="ABOUT ME">SOBRE MÍ</h3>
+ <span class="mono-tag" data-es="FILOSOFÍA Y MÉTODO" data-cat="FILOSOFIA I MÈTODE" data-eng="PHILOSOPHY & METHOD">FILOSOFÍA Y MÉTODO</span>
+ </div>
+ 
+ <div class="story-hero-media" data-modal-target="modal-estudio">
+ <video autoplay muted loop playsinline poster="img/HAVANA%2048.jpg">
+ <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4" type="video/mp4">
+ </video> </div>
+ <p class="story-summary-text" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall." data-eng="We conceive architecture as an essential response to place, matter, and light. We seek beauty in the honesty of form and the precision of every detail.">
+ Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-estudio" data-es="+ VER MANIFIESTO COMPLETO" data-cat="+ VEURE MANIFEST COMPLET" data-eng="+ VIEW FULL MANIFESTO">+ VER MANIFIESTO COMPLETO</button>
+ </article>
+ </div>
+ <!-- VISTA 2: PROYECTOS -->
+ <div class="view-visuals-layout layout-block">
+ 
+ <!-- PROYECTO 1 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>CASA CLARO DE LUZ</h3>
+ <span class="mono-tag" data-es="RESIDENCIAL • BARCELONA" data-cat="RESIDENCIAL • BARCELONA" data-eng="RESIDENTIAL • BARCELONA">RESIDENCIAL • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-clarodeluz">
+ <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Casa Claro de luz Hero">
+ </div>
+ <p class="story-summary-text" data-es="Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro." data-cat="Casa Claro de Luz és un refugi sereno on l'arquitectura es plega per deixar que la llum prengui el centre." data-eng="Casa Claro de Luz is a serene refuge where architecture folds inward to let light take center stage.">
+ Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-clarodeluz" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ <!-- PROYECTO 2 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>BRISA DE LUZ</h3>
+ <span class="mono-tag" data-es="VIVIENDA • BARCELONA" data-cat="HABITATGE • BARCELONA" data-eng="DWELLING • BARCELONA">VIVIENDA • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-brisadeluz">
+ <img src="img/BRISADELUZ/brisadeluz-1.jpg" alt="BRISA DE LUZ">
+ </div>
+ <p class="story-summary-text" data-es="Situada en la urbanización de Mas Alba, en Sant Pere de Ribes, Brisa de Luz es un refugio mediterráneo donde la arquitectura se funde con la luz." data-cat="Situada a la urbanització de Mas Alba, a Sant Pere de Ribes, Brisa de Luz és un refugi mediterrani on l'arquitectura es fon amb la llum." data-eng="Located in the Mas Alba urbanization in Sant Pere de Ribes, Brisa de Luz is a Mediterranean refuge where architecture merges with light.">
+ Situada en la urbanización de Mas Alba, en Sant Pere de Ribes, Brisa de Luz es un refugio mediterráneo donde la arquitectura se funde con la luz.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-brisadeluz" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ <!-- PROYECTO 3 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>INFINITA</h3>
+ <span class="mono-tag" data-es="RESIDENCIAL • BARCELONA" data-cat="RESIDENCIAL • BARCELONA" data-eng="RESIDENTIAL • BARCELONA">RESIDENCIAL • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-infinita">
+ <img src="img/INFINITA/infinita-4.jpg" alt="Infinita Detail">
+ </div>
+ <p class="story-summary-text" data-es="Infinita nace del gesto claro de abrazar el paisaje. Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Infinita neix del gest clar d'abraçar el paisatge. Una casa on l'arquitectura es converteix en paisatge, i el paisatge en part essencial de l'habitar." data-eng="Infinita is born from the clear gesture of embracing the landscape. A house where architecture becomes landscape, and the landscape an essential part of dwelling.">
+ Infinita nace del gesto claro de abrazar el paisaje. Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-infinita" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ <!-- PROYECTO 4 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>PASSACAGLIA</h3>
+ <span class="mono-tag" data-es="RESIDENCIAL • BARCELONA" data-cat="RESIDENCIAL • BARCELONA" data-eng="RESIDENTIAL • BARCELONA">RESIDENCIAL • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-passacaglia">
+ <img src="img/PASSACAGLIA/passacaglia-1.jpg" alt="Passacaglia Interior">
+ </div>
+ <p class="story-summary-text" data-es="Casa Passacaglia es un ejercicio de ritmo, luz y estructura. Su diseño sigue una cadencia precisa de llenos y vacíos." data-cat="Casa Passacaglia és un exercici de ritme, llum i estructura. El seu disseny segueix una cadència precisa de plens i buits." data-eng="Casa Passacaglia is an exercise in rhythm, light, and structure. Its design follows a precise cadence of solids and voids.">
+ Casa Passacaglia es un ejercicio de ritmo, luz y estructura. Su diseño sigue una cadencia precisa de llenos y vacíos.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-passacaglia" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ <!-- PROYECTO 5 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>FUYU</h3>
+ <span class="mono-tag" data-es="RESIDENCIAL • BARCELONA" data-cat="RESIDENCIAL • BARCELONA" data-eng="RESIDENTIAL • BARCELONA">RESIDENCIAL • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-fuyu">
+ <img src="img/FUYU/fuyu-3.jpg" alt="FUYU Concepto">
+ </div>
+ <p class="story-summary-text" data-es="La casa suspendida. Fuyū, que en japonés significa “flotar”, es una vivienda pensada para apoyarse con ligereza sobre el terreno." data-cat="La casa suspesa. Fuyū, que en japonès significa “flotar”, és un habitatge pensat per donar suport amb lleugeresa sobre el terreny." data-eng="The suspended house. Fuyū, which in Japanese means “floating,” is a dwelling designed to rest lightly on the ground.">
+ La casa suspendida. Fuyū, que en japonés significa “flotar”, es una vivienda pensada para apoyarse con ligereza sobre el terreno.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-fuyu" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ <!-- PROYECTO 6 -->
+ <article class="story-item-card">
+ <div class="story-meta-header">
+ <h3>CLAROSCURO</h3>
+ <span class="mono-tag" data-es="REHABILITACIÓN • BARCELONA" data-cat="REHABILITACIÓ • BARCELONA" data-eng="REHABILITATION • BARCELONA">REHABILITACIÓN • BARCELONA</span>
+ </div>
+ <div class="story-hero-media" data-modal-target="modal-claroscuro">
+ <img src="img/JP/jp-3.jpg" alt="CLAROSCURO">
+ </div>
+ <p class="story-summary-text" data-es="Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià." data-cat="Claroscuro és una reforma en planta baixa d'un edifici de 1920 a la plaça Joaquim Pena, a Sarrià." data-eng="Claroscuro is a ground floor renovation of a 1920 building in Plaça Joaquim Pena, Sarrià.">
+ Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià.
+ </p>
+ <button class="toggle-memory-btn" data-modal-target="modal-claroscuro" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE" data-eng="+ VIEW MEMORY & PROJECT">+ VER MEMORIA Y PROYECTO</button>
+ </article>
+ </div>
+ <!-- VISTA 3: CONTACTO -->
+ <div class="view-contact-layout layout-block">
+ <div class="contact-info-block">
+ <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE" data-eng="LET'S TALK ABOUT YOUR NEXT PROJECT">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
+ <p data-es="Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales." data-cat="Estem disponibles per a encàrrecs, col·laboracions i consultes arquitectòniques internacionals." data-eng="We are available for commissions, collaborations, and international architectural inquiries.">Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
+ 
+ <div class="contact-detail-item">
+ <label data-es="UBICACIÓN" data-cat="UBICACIÓ" data-eng="LOCATION">UBICACIÓN</label>
+ <p>Barcelona, España</p>
+ </div>
+ <div class="contact-detail-item">
+ <label>EMAIL</label>
+ <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
+ </div>
+ </div>
+ <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado.');">
+ <div class="form-group">
+ <label data-es="NOMBRE COMPLETO" data-cat="NOM SENCER" data-eng="FULL NAME">NOMBRE COMPLETO</label>
+ <input type="text" placeholder="Ej. Sofia Alarcón" required>
+ </div>
+ <div class="form-group">
+ <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC" data-eng="EMAIL ADDRESS">CORREO ELECTRÓNICO</label>
+ <input type="email" placeholder="ejemplo@dominio.com" required>
+ </div>
+ <div class="form-group">
+ <label data-es="MENSAJE" data-cat="MISSATGE" data-eng="MESSAGE">MENSAJE</label>
+ <textarea rows="4" placeholder="..." required></textarea>
+ </div>
+ <button type="submit" class="submit-btn" data-es="ENVIAR MENSAJE" data-cat="ENVIAR MISSATGE" data-eng="SEND MESSAGE">ENVIAR MENSAJE</button>
+ </form>
+ </div>
+ </section>
+ </main>
+ <!-- VENTANAS FLOTANTES (MODALS) PARA CADA PROYECTO -->
+ 
+ <!-- Modal Estudio -->
+ <div class="project-modal-overlay" id="modal-estudio">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">01 / FILOSOFÍA</span>
+ <h4 data-es="Introspección y rigor" data-cat="Introspecció i rigor" data-eng="Introspection and Rigor">Introspección y rigor</h4>
+ <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals." data-eng="At OWN ARCHITECTURE, we approach design from theoretical introspection and rigorous constructive execution. We believe in spaces devoid of artifice where light and shadow shape timeless atmospheres.">
+ En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.
+ </p>
+ </div>
+ <div class="story-detail-block">
+ <span class="story-chapter-num">02 / MÉTODO</span>
+ <h4 data-es="Proceso integral" data-cat="Procés integral" data-eng="Integral Process">Proceso integral</h4>
+ <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte." data-eng="We understand architecture as an integral discipline. From the first theoretical sketches to the technical direction of construction, we control every scale of the project.">
+ Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.
+ </p>
+ <div class="story-figure-wrapper">
+ <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
+ <span class="story-caption" data-es="FIG 01. ESPACIO DE TRABAJO Y ESTUDIO" data-cat="FIG 01. ESPAI DE TREBALL I ESTUDI" data-eng="FIG 01. WORKSPACE AND STUDIO">FIG 01. ESPACIO DE TRABAJO Y ESTUDIO</span>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Casa Claro de Luz -->
+ <div class="project-modal-overlay" id="modal-clarodeluz">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">CASA CLARO DE LUZ • 01 / CAPÍTULO I</span>
+ <h4 data-es="Refugio sereno y luz" data-cat="Refugi sereno i llum" data-eng="Serene Refuge and Light">Refugio sereno y luz</h4>
+ <p data-es="Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro. Con una disposición en L que abraza un jardín íntimo y acogedor, la vivienda se organiza en torno a un vacío lleno de sentido: un claro de luz que actúa como corazón del hogar. Allí, entre el porche y la piscina, se crea un espacio contenido, cálido y protegido, abierto al cielo y al tiempo lento." data-cat="Casa Claro de Luz és un refugi sereno on l'arquitectura es plega per deixar que la llum prengui el centre. Amb una disposició en L que abraça un jardí íntim i acollidor, l'habitatge s'organitza al voltant d'un buit ple de sentit." data-eng="Casa Claro de Luz is a serene refuge where architecture folds inward to let light take center stage. With an L-shaped layout embracing an intimate courtyard, the dwelling is organized around a meaningful void: a clearing of light acting as the heart of the home.">
+ Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro. Con una disposición en L que abraza un jardín íntimo y acogedor, la vivienda se organiza en torno a un vacío lleno de sentido: un claro de luz que actúa como corazón del hogar. Allí, entre el porche y la piscina, se crea un espacio contenido, cálido y protegido, abierto al cielo y al tiempo lento.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Clarodeluz 1"><span class="story-caption" data-es="FIG 01. VISTA GENERAL DE ACCESO" data-cat="FIG 01. VISTA GENERAL D'ACCÉS" data-eng="FIG 01. GENERAL ACCESS VIEW">FIG 01. VISTA GENERAL DE ACCESO</span></div>
+ 
+ <p data-es="El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol. En la planta superior, las habitaciones se disponen con cuidado para recibir la luz desde distintos ángulos, manteniendo siempre una sensación de recogimiento y calma." data-cat="El projecte respon amb delicadesa al seu entorn, buscant privadesa sense tancament. Les façanes que miren cap a les cases veïnes es tanquen amb sobrietat, mentre que l'interior s'obre amb naturalitat." data-eng="The project responds delicately to its surroundings, seeking privacy without enclosure. The facades facing neighboring houses close with sobriety, while the interior naturally opens to the garden and sun.">
+ El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol. En la planta superior, las habitaciones se disponen con cuidado para recibir la luz desde distintos ángulos, manteniendo siempre una sensación de recogimiento y calma. Grandes ventanales, celosías y voladizos permiten que la claridad entre con mesura, adaptándose al ritmo del día y de las estaciones.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-2.jpg" alt="Clarodeluz 2"><span class="story-caption" data-es="FIG 02. VOLADIZO PRINCIPAL PROYECTADO" data-cat="FIG 02. VOLadís PRINCIPAL PROJECTAT" data-eng="FIG 02. MAIN PROJECTED CANTILEVER">FIG 02. VOLADIZO PRINCIPAL PROYECTADO</span></div>
+ 
+ <p data-es="Casa Claro de Luz es una arquitectura que no impone su forma, sino que se deja habitar por la claridad y el silencio. Se vive hacia dentro, hacia ese claro vegetal donde la vida cotidiana florece entre reflejos, sombras suaves y vegetación. Una vivienda que no solo habita el espacio, sino también la luz." data-cat="Casa Claro de Luz és una arquitectura que no imposa la seva forma, sinó que es deixa habitar per la claredat i el silenci." data-eng="Casa Claro de Luz is an architecture that does not impose its form, but allows itself to be inhabited by clarity and silence.">
+ Casa Claro de Luz es una arquitectura que no impone su forma, sino que se deja habitar por la claridad y el silencio. Se vive hacia dentro, hacia ese claro vegetal donde la vida cotidiana florece entre reflejos, sombras suaves y vegetación. Una vivienda que no solo habita el espacio, sino también la luz.
+ </p>
 
-    <div class="container">
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-3.jpg" alt="Clarodeluz 3"><span class="story-caption" data-es="FIG 03. DETALLE DE LUZ DIFUSA Y TEXTURA" data-cat="FIG 03. DETALL DE LLUM DIFUSA I TEXTURA" data-eng="FIG 03. DIFFUSE LIGHT AND TEXTURE DETAIL">FIG 03. DETALLE DE LUZ DIFUSA Y TEXTURA</span></div>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-4.jpg" alt="Clarodeluz 4"><span class="story-caption" data-es="FIG 04. ESPACIO DE ESTAR INTERIOR" data-cat="FIG 04. ESPAI D'ESTAR INTERIOR" data-eng="FIG 04. INDOOR LIVING SPACE">FIG 04. ESPACIO DE ESTAR INTERIOR</span></div>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-5.jpg" alt="Clarodeluz 5"><span class="story-caption" data-es="FIG 05. JARDÍN ELEVADO Y PISCINA INFINITA" data-cat="FIG 05. JARDÍ ELEVAT I PISCINA INFINITA" data-eng="FIG 05. ELEVATED GARDEN AND INFINITY POOL">FIG 05. JARDÍN ELEVADO Y PISCINA INFINITA</span></div>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-6.jpg" alt="Clarodeluz 6"><span class="story-caption" data-es="FIG 06. SECCIÓN NOCTURNA Y ATMOSFÉRICA" data-cat="FIG 06. SECCIÓ NOCTURNA I ATMOSFÈRICA" data-eng="FIG 06. NIGHTTIME AND ATMOSPHERIC SECTION">FIG 06. SECCIÓN NOCTURNA Y ATMOSFÉRICA</span></div>
+ <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-7.jpg" alt="Clarodeluz 7"><span class="story-caption" data-es="FIG 07. PERSPECTIVA DE DETALLE CONSTRUCTIVO" data-cat="FIG 07. PERSPECTIVA DE DETALL CONSTRUCTIU" data-eng="FIG 07. CONSTRUCTIVE DETAIL PERSPECTIVE">FIG 07. PERSPECTIVA DE DETALLE CONSTRUCTIVO</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Brisa de Luz -->
+ <div class="project-modal-overlay" id="modal-brisadeluz">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">BRISA DE LUZ • 01 / CAPÍTULO I</span>
+ <h4 data-es="Refugio mediterráneo" data-cat="Refugi mediterrani" data-eng="Mediterranean Refuge">Refugio mediterráneo</h4>
+ <p data-es="Situada en la urbanización de Mas Alba, en Sant Pere de Ribes, Brisa de Luz es un refugio mediterráneo donde la arquitectura se funde con la luz. Ubicada sobre una parcela con pendiente y orientada al nordeste, la vivienda se diseña con un gesto claro: maximizar el espacio ajardinado en planta baja y capturar el sol, que se encuentra casi a sus espaldas respecto a las vistas del valle." data-cat="Situada a la urbanització de Mas Alba, a Sant Pere de Ribes, Brisa de Luz és un refugi mediterrani on l'arquitectura es fon amb la llum." data-eng="Located in the Mas Alba urbanization in Sant Pere de Ribes, Brisa de Luz is a Mediterranean refuge where architecture merges with light.">
+ Situada en la urbanización de Mas Alba, en Sant Pere de Ribes, Brisa de Luz es un refugio mediterráneo donde la arquitectura se funde con la luz. Ubicada sobre una parcela con pendiente y orientada al nordeste, la vivienda se diseña con un gesto claro: maximizar el espacio ajardinado en planta baja y capturar el sol, que se encuentra casi a sus espaldas respecto a las vistas del valle.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-1.jpg" alt="Brisa 1"><span class="story-caption" data-es="FIG 01. FACHADA PRINCIPAL CON CELOSÍAS" data-cat="FIG 01. FAÇANA PRINCIPAL AMB GELOSIES" data-eng="FIG 01. MAIN FAÇADE WITH LATTICE SCREENS">FIG 01. FACHADA PRINCIPAL CON CELOSÍAS</span></div>
+ 
+ <p data-es="Para ello, la piscina se sitúa al fondo de la parcela en la cota más elevada posible, como un elemento autónomo que define el nivel de la planta baja. La casa, dispuesta en L sobre uno de los laterales, genera una secuencia de espacios abiertos hacia el jardín y cerrados hacia la calle y los vecinos, reforzando la sensación de privacidad. Las amplias superficies acristaladas se convierten en el principal medio de diálogo entre interior y exterior, filtrando la luz y conectando los espacios con el paisaje." data-cat="Per a això, la piscina se situa al fons de la parcel·la en la cota més elevada possible." data-eng="To achieve this, the pool is located at the back of the plot at the highest possible level.">
+ Para ello, la piscina se sitúa al fondo de la parcela en la cota más elevada posible, como un elemento autónomo que define el nivel de la planta baja. La casa, dispuesta en L sobre uno de los laterales, genera una secuencia de espacios abiertos hacia el jardín y cerrados hacia la calle y los vecinos, reforzando la sensación de privacidad. Las amplias superficies acristaladas se convierten en el principal medio de diálogo entre interior y exterior, filtrando la luz y conectando los espacios con el paisaje.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-2.jpg" alt="Brisa 2"><span class="story-caption" data-es="FIG 02. ACCESO Y PATIO DELANTERO" data-cat="FIG 02. ACCÉS I PATI DAVANTER" data-eng="FIG 02. ACCESS AND FRONT COURTYARD">FIG 02. ACCESO Y PATIO DELANTERO</span></div>
 
-        <!-- 1. CASA CLARO DE LUZ -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-claro-de-luz.jpg' por la imagen real -->
-                <img src="ruta-foto-claro-de-luz.jpg" alt="Casa Claro de Luz">
-            </div>
-            <div class="project-content">
-                <h2>Casa Claro de Luz</h2>
-                <p>Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro. Con una disposición en L que abraza un jardín íntimo y acogedor, la vivienda se organiza en torno a un vacío lleno de sentido: un claro de luz que actúa como corazón del hogar. Allí, entre el porche y la piscina, se crea un espacio contenido, cálido y protegido, abierto al cielo y al tiempo lento.</p>
-                <p>El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol. En la planta superior, las habitaciones se disponen con cuidado para recibir la luz desde distintos ángulos, manteniendo siempre una sensación de recogimiento y calma. Grandes ventanales, celosías y voladizos permiten que la claridad entre con mesura, adaptándose al ritmo del día y de las estaciones.</p>
-                <p>Casa Claro de Luz es una arquitectura que no impone su forma, sino que se deja habitar por la claridad y el silencio. Se vive hacia dentro, hacia ese claro vegetal donde la vida cotidiana florece entre reflejos, sombras suaves y vegetación. Una vivienda que no solo habita el espacio, sino también la luz.</p>
-            </div>
-        </section>
+ <p data-es="La vivienda se organiza en dos plantas. El acceso y el garaje se encuentran en la planta superior, aprovechando la pendiente del terreno. Desde esta cota, una espectacular escalera desciende hacia la planta baja, desvelando progresivamente las vistas y la amplitud del espacio principal. En este nivel, la zona de día se desarrolla en una secuencia fluida entre la sala de estar, la cocina, el porche y la piscina, complementada por una suite que aporta exclusividad y confort. Especial atención se ha dedicado al diseño del paisaje, donde bancadas y desniveles se integran con el terreno original, creando terrazas ajardinadas que acogen árboles frutales de distintas especies, cada uno con su propio espacio." data-cat="L'habitatge s'organitza en dues plantes." data-eng="The dwelling is organized over two floors.">
+ La vivienda se organiza en dos plantas. El acceso y el garaje se encuentran en la planta superior, aprovechando la pendiente del terreno. Desde esta cota, una espectacular escalera desciende hacia la planta baja, desvelando progresivamente las vistas y la amplitud del espacio principal. En este nivel, la zona de día se desarrolla en una secuencia fluida entre la sala de estar, la cocina, el porche y la piscina, complementada por una suite que aporta exclusividad y confort. Especial atención se ha dedicado al diseño del paisaje, donde bancadas y desniveles se integran con el terreno original, creando terrazas ajardinadas que acogen árboles frutales de distintas especies, cada uno con su propio espacio.
+ </p>
 
-        <!-- 2. BRISA DE LUZ -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-brisa-de-luz.jpg' por la imagen real -->
-                <img src="ruta-foto-brisa-de-luz.jpg" alt="Brisa de Luz">
-            </div>
-            <div class="project-content">
-                <h2>Brisa de Luz</h2>
-                <p>Situada en la urbanización de Mas Alba, en Sant Pere de Ribes, Brisa de Luz es un refugio mediterráneo donde la arquitectura se funde con la luz. Ubicada sobre una parcela con pendiente y orientada al nordeste, la vivienda se diseña con un gesto claro: maximizar el espacio ajardinado en planta baja y capturar el sol, que se encuentra casi a sus espaldas respecto a las vistas del valle.</p>
-                <p>Para ello, la piscina se sitúa al fondo de la parcela en la cota más elevada posible, como un elemento autónomo que define el nivel de la planta baja. La casa, dispuesta en L sobre uno de los laterales, genera una secuencia de espacios abiertos hacia el jardín y cerrados hacia la calle y los vecinos, reforzando la sensación de privacidad. Las amplias superficies acristaladas se convierten en el principal medio de diálogo entre interior y exterior, filtrando la luz y conectando los espacios con el paisaje.</p>
-                <p>La vivienda se organiza en dos plantas. El acceso y el garaje se encuentran en la planta superior, aprovechando la pendiente del terreno. Desde esta cota, una espectacular escalera desciende hacia la planta baja, desvelando progresivamente las vistas y la amplitud del espacio principal. En este nivel, la zona de día se desarrolla en una secuencia fluida entre la sala de estar, la cocina, el porche y la piscina, complementada por una suite que aporta exclusividad y confort.</p>
-                <p>Especial atención se ha dedicado al diseño del paisaje, donde bancadas y desniveles se integran con el terreno original, creando terrazas ajardinadas que acogen árboles frutales de distintas especies, cada uno con su propio espacio.</p>
-            </div>
-        </section>
+ <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-3.jpg" alt="Brisa 3"><span class="story-caption" data-es="FIG 03. VISTA DEL INTERIOR FLUIDO" data-cat="FIG 03. VISTA DE L'INTERIOR FLUID" data-eng="FIG 03. FLUID INTERIOR VIEW">FIG 03. VISTA DEL INTERIOR FLUIDO</span></div>
+ <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-4.jpg" alt="Brisa 4"><span class="story-caption" data-es="FIG 04. DETALLE EXTERIOR Y LUZ TANGENCIAL" data-cat="FIG 04. DETALL EXTERIOR I LLUM TANGENCIAL" data-eng="FIG 04. EXTERIOR DETAIL AND TANGENTIAL LIGHT">FIG 04. DETALLE EXTERIOR Y LUZ TANGENCIAL</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Infinita -->
+ <div class="project-modal-overlay" id="modal-infinita">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">INFINITA • 01 / CAPÍTULO I</span>
+ <h4 data-es="Abrazar el paisaje" data-cat="Abraçar el paisatge" data-eng="Embracing the Landscape">Abrazar el paisaje</h4>
+ <p data-es="Infinita nace del gesto claro de abrazar el paisaje. Situada sobre una parcela con fuerte desnivel y orientada al nordeste, la casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores." data-cat="Infinita neix del gest clar d'abraçar el paisatge." data-eng="Infinita is born from the clear gesture of embracing the landscape.">
+ Infinita nace del gesto claro de abrazar el paisaje. Situada sobre una parcela con fuerte desnivel y orientada al nordeste, la casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-1.jpg" alt="Infinita 1"><span class="story-caption" data-es="FIG 01. VOLUMEN ESCALONADO SUPERIOR" data-cat="FIG 01. VOLUM ESGLAONAT SUPERIOR" data-eng="FIG 01. UPPER STEPPED VOLUME">FIG 01. VOLUMEN ESCALONADO SUPERIOR</span></div>
+ 
+ <p data-es="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior." data-cat="La normativa urbanística, molt restrictiva quant a moviments de terra." data-eng="Urban planning regulations, very restrictive regarding earthworks and level creation, were the starting point.">
+ La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-2.jpg" alt="Infinita 2"><span class="story-caption" data-es="FIG 02. INTEGRACIÓN CON EL TERRENO" data-cat="FIG 02. INTEGRACIÓ AMB EL TERRENY" data-eng="FIG 02. INTEGRATION WITH THE TERRAIN">FIG 02. INTEGRACIÓN CON EL TERRENO</span></div>
 
-        <!-- 3. INFINITA -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-infinita.jpg' por la imagen real -->
-                <img src="ruta-foto-infinita.jpg" alt="Infinita">
-            </div>
-            <div class="project-content">
-                <h2>Infinita</h2>
-                <p>Infinita nace del gesto claro de abrazar el paisaje. Situada sobre una parcela con fuerte desnivel y orientada al nordeste, la casa se articula en tres volúmenes escalonados que permiten maximizar el espacio ajardinado en la planta de día y captar la luz del sol que, aunque nace a su espalda, se filtra lateralmente e inunda los interiores.</p>
-                <p>La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior.</p>
-                <p>Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin. De ahí su nombre: Infinita, una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.</p>
-            </div>
-        </section>
+ <p data-es="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin. De ahí su nombre: Infinita, una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Un gran porxe cobert, sota el primer volum, prolonga aquest pla habitable." data-eng="A large covered porch beneath the first volume extends this habitable plane, blurring the boundaries between interior and exterior.">
+ Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin. De ahí su nombre: Infinita, una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.
+ </p>
 
-        <!-- 4. PASSACAGLIA -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-passacaglia.jpg' por la imagen real -->
-                <img src="ruta-foto-passacaglia.jpg" alt="Passacaglia">
-            </div>
-            <div class="project-content">
-                <h2>Casa Passacaglia</h2>
-                <p>Casa Passacaglia es un ejercicio de ritmo, luz y estructura. Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios.</p>
-                <p>El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios. Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.</p>
-                <p>En el interior, la espacialidad se define por la continuidad visual y la relación con el entorno ajardinado. Los espacios se encadenan en una progresión que permite una fluidez natural entre las áreas comunes y privadas, siempre manteniendo un equilibrio entre apertura y resguardo. La composición geométrica, con su repetición estructurada, evoca el carácter ordenado y orgánico de una pieza barroca.</p>
-                <p>Más que una vivienda, Casa Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical. Un hogar donde la precisión geométrica y la emoción sensorial convergen para crear una experiencia única.</p>
-            </div>
-        </section>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-3.jpg" alt="Infinita 3"><span class="story-caption" data-es="FIG 03. PORCHE Y TRANSICIÓN EXTERIOR" data-cat="FIG 03. PORXE I TRANSICIÓ EXTERIOR" data-eng="FIG 03. PORCH AND EXTERIOR TRANSITION">FIG 03. PORCHE Y TRANSICIÓN EXTERIOR</span></div>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-4.jpg" alt="Infinita 4"><span class="story-caption" data-es="FIG 04. PERSPECTIVA DE ESTAR" data-cat="FIG 04. PERSPECTIVA D'ESTAR" data-eng="FIG 04. LIVING PERSPECTIVE">FIG 04. PERSPECTIVA DE ESTAR</span></div>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-5.jpg" alt="Infinita 5"><span class="story-caption" data-es="FIG 05. COCINA Y MATERIALES CONTINUOS" data-cat="FIG 05. CUINA I MATERIALS CONTINUOS" data-eng="FIG 05. KITCHEN AND CONTINUOUS MATERIALS">FIG 05. COCINA Y MATERIALES CONTINUOS</span></div>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-6.jpg" alt="Infinita 6"><span class="story-caption" data-es="FIG 06. VISTA PLATAFORMA CONTÍNUA" data-cat="FIG 06. VISTA PLATAFORMA CONTÍNUA" data-eng="FIG 06. CONTINUOUS PLATFORM VIEW">FIG 06. VISTA PLATAFORMA CONTÍNUA</span></div>
+ <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-7.jpg" alt="Infinita 7"><span class="story-caption" data-es="FIG 07. ENCUENTRO CON LA VEGETACIÓN" data-cat="FIG 07. ENCONTRE AMB LA VEGETACIÓ" data-eng="FIG 07. ENCOUNTER WITH VEGETATION">FIG 07. ENCUENTRO CON LA VEGETACIÓN</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Passacaglia -->
+ <div class="project-modal-overlay" id="modal-passacaglia">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">PASSACAGLIA • 01 / CAPÍTULO I</span>
+ <h4 data-es="Ritmo, luz y estructura" data-cat="Ritme, llum i estructura" data-eng="Rhythm, Light and Structure">Ritmo, luz y estructura</h4>
+ <p data-es="Casa Passacaglia es un ejercicio de ritmo, luz y estructura. Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios." data-cat="Casa Passacaglia és un exercici de ritme, llum i estructura." data-eng="Casa Passacaglia is an exercise in rhythm, light, and structure.">
+ Casa Passacaglia es un ejercicio de ritmo, luz y estructura. Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-1.jpg" alt="Passacaglia 1"><span class="story-caption" data-es="FIG 01. CADENCIA DE FACHADA" data-cat="FIG 01. CADÈNCIA DE FAÇANA" data-eng="FIG 01. FAÇADE CADENCE">FIG 01. CADENCIA DE FACHADA</span></div>
+ 
+ <p data-es="El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios. Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa." data-cat="L'alçat serpentinejant reforça aquesta idea." data-eng="The meandering elevation reinforces this idea, playing with volumes that seem to shift in a patterned sequence.">
+ El alzado serpenteante refuerza esta idea, jugando con volúmenes que parecen desplazarse en una secuencia pautada, mientras que las transiciones entre interior y exterior se diluyen mediante amplios ventanales y espacios intermedios. Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-2.jpg" alt="Passacaglia 2"><span class="story-caption" data-es="FIG 02. RITMO DE HUECOS Y MACIZOS" data-cat="FIG 02. RITME DE BUITS I MASSISSOS" data-eng="FIG 02. RHYTHM OF OPENINGS AND SOLIDS">FIG 02. RITMO DE HUECOS Y MACIZOS</span></div>
 
-        <!-- 5. FUYŪ -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-fuyu.jpg' por la imagen real -->
-                <img src="ruta-foto-fuyu.jpg" alt="Fuyū">
-            </div>
-            <div class="project-content">
-                <h2>Fuyū (浮遊)</h2>
-                <p><strong>La casa suspendida.</strong> Fuyū, que en japonés significa “flotar”, es una vivienda pensada para apoyarse con ligereza sobre el terreno. Un hogar y un refugio diseñado para un médico que trabaja con terapias centradas en la plasticidad del sistema nervioso, y su pareja, comprometida con la naturaleza, el reciclaje y una vida saludable.</p>
-                <p>La casa se sitúa en lo alto de una ladera, en una parcela generosa bien orientada al sol y a las vistas, cerca del entorno natural dels cincles de Vertí. Se desarrolla en una sola planta y se extiende a lo largo de la parcela, adaptándose al lugar. Tres volúmenes —zona de día, zona de noche y un estudio independiente— se apoyan sobre muros que marcan el límite norte, aportando privacidad desde la calle. Entre ellos, las losas de cubierta, el pavimento exterior y la piscina los conectan y dan la sensación de que la casa queda suspendida.</p>
-                <p>Rodeada de árboles frutales, un huerto y zonas ajardinadas, la vivienda recoge el agua de lluvia y del entorno para regar y refrescarse de forma natural. Se trata de una casa pensada para ofrecer confort con sistemas sencillos y eficientes.</p>
-                <p>Fuyū no busca imponerse, sino formar parte del paisaje. Una casa que flota más que se apoya, y que se integra desde la calma y la ligereza.</p>
-            </div>
-        </section>
+ <p data-es="En el interior, la espacialidad se define por la continuidad visual y la relación con el entorno ajardinado. Los espacios se encadenan en una progresión que permite una fluidez natural entre las áreas comunes y privadas, siempre manteniendo un equilibrio entre apertura y resguardo. La composición geométrica, con su repetición estructurada, evoca el carácter ordenado y orgánico de una pieza barroca. Más que una vivienda, Casa Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical. Un hogar donde la precisión geométrica y la emoción sensorial convergen para crear una experiencia única." data-cat="A l'interior, l'espacialitat es defineix per la continuïtat visual." data-eng="Inside, spatiality is defined by visual continuity and the relationship with the landscaped environment.">
+ En el interior, la espacialidad se define por la continuidad visual y la relación con el entorno ajardinado. Los espacios se encadenan en una progresión que permite una fluidez natural entre las áreas comunes y privadas, siempre manteniendo un equilibrio entre apertura y resguardo. La composición geométrica, con su repetición estructurada, evoca el carácter ordenado y orgánico de una pieza barroca. Más que una vivienda, Casa Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical. Un hogar donde la precisión geométrica y la emoción sensorial convergen para crear una experiencia única.
+ </p>
 
-        <!-- 6. CLAROSCURO -->
-        <section class="project-section">
-            <div class="project-image">
-                <!-- Reemplaza 'ruta-foto-claroscuro.jpg' por la imagen real -->
-                <img src="ruta-foto-claroscuro.jpg" alt="Claroscuro">
-            </div>
-            <div class="project-content">
-                <h2>Claroscuro</h2>
-                <p>Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià. El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.</p>
-                <p>La intervención no busca borrar el pasado del edificio, sino hacerlo visible. Las paredes de obra original, con su textura irregular y su espesor, permanecen expuestas como testigos del tiempo. Frente a ellas, los nuevos planos blancos y precisos actúan como un fondo neutro que amplifica la luz natural y subraya el contraste entre lo antiguo y lo contemporáneo.</p>
-                <p>La luz se convierte en el verdadero material del proyecto. Entra tamizada, recorre el espacio longitudinalmente y se desliza sobre la piedra, generando un juego constante de claros y sombras que cambia a lo largo del día. El techo, con las vigas originales vistas, refuerza esta lectura estratificada del espacio, donde cada época mantiene su identidad.</p>
-                <p>Casa Claroscuro no es una reforma que impone una imagen, sino una que revela. Un ejercicio de contención, estructura y luz, donde la arquitectura nueva se retira lo justo para que la historia del edificio vuelva a respirar.</p>
-            </div>
-        </section>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-3.jpg" alt="Passacaglia 3"><span class="story-caption" data-es="FIG 03. PATIO CENTRAL DE DISTRIBUCIÓN" data-cat="FIG 03. PATI CENTRAL DE DISTRIBUCIÓ" data-eng="FIG 03. CENTRAL DISTRIBUTION COURTYARD">FIG 03. PATIO CENTRAL DE DISTRIBUCIÓN</span></div>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-4.jpg" alt="Passacaglia 4"><span class="story-caption" data-es="FIG 04. VISTA INTERIOR INTEGRADA CON EL PAISAJE" data-cat="FIG 04. VISTA INTERIOR INTEGRADA AMB EL PAISATGE" data-eng="FIG 04. INTERIOR VIEW INTEGRATED WITH LANDSCAPE">FIG 04. VISTA INTERIOR INTEGRADA CON EL PAISAJE</span></div>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-5.jpg" alt="Passacaglia 5"><span class="story-caption" data-es="FIG 05. DETALLE LUZ INTERIOR" data-cat="FIG 05. DETALL LLUM INTERIOR" data-eng="FIG 05. INTERIOR LIGHT DETAIL">FIG 05. DETALLE LUZ INTERIOR</span></div>
+ <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-6.jpg" alt="Passacaglia 6"><span class="story-caption" data-es="FIG 06. ESCALERA Y DOBLE ALTURA" data-cat="FIG 06. ESCALA I DOBLE ALÇADA" data-eng="FIG 06. STAIRCASE AND DOUBLE HEIGHT">FIG 06. ESCALERA Y DOBLE ALTURA</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Fuyu -->
+ <div class="project-modal-overlay" id="modal-fuyu">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">FUYU • 01 / CAPÍTULO I</span>
+ <h4 data-es="La casa suspendida" data-cat="La casa suspesa" data-eng="The Suspended House">La casa suspendida</h4>
+ <p data-es="Fuyū, que en japonés significa “flotar”, es una vivienda pensada para apoyarse con ligereza sobre el terreno. Un hogar y un refugio diseñado para un médico que trabaja con terapias centradas en la plasticidad del sistema nervioso, y su pareja, comprometida con la naturaleza, el reciclaje y una vida saludable." data-cat="Fuyū, que en japonès significa “flotar”, és un habitatge pensat per donar suport amb lleugeresa sobre el terreny." data-eng="Fuyū, which in Japanese means “floating,” is a dwelling designed to rest lightly on the ground.">
+ Fuyū, que en japonés significa “flotar”, es una vivienda pensada para apoyarse con ligereza sobre el terreno. Un hogar y un refugio diseñado para un médico que trabaja con terapias centradas en la plasticidad del sistema nervioso, y su pareja, comprometida con la naturaleza, el reciclaje y una vida saludable.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1"><span class="story-caption" data-es="FIG 01. FACHADA INTEGRADA EN EL PAISAJE" data-cat="FIG 01. FAÇANA INTEGRADA EN EL PAISATGE" data-eng="FIG 01. FAÇADE INTEGRATED INTO THE LANDSCAPE">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span></div>
+ 
+ <p data-es="La casa se sitúa en lo alto de una ladera, en una parcela generosa bien orientada al sol y a las vistas, cerca del entorno natural dels cincles de Vertí. Se desarrolla en una sola planta y se extiende a lo largo de la parcela, adaptándose al lugar. Tres volúmenes —zona de día, zona de noche y un estudio independiente— se apoyan sobre muros que marcan el límite norte, aportando privacidad desde la calle. Entre ellos, las losas de cubierta, el pavimento exterior y la piscina los conectan y dan la sensación de que la casa queda suspendida." data-cat="La casa se situa a la part alta d'un vessant." data-eng="The house sits high on a hillside, on a generous plot well-oriented to the sun and views.">
+ La casa se sitúa en lo alto de una ladera, en una parcela generosa bien orientada al sol y a las vistas, cerca del entorno natural dels cincles de Vertí. Se desarrolla en una sola planta y se extiende a lo largo de la parcela, adaptándose al lugar. Tres volúmenes —zona de día, zona de noche y un estudio independiente— se apoyan sobre muros que marcan el límite norte, aportando privacidad desde la calle. Entre ellos, las losas de cubierta, el pavimento exterior y la piscina los conectan y dan la sensación de que la casa queda suspendida.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-2.jpg" alt="Fuyu 2"><span class="story-caption" data-es="FIG 02. PATIO INTERIOR DE LUZ" data-cat="FIG 02. PATI INTERIOR DE LLUM" data-eng="FIG 02. INTERIOR LIGHT COURTYARD">FIG 02. PATIO INTERIOR DE LUZ</span></div>
 
-    </div>
+ <p data-es="Rodeada de árboles frutales, un huerto y zonas ajardinadas, la vivienda recoge el agua de lluvia y del entorno para regar y refrescarse de forma natural. Se trata de una casa pensada para ofrecer confort con sistemas sencillos y eficientes. Fuyū no busca imponerse, sino formar parte del paisaje. Una casa que flota más que se apoya, y que se integra desde la calma y la ligereza." data-cat="voltada d'arbres frugals, un hort i zones enjardinades." data-eng="Surrounded by fruit trees, an orchard, and garden areas, the dwelling collects rainwater and environmental water for natural irrigation and cooling.">
+ Rodeada de árboles frutales, un huerto y zonas ajardinadas, la vivienda recoge el agua de lluvia y del entorno para regar y refrescarse de forma natural. Se trata de una casa pensada para ofrecer confort con sistemas sencillos y eficientes. Fuyū no busca imponerse, sino formar parte del paisaje. Una casa que flota más que se apoya, y que se integra desde la calma y la ligereza.
+ </p>
 
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-3.jpg" alt="Fuyu 3"><span class="story-caption" data-es="FIG 03. DETALLE ARQUITECTURA SUSPENDIDA" data-cat="FIG 03. DETALL ARQUITECTURA SUSPESA" data-eng="FIG 03. SUSPENDED ARCHITECTURE DETAIL">FIG 03. DETALLE ARQUITECTURA SUSPENDIDA</span></div>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-4.jpg" alt="Fuyu 4"><span class="story-caption" data-es="FIG 04. ZONA DE DÍA MONOLÍTICA" data-cat="FIG 04. ZONA DE DIA MONOLÍTICA" data-eng="FIG 04. MONOLITHIC DAYTIME ZONE">FIG 04. ZONA DE DÍA MONOLÍTICA</span></div>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption" data-es="FIG 05. PASARELAS Y CONEXIONES" data-cat="FIG 05. PASSAREL·LES I CONNEXIONS" data-eng="FIG 05. WALKWAYS AND CONNECTIONS">FIG 05. PASARELAS Y CONEXIONES</span></div>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-6.jpg" alt="Fuyu 6"><span class="story-caption" data-es="FIG 06. MATERIALIDAD PÉTREA" data-cat="FIG 06. MATERIALITAT PÈTRA" data-eng="FIG 06. STONEY MATERIALITY">FIG 06. MATERIALIDAD PÉTREA</span></div>
+ <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-7.jpg" alt="Fuyu 7"><span class="story-caption" data-es="FIG 07. ESCALA Y SOMBRAS ARROJADAS" data-cat="FIG 07. ESCALA I OMBRES llançades" data-eng="FIG 07. SCALE AND CAST SHADOWS">FIG 07. ESCALA Y SOMBRAS ARROJADAS</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- Modal Claroscuro -->
+ <div class="project-modal-overlay" id="modal-claroscuro">
+ <div class="project-modal-container">
+ <button class="modal-close-btn">&times;</button>
+ <div class="modal-content-inner">
+ <div class="story-detail-block">
+ <span class="story-chapter-num">CLAROSCURO • 01 / CAPÍTULO I</span>
+ <h4 data-es="Reforma en planta baja" data-cat="Reforma en planta baixa" data-eng="Ground Floor Renovation">Reforma en planta baja</h4>
+ <p data-es="Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià. El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa." data-cat="Claroscuro és una reforma en planta baixa d'un edifici de 1920 a la plaça Joaquim Pena, a Sarrià." data-eng="Claroscuro is a ground floor renovation of a 1920 building in Plaça Joaquim Pena, Sarrià.">
+ Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià. El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/JP/jp-1.jpg" alt="Claroscuro 1"><span class="story-caption" data-es="FIG 01. ESTADO ORIGINAL VS LIBERADO" data-cat="FIG 01. ESTAT ORIGINAL VS LLIURAT" data-eng="FIG 01. ORIGINAL VS FREED STATE">FIG 01. ESTADO ORIGINAL VS LIBERADO</span></div>
+ 
+ <p data-es="La intervención no busca borrar el pasado del edificio, sino hacerlo visible. Las paredes de obra original, con su textura irregular y su espesor, permanecen expuestas como testigos del tiempo. Frente a ellas, los nuevos planos blancos y precisos actúan como un fondo neutro que amplifica la luz natural y subraya el contraste entre lo antiguo y lo contemporáneo." data-cat="La intervenció no busca esborrar el passat de l'edifici." data-eng="The intervention does not seek to erase the building's past, but to make it visible.">
+ La intervención no busca borrar el pasado del edificio, sino hacerlo visible. Las paredes de obra original, con su textura irregular y su espesor, permanecen expuestas como testigos del tiempo. Frente a ellas, los nuevos planos blancos y precisos actúan como un fondo neutro que amplifica la luz natural y subraya el contraste entre lo antiguo y lo contemporáneo.
+ </p>
+ <div class="story-figure-wrapper"><img src="img/JP/jp-2.jpg" alt="Claroscuro 2"><span class="story-caption" data-es="FIG 02. VISTA DEL INTERIOR CONTINUO" data-cat="FIG 02. VISTA DE L'INTERIOR CONTÍNU" data-eng="FIG 02. CONTINUOUS INTERIOR VIEW">FIG 02. VISTA DEL INTERIOR CONTINUO</span></div>
+
+ <p data-es="La luz se convierte en el verdadero material del proyecto. Entra tamizada, recorre el espacio longitudinalmente y se desliza sobre la piedra, generando un juego constante de claros y sombras que cambia a lo largo del día. El techo, con las vigas originales vistas, refuerza esta lectura estratificada del espacio, donde cada época mantiene su identidad. Casa Claroscuro no es una reforma que impone una imagen, sino una que revela. Un ejercicio de contención, estructura y luz, donde la arquitectura nueva se retira lo justo para que la historia del edificio vuelva a respirar." data-cat="La llum es converteix en el veritable material del projecte." data-eng="Light becomes the true material of the project.">
+ La luz se convierte en el verdadero material del proyecto. Entra tamizada, recorre el espacio longitudinalmente y se desliza sobre la piedra, generando un juego constante de claros y sombras que cambia a lo largo del día. El techo, con las vigas originales vistas, refuerza esta lectura estratificada del espacio, donde cada época mantiene su identidad. Casa Claroscuro no es una reforma que impone una imagen, sino una que revela. Un ejercicio de contención, estructura y luz, donde la arquitectura nueva se retira lo justo para que la historia del edificio vuelva a respirar.
+ </p>
+
+ <div class="story-figure-wrapper"><img src="img/JP/jp-3.jpg" alt="Claroscuro 3"><span class="story-caption" data-es="FIG 03. SALA DE ESTAR Y LUZ NATURAL" data-cat="FIG 03. SALA D'ESTAR I LLUM NATURAL" data-eng="FIG 03. LIVING ROOM AND NATURAL LIGHT">FIG 03. SALA DE ESTAR Y LUZ NATURAL</span></div>
+ <div class="story-figure-wrapper"><img src="img/JP/jp-4.jpg" alt="Claroscuro 4"><span class="story-caption" data-es="FIG 04. COCINA INTEGRADA EN PLANTA BAJA" data-cat="FIG 04. CUINA INTEGRADA EN PLANTA BAIXA" data-eng="FIG 04. KITCHEN INTEGRATED ON GROUND FLOOR">FIG 04. COCINA INTEGRADA EN PLANTA BAJA</span></div>
+ <div class="story-figure-wrapper"><img src="img/JP/jp-5.jpg" alt="Claroscuro 5"><span class="story-caption" data-es="FIG 05. DETALLE EXTERIOR A PLAZA JOAQUIM PENA" data-cat="FIG 05. DETALL EXTERIOR A PLAÇA JOAQUIM PENA" data-eng="FIG 05. EXTERIOR DETAIL TOWARDS PLAÇA JOAQUIM PENA">FIG 05. DETALLE EXTERIOR A PLAZA JOAQUIM PENA</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- SCRIPT INTERACTIVO INTEGRADO -->
+ <script>
+ let currentLang = 'es';
+ // CURSOR PERSONALIZADO
+ const cursor = document.getElementById('custom-cursor');
+ document.addEventListener('mousemove', (e) => {
+ cursor.style.left = e.clientX + 'px';
+ cursor.style.top = e.clientY + 'px';
+ if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
+ });
+ const updateHoverables = () => {
+ const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
+ hoverables.forEach(el => {
+ el.removeEventListener('mouseenter', () => cursor.classList.add('hovered'));
+ el.removeEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+ el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+ el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+ });
+ };
+ updateHoverables();
+ // RETORNO AL INICIO (LOGO CLICK)
+ const brandLogo = document.getElementById('brandLogo');
+ const entrySplit = document.getElementById('entrySplit');
+ brandLogo.addEventListener('click', (e) => {
+ e.preventDefault();
+ entrySplit.classList.remove('hidden');
+ document.body.classList.remove('content-active');
+ });
+ // SPLIT INICIAL CLICK
+ const selectStories = document.getElementById('selectStories');
+ const selectVisuals = document.getElementById('selectVisuals');
+ function activateContent(mode) {
+ entrySplit.classList.add('hidden');
+ document.body.classList.add('content-active');
+ switchMode(mode);
+ }
+ selectStories.addEventListener('click', () => activateContent('stories'));
+ selectVisuals.addEventListener('click', () => activateContent('visuals'));
+ // CAMBIO DE IDIOMA (ES, CAT, ENG)
+ const langEsBtn = document.getElementById('langEs');
+ const langCatBtn = document.getElementById('langCat');
+ const langEngBtn = document.getElementById('langEng');
+ function setLanguage(lang) {
+ currentLang = lang;
+ langEsBtn.classList.toggle('active', lang === 'es');
+ langCatBtn.classList.toggle('active', lang === 'cat');
+ langEngBtn.classList.toggle('active', lang === 'eng');
+ document.querySelectorAll(`[data-${lang}]`).forEach(elem => {
+ elem.textContent = elem.getAttribute(`data-${lang}`);
+ });
+ } 
+ langEsBtn.addEventListener('click', () => setLanguage('es'));
+ langCatBtn.addEventListener('click', () => setLanguage('cat'));
+ langEngBtn.addEventListener('click', () => setLanguage('eng'));
+ // CONMUTACIÓN DE SECCIONES
+ const btnStories = document.getElementById('btnModeStories');
+ const btnVisuals = document.getElementById('btnModeVisuals');
+ const btnContact = document.getElementById('btnModeContact');
+ const titleHeader = document.getElementById('galleryModeTitle');
+ const tagHeader = document.getElementById('galleryModeTag');
+ function switchMode(mode) {
+ document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-contact-active');
+ btnStories.classList.remove('active');
+ btnVisuals.classList.remove('active');
+ btnContact.classList.remove('active');
+ if (mode === 'stories') {
+ document.body.classList.add('mode-stories-active');
+ btnStories.classList.add('active');
+ titleHeader.setAttribute('data-es', 'ESTUDIO'); 
+ titleHeader.setAttribute('data-cat', 'ESTUDI'); titleHeader.setAttribute('data-eng', 'STUDIO');
+ tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); 
+ tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE'); 
+ tagHeader.setAttribute('data-eng', 'PHILOSOPHY & METHOD');
+ } else if (mode === 'visuals') {
+ document.body.classList.add('mode-visual-active');
+ btnVisuals.classList.add('active');
+ titleHeader.setAttribute('data-es', 'PROYECTOS'); 
+ titleHeader.setAttribute('data-cat', 'PROJECTES'); titleHeader.setAttribute('data-eng', 'PROJECTS');
+ tagHeader.setAttribute('data-es', 'MEMORIAS Y OBRA'); 
+ tagHeader.setAttribute('data-cat', 'MEMÒRIES I OBRA'); 
+ tagHeader.setAttribute('data-eng', 'MEMORIES & WORKS');
+ } else if (mode === 'contact') {
+ document.body.classList.add('mode-contact-active');
+ btnContact.classList.add('active');
+ titleHeader.setAttribute('data-es', 'CONTACTO'); 
+ titleHeader.setAttribute('data-cat', 'CONTACTE'); titleHeader.setAttribute('data-eng', 'CONTACT'); 
+ tagHeader.setAttribute('data-es', 'CONSULTAS Y PROYECTOS'); 
+ tagHeader.setAttribute('data-cat', 'CONSULTES I PROJECTES'); 
+ tagHeader.setAttribute('data-eng', 'INQUIRIES & PROJECTS');
+ }
+ setLanguage(currentLang);
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+ }
+ btnStories.addEventListener('click', () => switchMode('stories'));
+ btnVisuals.addEventListener('click', () => switchMode('visuals'));
+ btnContact.addEventListener('click', () => switchMode('contact'));
+ // CONTROL DE VENTANAS FLOTANTES (MODALS)
+ document.querySelectorAll('[data-modal-target]').forEach(trigger => {
+ trigger.addEventListener('click', () => {
+ const modalId = trigger.getAttribute('data-modal-target');
+ const modal = document.getElementById(modalId);
+ if (modal) {
+ modal.classList.add('active');
+ document.body.style.overflow = 'hidden';
+ }
+ });
+ });
+ document.querySelectorAll('.project-modal-overlay').forEach(modal => {
+ const closeBtn = modal.querySelector('.modal-close-btn');
+ 
+ const closeModal = () => {
+ modal.classList.remove('active');
+ document.body.style.overflow = 'auto';
+ };
+ closeBtn.addEventListener('click', closeModal);
+ modal.addEventListener('click', (e) => {
+ if (e.target === modal) {
+ closeModal();
+ }
+ });
+ });
+ </script>
 </body>
 </html>
