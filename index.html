@@ -1,621 +1,637 @@
-```
-    html { 
-        scroll-behavior: smooth;
-        font-size: 16px;
-    }
-
-    body {
-        background-color: #0d0d0d;
-        color: #111111;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        overflow: hidden;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    body.content-active {
-        overflow-x: hidden;
-        overflow-y: auto;
-        background-color: #ffffff;
-    }
-
-    /* CURSOR PERSONALIZADO */
-    #custom-cursor {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #000000;
-        border: none;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 99999;
-        transform: translate(-50%, -50%);
-        transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
-        opacity: 0;
-    }
-
-    #custom-cursor.visible { opacity: 1; }
-
-    #custom-cursor.hovered {
-        width: 22px;
-        height: 22px;
-        background-color: #000000;
-    }
-
-    .mono-tag {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #777777;
-    }
-
-    /* PANTALLA INICIAL (SPLIT LANDING) */
-    .entry-split-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        display: flex;
-        z-index: 2000;
-        background-color: #0d0d0d;
-        transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
-    }
-
-    .entry-split-container.hidden {
-        transform: translateY(-100%);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .split-pane {
-        position: relative;
-        flex: 1;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
-        transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-        overflow: hidden;
-    }
-
-    .split-pane.pane-stories {
-        background-color: #0d0d0d;
-        color: #ffffff;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .split-pane.pane-visuals {
-        background-color: #f7f7f7;
-        color: #111111;
-    }
-
-    .pane-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0.3;
-        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-        z-index: 1;
-    }
-    
-    .pane-stories .pane-bg { background-image: url('img/FUYU/fuyu-4.jpg');opacity: 0.15; filter: grayscale(100%); }
-    .pane-visuals .pane-bg { background-image: url('img/PASSACAGLIA/passacaglia-5.jpg'); }
-
-    @media (hover: hover) {
-        .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
-        .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
-        .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
-    }
-
-    .split-content-top { position: relative; z-index: 2; }
-    .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
-
-    .split-badge {
-        display: inline-block;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 6px 14px;
-        border-radius: 30px;
-        margin-bottom: 20px;
-    }
-
-    .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
-    .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
-
-    .split-title {
-        font-size: clamp(2rem, 5vw, 4.5rem);
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -1.5px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-    }
-
-    .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
-
-    .split-action {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 28px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 700;
-    }
-
-    .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
-    .split-pane:hover .split-action svg { transform: translateX(8px); }
-
-    /* HEADER / NAVEGACIÓN */
-    header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px 6%;
-        z-index: 1000;
-        background-color: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
-    }
-
-    body.content-active header {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .logo { 
-        font-size: 0.95rem; 
-        font-weight: 800; 
-        letter-spacing: 4px; 
-        text-transform: uppercase; 
-        color: #111111; 
-        text-decoration: none;
-        transition: opacity 0.2s ease;
-    }
-    .logo:hover { opacity: 0.6; }
-
-    .header-controls {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .mode-switch-bar {
-        display: flex;
-        background-color: rgba(0, 0, 0, 0.05);
-        padding: 4px;
-        border-radius: 30px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        gap: 4px;
-    }
-
-    .mode-btn {
-        background: none;
-        border: none;
-        padding: 8px 18px;
-        border-radius: 20px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.68rem;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: #666666;
-        transition: all 0.25s ease;
-    }
-
-    .mode-btn.active {
-        background-color: #111111;
-        color: #ffffff;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .lang-switch-bar {
-        display: flex;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.05);
-        padding: 4px 8px;
-        border-radius: 30px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        gap: 4px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.68rem;
-    }
-
-    .lang-btn {
-        background: none;
-        border: none;
-        padding: 4px 10px;
-        border-radius: 12px;
-        font-weight: 600;
-        color: #777777;
-        transition: all 0.2s ease;
-    }
-
-    .lang-btn.active {
-        background-color: #111111;
-        color: #ffffff;
-    }
-
-    /* VISTAS PRINCIPALES */
-    .main-view-container {
-        position: relative;
-        width: 100%;
-        opacity: 0;
-        transition: opacity 0.6s ease 0.3s;
-    }
-
-    body.content-active .main-view-container { opacity: 1; }
-
-    .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; min-height: 100vh; }
-
-    .gallery-header {
-        margin-bottom: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        border-bottom: 2px solid #111111;
-        padding-bottom: 20px;
-    }
-
-    .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
-
-    .view-stories-layout,
-    .view-visuals-layout {
-        display: flex;
-        flex-direction: column;
-        gap: 100px;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-
-    .story-item-card {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-        border-bottom: 1px solid #eaeaea;
-        padding-bottom: 80px;
-        transition: transform 0.4s ease;
-    }
-
-    .story-item-card:last-child { border-bottom: none; }
-
-    .story-meta-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
-
-    .story-meta-header h3 {
-        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-        font-weight: 800;
-        letter-spacing: -1.5px;
-        text-transform: uppercase;
-    }
-
-    .story-hero-media {
-        width: 100%;
-        aspect-ratio: 16 / 10;
-        max-height: 70vh;
-        overflow: hidden;
-        background-color: #f2f2f2;
-        border-radius: 4px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .story-hero-media img, .story-hero-media video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-    }
-
-    .story-item-card:hover .story-hero-media img,
-    .story-item-card:hover .story-hero-media video {
-        transform: scale(1.03);
-    }
-
-    .story-summary-text {
-        font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-        line-height: 1.6;
-        font-weight: 300;
-        color: #333333;
-        max-width: 900px;
-    }
-
-    .toggle-memory-btn {
-        align-self: flex-start;
-        background: none;
-        border: 1px solid #111111;
-        padding: 12px 28px;
-        border-radius: 30px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: #111111;
-        transition: all 0.3s ease;
-        margin-top: 4px;
-    }
-
-    .toggle-memory-btn:hover {
-        background-color: #111111;
-        color: #ffffff;
-    }
-
-    /* VENTANA FLOTANTE MODAL PARA EL DETALLE DEL PROYECTO */
-    .project-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        z-index: 3000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .project-modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .project-modal-container {
-        background-color: #ffffff;
-        width: 90vw;
-        max-width: 1000px;
-        height: 85vh;
-        border-radius: 6px;
-        overflow-y: auto;
-        position: relative;
-        padding: clamp(30px, 5vw, 60px);
-        transform: translateY(30px);
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-    }
-
-    .project-modal-overlay.active .project-modal-container {
-        transform: translateY(0);
-    }
-
-    .modal-close-btn {
-        position: absolute;
-        top: 25px;
-        right: 30px;
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        font-weight: 300;
-        color: #111111;
-        cursor: pointer;
-        z-index: 10;
-        transition: opacity 0.2s ease;
-    }
-    .modal-close-btn:hover { opacity: 0.5; }
-
-    .modal-content-inner {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-    }
-
-    .story-chapter-num {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        color: #888888;
-        margin-bottom: 8px;
-        display: block;
-        letter-spacing: 1.5px;
-    }
-
-    .story-detail-block h4 {
-        font-size: clamp(1.2rem, 2vw, 1.7rem);
-        font-weight: 800;
-        margin-bottom: 14px;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
-        color: #111111;
-    }
-
-    .story-detail-block p {
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: #444444;
-        font-weight: 300;
-        max-width: 850px;
-        margin-bottom: 24px;
-    }
-
-    .story-figure-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 24px;
-        margin-bottom: 24px;
-    }
-
-    .story-figure-wrapper img {
-        width: 100%;
-        max-height: 600px;
-        object-fit: cover;
-        border-radius: 2px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-    }
-
-    .story-caption {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.68rem;
-        color: #777777;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-
-    /* SECCIÓN CONTACTO */
-    .view-contact-layout {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 80px;
-    }
-
-    .contact-info-block h3 {
-        font-size: 2rem;
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 24px;
-        text-transform: uppercase;
-    }
-
-    .contact-info-block p {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: #555555;
-        font-weight: 300;
-        margin-bottom: 40px;
-    }
-
-    .contact-detail-item {
-        margin-bottom: 30px;
-    }
-
-    .contact-detail-item label {
-        display: block;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        color: #888888;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 6px;
-    }
-
-    .contact-detail-item p, .contact-detail-item a {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #111111;
-        text-decoration: none;
-    }
-
-    .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .form-group label {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #666666;
-    }
-
-    .form-group input, .form-group textarea {
-        width: 100%;
-        padding: 16px 0;
-        border: none;
-        border-bottom: 1px solid #cccccc;
-        background: transparent;
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        color: #111111;
-        outline: none;
-        transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus, .form-group textarea:focus {
-        border-bottom-color: #111111;
-    }
-
-    .submit-btn {
-        align-self: flex-start;
-        background-color: #111111;
-        color: #ffffff;
-        border: none;
-        padding: 16px 40px;
-        border-radius: 40px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin-top: 10px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .submit-btn:hover {
-        background-color: #000000;
-        transform: scale(1.02);
-    }
-
-    .layout-block { display: none; }
-    body.mode-stories-active .view-stories-layout { display: flex; }
-    body.mode-visual-active .view-visuals-layout { display: flex; }
-    body.mode-contact-active .view-contact-layout { display: grid; }
-
-    @media (pointer: coarse), (hover: none) {
-        * { cursor: auto !important; }
-        #custom-cursor { display: none !important; }
-    }
-
-    @media (max-width: 1024px) {
-        header { padding: 18px 5%; }
-        .entry-split-container { flex-direction: column; }
-        .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
-        .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-        .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
-    }
-
-    @media (max-width: 768px) {
-        header { flex-direction: column; gap: 12px; padding: 14px 5%; }
-        .header-controls { width: 100%; justify-content: space-between; }
-        .mode-switch-bar { flex: 1; justify-content: center; }
-    }
-</style>
-
-```
-
-```
-<!-- CURSOR PERSONALIZADO -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWN ARCHITECTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        html { 
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #111111;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+        }
+
+        body.content-active {
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
+
+        /* CURSOR PERSONALIZADO */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #000000;
+            border: none;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+            opacity: 0;
+        }
+
+        #custom-cursor.visible { opacity: 1; }
+
+        #custom-cursor.hovered {
+            width: 22px;
+            height: 22px;
+            background-color: #000000;
+        }
+
+        .mono-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #777777;
+        }
+
+        /* PANTALLA INICIAL (SPLIT LANDING) */
+        .entry-split-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            z-index: 2000;
+            background-color: #0d0d0d;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+
+        .entry-split-container.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .split-pane {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .split-pane.pane-stories {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .split-pane.pane-visuals {
+            background-color: #f7f7f7;
+            color: #111111;
+        }
+
+        .pane-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            z-index: 1;
+        }
+        
+        .pane-stories .pane-bg { background-color: #1a1a1a; opacity: 0.15; }
+        .pane-visuals .pane-bg { background-color: #e5e5e5; }
+
+        @media (hover: hover) {
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
+            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+        }
+
+        .split-content-top { position: relative; z-index: 2; }
+        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+
+        .split-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
+
+        .split-title {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
+
+        .split-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .split-pane:hover .split-action svg { transform: translateX(8px); }
+
+        /* HEADER / NAVEGACIÓN */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 6%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+            box-sizing: border-box;
+        }
+
+        body.content-active header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo { 
+            font-size: 0.95rem; 
+            font-weight: 800; 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            color: #111111; 
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            cursor: pointer;
+        }
+        .logo:hover { opacity: 0.6; }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mode-switch-bar {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            gap: 4px;
+        }
+
+        .mode-btn {
+            background: none;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #666666;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .mode-btn.active {
+            background-color: #111111;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .lang-switch-bar {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px 8px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            gap: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #777777;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .lang-btn.active {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        /* VISTAS PRINCIPALES */
+        .main-view-container {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.3s;
+        }
+
+        body.content-active .main-view-container { opacity: 1; }
+
+        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; min-height: 100vh; box-sizing: border-box; }
+
+        .gallery-header {
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #111111;
+            padding-bottom: 20px;
+        }
+
+        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; margin: 0; }
+
+        .view-stories-layout,
+        .view-visuals-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .story-item-card {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 80px;
+        }
+
+        .story-item-card:last-child { border-bottom: none; }
+
+        .story-meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .story-meta-header h3 {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .story-hero-media {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            max-height: 70vh;
+            overflow: hidden;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .story-hero-media img, .story-hero-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .story-item-card:hover .story-hero-media img,
+        .story-item-card:hover .story-hero-media video {
+            transform: scale(1.03);
+        }
+
+        .story-summary-text {
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            line-height: 1.6;
+            font-weight: 300;
+            color: #333333;
+            max-width: 900px;
+            margin: 0;
+        }
+
+        .toggle-memory-btn {
+            align-self: flex-start;
+            background: none;
+            border: 1px solid #111111;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #111111;
+            transition: all 0.3s ease;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .toggle-memory-btn:hover {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        /* VENTANA FLOTANTE MODAL */
+        .project-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .project-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .project-modal-container {
+            background-color: #ffffff;
+            width: 90vw;
+            max-width: 1000px;
+            height: 85vh;
+            border-radius: 6px;
+            overflow-y: auto;
+            position: relative;
+            padding: clamp(30px, 5vw, 60px);
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            box-sizing: border-box;
+        }
+
+        .project-modal-overlay.active .project-modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #111111;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.2s ease;
+        }
+        .modal-close-btn:hover { opacity: 0.5; }
+
+        .modal-content-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .story-chapter-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            margin-bottom: 8px;
+            display: block;
+            letter-spacing: 1.5px;
+        }
+
+        .story-detail-block h4 {
+            font-size: clamp(1.2rem, 2vw, 1.7rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: #111111;
+        }
+
+        .story-detail-block p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #444444;
+            font-weight: 300;
+            max-width: 850px;
+            margin-bottom: 24px;
+        }
+
+        .story-figure-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .story-figure-wrapper img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+
+        .story-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: #777777;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* SECCIÓN CONTACTO */
+        .view-contact-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .contact-info-block h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .contact-info-block p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555555;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .contact-detail-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-detail-item label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .contact-detail-item p, .contact-detail-item a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111111;
+            text-decoration: none;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 16px 0;
+            border: none;
+            border-bottom: 1px solid #cccccc;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #111111;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-bottom-color: #111111;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            background-color: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #000000;
+            transform: scale(1.02);
+        }
+
+        .layout-block { display: none; }
+        body.mode-stories-active .view-stories-layout { display: flex; }
+        body.mode-visual-active .view-visuals-layout { display: flex; }
+        body.mode-contact-active .view-contact-layout { display: grid; }
+
+        @media (pointer: coarse), (hover: none) {
+            * { cursor: auto !important; }
+            #custom-cursor { display: none !important; }
+        }
+
+        @media (max-width: 1024px) {
+            header { padding: 18px 5%; }
+            .entry-split-container { flex-direction: column; }
+            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
+            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+            .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; padding: 14px 5%; }
+            .header-controls { width: 100%; justify-content: space-between; }
+            .mode-switch-bar { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
 <div id="custom-cursor"></div>
 
-<!-- PANTALLA INICIAL (SPLIT LANDING) -->
 <section class="entry-split-container" id="entrySplit">
     <div class="split-pane pane-stories" id="selectStories">
         <div class="pane-bg"></div>
@@ -648,9 +664,8 @@
     </div>
 </section>
 
-<!-- HEADER -->
 <header id="mainHeader">
-    <a href="#" class="logo" id="brandLogo">OWN ARCHITECTURE</a>
+    <a class="logo" id="brandLogo">OWN ARCHITECTURE</a>
     <div class="header-controls">
         <div class="mode-switch-bar">
             <button class="mode-btn active" id="btnModeStories" data-es="ESTUDIO" data-cat="ESTUDI">ESTUDIO</button>
@@ -665,7 +680,6 @@
     </div>
 </header>
 
-<!-- CONTENIDO PRINCIPAL -->
 <main class="main-view-container">
     <section class="gallery-section">
         <div class="gallery-header">
@@ -673,46 +687,38 @@
             <span class="mono-tag" id="galleryModeTag" data-es="FILOSOFÍA Y MÉTODO" data-cat="FILOSOFIA I MÈTODE">FILOSOFÍA Y MÉTODO</span>
         </div>
         
-        <!-- VISTA 1: ESTUDIO -->
         <div class="view-stories-layout layout-block">
             <article class="story-item-card">
                 <div class="story-meta-header">
                     <span class="mono-tag">FILOSOFÍA Y MÉTODO</span>
                 </div>
-                
                 <div class="story-hero-media" data-modal-target="modal-estudio">
-                    <video autoplay muted loop playsinline poster="img/PASSACAGLIA/passacaglia-4.jpg">
-                        <source src="[https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4](https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4)" type="video/mp4">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4" type="video/mp4">
                     </video>
                 </div>
-
-                <p class="story-summary-text" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle." data-cat="Concebem l'arquitectura com una resposta essencial al lloc, la matèria i la llum. Busquem la bellesa en l'honestedat de la forma i la precisió de cada detall.">
-                    Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
+                <p class="story-summary-text" data-es="Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz." data-cat="Concebem l'arquitectura com una resposta essencial al lloc.">
+                    Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz.
                 </p>
-
                 <button class="toggle-memory-btn" data-modal-target="modal-estudio" data-es="+ VER MANIFIESTO COMPLETO" data-cat="+ VEURE MANIFEST COMPLET">+ VER MANIFIESTO COMPLETO</button>
             </article>
         </div>
 
-        <!-- VISTA 2: PROYECTOS -->
         <div class="view-visuals-layout layout-block">
-            
-            <!-- PROYECTO 1 -->
             <article class="story-item-card">
                 <div class="story-meta-header">
                     <h3>CASA CLARO DE LUZ</h3>
                     <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
                 </div>
                 <div class="story-hero-media" data-modal-target="modal-clarodeluz">
-                    <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Casa Claro de luz Hero">
+                    <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Casa Claro de luz">
                 </div>
-                <p class="story-summary-text" data-es="Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro." data-cat="Casa Claro de Luz és un refugi sereno on l'arquitectura es replega per deixar que la llum prengui el centre.">
+                <p class="story-summary-text" data-es="Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro." data-cat="Casa Claro de Luz és un refugi sereno on l'arquitectura es replega.">
                     Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro.
                 </p>
                 <button class="toggle-memory-btn" data-modal-target="modal-clarodeluz" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
             </article>
 
-            <!-- PROYECTO 2 -->
             <article class="story-item-card">
                 <div class="story-meta-header">
                     <h3>FUYU</h3>
@@ -721,360 +727,84 @@
                 <div class="story-hero-media" data-modal-target="modal-fuyu">
                     <img src="img/FUYU/fuyu-3.jpg" alt="FUYU Concepto">
                 </div>
-                <p class="story-summary-text" data-es="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores." data-cat="La cerca del silenci a través d'una massa cega que protegeix microuniversos de patis interiors.">
-                    La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores.
+                <p class="story-summary-text" data-es="Fuyū (浮遊) - La casa suspendida. Pensada para apoyarse con ligereza sobre el terreno[cite: 6]." data-cat="Fuyū (浮遊) - La casa suspesa[cite: 6].">
+                    Fuyū (浮遊) - La casa suspendida. Pensada para apoyarse con ligereza sobre el terreno[cite: 6].
                 </p>
                 <button class="toggle-memory-btn" data-modal-target="modal-fuyu" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
             </article>
-
-            <!-- PROYECTO 3 -->
-            <article class="story-item-card">
-                <div class="story-meta-header">
-                    <h3>INFINITA</h3>
-                    <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                </div>
-                <div class="story-hero-media" data-modal-target="modal-infinita">
-                    <img src="img/INFINITA/infinita-5.jpg" alt="Infinita Detail">
-                </div>
-                <p class="story-summary-text" data-es="Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar." data-cat="Una casa on l'arquitectura es converteix en paisatge, i el paisatge en part essencial de l'habitar.">
-                    Una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.
-                </p>
-                <button class="toggle-memory-btn" data-modal-target="modal-infinita" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
-            </article>
-
-            <!-- PROYECTO 4 -->
-            <article class="story-item-card">
-                <div class="story-meta-header">
-                    <h3>PASSACAGLIA</h3>
-                    <span class="mono-tag">RESIDENCIAL • BARCELONA</span>
-                </div>
-                <div class="story-hero-media" data-modal-target="modal-passacaglia">
-                    <img src="img/PASSACAGLIA/passacaglia-6.jpg" alt="Passacaglia Interior">
-                </div>
-                <p class="story-summary-text" data-es="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía." data-cat="El seu disseny segueix una cadència precisa de plens i buits, generant una composició arquitectònica on la llum i l'ombra alternen en perfecta harmonia.">
-                    Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía.
-                </p>
-                <button class="toggle-memory-btn" data-modal-target="modal-passacaglia" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
-            </article>
-
-            <!-- PROYECTO 5 -->
-            <article class="story-item-card">
-                <div class="story-meta-header">
-                    <h3>CLAROSCURO</h3>
-                    <span class="mono-tag">REHABILITACIÓN • BARCELONA</span>
-                </div>
-                <div class="story-hero-media" data-modal-target="modal-claroscuro">
-                    <img src="img/JP/jp-5.jpg" alt="CLAROSCURO">
-                </div>
-                <p class="story-summary-text" data-es="Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià." data-cat="Claroscuro és una reforma en planta baixa d'un edifici de 1920 a la plaça Joaquim Pena, a Sarrià.">
-                    Claroscuro es una reforma en planta baja de un edificio de 1920 en la plaza Joaquim Pena, en Sarrià.
-                </p>
-                <button class="toggle-memory-btn" data-modal-target="modal-claroscuro" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
-            </article>
-
-            <!-- PROYECTO 6 -->
-            <article class="story-item-card">
-                <div class="story-meta-header">
-                    <h3>BRISA DE LUZ</h3>
-                    <span class="mono-tag">VIVIENDA • BARCELONA</span>
-                </div>
-                <div class="story-hero-media" data-modal-target="modal-brisadeluz">
-                    <img src="img/BRISADELUZ/brisadeluz-1.jpg" alt="BRISA DE LUZ">
-                </div>
-                <p class="story-summary-text" data-es="Vivienda concebida para capturar las corrientes de aire fresco y la luminosidad mediterránea a través de celosías." data-cat="Habitatge concebut per capturar els corrents d'aire fresc i la lluminositat mediterrània a través de gelosies.">
-                    Vivienda concebida para capturar las corrientes de aire fresco y la luminosidad mediterránea a través de celosías.
-                </p>
-                <button class="toggle-memory-btn" data-modal-target="modal-brisadeluz" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
-            </article>
-
         </div>
 
-        <!-- VISTA 3: CONTACTO -->
         <div class="view-contact-layout layout-block">
             <div class="contact-info-block">
                 <h3 data-es="HABLEMOS DE TU PRÓXIMO PROYECTO" data-cat="PARLEM DEL TEU PROPER PROJECTE">HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
-                <p data-es="Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales." data-cat="Estem disponibles per a encàrrecs, col·laboracions i consultes arquitectòniques internacionals.">Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
-                
+                <p data-es="Estamos disponibles para encargos y consultas." data-cat="Estem disponibles per a encàrrecs.">Estamos disponibles para encargos y consultas.</p>
                 <div class="contact-detail-item">
-                    <label data-es="UBICACIÓN" data-cat="UBICACIÓ">UBICACIÓN</label>
+                    <label>UBICACIÓN</label>
                     <p>Barcelona, España</p>
                 </div>
-                <div class="contact-detail-item">
-                    <label>EMAIL</label>
-                    <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
-                </div>
             </div>
-
             <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado.');">
                 <div class="form-group">
-                    <label data-es="NOMBRE COMPLETO" data-cat="NOM SENCER">NOMBRE COMPLETO</label>
-                    <input type="text" placeholder="Ej. Sofia Alarcón" required>
+                    <label>NOMBRE</label>
+                    <input type="text" required>
                 </div>
                 <div class="form-group">
-                    <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC">CORREO ELECTRÓNICO</label>
-                    <input type="email" placeholder="ejemplo@dominio.com" required>
+                    <label>EMAIL</label>
+                    <input type="email" required>
                 </div>
-                <div class="form-group">
-                    <label data-es="MENSAJE" data-cat="MISSATGE">MENSAJE</label>
-                    <textarea rows="4" placeholder="..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn" data-es="ENVIAR MENSAJE" data-cat="ENVIAR MISSATGE">ENVIAR MENSAJE</button>
+                <button type="submit" class="submit-btn">ENVIAR</button>
             </form>
         </div>
-
     </section>
 </main>
 
-<!-- VENTANAS FLOTANTES (MODALS) PARA CADA PROYECTO -->
-
-<!-- Modal Estudio -->
 <div class="project-modal-overlay" id="modal-estudio">
     <div class="project-modal-container">
         <button class="modal-close-btn">&times;</button>
         <div class="modal-content-inner">
             <div class="story-detail-block">
                 <span class="story-chapter-num">01 / FILOSOFÍA</span>
-                <h4 data-es="Introspección y rigor" data-cat="Introspecció i rigor">Introspección y rigor</h4>
-                <p data-es="En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales." data-cat="A OWN ARCHITECTURE abordem el disseny des de la introspecció teòrica i la rigorosa execució constructiva. Creiem en espais buits d'artifici on la llum i l'ombra motllen atmosferes atemporals.">
-                    En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.
-                </p>
-            </div>
-            <div class="story-detail-block">
-                <span class="story-chapter-num">02 / MÉTODO</span>
-                <h4 data-es="Proceso integral" data-cat="Procés integral">Proceso integral</h4>
-                <p data-es="Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto." data-cat="Entenem l'arquitectura com una disciplina integral. Des dels primers croquis teòrics fins a la direcció tècnica d'obra, controlem cada escala del projecte.">
-                    Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.
-                </p>
-                <div class="story-figure-wrapper">
-                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
-                    <span class="story-caption">FIG 01. ESPACIO DE TRABAJO Y ESTUDIO</span>
-                </div>
+                <h4>Introspección y rigor</h4>
+                <p>En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Casa Claro de Luz (TEXTO INTERCALADO Y MULTI-IDIOMA) -->
-<div class="project-modal-overlay" id="modal-clarodeluz">
-    <div class="project-modal-container">
-        <button class="modal-close-btn">&times;</button>
-        <div class="modal-content-inner">
-            <div class="story-detail-block">
-                <span class="story-chapter-num">CASA CLARO DE LUZ</span>
-                
-                <p data-es="Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro." 
-                   data-cat="Casa Claro de Luz és un refugi sereno on l'arquitectura es replega per deixar que la llum prengui el centre."
-                   data-en="Casa Claro de Luz is a serene refuge where architecture retreats to let light take center stage.">
-                    Casa Claro de Luz es un refugio sereno donde la arquitectura se repliega para dejar que la luz tome el centro.
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Clarodeluz 1">
-                    <span class="story-caption" data-es="FIG 01. VISTA GENERAL DE ACCESO" data-cat="FIG 01. VISTA GENERAL D'ACCÉS" data-en="FIG 01. GENERAL ACCESS VIEW">FIG 01. VISTA GENERAL DE ACCESO</span>
-                </div>
-
-                <p data-es="Con una disposición en L que abraza un jardín íntimo y acogedor, la vivienda se organiza en torno a un vacío lleno de sentido: un claro de luz que actúa como corazón del hogar. Allí, entre el porche y la piscina, se crea un espacio contenido, cálido y protegido, abierto al cielo y al tiempo lento." 
-                   data-cat="Amb una disposició en L que abraça un jardí íntim i acollidor, l'habitatge s'organitza al voltant d'un buit ple de sentit: un clar de llum que actua com a cor de la llar. Allà, entre el porxo i la piscina, es crea un espai contingut, càlid i protegit, obert al cel i al temps lent."
-                   data-en="With an L-shaped layout that embraces an intimate and welcoming garden, the house is organized around a meaningful void: a clearing of light that acts as the heart of the home. There, between the porch and the pool, a contained, warm, and protected space is created, open to the sky and slow time.">
-                    Con una disposición en L que abraza un jardín íntimo y acogedor, la vivienda se organiza en torno a un vacío lleno de sentido: un claro de luz que actúa como corazón del hogar. Allí, entre el porche y la piscina, se crea un espacio contenido, cálido y protegido, abierto al cielo y al tiempo lento.
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/CLARODELUZ/clarodeluz-2.jpg" alt="Clarodeluz 2">
-                    <span class="story-caption" data-es="FIG 02. VOLADIZO PRINCIPAL PROYECTADO" data-cat="FIG 02. VOLADÍS PRINCIPAL PROJECTAT" data-en="FIG 02. MAIN PROJECTED CANTILEVER">FIG 02. VOLADIZO PRINCIPAL PROYECTADO</span>
-                </div>
-
-                <p data-es="El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol." 
-                   data-cat="El projecte respon amb delicadesa al seu entorn, buscant privadesa sense tancament. Les façanes que miren cap a les cases veïnes es tancant amb sobrietat, mentre que l'interior s'obre amb naturalitat al jardí i al sol."
-                   data-en="The project responds delicately to its surroundings, seeking privacy without confinement. The facades facing neighboring houses close with sobriety, while the interior opens naturally to the garden and the sun.">
-                    El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol.
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/CLARODELUZ/clarodeluz-3.jpg" alt="Clarodeluz 3">
-                    <span class="story-caption" data-es="FIG 03. DETALLE DE LUZ DIFUSA Y TEXTURA" data-cat="FIG 03. DETALL DE LLUM DIFUSA I TEXTURA" data-en="FIG 03. DIFFUSE LIGHT AND TEXTURE DETAIL">FIG 03. DETALLE DE LUZ DIFUSA Y TEXTURA</span>
-                </div>
-
-                <p data-es="En la planta superior, las habitaciones se disponen con cuidado para recibir la luz desde distintos ángulos, manteniendo siempre una sensación de recogimiento y calma. Grandes ventanales, celosías y voladizos permiten que la claridad entre con mesura, adaptándose al ritmo del día y de las estaciones." 
-                   data-cat="A la planta superior, les habitacions es disposen amb cura per rebre la llum des de diferents angles, mantenint sempre una sensació de recolliment i calma. Grans finestrals, gelosies i voladissos permeten que la claredat entri amb mesura, adaptant-se al ritme del dia i de les estacions."
-                   data-en="On the upper floor, the rooms are carefully arranged to receive light from different angles, always maintaining a sense of seclusion and calm. Large windows, latticework, and overhangs allow clarity to enter moderately, adapting to the rhythm of the day and the seasons.">
-                    En la planta superior, las habitaciones se disponen con cuidado para recibir la luz desde distintos ángulos, manteniendo siempre una sensación de recogimiento y calma. Grandes ventanales, celosías y voladizos permiten que la claridad entre con mesura, adaptándose al ritmo del día y de las estaciones.
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/CLARODELUZ/clarodeluz-4.jpg" alt="Clarodeluz 4">
-                    <span class="story-caption" data-es="FIG 04. ESPACIO DE ESTAR INTERIOR" data-cat="FIG 04. ESPAI D'ESTAR INTERIOR" data-en="FIG 04. INDOOR LIVING SPACE">FIG 04. ESPACIO DE ESTAR INTERIOR</span>
-                </div>
-
-                <p data-es="Casa Claro de Luz es una arquitectura que no impone su forma, sino que se deja habitar por la claridad y el silencio. Se vive hacia dentro, hacia ese claro vegetal donde la vida cotidiana florece entre reflejos, sombras suaves y vegetación. Una vivienda que no solo habita el espacio, sino también la luz." 
-                   data-cat="Casa Claro de Luz és una arquitectura que no imposa la seva forma, sinó que es deixa habitar per la claredat i el silenci. Es viu cap endins, cap a aquell clar vegetal on la vida quotidiana floreix entre reflexos, ombres suaus i vegetació. Un habitatge que no només habita l'espai, sinó també la llum."
-                   data-en="Casa Claro de Luz is an architecture that does not impose its form, but allows itself to be inhabited by clarity and silence. It is lived inward, towards that vegetal clearing where daily life flourishes among reflections, soft shadows, and vegetation. A dwelling that inhabits not only space, but also light.">
-                    Casa Claro de Luz es una arquitectura que no impone su forma, sino que se deja habitar por la claridad y el silencio. Se vive hacia dentro, hacia ese claro vegetal donde la vida cotidiana florece entre reflejos, sombras suaves y vegetación. Una vivienda que no solo habita el espacio, sino también la luz.
-                </p>
-
-                <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-5.jpg" alt="Clarodeluz 5"><span class="story-caption" data-es="FIG 05. JARDÍN ELEVADO Y PISCINA INFINITA" data-cat="FIG 05. JARDÍ ELEVAT I PISCINA INFINITA" data-en="FIG 05. RAISED GARDEN AND INFINITY POOL">FIG 05. JARDÍN ELEVADO Y PISCINA INFINITA</span></div>
-                <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-6.jpg" alt="Clarodeluz 6"><span class="story-caption" data-es="FIG 06. SECCIÓN NOCTURNA Y ATMOSFÉRICA" data-cat="FIG 06. SECCIÓ NOCTURNA I ATMOSFÈRICA" data-en="FIG 06. NIGHTTIME AND ATMOSPHERIC SECTION">FIG 06. SECCIÓN NOCTURNA Y ATMOSFÉRICA</span></div>
-                <div class="story-figure-wrapper"><img src="img/CLARODELUZ/clarodeluz-7.jpg" alt="Clarodeluz 7"><span class="story-caption" data-es="FIG 07. PERSPECTIVA DE DETALLE CONSTRUCTIVO" data-cat="FIG 07. PERSPECTIVA DE DETALL CONSTRUCTIU" data-en="FIG 07. CONSTRUCTIVE DETAIL PERSPECTIVE">FIG 07. PERSPECTIVA DE DETALLE CONSTRUCTIVO</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Fuyu -->
 <div class="project-modal-overlay" id="modal-fuyu">
     <div class="project-modal-container">
         <button class="modal-close-btn">&times;</button>
         <div class="modal-content-inner">
             <div class="story-detail-block">
-                <span class="story-chapter-num">FUYU • 01 / CAPÍTULO I</span>
-                <h4 data-es="La fachada como refugio y patios" data-cat="La façana com a refugi i patis">La fachada como refugio y patios</h4>
-                <p data-es="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado."
-                   data-cat="En un entorn urbà saturat, FUYU actua com a monòlit introspectiu.">
-                    En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado.
-                </p>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1"><span class="story-caption">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-2.jpg" alt="Fuyu 2"><span class="story-caption">FIG 02. PATIO INTERIOR DE LUZ</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-3.jpg" alt="Fuyu 3"><span class="story-caption">FIG 03. DETALLE ARQUITECTURA SUSPENDIDA</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-4.jpg" alt="Fuyu 4"><span class="story-caption">FIG 04. ZONA DE DÍA MONOLÍTICA</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption">FIG 05. PASARELAS Y CONEXIONES</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-6.jpg" alt="Fuyu 6"><span class="story-caption">FIG 06. MATERIALIDAD PÉTREA</span></div>
+                <span class="story-chapter-num">FUYU (浮遊)</span>
+                <h4>Ligereza y conexión con el paisaje[cite: 6]</h4>
+                <p>Fuyū, que en japonés significa 'flotar', es una vivienda pensada para apoyarse con ligereza sobre el terreno[cite: 6].</p>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1"><span class="story-caption">FIG 01[cite: 6]</span></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Infinita -->
-<div class="project-modal-overlay" id="modal-infinita">
-    <div class="project-modal-container">
-        <button class="modal-close-btn">&times;</button>
-        <div class="modal-content-inner">
-            <div class="story-detail-block">
-                <span class="story-chapter-num">INFINITA • 01 / CAPÍTULO I</span>
-                <h4 data-es="Sutileza en la materia" data-cat="Subtilesa en la matèria">Sutileza en la materia</h4>
-                <p data-es="Infinita diluye los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
-                   data-cat="Infinita dilueix els límits entre interior i exterior.">
-                    Infinita diluye los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin.
-                </p>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-1.jpg" alt="Infinita 1"><span class="story-caption">FIG 01. VOLUMEN ESCALONADO SUPERIOR</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-2.jpg" alt="Infinita 2"><span class="story-caption">FIG 02. INTEGRACIÓN CON EL TERRENO</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-3.jpg" alt="Infinita 3"><span class="story-caption">FIG 03. PORCHE Y TRANSICIÓN EXTERIOR</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-4.jpg" alt="Infinita 4"><span class="story-caption">FIG 04. PERSPECTIVA DE ESTAR</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-5.jpg" alt="Infinita 5"><span class="story-caption">FIG 05. COCINA Y MATERIALES CONTINUOS</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-6.jpg" alt="Infinita 6"><span class="story-caption">FIG 06. VISTA PLATAFORMA CONTÍNUA</span></div>
-                <div class="story-figure-wrapper"><img src="img/INFINITA/infinita-7.jpg" alt="Infinita 7"><span class="story-caption">FIG 07. ENCUENTRO CON LA VEGETACIÓN</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Passacaglia -->
-<div class="project-modal-overlay" id="modal-passacaglia">
-    <div class="project-modal-container">
-        <button class="modal-close-btn">&times;</button>
-        <div class="modal-content-inner">
-            <div class="story-detail-block">
-                <span class="story-chapter-num">PASSACAGLIA • 01 / CAPÍTULO I</span>
-                <h4 data-es="Iluminación y contraste rítmico" data-cat="Il·luminació i contrast rítmic">Iluminación y contraste rítmico</h4>
-                <p data-es="Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa."
-                   data-cat="Cada ple i cada buit estan calculats per captar i modelar la llum al llarg del dia.">
-                    Cada lleno y cada vacío están calculados para captar y modelar la luz a lo largo del día, generando contrastes que enriquecen la materialidad de la casa.
-                </p>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-6.jpg" alt="Passacaglia 1"><span class="story-caption">FIG 01. CADENCIA DE FACHADA</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-1.jpg" alt="Passacaglia 2"><span class="story-caption">FIG 02. RITMO DE HUECOS Y MACIZOS</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-2.jpg" alt="Passacaglia 3"><span class="story-caption">FIG 03. PATIO CENTRAL DE DISTRIBUCIÓN</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-3.jpg" alt="Passacaglia 4"><span class="story-caption">FIG 04. VISTA INTERIOR INTEGRADA CON EL PAISAJE</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-4.jpg" alt="Passacaglia 5"><span class="story-caption">FIG 05. DETALLE LUZ INTERIOR</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-5.jpg" alt="Passacaglia 6"><span class="story-caption">FIG 06. ESCALERA Y DOBLE ALTURA</span></div>
-                <div class="story-figure-wrapper"><img src="img/PASSACAGLIA/passacaglia-6.jpg" alt="Passacaglia 7"><span class="story-caption">FIG 07. PERSPECTIVA GENERAL EXTERIOR</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Claroscuro -->
-<div class="project-modal-overlay" id="modal-claroscuro">
-    <div class="project-modal-container">
-        <button class="modal-close-btn">&times;</button>
-        <div class="modal-content-inner">
-            <div class="story-detail-block">
-                <span class="story-chapter-num">CLAROSCURO • 01 / CAPÍTULO I</span>
-                <h4 data-es="Conexión panorámica y estructura" data-cat="Connexió panoràmica i estructura">Conexión panorámica y estructura</h4>
-                <p data-es="El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa."
-                   data-cat="El projecte part d'una operació estructural decisiva.">
-                   El proyecto parte de una operación estructural decisiva: un apeo que permite liberar la planta y ampliar la sala de estar y la cocina, transformando un espacio fragmentado y oscuro en una estancia continua, profunda y luminosa.
-                </p>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-1.jpg" alt="Claroscuro 1"><span class="story-caption">FIG 01. ESTADO ORIGINAL VS LIBERADO</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-2.jpg" alt="Claroscuro 2"><span class="story-caption">FIG 02. VISTA DEL INTERIOR CONTINUO</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-3.jpg" alt="Claroscuro 3"><span class="story-caption">FIG 03. SALA DE ESTAR Y LUZ NATURAL</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-4.jpg" alt="Claroscuro 4"><span class="story-caption">FIG 04. COCINA INTEGRADA EN PLANTA BAJA</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-5.jpg" alt="Claroscuro 5"><span class="story-caption">FIG 05. DETALLE EXTERIOR A PLAZA JOAQUIM PENA</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-9.jpg" alt="Claroscuro 6"><span class="story-caption">FIG 06. TEXTURAS RECUPERADAS DE 1920</span></div>
-                <div class="story-figure-wrapper"><img src="img/JP/jp-7.jpg" alt="Claroscuro 7"><span class="story-caption">FIG 07. LUZ CENITAL EN PATIO INTERIOR</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Brisa de Luz -->
-<div class="project-modal-overlay" id="modal-brisadeluz">
-    <div class="project-modal-container">
-        <button class="modal-close-btn">&times;</button>
-        <div class="modal-content-inner">
-            <div class="story-detail-block">
-                <span class="story-chapter-num">BRISA DE LUZ • 01 / CAPÍTULO I</span>
-                <h4 data-es="Ventilación cruzada y celosías" data-cat="Ventilació creuada i gelosies">Ventilación cruzada y celosías</h4>
-                <p data-es="La envolvente perforada permite un control térmico pasivo excelente, tamizando la luz directa del sol y generando un juego de sombras dinámico en los espacios principales."
-                   data-cat="L'envoltant perforada permet un control tèrmic passiu excel·lent.">
-                   La envolvente perforada permite un control térmico pasivo excelente, tamizando la luz directa del sol y generando un juego de sombras dinámico en los espacios principales.
-                </p>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-1.jpg" alt="Brisa 1"><span class="story-caption">FIG 01. FACHADA PRINCIPAL CON CELOSÍAS</span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-2.jpg" alt="Brisa 2"><span class="story-caption">FIG 02. ACCESO Y PATIO DELANTERO</span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-3.jpg" alt="Brisa 3"><span class="story-caption">FIG 03. VISTA DEL INTERIOR FLUIDO</span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-4.jpg" alt="Brisa 4"><span class="story-caption">FIG 04. DETALLE EXTERIOR Y LUZ TANGENCIAL</span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-5.jpg" alt="Brisa 5"><span class="story-caption">FIG 05. ESTAR-COMEDOR PASANTE</span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-6.jpg" alt="Brisa 6"><span class="story-caption">FIG 06. DETALLE EXTERIOR </span></div>
-                <div class="story-figure-wrapper"><img src="img/BRISADELUZ/brisadeluz-8.jpg" alt="Brisa 7"><span class="story-caption">FIG 07. DETALLE PISCINA </span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SCRIPT INTERACTIVO INTEGRADO -->
 <script>
     let currentLang = 'es';
-
-    // CURSOR PERSONALIZADO
     const cursor = document.getElementById('custom-cursor');
+    
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
         if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
     });
 
-    const updateHoverables = () => {
-        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
-        hoverables.forEach(el => {
-            el.removeEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.removeEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
-    };
-    updateHoverables();
-
-    // RETORNO AL INICIO (LOGO CLICK)
     const brandLogo = document.getElementById('brandLogo');
     const entrySplit = document.getElementById('entrySplit');
 
-    brandLogo.addEventListener('click', (e) => {
-        e.preventDefault();
+    brandLogo.addEventListener('click', () => {
         entrySplit.classList.remove('hidden');
         document.body.classList.remove('content-active');
     });
 
-    // SPLIT INICIAL CLICK
-    const selectStories = document.getElementById('selectStories');
-    const selectVisuals = document.getElementById('selectVisuals');
+    document.getElementById('selectStories').addEventListener('click', () => activateContent('stories'));
+    document.getElementById('selectVisuals').addEventListener('click', () => activateContent('visuals'));
 
     function activateContent(mode) {
         entrySplit.classList.add('hidden');
@@ -1082,40 +812,22 @@
         switchMode(mode);
     }
 
-    selectStories.addEventListener('click', () => activateContent('stories'));
-    selectVisuals.addEventListener('click', () => activateContent('visuals'));
-
-    // CAMBIO DE IDIOMA (Soporte ES / CAT / EN dinámico para Claro de Luz y general)
-    const langEsBtn = document.getElementById('langEs');
-    const langCatBtn = document.getElementById('langCat');
-
-    // Opcional: Expandir barra si deseas incluir EN de forma directa, aquí mantenemos ES / CAT en botones principales o adaptamos
     function setLanguage(lang) {
         currentLang = lang;
-        if (lang === 'es') {
-            langEsBtn.classList.add('active');
-            langCatBtn.classList.remove('active');
-        } else {
-            langCatBtn.classList.add('active');
-            langEsBtn.classList.remove('active');
-        }
-
+        document.getElementById('langEs').classList.toggle('active', lang === 'es');
+        document.getElementById('langCat').classList.toggle('active', lang === 'cat');
         document.querySelectorAll('[data-es]').forEach(elem => {
-            const translation = elem.getAttribute(`data-${lang}`);
-            if (translation) {
-                elem.textContent = translation;
-            }
+            const t = elem.getAttribute(`data-${lang}`);
+            if (t) elem.textContent = t;
         });
     }
 
-    langEsBtn.addEventListener('click', () => setLanguage('es'));
-    langCatBtn.addEventListener('click', () => setLanguage('cat'));
+    document.getElementById('langEs').addEventListener('click', () => setLanguage('es'));
+    document.getElementById('langCat').addEventListener('click', () => setLanguage('cat'));
 
-    // CONMUTACIÓN DE SECCIONES
     const btnStories = document.getElementById('btnModeStories');
     const btnVisuals = document.getElementById('btnModeVisuals');
     const btnContact = document.getElementById('btnModeContact');
-
     const titleHeader = document.getElementById('galleryModeTitle');
     const tagHeader = document.getElementById('galleryModeTag');
 
@@ -1128,18 +840,12 @@
         if (mode === 'stories') {
             document.body.classList.add('mode-stories-active');
             btnStories.classList.add('active');
-            titleHeader.setAttribute('data-es', 'ESTUDIO'); titleHeader.setAttribute('data-cat', 'ESTUDI');
-            tagHeader.setAttribute('data-es', 'FILOSOFÍA Y MÉTODO'); tagHeader.setAttribute('data-cat', 'FILOSOFIA I MÈTODE');
         } else if (mode === 'visuals') {
             document.body.classList.add('mode-visual-active');
             btnVisuals.classList.add('active');
-            titleHeader.setAttribute('data-es', 'PROYECTOS'); titleHeader.setAttribute('data-cat', 'PROJECTES');
-            tagHeader.setAttribute('data-es', 'MEMORIAS Y OBRA'); tagHeader.setAttribute('data-cat', 'MEMÒRIES I OBRA');
         } else if (mode === 'contact') {
             document.body.classList.add('mode-contact-active');
             btnContact.classList.add('active');
-            titleHeader.setAttribute('data-es', 'CONTACTO'); titleHeader.setAttribute('data-cat', 'CONTACTE');
-            tagHeader.setAttribute('data-es', 'CONSULTAS Y PROYECTOS'); tagHeader.setAttribute('data-cat', 'CONSULTES I PROJECTES');
         }
         setLanguage(currentLang);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1149,35 +855,25 @@
     btnVisuals.addEventListener('click', () => switchMode('visuals'));
     btnContact.addEventListener('click', () => switchMode('contact'));
 
-    // CONTROL DE VENTANAS FLOTANTES (MODALS)
     document.querySelectorAll('[data-modal-target]').forEach(trigger => {
         trigger.addEventListener('click', () => {
-            const modalId = trigger.getAttribute('data-modal-target');
-            const modal = document.getElementById(modalId);
+            const modal = document.getElementById(trigger.getAttribute('data-modal-target'));
             if (modal) {
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+                document.body.style.overflow = 'hidden';
             }
         });
     });
 
     document.querySelectorAll('.project-modal-overlay').forEach(modal => {
-        const closeBtn = modal.querySelector('.modal-close-btn');
-        
         const closeModal = () => {
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Restaurar scroll
+            document.body.style.overflow = 'auto';
         };
-
-        closeBtn.addEventListener('click', closeModal);
-        
-        // Cerrar al hacer clic fuera del contenedor blanco
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
+        modal.querySelector('.modal-close-btn').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     });
 </script>
 
-```
+</body>
+</html>
