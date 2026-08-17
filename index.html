@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>OWN ARCHITECTURE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* RESET & BASES */
         * {
@@ -23,7 +23,7 @@
         body {
             background-color: #0d0d0d;
             color: #111111;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -32,6 +32,13 @@
             overflow-x: hidden;
             overflow-y: auto;
             background-color: #ffffff;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
         /* CURSOR PERSONALIZADO */
@@ -65,6 +72,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #777777;
+            font-weight: 500;
         }
 
         /* PANTALLA INICIAL (SPLIT LANDING) */
@@ -144,6 +152,7 @@
             padding: 6px 14px;
             border-radius: 30px;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
@@ -186,10 +195,10 @@
             align-items: center;
             padding: 24px 6%;
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
@@ -263,6 +272,7 @@
             border: none;
             padding: 4px 8px;
             border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
             color: #777777;
             transition: all 0.2s ease;
@@ -320,6 +330,8 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .story-meta-header h3 {
@@ -345,6 +357,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
             transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
         }
 
@@ -452,6 +465,7 @@
             margin-bottom: 8px;
             display: block;
             letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .story-detail-block h4 {
@@ -486,6 +500,7 @@
             object-fit: cover;
             border-radius: 2px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            display: block;
         }
 
         .story-caption {
@@ -494,6 +509,7 @@
             color: #777777;
             text-transform: uppercase;
             letter-spacing: 1.5px;
+            font-weight: 500;
         }
 
         /* SECCIÓN CONTACTO */
@@ -533,6 +549,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 6px;
+            font-weight: 600;
         }
 
         .contact-detail-item p, .contact-detail-item a {
@@ -560,6 +577,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #666666;
+            font-weight: 600;
         }
 
         .form-group input, .form-group textarea {
@@ -826,11 +844,11 @@
                 <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado.');">
                     <div class="form-group">
                         <label data-es="NOMBRE COMPLETO" data-cat="NOM SENCER" data-eng="FULL NAME">NOMBRE COMPLETO</label>
-                        <input type="text" placeholder="Ej. Sofia Alarcón" required>
+                        <input type="text" data-es="Ej. Sofia Alarcón" data-cat="Ex. Sofia Alarcón" data-eng="Ex. Sofia Alarcón" placeholder="Ej. Sofia Alarcón" required>
                     </div>
                     <div class="form-group">
                         <label data-es="CORREO ELECTRÓNICO" data-cat="CORREU ELECTRÒNIC" data-eng="EMAIL ADDRESS">CORREO ELECTRÓNICO</label>
-                        <input type="email" placeholder="ejemplo@dominio.com" required>
+                        <input type="email" data-es="ejemplo@dominio.com" data-cat="exemple@domini.com" data-eng="example@domain.com" placeholder="ejemplo@dominio.com" required>
                     </div>
                     <div class="form-group">
                         <label data-es="MENSAJE" data-cat="MISSATGE" data-eng="MESSAGE">MENSAJE</label>
@@ -1046,10 +1064,8 @@
         });
 
         const updateHoverables = () => {
-            const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea');
+            const hoverables = document.querySelectorAll('button, a, .split-pane, .story-item-card, input, textarea, .story-hero-media');
             hoverables.forEach(el => {
-                el.removeEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                el.removeEventListener('mouseleave', () => cursor.classList.remove('hovered'));
                 el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
             });
@@ -1064,6 +1080,7 @@
             e.preventDefault();
             entrySplit.classList.remove('hidden');
             document.body.classList.remove('content-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // SPLIT INICIAL CLICK
@@ -1091,7 +1108,14 @@
             langEngBtn.classList.toggle('active', lang === 'eng');
 
             document.querySelectorAll(`[data-${lang}]`).forEach(elem => {
-                elem.textContent = elem.getAttribute(`data-${lang}`);
+                const attrVal = elem.getAttribute(`data-${lang}`);
+                if (attrVal) {
+                    if (elem.tagName === 'INPUT' || elem.tagName === 'TEXTAREA') {
+                        elem.placeholder = attrVal;
+                    } else {
+                        elem.textContent = attrVal;
+                    }
+                }
             });
         }
 
@@ -1154,10 +1178,15 @@
             
             const closeModal = () => {
                 modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                if (document.body.classList.contains('content-active')) {
+                    document.body.style.overflowX = 'hidden';
+                    document.body.style.overflowY = 'auto';
+                } else {
+                    document.body.style.overflow = 'hidden';
+                }
             };
 
-            closeBtn.addEventListener('click', closeModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
