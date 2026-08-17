@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWN ARCHITECTURE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
+```
     html { 
         scroll-behavior: smooth;
         font-size: 16px;
@@ -116,7 +107,7 @@
         z-index: 1;
     }
     
-    .pane-stories .pane-bg { background-image: url('img/FUYU/fuyu-4.jpg'); opacity: 0.15; filter: grayscale(100%); }
+    .pane-stories .pane-bg { background-image: url('img/FUYU/fuyu-4.jpg');opacity: 0.15; filter: grayscale(100%); }
     .pane-visuals .pane-bg { background-image: url('img/PASSACAGLIA/passacaglia-5.jpg'); }
 
     @media (hover: hover) {
@@ -616,10 +607,11 @@
         .header-controls { width: 100%; justify-content: space-between; }
         .mode-switch-bar { flex: 1; justify-content: center; }
     }
-    </style>
-</head>
-<body>
+</style>
 
+```
+
+```
 <!-- CURSOR PERSONALIZADO -->
 <div id="custom-cursor"></div>
 
@@ -690,7 +682,7 @@
                 
                 <div class="story-hero-media" data-modal-target="modal-estudio">
                     <video autoplay muted loop playsinline poster="img/PASSACAGLIA/passacaglia-4.jpg">
-                        <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4" type="video/mp4">
+                        <source src="[https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4](https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-blueprint-41662-large.mp4)" type="video/mp4">
                     </video>
                 </div>
 
@@ -720,7 +712,7 @@
                 <button class="toggle-memory-btn" data-modal-target="modal-clarodeluz" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
             </article>
 
-            <!-- PROYECTO 2 (FUYU) -->
+            <!-- PROYECTO 2 -->
             <article class="story-item-card">
                 <div class="story-meta-header">
                     <h3>FUYU</h3>
@@ -729,8 +721,8 @@
                 <div class="story-hero-media" data-modal-target="modal-fuyu">
                     <img src="img/FUYU/fuyu-3.jpg" alt="FUYU Concepto">
                 </div>
-                <p class="story-summary-text" data-es="Fuyū (浮遊) - La casa suspendida. Pensada para apoyarse con ligereza sobre el terreno, un hogar y refugio para un médico y su pareja comprometidos con la naturaleza y la vida saludable[cite: 6]." data-cat="Fuyū (浮遊) - La casa suspesa. Pensada per donar suport amb lleugeresa sobre el terreny, una llar i refugi per a un metge i la seva parella[cite: 6].">
-                    Fuyū (浮遊) - La casa suspendida. Pensada para apoyarse con ligereza sobre el terreno, un hogar y refugio para un médico y su pareja comprometidos con la naturaleza y la vida saludable[cite: 6].
+                <p class="story-summary-text" data-es="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores." data-cat="La cerca del silenci a través d'una massa cega que protegeix microuniversos de patis interiors.">
+                    La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores.
                 </p>
                 <button class="toggle-memory-btn" data-modal-target="modal-fuyu" data-es="+ VER MEMORIA Y PROYECTO" data-cat="+ VEURE MEMÒRIA I PROJECTE">+ VER MEMORIA Y PROYECTO</button>
             </article>
@@ -862,7 +854,7 @@
     </div>
 </div>
 
-<!-- Modal Casa Claro de Luz -->
+<!-- Modal Casa Claro de Luz (TEXTO INTERCALADO Y MULTI-IDIOMA) -->
 <div class="project-modal-overlay" id="modal-clarodeluz">
     <div class="project-modal-container">
         <button class="modal-close-btn">&times;</button>
@@ -934,47 +926,18 @@
         <button class="modal-close-btn">&times;</button>
         <div class="modal-content-inner">
             <div class="story-detail-block">
-                <span class="story-chapter-num">FUYU (浮遊) • LA CASA SUSPENDIDA</span>
-                <h4 data-es="Ligereza y conexión con el paisaje" data-cat="Lleugeresa i connexió amb el paisatge">Ligereza y conexión con el paisaje</h4>
-                
-                <p data-es="Fuyū, que en japonés significa 'flotar', es una vivienda pensada para apoyarse con ligereza sobre el terreno. Un hogar y un refugio diseñado para un médico que trabaja con terapias centradas en la plasticidad del sistema nervioso, y su pareja, comprometida con la naturaleza, el reciclaje y una vida saludable[cite: 6]."
-                   data-cat="Fuyū, que en japonès significa 'flotar', és una vivenda pensada per recolzar-se amb lleugeresa sobre el terreny. Una llar i un refugi dissenyat per a un metge i la seva parella[cite: 6].">
-                    Fuyū, que en japonés significa "flotar", es una vivienda pensada para apoyarse con ligereza sobre el terreno. Un hogar y un refugio diseñado para un médico que trabaja con terapias centradas en la plasticidad del sistema nervioso, y su pareja, comprometida con la naturaleza, el reciclaje y una vida saludable[cite: 6].
+                <span class="story-chapter-num">FUYU • 01 / CAPÍTULO I</span>
+                <h4 data-es="La fachada como refugio y patios" data-cat="La façana com a refugi i patis">La fachada como refugio y patios</h4>
+                <p data-es="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado."
+                   data-cat="En un entorn urbà saturat, FUYU actua com a monòlit introspectiu.">
+                    En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas tradicionales hacia la calle, orientando toda la ventilación y la vida social hacia el núcleo ajardinado.
                 </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1">
-                    <span class="story-caption">FIG 01. SITUACIÓN EN LO ALTO DE LA LADERA, CERCA DEL ENTORNO NATURAL DELS CINCLES DE VERTÍ[cite: 6]</span>
-                </div>
-
-                <p data-es="La casa se sitúa en lo alto de una ladera, en una parcela generosa bien orientada al sol y a las vistas, cerca del entorno natural dels cincles de Vertí. Se desarrolla en una sola planta y se extiende a lo largo de la parcela, adaptándose al lugar[cite: 6]."
-                   data-cat="La casa se situa a la part alta d'una vessant, en una parcel·la generosa ben orientada al sol i a les vistes, a prop de l'entorn natural dels cincles de Vertí[cite: 6].">
-                    La casa se sitúa en lo alto de una ladera, en una parcela generosa bien orientada al sol y a las vistas, cerca del entorno natural dels cincles de Vertí. Se desarrolla en una sola planta y se extiende a lo largo de la parcela, adaptándose al lugar[cite: 6].
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/FUYU/fuyu-2.jpg" alt="Fuyu 2">
-                    <span class="story-caption">FIG 02. TRES VOLÚMENES (ZONA DE DÍA, DE NOCHE Y ESTUDIO) APOYADOS SOBRE MUROS EN EL LÍMITE NORTE[cite: 6]</span>
-                </div>
-
-                <p data-es="Tres volúmenes —zona de día, zona de noche y un estudio independiente— se apoyan sobre muros que marcan el límite norte, aportando privacidad desde la calle. Entre ellos, las losas de cubierta, el pavimento exterior y la piscina los conectan y dan la sensación de que la casa queda suspendida[cite: 6]."
-                   data-cat="Tres volums —zona de dia, zona de nit i un estudi independent— es recolzen sobre murs que marquen el límit nord[cite: 6].">
-                    Tres volúmenes —zona de día, zona de noche y un estudio independiente— se apoyan sobre muros que marcan el límite norte, aportando privacidad desde la calle. Entre ellos, las losas de cubierta, el pavimento exterior y la piscina los conectan y dan la sensación de que la casa queda suspendida[cite: 6].
-                </p>
-
-                <div class="story-figure-wrapper">
-                    <img src="img/FUYU/fuyu-3.jpg" alt="Fuyu 3">
-                    <span class="story-caption">FIG 03. ÁRBOLES FRUTALES, HUERTO Y RECOGIDA DE AGUA DE LLUVIA[cite: 6]</span>
-                </div>
-
-                <p data-es="Rodeada de árboles frutales, un huerto y zonas ajardinadas, la vivienda recoge el agua de lluvia y del entorno para regar y refrescarse de forma natural. Se trata de una casa pensada para ofrecer confort con sistemas sencillos y eficientes[cite: 6]."
-                   data-cat="voltada d'arbres frugals, un hort i zones enjardinades, l'habitatge recull l'aigua de pluja i de l'entorn per regar i refrescar-se de manera natural[cite: 6].">
-                    Rodeada de árboles frutales, un huerto y zonas ajardinadas, la vivienda recoge el agua de lluvia y del entorno para regar y refrescarse de forma natural. Se trata de una casa pensada para ofrecer confort con sistemas sencillos y eficientes[cite: 6].
-                </p>
-
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-4.jpg" alt="Fuyu 4"><span class="story-caption">FIG 04. INTEGRACIÓN DESDE LA CALMA Y LA LIGEREZA[cite: 6]</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption">FIG 05. DETALLE DE PASARELAS Y CONEXIONES EXTERIORES</span></div>
-                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-6.jpg" alt="Fuyu 6"><span class="story-caption">FIG 06. VISTA NOCTURNA Y LUZ ATMOSFÉRICA</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-1.jpg" alt="Fuyu 1"><span class="story-caption">FIG 01. FACHADA INTEGRADA EN EL PAISAJE</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-2.jpg" alt="Fuyu 2"><span class="story-caption">FIG 02. PATIO INTERIOR DE LUZ</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-3.jpg" alt="Fuyu 3"><span class="story-caption">FIG 03. DETALLE ARQUITECTURA SUSPENDIDA</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-4.jpg" alt="Fuyu 4"><span class="story-caption">FIG 04. ZONA DE DÍA MONOLÍTICA</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-5.jpg" alt="Fuyu 5"><span class="story-caption">FIG 05. PASARELAS Y CONEXIONES</span></div>
+                <div class="story-figure-wrapper"><img src="img/FUYU/fuyu-6.jpg" alt="Fuyu 6"><span class="story-caption">FIG 06. MATERIALIDAD PÉTREA</span></div>
             </div>
         </div>
     </div>
@@ -1126,6 +1089,7 @@
     const langEsBtn = document.getElementById('langEs');
     const langCatBtn = document.getElementById('langCat');
 
+    // Opcional: Expandir barra si deseas incluir EN de forma directa, aquí mantenemos ES / CAT en botones principales o adaptamos
     function setLanguage(lang) {
         currentLang = lang;
         if (lang === 'es') {
@@ -1216,5 +1180,4 @@
     });
 </script>
 
-</body>
-</html>
+```
