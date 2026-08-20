@@ -1,6 +1,4 @@
-# Correction script for navigation and horizontal drag scroll interaction
-
-html_fixed = """<!DOCTYPE html>
+updated_html = """<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -35,7 +33,7 @@ html_fixed = """<!DOCTYPE html>
       cursor: pointer;
     }
 
-    /* --- NAVEGACIÓN PERMANENTE CORREGIDA --- */
+    /* --- NAVEGACIÓN FIJA --- */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -47,6 +45,7 @@ html_fixed = """<!DOCTYPE html>
       padding: 2.5rem 4vw;
       z-index: 10000;
       background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+      pointer-events: auto;
     }
 
     .brand-logo {
@@ -92,7 +91,7 @@ html_fixed = """<!DOCTYPE html>
       width: 100%;
     }
 
-    /* --- VISTAS / SECCIONES --- */
+    /* --- SECCIONES PRINCIPALES --- */
     .page-section {
       position: fixed;
       top: 0;
@@ -103,7 +102,7 @@ html_fixed = """<!DOCTYPE html>
       visibility: hidden;
       transition: opacity 0.6s ease, visibility 0.6s;
       z-index: 1;
-      overflow: hidden;
+      overflow-y: auto;
     }
 
     .page-section.active {
@@ -112,13 +111,14 @@ html_fixed = """<!DOCTYPE html>
       z-index: 2;
     }
 
-    /* --- 1. HERO --- */
+    /* --- HOME / PORTADA --- */
     #section-home {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #ffffff;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .hero-title-interactive {
@@ -129,11 +129,10 @@ html_fixed = """<!DOCTYPE html>
       color: #111111;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.6s ease;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .hero-title-interactive:hover {
-      letter-spacing: 0.02em;
       transform: scale(1.02);
     }
 
@@ -146,22 +145,73 @@ html_fixed = """<!DOCTYPE html>
       font-weight: 300;
     }
 
-    /* --- 2. PROYECTOS: DESPLAZAMIENTO HORIZONTAL + DRAG & DROP --- */
-    #section-proyectos {
+    /* --- SECCIÓN PROYECTOS (ESTRUCTURA VERTICAL DE TRES NIVELES) --- */
+    
+    /* 1. HERO A PANTALLA COMPLETA */
+    .projects-hero-banner {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .projects-hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+
+    .projects-hero-caption {
+      position: absolute;
+      bottom: 4rem;
+      left: 5vw;
+      color: #ffffff;
+      z-index: 10;
+    }
+
+    .projects-hero-caption h2 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .projects-hero-caption p {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    /* 2. CARRUSEL HORIZONTAL ULTRA-FLUIDO (INERTIAL LERP SCROLL) */
+    .projects-horizontal-wrapper {
+      padding: 10vh 0;
       background-color: #fafafa;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .section-label {
+      padding: 0 5vw 3rem 5vw;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #888888;
     }
 
     .projects-horizontal-scroll {
       display: flex;
       align-items: center;
-      height: 100vh;
       width: 100vw;
       overflow-x: auto;
       overflow-y: hidden;
-      padding: 0 10vw 0 12vw;
+      padding: 0 5vw;
       scrollbar-width: none;
       cursor: grab;
       user-select: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: auto;
     }
 
     .projects-horizontal-scroll:active {
@@ -174,16 +224,15 @@ html_fixed = """<!DOCTYPE html>
 
     .project-card-fluid {
       flex: 0 0 auto;
-      width: clamp(320px, 42vw, 700px);
-      margin-right: 8vw;
+      width: clamp(300px, 38vw, 650px);
+      margin-right: 6vw;
       position: relative;
     }
 
     .project-image-container {
       width: 100%;
-      height: 58vh;
+      height: 52vh;
       overflow: hidden;
-      position: relative;
       background-color: #eaeaea;
     }
 
@@ -191,37 +240,27 @@ html_fixed = """<!DOCTYPE html>
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-      filter: grayscale(15%);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
+      will-change: transform;
     }
 
     .project-card-fluid:hover .project-image-container img {
       transform: scale(1.04);
-      filter: grayscale(0%);
     }
 
     .project-info-fluid {
-      margin-top: 1.8rem;
+      margin-top: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
     }
 
-    .project-num {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: #a0a0a0;
-      font-weight: 300;
-      margin-bottom: 0.4rem;
-    }
-
     .project-name {
-      font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+      font-size: clamp(1.1rem, 2vw, 1.8rem);
       font-weight: 200;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      color: #111111;
     }
 
     .project-location {
@@ -229,13 +268,63 @@ html_fixed = """<!DOCTYPE html>
       letter-spacing: 0.2em;
       color: #777777;
       text-transform: uppercase;
-      font-weight: 300;
     }
 
-    /* --- 3. ESTUDIO --- */
+    /* 3. GRILLA ASIMÉTRICA DE FOTOS DE PROYECTOS */
+    .projects-asymmetric-section {
+      padding: 10vh 5vw 15vh 5vw;
+      background-color: #ffffff;
+    }
+
+    .asymmetric-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3vw 2vw;
+      margin-top: 3rem;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      background-color: #f4f4f4;
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease, filter 0.6s ease;
+      filter: grayscale(20%);
+      will-change: transform;
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.03);
+      filter: grayscale(0%);
+    }
+
+    /* Layout Asimétrico en 12 columnas */
+    .grid-item-1 { grid-column: span 8; height: 70vh; }
+    .grid-item-2 { grid-column: span 4; height: 50vh; margin-top: 10vh; }
+    .grid-item-3 { grid-column: span 5; height: 60vh; }
+    .grid-item-4 { grid-column: span 7; height: 75vh; }
+    .grid-item-5 { grid-column: span 12; height: 80vh; }
+
+    .grid-item-title {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      color: #ffffff;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    /* --- SECCIÓN ESTUDIO --- */
     #section-estudio {
       background-color: #ffffff;
-      overflow-y: auto;
     }
 
     .estudio-container {
@@ -248,51 +337,15 @@ html_fixed = """<!DOCTYPE html>
       font-size: clamp(2rem, 4.5vw, 4rem);
       font-weight: 200;
       line-height: 1.25;
-      letter-spacing: -0.01em;
-      max-width: 1100px;
-      margin-bottom: 8rem;
-      color: #111111;
-    }
-
-    .estudio-hero-quote span {
-      color: #a0a0a0;
-    }
-
-    .video-fluid-frame {
-      width: 100%;
-      height: 70vh;
-      margin-bottom: 10rem;
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .video-fluid-frame iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      opacity: 0.9;
+      margin-bottom: 6rem;
     }
 
     .pillars-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4rem;
-      margin-bottom: 12rem;
       border-top: 1px solid #eeeeee;
       padding-top: 4rem;
-    }
-
-    .pillar-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pillar-num {
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      color: #999999;
-      margin-bottom: 1.5rem;
     }
 
     .pillar-title {
@@ -310,68 +363,7 @@ html_fixed = """<!DOCTYPE html>
       font-weight: 300;
     }
 
-    /* EQUIPO INTERACTIVO */
-    .team-interactive-section {
-      border-top: 1px solid #eeeeee;
-      padding-top: 5rem;
-    }
-
-    .team-header-title {
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #888888;
-      margin-bottom: 4rem;
-    }
-
-    .team-fluid-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6rem 4rem;
-    }
-
-    .team-card-large {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .team-img-wrapper {
-      width: 100%;
-      aspect-ratio: 4/5;
-      overflow: hidden;
-      margin-bottom: 1.8rem;
-      background-color: #f5f5f5;
-    }
-
-    .team-img-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: filter 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .team-card-large:hover .team-img-wrapper img {
-      filter: grayscale(0%);
-      transform: scale(1.03);
-    }
-
-    .team-meta-name {
-      font-size: 1.3rem;
-      font-weight: 300;
-      letter-spacing: 0.02em;
-    }
-
-    .team-meta-role {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #888888;
-      margin-top: 0.4rem;
-      font-weight: 300;
-    }
-
-    /* --- DETALLE DE PROYECTO --- */
+    /* --- MODAL DETALLE DE PROYECTO --- */
     #project-modal {
       position: fixed;
       top: 0;
@@ -402,13 +394,6 @@ html_fixed = """<!DOCTYPE html>
       padding: 0.8rem 1.6rem;
       background: #ffffff;
       border: 1px solid #e5e5e5;
-      cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    .modal-close-btn:hover {
-      background: #111111;
-      color: #ffffff;
     }
 
     .modal-hero-img {
@@ -423,82 +408,10 @@ html_fixed = """<!DOCTYPE html>
       padding: 6rem 5vw 120px 5vw;
     }
 
-    .modal-header-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 5rem;
-      margin-bottom: 6rem;
-    }
-
-    .modal-project-title {
-      font-size: clamp(2.2rem, 4vw, 4rem);
-      font-weight: 200;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      line-height: 1.1;
-    }
-
-    .modal-project-text {
-      font-size: 1.05rem;
-      line-height: 1.9;
-      color: #444444;
-      font-weight: 300;
-    }
-
-    .tech-specs {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-      border-top: 1px solid #eeeeee;
-      padding-top: 1.8rem;
-    }
-
-    .spec-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .spec-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #a0a0a0;
-      margin-bottom: 0.3rem;
-    }
-
-    .spec-value {
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: #111111;
-    }
-
-    .modal-gallery {
-      display: flex;
-      flex-direction: column;
-      gap: 4rem;
-    }
-
-    .modal-gallery img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
     @media (max-width: 900px) {
-      .pillars-grid, .team-fluid-grid, .modal-header-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .nav-menu {
-        gap: 1.5rem;
-      }
-
-      .project-card-fluid {
-        width: 80vw;
-        margin-right: 10vw;
-      }
+      .asymmetric-grid { display: flex; flex-direction: column; }
+      .grid-item { width: 100% !important; height: 50vh !important; margin: 0 !important; }
+      .pillars-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -513,151 +426,127 @@ html_fixed = """<!DOCTYPE html>
     </div>
   </nav>
 
-  <!-- 1. SECCIÓN HOME -->
+  <!-- 1. HOME -->
   <section id="section-home" class="page-section active">
     <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
     <div class="hero-subtext">Arquitectura & Diseño Contemporáneo</div>
   </section>
 
-  <!-- 2. SECCIÓN PROYECTOS -->
+  <!-- 2. PROYECTOS (IMAGEN GIGANTE + HORIZONTAL + GRILLA ASIMÉTRICA) -->
   <section id="section-proyectos" class="page-section">
-    <div class="projects-horizontal-scroll" id="scroll-container">
-      
-      <!-- Proyecto 1 -->
-      <div class="project-card-fluid" onclick="handleCardClick(1)">
-        <div class="project-image-container">
-          <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Casa Claro de luz">
-        </div>
-        <div class="project-info-fluid">
-          <div>
-            <div class="project-num">01 / 03</div>
-            <div class="project-name">Torre en Conill</div>
-          </div>
-          <div class="project-location">Valencia</div>
-        </div>
+    
+    <!-- 1. FOTO PANORÁMICA FULLSCREEN -->
+    <div class="projects-hero-banner">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture">
+      <div class="projects-hero-caption">
+        <h2>Obras Selección 2024—2026</h2>
+        <p>Espacios donde el material y la luz dialogan</p>
       </div>
-
-      <!-- Proyecto 2 -->
-      <div class="project-card-fluid" onclick="handleCardClick(2)">
-        <div class="project-image-container">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
-        </div>
-        <div class="project-info-fluid">
-          <div>
-            <div class="project-num">02 / 03</div>
-            <div class="project-name">Villa Pedralbes</div>
-          </div>
-          <div class="project-location">Barcelona</div>
-        </div>
-      </div>
-
-      <!-- Proyecto 3 -->
-      <div class="project-card-fluid" onclick="handleCardClick(3)">
-        <div class="project-image-container">
-          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Costa Brava">
-        </div>
-        <div class="project-info-fluid">
-          <div>
-            <div class="project-num">03 / 03</div>
-            <div class="project-name">Residencia Brava</div>
-          </div>
-          <div class="project-location">Girona</div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- 2. DESPLAZAMIENTO HORIZONTAL CON LERP (INERCIA ORGÁNICA) -->
+    <div class="projects-horizontal-wrapper">
+      <div class="section-label">01 / Proyectos Destacados (Desplazamiento Inercial)</div>
+      <div class="projects-horizontal-scroll" id="scroll-container">
+        
+        <div class="project-card-fluid" onclick="handleCardClick(1)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Torre en Conill</div>
+            <div class="project-location">Valencia</div>
+          </div>
+        </div>
+
+        <div class="project-card-fluid" onclick="handleCardClick(2)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Villa Pedralbes</div>
+            <div class="project-location">Barcelona</div>
+          </div>
+        </div>
+
+        <div class="project-card-fluid" onclick="handleCardClick(3)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Residencia Brava</div>
+            <div class="project-location">Girona</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. GRILLA ASIMÉTRICA DE FOTOS -->
+    <div class="projects-asymmetric-section">
+      <div class="section-label">02 / Perspectivas y Arquitectura Visual</div>
+      <div class="asymmetric-grid">
+        
+        <div class="grid-item grid-item-1" onclick="openProjectDetail(1)">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop" alt="Estructura">
+          <div class="grid-item-title">Refugio de Hormigón — Valencia</div>
+        </div>
+
+        <div class="grid-item grid-item-2" onclick="openProjectDetail(2)">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop" alt="Interiorismo">
+          <div class="grid-item-title">Casa de la Luz — Barcelona</div>
+        </div>
+
+        <div class="grid-item grid-item-3" onclick="openProjectDetail(3)">
+          <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200&auto=format&fit=crop" alt="Texturas">
+          <div class="grid-item-title">Materia Continua — Girona</div>
+        </div>
+
+        <div class="grid-item grid-item-4" onclick="openProjectDetail(1)">
+          <img src="https://images.unsplash.com/photo-1600566753086-35f13ebc6746?q=80&w=1600&auto=format&fit=crop" alt="Piscina">
+          <div class="grid-item-title">Plano de Agua — Torre en Conill</div>
+        </div>
+
+        <div class="grid-item grid-item-5" onclick="openProjectDetail(2)">
+          <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=2000&auto=format&fit=crop" alt="Fachada">
+          <div class="grid-item-title">Vista Panorámica — Villa Pedralbes</div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO -->
+  <!-- 3. ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="estudio-container">
-      
       <div class="estudio-hero-quote">
-        Proyectamos arquitectura silenciosa, <span>donde la precisión de la materia y la pureza de la luz definen el espacio.</span>
+        Proyectamos arquitectura silenciosa, donde la precisión de la materia y la pureza de la luz definen el espacio.
       </div>
-
-      <div class="video-fluid-frame">
-        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgWgXcQ?autoplay=0&controls=0&mute=1&loop=1" title="OWN Process Video" allowfullscreen></iframe>
-      </div>
-
       <div class="pillars-grid">
         <div class="pillar-item">
-          <div class="pillar-num">01</div>
           <div class="pillar-title">Geometría Ligera</div>
-          <div class="pillar-desc">Buscamos reducir el proyecto a sus líneas esenciales, eliminando lo superfluo para destacar la escala humana y la continuidad visual.</div>
+          <div class="pillar-desc">Buscamos reducir el proyecto a sus líneas esenciales, eliminando lo superfluo.</div>
         </div>
         <div class="pillar-item">
-          <div class="pillar-num">02</div>
           <div class="pillar-title">Materia & Luz</div>
-          <div class="pillar-desc">Trabajamos el hormigón, el vidrio y la piedra natural como elementos continuos que dialogan con la orientación solar a lo largo del día.</div>
+          <div class="pillar-desc">Trabajamos el hormigón, vidrio y piedra como elementos continuos en diálogo con el sol.</div>
         </div>
         <div class="pillar-item">
-          <div class="pillar-num">03</div>
           <div class="pillar-title">Sostenibilidad</div>
-          <div class="pillar-desc">Integración pasiva en el entorno, optimización del consumo energético y máximo confort térmico y acústico en cada vivienda.</div>
+          <div class="pillar-desc">Integración pasiva en el entorno con máxima eficiencia energética.</div>
         </div>
       </div>
-
-      <div class="team-interactive-section">
-        <div class="team-header-title">Dirección del Estudio</div>
-        <div class="team-fluid-grid">
-          <div class="team-card-large">
-            <div class="team-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Elena Santillana">
-            </div>
-            <div class="team-meta-name">Elena Santillana</div>
-            <div class="team-meta-role">Arquitecta Fundadora</div>
-          </div>
-
-          <div class="team-card-large">
-            <div class="team-img-wrapper">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Marc Vidal">
-            </div>
-            <div class="team-meta-name">Marc Vidal</div>
-            <div class="team-meta-role">Arquitecto Socio</div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
-  <!-- MODAL / DETALLE DE PROYECTO -->
+  <!-- MODAL DE PROYECTO -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
-
     <div class="modal-body">
-      <div class="modal-header-grid">
-        <div>
-          <h1 id="m-title" class="modal-project-title"></h1>
-          <p id="m-text" class="modal-project-text"></p>
-        </div>
-
-        <div class="tech-specs">
-          <div class="spec-item">
-            <span class="spec-label">Ubicación</span>
-            <span id="m-loc" class="spec-value"></span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Superficie</span>
-            <span id="m-area" class="spec-value"></span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Año</span>
-            <span id="m-year" class="spec-value"></span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-label">Autoría</span>
-            <span id="m-arch" class="spec-value">OWN Studio</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-gallery">
-        <img id="m-gal-1" src="" alt="Galería 1">
-        <img id="m-gal-2" src="" alt="Galería 2">
-      </div>
+      <h1 id="m-title" style="font-size: 3rem; font-weight: 200; margin-bottom: 1rem;"></h1>
+      <p id="m-text" style="font-size: 1.1rem; line-height: 1.8; color: #555;"></p>
     </div>
   </div>
 
@@ -665,33 +554,18 @@ html_fixed = """<!DOCTYPE html>
     const projects = {
       1: {
         title: "Torre en Conill",
-        text: "Una vivienda unifamiliar concebida como una secuencia de volúmenes blancos superpuestos. El proyecto se articula mediante un gran plano acristalado que conecta el salón principal con una piscina sinfín.",
-        loc: "Valencia, España",
-        area: "540 m²",
-        year: "2025",
-        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop",
-        g1: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop",
-        g2: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop"
+        text: "Una vivienda unifamiliar concebida como una secuencia de volúmenes blancos superpuestos con grandes ventanales.",
+        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop"
       },
       2: {
         title: "Villa Pedralbes",
-        text: "Estructurada sobre la ladera de la zona alta de Barcelona, esta residencia prioriza las vistas panorámicas hacia el Mediterráneo manteniendo total privacidad hacia la calle.",
-        loc: "Barcelona, España",
-        area: "720 m²",
-        year: "2024",
-        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop",
-        g1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1600&auto=format&fit=crop",
-        g2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop"
+        text: "Estructurada sobre la ladera con vistas panorámicas hacia el Mediterráneo y total privacidad.",
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop"
       },
       3: {
         title: "Residencia Brava",
-        text: "Un refugio integrado en las rocas del acantilado. Se empleó hormigón visto teñido en tonos áridos para lograr un diálogo armónico con la vegetación autóctona.",
-        loc: "Girona, España",
-        area: "480 m²",
-        year: "2024",
-        hero: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1800&auto=format&fit=crop",
-        g1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
-        g2: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop"
+        text: "Un refugio integrado en las rocas del acantilado en hormigón visto teñido.",
+        hero: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1800&auto=format&fit=crop"
       }
     };
 
@@ -706,67 +580,71 @@ html_fixed = """<!DOCTYPE html>
       if(navBtn) navBtn.classList.add('active');
     }
 
-    /* --- SISTEMA DRAG & DROP Y RUEDA PARA EL SCROLL HORIZONTAL --- */
+    /* SISTEMA DE SCROLL HORIZONTAL CON INERCIA (LERP + REQUESTANIMATIONFRAME) */
     const slider = document.getElementById('scroll-container');
+    let currentScroll = 0;
+    let targetScroll = 0;
     let isDown = false;
-    let startX;
-    let scrollLeft;
+    let startX = 0;
+    let scrollLeftStart = 0;
     let isDragging = false;
+    const easeFactor = 0.08; // Controla la suavidad (menor = más suave/inercial)
 
-    // Scroll con la rueda del ratón (transformar scroll vertical en horizontal)
+    function updateInertialScroll() {
+      // Interpolación lineal (LERP)
+      currentScroll += (targetScroll - currentScroll) * easeFactor;
+      
+      // Aplicar posición
+      slider.scrollLeft = currentScroll;
+
+      // Continuar loop de animación
+      requestAnimationFrame(updateInertialScroll);
+    }
+
+    // Inicializar el loop de renderizado
+    requestAnimationFrame(updateInertialScroll);
+
+    // Evento de Rueda de Ratón (Wheel)
     slider.addEventListener('wheel', (e) => {
-      if (e.deltaY !== 0) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
-        slider.scrollLeft += e.deltaY * 1.5;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + e.deltaY * 1.8));
       }
     }, { passive: false });
 
-    // Arrastre con el ratón (Drag)
+    // Eventos de Arrastre (Mouse & Touch)
     slider.addEventListener('mousedown', (e) => {
       isDown = true;
       isDragging = false;
       startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
+      scrollLeftStart = targetScroll;
     });
 
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-    });
-
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-    });
+    slider.addEventListener('mouseleave', () => { isDown = false; });
+    slider.addEventListener('mouseup', () => { isDown = false; });
 
     slider.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2; // Velocidad de arrastre
-      if (Math.abs(walk) > 5) {
-        isDragging = true;
-      }
-      slider.scrollLeft = scrollLeft - walk;
+      const walk = (x - startX) * 2.2;
+      if (Math.abs(walk) > 5) isDragging = true;
+      
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      targetScroll = Math.max(0, Math.min(maxScroll, scrollLeftStart - walk));
     });
 
     function handleCardClick(id) {
-      if (!isDragging) {
-        openProjectDetail(id);
-      }
+      if (!isDragging) openProjectDetail(id);
     }
 
     function openProjectDetail(id) {
       const p = projects[id];
       if(!p) return;
-
       document.getElementById('m-hero-img').src = p.hero;
       document.getElementById('m-title').innerText = p.title;
       document.getElementById('m-text').innerText = p.text;
-      document.getElementById('m-loc').innerText = p.loc;
-      document.getElementById('m-area').innerText = p.area;
-      document.getElementById('m-year').innerText = p.year;
-      document.getElementById('m-gal-1').src = p.g1;
-      document.getElementById('m-gal-2').src = p.g2;
-
       document.getElementById('project-modal').classList.add('active');
     }
 
@@ -779,6 +657,6 @@ html_fixed = """<!DOCTYPE html>
 """
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_fixed)
+    f.write(updated_html)
 
-print("Versión corregida guardada.")
+print("Scroll inercial aplicado con éxito.")
