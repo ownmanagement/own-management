@@ -2,7 +2,7 @@
 .hero-image {
   width: 100%;
   /* CAMBIO: Sube este valor. 80vh a 90vh dará una sensación mucho más vertical y cinematográfica */
-  height: 85vh; 
+  height: 100vh; 
   /* Si quieres que sea un cuadrado perfecto en pantallas grandes, podrías usar aspect-ratio: 1 / 1; en lugar de height */
   
   min-height: 500px; /* Aumentamos el mínimo para que no se vea achatada en laptops pequeñas */
