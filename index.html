@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OWN — Estudio de Arquitectura</title>
+  <title>OWN — Arquitectura & Diseño</title>
   
-  <style>
-    /* Carga de tipografías optimizada */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Syne:wght@400;500;700&display=swap');
+  <!-- TIPOGRAFÍAS SELECCIONADAS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -17,7 +19,7 @@
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Playfair Display SC', serif;
       background-color: #ffffff;
       color: #0f0f0f;
       overflow-x: hidden;
@@ -32,7 +34,7 @@
       cursor: pointer;
     }
 
-    /* --- NAV --- */
+    /* --- NAV MINIMALISTA --- */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -45,30 +47,62 @@
       z-index: 10000;
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
 
+    /* OWN del inicio/header con Space Grotesk */
     .brand-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.4em;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
+      color: #000;
       cursor: pointer;
+      transition: letter-spacing 0.5s ease;
     }
 
-    .nav-menu { display: flex; gap: 4rem; }
+    .brand-logo:hover {
+      letter-spacing: 0.4em;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 4rem;
+    }
 
     .nav-item {
-      font-size: 0.68rem;
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.35em;
-      color: #888;
-      transition: color 0.4s;
+      letter-spacing: 0.2em;
+      color: #888888;
+      transition: color 0.4s ease;
+      position: relative;
     }
 
-    .nav-item:hover, .nav-item.active { color: #000; }
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #000;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-    /* --- SECCIONES --- */
+    .nav-item:hover, .nav-item.active {
+      color: #000;
+    }
+
+    .nav-item.active::after, .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* --- SECCIONES PRINCIPALES --- */
     .page-section {
       position: fixed;
       top: 0;
@@ -77,27 +111,70 @@
       height: 100vh;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.8s, visibility 0.8s;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+      z-index: 1;
       overflow-y: auto;
     }
 
-    .page-section.active { opacity: 1; visibility: visible; z-index: 2; }
-
-    /* --- HOME --- */
-    #section-home { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
-
-    .hero-title-interactive {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(7rem, 28vw, 24rem);
-      font-weight: 400;
-      cursor: pointer;
-      line-height: 0.8;
+    .page-section.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
     }
 
-    /* --- PROYECTOS (Banner Ajustado) --- */
+    /* --- HOME INTERACTIVO --- */
+    #section-home {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffffff;
+    }
+
+    /* OWN gigante del comienzo con Space Grotesk */
+    .hero-title-interactive {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(7rem, 28vw, 24rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 0.8;
+      color: #0f0f0f;
+      cursor: pointer;
+      user-select: none;
+      animation: floatBreath 7s ease-in-out infinite alternate;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.8s;
+    }
+
+    .hero-title-interactive:hover {
+      letter-spacing: -0.02em;
+      transform: scale(1.02);
+    }
+
+    @keyframes floatBreath {
+      0% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.92;
+      }
+      100% {
+        transform: translateY(-8px) scale(1.015);
+        opacity: 1;
+      }
+    }
+
+    .hero-subtext {
+      font-family: 'Playfair Display SC', serif;
+      margin-top: 3.5rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: #a0a0a0;
+    }
+
+    /* --- SECCIÓN PROYECTOS --- */
     .projects-hero-banner {
       width: 100vw;
-      height: 90vh !important; /* Altura aumentada */
+      height: 85vh;
       position: relative;
       overflow: hidden;
     }
@@ -106,45 +183,347 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%; /* Foco ligeramente arriba */
     }
 
     .projects-hero-caption {
       position: absolute;
       bottom: 5rem;
       left: 6vw;
-      color: #fff;
+      color: #ffffff;
       z-index: 10;
     }
 
-    .projects-hero-caption h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 5vw, 4.5rem);
-      line-height: 1;
+    /* H1 en Mayúsculas con Familjen Grotesk */
+    .projects-hero-caption h1 {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      line-height: 0.95;
+    }
+
+    .projects-hero-caption p {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-top: 1.2rem;
+    }
+
+    /* CARRUSEL HORIZONTAL */
+    .projects-horizontal-wrapper {
+      padding: 12vh 0;
+      background-color: #fafafa;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .section-label {
+      font-family: 'Familjen Grotesk', sans-serif;
+      padding: 0 6vw 3rem 6vw;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #a0a0a0;
+      font-weight: 600;
+    }
+
+    .projects-horizontal-scroll {
+      display: flex;
+      align-items: flex-start;
+      width: 100vw;
+      overflow-x: auto;
+      padding: 0 6vw;
+      scrollbar-width: none;
+      user-select: none;
+    }
+
+    .projects-horizontal-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-card-fluid {
+      flex: 0 0 auto;
+      width: clamp(340px, 36vw, 560px);
+      margin-right: 5vw;
+      cursor: pointer;
+    }
+
+    .project-image-container {
+      width: 100%;
+      height: 50vh;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+
+    .project-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card-fluid:hover .project-image-container img {
+      transform: scale(1.05);
+    }
+
+    .project-info-fluid {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-name {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #0f0f0f;
+    }
+
+    .project-location {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: #999999;
       text-transform: uppercase;
     }
 
-    /* --- RESTO DEL CSS --- */
-    .projects-horizontal-wrapper { padding: 12vh 0; background-color: #fafafa; }
-    .section-label { padding: 0 6vw 3rem 6vw; font-size: 0.65rem; letter-spacing: 0.4em; color: #a0a0a0; }
-    .projects-horizontal-scroll { display: flex; width: 100vw; overflow-x: auto; padding: 0 6vw; scrollbar-width: none; }
-    .project-card-fluid { flex: 0 0 auto; width: 400px; margin-right: 5vw; cursor: pointer; }
-    .project-image-container { width: 100%; height: 50vh; overflow: hidden; }
-    .project-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s; }
-    .project-card-fluid:hover img { transform: scale(1.05); }
+    /* GRILLA DETALLES */
+    .projects-asymmetric-section {
+      padding: 12vh 6vw 15vh 6vw;
+      background-color: #ffffff;
+    }
 
-    /* --- MODAL Y LIGHTBOX (Mantienen estructura) --- */
-    #project-modal { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#fff; z-index:20000; opacity:0; visibility:hidden; overflow-y:auto; transition: 0.6s; }
-    #project-modal.active { opacity:1; visibility:visible; }
-    .modal-hero-img { width: 100vw; height: 85vh; object-fit: cover; }
-    
+    .asymmetric-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2vw;
+      margin-top: 2rem;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      background-color: #f5f5f5;
+      cursor: zoom-in;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease, filter 0.8s ease;
+      filter: grayscale(15%);
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+
+    .grid-item-1 { grid-column: span 4; height: 38vh; }
+    .grid-item-2 { grid-column: span 4; height: 38vh; }
+    .grid-item-3 { grid-column: span 4; height: 38vh; }
+    .grid-item-4 { grid-column: span 7; height: 45vh; }
+    .grid-item-5 { grid-column: span 5; height: 45vh; }
+    .grid-item-6 { grid-column: span 4; height: 38vh; }
+    .grid-item-7 { grid-column: span 4; height: 38vh; }
+    .grid-item-8 { grid-column: span 4; height: 38vh; }
+
+    .grid-item-title {
+      font-family: 'Playfair Display SC', serif;
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      color: #ffffff;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      pointer-events: none;
+    }
+
+    /* --- ESTUDIO --- */
+    #section-estudio {
+      background-color: #ffffff;
+    }
+
+    .estudio-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 180px 6vw 120px 6vw;
+    }
+
+    .estudio-hero-quote {
+      font-family: 'Playfair Display SC', serif;
+      font-size: clamp(1.8rem, 3.2vw, 3rem);
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      margin-bottom: 7rem;
+      color: #0f0f0f;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 4rem;
+    }
+
+    .pillar-title {
+      font-family: 'Familjen Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.2rem;
+    }
+
+    .pillar-desc {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #555555;
+    }
+
+    /* --- MODAL DETALLE --- */
+    #project-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffffff;
+      z-index: 20000;
+      opacity: 0;
+      visibility: hidden;
+      overflow-y: auto;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+
+    #project-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-close-btn {
+      font-family: 'Familjen Grotesk', sans-serif;
+      position: fixed;
+      top: 2.5rem;
+      right: 6vw;
+      z-index: 21000;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.8rem;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .modal-hero-img {
+      width: 100vw;
+      height: 85vh;
+      object-fit: cover;
+    }
+
+    .modal-body-full {
+      width: 100vw;
+      padding: 6vh 6vw 120px 6vw;
+    }
+
+    .sheet-meta-grid-full {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 3rem 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin: 4rem 0;
+    }
+
+    .meta-box span {
+      font-family: 'Familjen Grotesk', sans-serif;
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #a0a0a0;
+      font-weight: 600;
+    }
+
+    .meta-box strong {
+      font-family: 'Playfair Display SC', serif;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .sheet-grid-2-full {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: center;
+    }
+
+    .sheet-text-p {
+      font-family: 'Playfair Display SC', serif;
+      font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+      line-height: 1.6;
+      color: #0f0f0f;
+    }
+
+    .sheet-sketch-img {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
+      background-color: #f9f9f9;
+    }
+
+    /* LIGHTBOX ZOOM */
+    #image-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(10,10,10,0.96);
+      z-index: 30000;
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease, visibility 0.4s;
+      cursor: zoom-out;
+    }
+
+    #image-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #image-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
     @media (max-width: 900px) {
-      .projects-hero-banner { height: 60vh !important; }
+      .asymmetric-grid { display: flex; flex-direction: column; }
+      .grid-item { width: 100% !important; height: 35vh !important; }
+      .pillars-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV ESTUDIO -->
   <nav class="nav-bar">
     <div class="brand-logo" onclick="switchSection('home')">OWN</div>
     <div class="nav-menu">
@@ -153,38 +532,300 @@
     </div>
   </nav>
 
+  <!-- 1. HOME -->
   <section id="section-home" class="page-section active">
     <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
+    <div class="hero-subtext">Arquitectura & Proyección Tectónica</div>
   </section>
 
+  <!-- 2. PROYECTOS -->
   <section id="section-proyectos" class="page-section">
+    
     <div class="projects-hero-banner">
       <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture">
       <div class="projects-hero-caption">
-        <h2>Obras Seleccionadas<br>2024—2026</h2>
+        <h1>Obras Seleccionadas<br>2024—2026</h1>
+        <p>Espacios donde la materia y el silencio dialogan</p>
       </div>
     </div>
+
+    <!-- SECCIÓN HORIZONTAL -->
     <div class="projects-horizontal-wrapper">
-      <div class="section-label">01 / Proyectos</div>
+      <div class="section-label">01 / Proyectos Destacados</div>
       <div class="projects-horizontal-scroll" id="scroll-container">
-         <div class="project-card-fluid" onclick="openProjectDetail(1)">
-           <div class="project-image-container"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Proyecto"></div>
-         </div>
+        
+        <div class="project-card-fluid" onclick="openProjectDetail(1)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Torre en Conill</div>
+            <div class="project-location">Valencia</div>
+          </div>
+        </div>
+
+        <div class="project-card-fluid" onclick="openProjectDetail(2)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Villa Pedralbes</div>
+            <div class="project-location">Barcelona</div>
+          </div>
+        </div>
+
+        <div class="project-card-fluid" onclick="openProjectDetail(3)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Residencia Brava</div>
+            <div class="project-location">Girona</div>
+          </div>
+        </div>
+
+        <div class="project-card-fluid" onclick="openProjectDetail(4)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Refugio Hormigón</div>
+            <div class="project-location">Alicante</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GRILLA ZOOM -->
+    <div class="projects-asymmetric-section">
+      <div class="section-label">02 / Fragmentos & Espacialidad</div>
+      <div class="asymmetric-grid">
+        
+        <div class="grid-item grid-item-1" onclick="openLightbox('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop" alt="Estructura">
+          <div class="grid-item-title">Estructura & Encofrado</div>
+        </div>
+
+        <div class="grid-item grid-item-2" onclick="openLightbox('https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1000&auto=format&fit=crop" alt="Interiorismo">
+          <div class="grid-item-title">Luz Cenital</div>
+        </div>
+
+        <div class="grid-item grid-item-3" onclick="openLightbox('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop" alt="Texturas">
+          <div class="grid-item-title">Materia Continua</div>
+        </div>
+
+        <div class="grid-item grid-item-4" onclick="openLightbox('https://images.unsplash.com/photo-1600566753086-35f13ebc6746?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600566753086-35f13ebc6746?q=80&w=1200&auto=format&fit=crop" alt="Piscina">
+          <div class="grid-item-title">Plano de Agua</div>
+        </div>
+
+        <div class="grid-item grid-item-5" onclick="openLightbox('https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop" alt="Fachada">
+          <div class="grid-item-title">Fachada Norte</div>
+        </div>
+
+        <div class="grid-item grid-item-6" onclick="openLightbox('https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1000&auto=format&fit=crop" alt="Patio Central">
+          <div class="grid-item-title">Patio Central</div>
+        </div>
+
+        <div class="grid-item grid-item-7" onclick="openLightbox('https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1000&auto=format&fit=crop" alt="Detalle Tectónico">
+          <div class="grid-item-title">Detalle Tectónico</div>
+        </div>
+
+        <div class="grid-item grid-item-8" onclick="openLightbox('https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1800&auto=format&fit=crop')">
+          <img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?q=80&w=1000&auto=format&fit=crop" alt="Perspectiva">
+          <div class="grid-item-title">Sombra & Vacío</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 3. ESTUDIO -->
+  <section id="section-estudio" class="page-section">
+    <div class="estudio-container">
+      <div class="estudio-hero-quote">
+        Proyectamos una arquitectura esencial, centrada en la precisión del detalle y la interacción pura de la luz con la materia.
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-item">
+          <div class="pillar-title">Geometría Ligera</div>
+          <div class="pillar-desc">Sintetizamos la complejidad formal en volúmenes puros y líneas fluidas que respetan el entorno.</div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-title">Materia & Luz</div>
+          <div class="pillar-desc">Exploramos el hormigón, el vidrio y la piedra en su estado más honesto y continuo.</div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-title">Sostenibilidad</div>
+          <div class="pillar-desc">Estrategias pasivas que optimizan la ventilación natural y la captación solar.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="section-estudio" class="page-section">
-    <!-- Contenido estudio -->
-  </section>
+  <!-- MODAL PROYECTO -->
+  <div id="project-modal">
+    <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
+    <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
+    <div class="modal-body-full" id="m-content"></div>
+  </div>
+
+  <!-- LIGHTBOX ZOOM -->
+  <div id="image-lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Zoom Photo">
+  </div>
 
   <script>
+    const projects = {
+      1: {
+        title: "Torre en Conill",
+        location: "Valencia, España",
+        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "480 m²",
+        photo: "Mariela Apollonio",
+        year: "2025",
+        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo que comprime la escala antes de liberar la vista hacia el horizonte.",
+        sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
+      },
+      2: {
+        title: "Villa Pedralbes",
+        location: "Barcelona, España",
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "650 m²",
+        photo: "Fernando Guerra",
+        year: "2024",
+        conceptText: "Adaptándose a un desnivel del 30%, la casa se organiza en terrazas escalonadas centrípetas articuladas alrededor de un patio interior.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
+      },
+      3: {
+        title: "Residencia Brava",
+        location: "Girona, España",
+        hero: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2000&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "390 m²",
+        photo: "Adrià Goula",
+        year: "2024",
+        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado.",
+        sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
+      },
+      4: {
+        title: "Refugio Hormigón",
+        location: "Alicante, España",
+        hero: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "310 m²",
+        photo: "Mariela Apollonio",
+        year: "2025",
+        conceptText: "Estructura introvertida diseñada para proteger el interior del intenso sol de la comarca.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
+      }
+    };
+
     function switchSection(sectionId) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById('section-' + sectionId).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+      const target = document.getElementById('section-' + sectionId);
+      if(target) target.classList.add('active');
+
+      const navBtn = document.getElementById('nav-' + sectionId);
+      if(navBtn) navBtn.classList.add('active');
     }
-    function openProjectDetail(id) { document.getElementById('project-modal').classList.add('active'); }
-    function closeProjectDetail() { document.getElementById('project-modal').classList.remove('active'); }
+
+    /* AUTO SCROLL SUAVE */
+    const slider = document.getElementById('scroll-container');
+    let autoScrollSpeed = 0;
+    let animFrameId = null;
+
+    function stepScroll() {
+      if (autoScrollSpeed !== 0) {
+        slider.scrollLeft += autoScrollSpeed;
+        animFrameId = requestAnimationFrame(stepScroll);
+      } else {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+    }
+
+    slider.addEventListener('mousemove', (e) => {
+      const rect = slider.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const width = rect.width;
+      const threshold = 0.25;
+      const maxSpeed = 12;
+
+      if (mouseX < width * threshold) {
+        const factor = (width * threshold - mouseX) / (width * threshold);
+        autoScrollSpeed = -maxSpeed * factor;
+      } else if (mouseX > width * (1 - threshold)) {
+        const factor = (mouseX - width * (1 - threshold)) / (width * threshold);
+        autoScrollSpeed = maxSpeed * factor;
+      } else {
+        autoScrollSpeed = 0;
+      }
+
+      if (autoScrollSpeed !== 0 && !animFrameId) {
+        animFrameId = requestAnimationFrame(stepScroll);
+      }
+    });
+
+    slider.addEventListener('mouseleave', () => { autoScrollSpeed = 0; });
+
+    /* MODAL */
+    function openProjectDetail(id) {
+      const p = projects[id];
+      if(!p) return;
+
+      document.getElementById('m-hero-img').src = p.hero;
+
+      let contentHtml = `
+        <h1 style="font-family: 'Familjen Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase;">${p.title}</h1>
+        <p style="font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #a0a0a0; text-transform: uppercase; margin-top: 0.8rem;">${p.location}</p>
+
+        <div class="sheet-meta-grid-full">
+          <div class="meta-box"><span>Arquitectura</span><strong>${p.architects}</strong></div>
+          <div class="meta-box"><span>Superficie</span><strong>${p.area}</strong></div>
+          <div class="meta-box"><span>Fotografía</span><strong>${p.photo}</strong></div>
+          <div class="meta-box"><span>Año</span><strong>${p.year}</strong></div>
+        </div>
+
+        <div class="sheet-grid-2-full">
+          <div>
+            <div style="font-family: 'Familjen Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #a0a0a0; margin-bottom: 2rem;">Concepto Arquitectónico</div>
+            <p class="sheet-text-p">${p.conceptText}</p>
+          </div>
+          <div>
+            <img class="sheet-sketch-img" src="${p.sketchImg}" alt="Croquis">
+          </div>
+        </div>
+      `;
+
+      document.getElementById('m-content').innerHTML = contentHtml;
+      document.getElementById('project-modal').classList.add('active');
+    }
+
+    function closeProjectDetail() {
+      document.getElementById('project-modal').classList.remove('active');
+    }
+
+    /* LIGHTBOX */
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('image-lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('image-lightbox').classList.remove('active');
+    }
   </script>
 </body>
 </html>
