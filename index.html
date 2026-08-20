@@ -183,11 +183,12 @@
       margin-top: 0.5rem;
     }
 
-    /* CARRUSEL HORIZONTAL APLIADO */
+    /* CARRUSEL HORIZONTAL CON AUTO-SCROLL POR MOUSE */
     .projects-horizontal-wrapper {
       padding: 8vh 0;
       background-color: #fafafa;
       border-bottom: 1px solid #eeeeee;
+      position: relative;
     }
 
     .section-label {
@@ -206,13 +207,9 @@
       overflow-y: hidden;
       padding: 0 5vw;
       scrollbar-width: none;
-      cursor: grab;
       user-select: none;
       -webkit-overflow-scrolling: touch;
-    }
-
-    .projects-horizontal-scroll:active {
-      cursor: grabbing;
+      scroll-behavior: auto;
     }
 
     .projects-horizontal-scroll::-webkit-scrollbar {
@@ -224,6 +221,7 @@
       width: clamp(320px, 35vw, 550px);
       margin-right: 3vw;
       position: relative;
+      cursor: pointer;
     }
 
     .project-image-container {
@@ -266,7 +264,7 @@
       text-transform: uppercase;
     }
 
-    /* GRILLA AMPLIADA SOLO PARA ZOOM/LIGHTBOX */
+    /* GRILLA SOLO PARA ZOOM/LIGHTBOX */
     .projects-asymmetric-section {
       padding: 8vh 5vw 12vh 5vw;
       background-color: #ffffff;
@@ -366,7 +364,7 @@
       font-weight: 300;
     }
 
-    /* --- MODAL FICHA TÉCNICA (FULL-BLEED / TODO EL ESPACIO DISPONIBLE) --- */
+    /* --- MODAL FICHA TÉCNICA (FULL-BLEED) --- */
     #project-modal {
       position: fixed;
       top: 0;
@@ -406,7 +404,6 @@
       display: block;
     }
 
-    /* Ancho completo sin encasillar */
     .modal-body-full {
       width: 100vw;
       padding: 5vh 5vw 120px 5vw;
@@ -565,12 +562,12 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 2: DESPLAZAMIENTO HORIZONTAL AMPLIADO (6 PROYECTOS) -->
+    <!-- SECCIÓN 2: DESPLAZAMIENTO HORIZONTAL POR POSICIÓN DEL CURSOR -->
     <div class="projects-horizontal-wrapper">
-      <div class="section-label">01 / Proyectos Destacados (Haz clic para ver Ficha Técnica Completa)</div>
+      <div class="section-label">01 / Proyectos Destacados (Mueve el cursor a los lados para desplazarte)</div>
       <div class="projects-horizontal-scroll" id="scroll-container">
         
-        <div class="project-card-fluid" onclick="handleCardClick(1)">
+        <div class="project-card-fluid" onclick="openProjectDetail(1)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
           </div>
@@ -580,7 +577,7 @@
           </div>
         </div>
 
-        <div class="project-card-fluid" onclick="handleCardClick(2)">
+        <div class="project-card-fluid" onclick="openProjectDetail(2)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
           </div>
@@ -590,7 +587,7 @@
           </div>
         </div>
 
-        <div class="project-card-fluid" onclick="handleCardClick(3)">
+        <div class="project-card-fluid" onclick="openProjectDetail(3)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
           </div>
@@ -600,7 +597,7 @@
           </div>
         </div>
 
-        <div class="project-card-fluid" onclick="handleCardClick(4)">
+        <div class="project-card-fluid" onclick="openProjectDetail(4)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
           </div>
@@ -610,7 +607,7 @@
           </div>
         </div>
 
-        <div class="project-card-fluid" onclick="handleCardClick(5)">
+        <div class="project-card-fluid" onclick="openProjectDetail(5)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1400&auto=format&fit=crop" alt="Casa del Acantilado">
           </div>
@@ -620,7 +617,7 @@
           </div>
         </div>
 
-        <div class="project-card-fluid" onclick="handleCardClick(6)">
+        <div class="project-card-fluid" onclick="openProjectDetail(6)">
           <div class="project-image-container">
             <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1400&auto=format&fit=crop" alt="Atrio de Piedra">
           </div>
@@ -633,7 +630,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 3: GRILLA SÓLO PARA ZOOM / LIGHTBOX DE IMÁGENES -->
+    <!-- SECCIÓN 3: GRILLA SOLO PARA ZOOM -->
     <div class="projects-asymmetric-section">
       <div class="section-label">02 / Perspectivas Detalladas (Haz clic en cualquier foto para Zoom)</div>
       <div class="asymmetric-grid">
@@ -716,7 +713,7 @@
     </div>
   </section>
 
-  <!-- MODAL FICHA TÉCNICA FULL-BLEED (Gallardo Llopis style) -->
+  <!-- MODAL FICHA TÉCNICA FULL-BLEED -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
@@ -847,39 +844,51 @@
       if(navBtn) navBtn.classList.add('active');
     }
 
-    /* SCROLL HORIZONTAL CON ARRASTRE */
+    /* DESPLAZAMIENTO AUTOMÁTICO AL MOVER EL CURSOR A LOS BORDES */
     const slider = document.getElementById('scroll-container');
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    let isDragging = false;
+    let autoScrollSpeed = 0;
+    let animFrameId = null;
 
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      isDragging = false;
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('mouseleave', () => { isDown = false; });
-    slider.addEventListener('mouseup', () => { isDown = false; });
-
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.8;
-      if (Math.abs(walk) > 5) {
-        isDragging = true;
-        e.preventDefault();
+    function stepScroll() {
+      if (autoScrollSpeed !== 0) {
+        slider.scrollLeft += autoScrollSpeed;
+        animFrameId = requestAnimationFrame(stepScroll);
+      } else {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
       }
-      slider.scrollLeft = scrollLeft - walk;
-    });
-
-    function handleCardClick(id) {
-      if (!isDragging) openProjectDetail(id);
     }
 
-    /* ABRIR FICHA TÉCNICA (AMPLIA Y FULL-BLEED) */
+    slider.addEventListener('mousemove', (e) => {
+      const rect = slider.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const width = rect.width;
+
+      const threshold = 0.3; // Zona activa del 30% en los bordes
+      const maxSpeed = 14;   // Velocidad máxima de desplazamiento
+
+      if (mouseX < width * threshold) {
+        // Lado izquierdo: acelerar hacia la izquierda
+        const factor = (width * threshold - mouseX) / (width * threshold);
+        autoScrollSpeed = -maxSpeed * factor;
+      } else if (mouseX > width * (1 - threshold)) {
+        // Lado derecho: acelerar hacia la derecha
+        const factor = (mouseX - width * (1 - threshold)) / (width * threshold);
+        autoScrollSpeed = maxSpeed * factor;
+      } else {
+        autoScrollSpeed = 0;
+      }
+
+      if (autoScrollSpeed !== 0 && !animFrameId) {
+        animFrameId = requestAnimationFrame(stepScroll);
+      }
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      autoScrollSpeed = 0;
+    });
+
+    /* ABRIR FICHA TÉCNICA */
     function openProjectDetail(id) {
       const p = projects[id];
       if(!p) return;
