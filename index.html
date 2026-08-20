@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OWN — Estudio de Arquitectura</title>
+  <title>OWN — Arquitectura & Diseño</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@200;300;400;500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -22,7 +22,6 @@
       background-color: #ffffff;
       color: #111111;
       overflow-x: hidden;
-      height: 100vh;
       width: 100vw;
     }
 
@@ -34,161 +33,8 @@
       cursor: pointer;
     }
 
-    /* --- 1. ENTRADA DE MARCA "OWN" --- */
-    #splash-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      cursor: pointer;
-      transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s;
-    }
-
-    .splash-title {
-      font-size: clamp(4rem, 16vw, 14rem);
-      font-weight: 200;
-      letter-spacing: -0.03em;
-      color: #111111;
-      line-height: 0.9;
-      text-transform: uppercase;
-    }
-
-    .splash-subtitle {
-      margin-top: 2rem;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      color: #999999;
-      font-weight: 300;
-    }
-
-    /* --- 2. PORTADA PRINCIPAL (CON IMAGEN DE FONDO Y MENÚ) --- */
-    #hero-selection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.8s ease, visibility 0.8s;
-      z-index: 5000;
-    }
-
-    #hero-selection.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .hero-bg-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .hero-bg-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.95);
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.15);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 3vw 4vw;
-    }
-
-    .hero-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .brand-mini {
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .hero-center-nav {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 3rem 5rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-center-title {
-      font-size: clamp(3rem, 7vw, 6rem);
-      font-weight: 200;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .nav-options {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-    }
-
-    .nav-btn-large {
-      font-size: 0.85rem;
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: #333333;
-      transition: color 0.3s ease;
-    }
-
-    .nav-btn-large:hover {
-      color: #000000;
-      font-weight: 400;
-    }
-
-    .divider-line {
-      width: 1px;
-      height: 15px;
-      background-color: #ccc;
-    }
-
-    .hero-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #555555;
-    }
-
-    /* --- NAVEGACIÓN FIJA EN VISTAS --- */
-    .fixed-nav {
+    /* --- NAVEGACIÓN PRINCIPAL (MINIMALISTA Y FLUIDA) --- */
+    .nav-bar {
       position: fixed;
       top: 0;
       left: 0;
@@ -197,527 +43,687 @@
       justify-content: space-between;
       align-items: center;
       padding: 2.5rem 4vw;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(5px);
-      z-index: 7000;
-      border-bottom: 1px solid #f0f0f0;
+      z-index: 10000;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+      pointer-events: none;
     }
 
-    .nav-left {
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+    .nav-bar * {
+      pointer-events: auto;
+    }
+
+    .brand-logo {
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
       cursor: pointer;
     }
 
-    .nav-links-right {
+    .nav-menu {
       display: flex;
-      gap: 2.5rem;
+      gap: 3.5rem;
+    }
+
+    .nav-item {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
+      color: #777777;
+      transition: color 0.4s ease, opacity 0.4s ease;
+      position: relative;
+      padding-bottom: 4px;
     }
 
-    .nav-link-item {
-      color: #888888;
-      transition: color 0.3s ease;
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: #111111;
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    .nav-link-item.active, .nav-link-item:hover {
+    .nav-item:hover, .nav-item.active {
       color: #111111;
     }
 
-    /* --- VISTAS INTERNAS (BLANCAS) --- */
-    .content-view {
+    .nav-item.active::after, .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* --- VISTAS / SECCIONES --- */
+    .page-section {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #ffffff;
-      overflow-y: auto;
       opacity: 0;
       visibility: hidden;
-      z-index: 6000;
-      transition: opacity 0.5s ease, visibility 0.5s;
-      padding-top: 140px;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+      z-index: 1;
+      overflow: hidden;
     }
 
-    .content-view.active {
+    .page-section.active {
       opacity: 1;
       visibility: visible;
+      z-index: 2;
     }
 
-    .section-container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 0 4vw 100px 4vw;
+    /* --- 1. HERO / SPLASH FLUIDO --- */
+    #section-home {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
     }
 
-    /* ESTUDIO */
-    .video-hero-wrapper {
-      width: 100%;
-      height: 65vh;
-      overflow: hidden;
-      margin-bottom: 5rem;
-      background-color: #f5f5f5;
-    }
-
-    .video-hero-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .studio-manifesto {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 4rem;
-      margin-bottom: 7rem;
-    }
-
-    .manifesto-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: #888888;
-      font-weight: 400;
-    }
-
-    .manifesto-text {
-      font-size: clamp(1.1rem, 2vw, 1.8rem);
+    .hero-title-interactive {
+      font-size: clamp(5rem, 22vw, 18rem);
       font-weight: 200;
-      line-height: 1.6;
-      color: #222222;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      color: #111111;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.6s ease;
     }
 
-    .team-section-title {
+    .hero-title-interactive:hover {
+      letter-spacing: 0.02em;
+      transform: scale(1.02);
+    }
+
+    .hero-subtext {
+      margin-top: 3rem;
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: #888888;
-      margin-bottom: 3rem;
-      font-weight: 400;
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 3rem;
-    }
-
-    .team-card img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      margin-bottom: 1rem;
-      filter: grayscale(20%);
-    }
-
-    .team-name {
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.2rem;
-    }
-
-    .team-role {
-      font-size: 0.75rem;
+      letter-spacing: 0.4em;
       color: #888888;
       font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      animation: fadeIn 2s ease;
     }
 
-    /* PROYECTOS (GALLARDO LLOPIS GRID) */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 5rem 3rem;
+    /* --- 2. PROYECTOS: EXPERIENCIA HORIZONTAL Y FLUIDA --- */
+    #section-proyectos {
+      background-color: #fafafa;
     }
 
-    .project-card {
+    .projects-horizontal-scroll {
+      display: flex;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 10vw 0 12vw;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .projects-horizontal-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-card-fluid {
+      flex: 0 0 auto;
+      width: clamp(350px, 45vw, 750px);
+      margin-right: 8vw;
+      scroll-snap-align: center;
       cursor: pointer;
+      position: relative;
+      group: project;
     }
 
-    .project-img-wrapper {
+    .project-image-container {
       width: 100%;
-      aspect-ratio: 16/10;
+      height: 58vh;
       overflow: hidden;
-      margin-bottom: 1rem;
-      background-color: #f9f9f9;
+      position: relative;
+      background-color: #eaeaea;
     }
 
-    .project-img-wrapper img {
+    .project-image-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity 0.4s ease;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+      filter: grayscale(15%);
     }
 
-    .project-card:hover .project-img-wrapper img {
-      opacity: 0.85;
+    .project-card-fluid:hover .project-image-container img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
     }
 
-    .project-meta {
+    .project-info-fluid {
+      margin-top: 1.8rem;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
     }
 
-    .project-title {
-      font-size: 0.95rem;
+    .project-num {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #a0a0a0;
+      font-weight: 300;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-name {
+      font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+      font-weight: 200;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #111111;
+    }
+
+    .project-location {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #777777;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* --- 3. ESTUDIO: EXPERIENCIA EDITORIAL DIVERSIFICADA --- */
+    #section-estudio {
+      background-color: #ffffff;
+      overflow-y: auto;
+    }
+
+    .estudio-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 160px 5vw 120px 5vw;
+    }
+
+    .estudio-hero-quote {
+      font-size: clamp(2rem, 4.5vw, 4rem);
+      font-weight: 200;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      max-width: 1100px;
+      margin-bottom: 8rem;
+      color: #111111;
+    }
+
+    .estudio-hero-quote span {
+      color: #a0a0a0;
+    }
+
+    .video-fluid-frame {
+      width: 100%;
+      height: 70vh;
+      margin-bottom: 10rem;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-fluid-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 0.9;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 12rem;
+      border-top: 1px solid #eeeeee;
+      padding-top: 4rem;
+    }
+
+    .pillar-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pillar-num {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: #999999;
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-title {
+      font-size: 1.2rem;
       font-weight: 300;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      margin-bottom: 1rem;
     }
 
-    .project-loc {
-      font-size: 0.75rem;
-      color: #888888;
+    .pillar-desc {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #666666;
       font-weight: 300;
     }
 
-    /* DETALLE DE PROYECTO (ESTILO GALLARDO LLOPIS) */
-    #project-detail-view {
+    /* EQUIPO INTERACTIVO */
+    .team-interactive-section {
+      border-top: 1px solid #eeeeee;
+      padding-top: 5rem;
+    }
+
+    .team-header-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #888888;
+      margin-bottom: 4rem;
+    }
+
+    .team-fluid-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6rem 4rem;
+    }
+
+    .team-card-large {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      margin-bottom: 1.8rem;
+      background-color: #f5f5f5;
+    }
+
+    .team-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .team-card-large:hover .team-img-wrapper img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
+
+    .team-meta-name {
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    .team-meta-role {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888888;
+      margin-top: 0.4rem;
+      font-weight: 300;
+    }
+
+    /* --- DETALLE DE PROYECTO (MODAL / OVERLAY EGANTE) --- */
+    #project-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       background-color: #ffffff;
-      overflow-y: auto;
-      z-index: 8000;
+      z-index: 20000;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s;
+      overflow-y: auto;
+      transition: opacity 0.6s ease, visibility 0.6s;
     }
 
-    #project-detail-view.active {
+    #project-modal.active {
       opacity: 1;
       visibility: visible;
     }
 
-    .detail-close-btn {
+    .modal-close-btn {
       position: fixed;
       top: 2.5rem;
       right: 4vw;
-      z-index: 9000;
+      z-index: 21000;
       font-size: 0.75rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      padding: 0.8rem 1.6rem;
       background: #ffffff;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid #eeeeee;
-      color: #111111;
+      border: 1px solid #e5e5e5;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .detail-hero-img {
+    .modal-close-btn:hover {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .modal-hero-img {
       width: 100%;
-      height: 80vh;
+      height: 85vh;
       object-fit: cover;
     }
 
-    .detail-content {
+    .modal-body {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 5rem 4vw 100px 4vw;
+      padding: 6rem 5vw 120px 5vw;
     }
 
-    .detail-header-grid {
+    .modal-header-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 4rem;
-      margin-bottom: 5rem;
-      border-bottom: 1px solid #eeeeee;
-      padding-bottom: 4rem;
+      gap: 5rem;
+      margin-bottom: 6rem;
     }
 
-    .detail-main-title {
-      font-size: clamp(2rem, 4vw, 3.5rem);
+    .modal-project-title {
+      font-size: clamp(2.2rem, 4vw, 4rem);
       font-weight: 200;
-      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
       margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
+      line-height: 1.1;
     }
 
-    .detail-description {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: #555555;
+    .modal-project-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #444444;
       font-weight: 300;
     }
 
-    .tech-sheet {
+    .tech-specs {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1.8rem;
+      border-top: 1px solid #eeeeee;
+      padding-top: 1.8rem;
     }
 
-    .tech-item {
+    .spec-item {
       display: flex;
       flex-direction: column;
-      border-bottom: 1px solid #f5f5f5;
-      padding-bottom: 0.6rem;
     }
 
-    .tech-label {
+    .spec-label {
       font-size: 0.65rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #999999;
-      margin-bottom: 0.2rem;
+      color: #a0a0a0;
+      margin-bottom: 0.3rem;
     }
 
-    .tech-val {
-      font-size: 0.85rem;
-      color: #222222;
+    .spec-value {
+      font-size: 0.95rem;
       font-weight: 300;
+      color: #111111;
     }
 
-    .detail-gallery {
+    .modal-gallery {
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: 4rem;
     }
 
-    .detail-gallery img {
+    .modal-gallery img {
       width: 100%;
       height: auto;
       object-fit: cover;
     }
 
-    @media (max-width: 800px) {
-      .projects-grid, .studio-manifesto, .detail-header-grid {
+    @media (max-width: 900px) {
+      .pillars-grid, .team-fluid-grid, .modal-header-grid {
         grid-template-columns: 1fr;
+        gap: 3rem;
       }
-      .hero-center-nav {
-        padding: 2rem 2rem;
-        width: 85%;
+
+      .nav-menu {
+        gap: 1.5rem;
+      }
+
+      .project-card-fluid {
+        width: 80vw;
+        margin-right: 10vw;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. SPLASH / ENTRADA DE MARCA -->
-  <div id="splash-screen" onclick="enterExperience()">
-    <h1 class="splash-title">OWN</h1>
-    <span class="splash-subtitle">Entrar</span>
-  </div>
-
-  <!-- 2. PORTADA PRINCIPAL -->
-  <div id="hero-selection">
-    <div class="hero-bg-container">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture" class="hero-bg-image">
+  <!-- NAVEGACIÓN PERMANENTE -->
+  <nav class="nav-bar">
+    <div class="brand-logo" onclick="switchSection('home')">OWN</div>
+    <div class="nav-menu">
+      <button class="nav-item" id="nav-estudio" onclick="switchSection('estudio')">Estudio</button>
+      <button class="nav-item" id="nav-proyectos" onclick="switchSection('proyectos')">Proyectos</button>
     </div>
-    <div class="hero-overlay">
-      <div class="hero-header">
-        <div class="brand-mini">OWN</div>
-        <div style="font-size: 0.7rem; letter-spacing: 0.2em; color: #666;">ARQUITECTURA & DISEÑO</div>
-      </div>
+  </nav>
 
-      <div class="hero-center-nav">
-        <div class="hero-center-title">OWN</div>
-        <div class="nav-options">
-          <button class="nav-btn-large" onclick="openView('estudio')">ESTUDIO</button>
-          <div class="divider-line"></div>
-          <button class="nav-btn-large" onclick="openView('proyectos')">PROYECTOS</button>
-        </div>
-      </div>
+  <!-- 1. SECCIÓN HOME / PORTADA -->
+  <section id="section-home" class="page-section active">
+    <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
+    <div class="hero-subtext">Arquitectura & Diseño Contemporáneo</div>
+  </section>
 
-      <div class="hero-footer">
-        <div>BARCELONA</div>
-        <div>&copy; OWN MANAGEMENT</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN FIJA INTERNA -->
-  <div class="fixed-nav" id="main-fixed-nav" style="display: none;">
-    <div class="nav-left" onclick="returnToHero()">OWN</div>
-    <div class="nav-links-right">
-      <span class="nav-link-item" id="nav-item-estudio" onclick="openView('estudio')" style="cursor:pointer;">Estudio</span>
-      <span class="nav-link-item" id="nav-item-proyectos" onclick="openView('proyectos')" style="cursor:pointer;">Proyectos</span>
-    </div>
-  </div>
-
-  <!-- 3. SECCIÓN: ESTUDIO -->
-  <div id="view-estudio" class="content-view">
-    <div class="section-container">
-      <div class="video-hero-wrapper">
-        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&controls=0&mute=1&loop=1" title="OWN Studio Video" frameborder="0" allowfullscreen></iframe>
-      </div>
-
-      <div class="studio-manifesto">
-        <div class="manifesto-title">Manifiesto</div>
-        <div class="manifesto-text">
-          Desarrollamos proyectos basados en la limpieza de formas, la continuidad de los espacios y la búsqueda de la belleza a través de la precisión técnica y la luz.
-        </div>
-      </div>
-
-      <div class="team-section-title">Equipo</div>
-      <div class="team-grid">
-        <div class="team-card">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop" alt="Equipo 1">
-          <div class="team-name">Elena Santillana</div>
-          <div class="team-role">Arquitecta Directora</div>
-        </div>
-        <div class="team-card">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Equipo 2">
-          <div class="team-name">Marc Vidal</div>
-          <div class="team-role">Arquitecto Socio</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. SECCIÓN: PROYECTOS (GRID) -->
-  <div id="view-proyectos" class="content-view">
-    <div class="section-container">
-      <div class="team-section-title" style="margin-bottom: 2.5rem;">Proyectos Seleccionados</div>
+  <!-- 2. SECCIÓN PROYECTOS (DESPLAZAMIENTO HORIZONTAL FLUIDO) -->
+  <section id="section-proyectos" class="page-section">
+    <div class="projects-horizontal-scroll">
       
-      <div class="projects-grid">
-        <div class="project-card" onclick="openProjectDetail(1)">
-          <div class="project-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Casa en Torre en Conill">
-          </div>
-          <div class="project-meta">
-            <div class="project-title">Casa en Torre en Conill</div>
-            <div class="project-loc">Valencia</div>
-          </div>
+      <!-- Proyecto 1 -->
+      <div class="project-card-fluid" onclick="openProjectDetail(1)">
+        <div class="project-image-container">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Casa en Torre en Conill">
         </div>
-
-        <div class="project-card" onclick="openProjectDetail(2)">
-          <div class="project-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Villa Pedralbes">
+        <div class="project-info-fluid">
+          <div>
+            <div class="project-num">01 / 03</div>
+            <div class="project-name">Torre en Conill</div>
           </div>
-          <div class="project-meta">
-            <div class="project-title">Villa Pedralbes</div>
-            <div class="project-loc">Barcelona</div>
-          </div>
+          <div class="project-location">Valencia</div>
         </div>
       </div>
+
+      <!-- Proyecto 2 -->
+      <div class="project-card-fluid" onclick="openProjectDetail(2)">
+        <div class="project-image-container">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+        </div>
+        <div class="project-info-fluid">
+          <div>
+            <div class="project-num">02 / 03</div>
+            <div class="project-name">Villa Pedralbes</div>
+          </div>
+          <div class="project-location">Barcelona</div>
+        </div>
+      </div>
+
+      <!-- Proyecto 3 -->
+      <div class="project-card-fluid" onclick="openProjectDetail(3)">
+        <div class="project-image-container">
+          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Costa Brava">
+        </div>
+        <div class="project-info-fluid">
+          <div>
+            <div class="project-num">03 / 03</div>
+            <div class="project-name">Residencia Brava</div>
+          </div>
+          <div class="project-location">Girona</div>
+        </div>
+      </div>
+
     </div>
-  </div>
+  </section>
 
-  <!-- 5. DETALLE DE PROYECTO (FICHA ESTILO GALLARDO LLOPIS) -->
-  <div id="project-detail-view">
-    <button class="detail-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
-    <img id="detail-hero-img" src="" alt="Project Hero" class="detail-hero-img">
+  <!-- 3. SECCIÓN ESTUDIO (DISEÑO EDITORIAL & AMPLIO) -->
+  <section id="section-estudio" class="page-section">
+    <div class="estudio-container">
+      
+      <div class="estudio-hero-quote">
+        Proyectamos arquitectura silenciosa, <span>donde la precisión de la materia y la pureza de la luz definen el espacio.</span>
+      </div>
 
-    <div class="detail-content">
-      <div class="detail-header-grid">
-        <div>
-          <h1 id="detail-title" class="detail-main-title"></h1>
-          <p id="detail-desc" class="detail-description"></p>
+      <div class="video-fluid-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&controls=0&mute=1&loop=1" title="OWN Process Video" allowfullscreen></iframe>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-item">
+          <div class="pillar-num">01</div>
+          <div class="pillar-title">Geometría Ligera</div>
+          <div class="pillar-desc">Buscamos reducir el proyecto a sus líneas esenciales, eliminando lo superfluo para destacar la escala humana y la continuidad visual.</div>
         </div>
+        <div class="pillar-item">
+          <div class="pillar-num">02</div>
+          <div class="pillar-title">Materia & Luz</div>
+          <div class="pillar-desc">Trabajamos el hormigón, el vidrio y la piedra natural como elementos continuos que dialogan con la orientación solar a lo largo del día.</div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-num">03</div>
+          <div class="pillar-title">Sostenibilidad</div>
+          <div class="pillar-desc">Integración pasiva en el entorno, optimización del consumo energético y máximo confort térmico y acústico en cada vivienda.</div>
+        </div>
+      </div>
 
-        <div class="tech-sheet">
-          <div class="tech-item">
-            <span class="tech-label">Arquitectura</span>
-            <span id="tech-arch" class="tech-val">OWN Studio</span>
+      <div class="team-interactive-section">
+        <div class="team-header-title">Dirección del Estudio</div>
+        <div class="team-fluid-grid">
+          <div class="team-card-large">
+            <div class="team-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Elena Santillana">
+            </div>
+            <div class="team-meta-name">Elena Santillana</div>
+            <div class="team-meta-role">Arquitecta Fundadora</div>
           </div>
-          <div class="tech-item">
-            <span class="tech-label">Ubicación</span>
-            <span id="tech-loc" class="tech-val"></span>
-          </div>
-          <div class="tech-item">
-            <span class="tech-label">Superficie</span>
-            <span id="tech-area" class="tech-val"></span>
-          </div>
-          <div class="tech-item">
-            <span class="tech-label">Año</span>
-            <span id="tech-year" class="tech-val"></span>
+
+          <div class="team-card-large">
+            <div class="team-img-wrapper">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Marc Vidal">
+            </div>
+            <div class="team-meta-name">Marc Vidal</div>
+            <div class="team-meta-role">Arquitecto Socio</div>
           </div>
         </div>
       </div>
 
-      <div class="detail-gallery">
-        <img id="detail-gal-1" src="" alt="Galeria 1">
-        <img id="detail-gal-2" src="" alt="Galeria 2">
+    </div>
+  </section>
+
+  <!-- MODAL / DETALLE DE PROYECTO -->
+  <div id="project-modal">
+    <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
+    <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
+
+    <div class="modal-body">
+      <div class="modal-header-grid">
+        <div>
+          <h1 id="m-title" class="modal-project-title"></h1>
+          <p id="m-text" class="modal-project-text"></p>
+        </div>
+
+        <div class="tech-specs">
+          <div class="spec-item">
+            <span class="spec-label">Ubicación</span>
+            <span id="m-loc" class="spec-value"></span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Superficie</span>
+            <span id="m-area" class="spec-value"></span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Año</span>
+            <span id="m-year" class="spec-value"></span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Autoría</span>
+            <span id="m-arch" class="spec-value">OWN Studio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-gallery">
+        <img id="m-gal-1" src="" alt="Galería 1">
+        <img id="m-gal-2" src="" alt="Galería 2">
       </div>
     </div>
   </div>
 
   <script>
-    const projectsData = {
+    const projects = {
       1: {
-        title: "Casa en Torre en Conill",
-        desc: "Una propuesta monolítica de líneas puras que se abre hacia el jardín privado. La integración de grandes planos acristalados permite la continuidad fluida entre el espacio interior y exterior.",
-        arch: "OWN Studio",
+        title: "Torre en Conill",
+        text: "Una vivienda unifamiliar concebida como una secuencia de volúmenes blancos superpuestos. El proyecto se articula mediante un gran plano acristalado que conecta el salón principal con una piscina sinfín.",
         loc: "Valencia, España",
         area: "540 m²",
         year: "2025",
-        heroImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop",
-        gal1: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop",
-        gal2: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop"
+        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop",
+        g1: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop",
+        g2: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop"
       },
       2: {
         title: "Villa Pedralbes",
-        desc: "Proyecto residencial estructurado a partir del uso de materiales nobles y luz cenital. Espacios diáfanos diseñados para ofrecer máxima privacidad y confort visual.",
-        arch: "OWN Studio",
+        text: "Estructurada sobre la ladera de la zona alta de Barcelona, esta residencia prioriza las vistas panorámicas hacia el Mediterráneo manteniendo total privacidad hacia la calle.",
         loc: "Barcelona, España",
         area: "720 m²",
         year: "2024",
-        heroImg: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop",
-        gal1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1600&auto=format&fit=crop",
-        gal2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop"
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop",
+        g1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1600&auto=format&fit=crop",
+        g2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop"
+      },
+      3: {
+        title: "Residencia Brava",
+        text: "Un refugio integrado en las rocas del acantilado. Se empleó hormigón visto teñido en tonos áridos para lograr un diálogo armónico con la vegetación autóctona.",
+        loc: "Girona, España",
+        area: "480 m²",
+        year: "2024",
+        hero: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1800&auto=format&fit=crop",
+        g1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
+        g2: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop"
       }
     };
 
-    function enterExperience() {
-      const splash = document.getElementById('splash-screen');
-      const hero = document.getElementById('hero-selection');
-      splash.style.opacity = '0';
-      splash.style.visibility = 'hidden';
-      setTimeout(() => hero.classList.add('active'), 200);
-    }
+    function switchSection(sectionId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
 
-    function openView(viewName) {
-      document.getElementById('view-estudio').classList.remove('active');
-      document.getElementById('view-proyectos').classList.remove('active');
-      document.getElementById('main-fixed-nav').style.display = 'flex';
+      const target = document.getElementById('section-' + sectionId);
+      if(target) target.classList.add('active');
 
-      document.getElementById('nav-item-estudio').classList.remove('active');
-      document.getElementById('nav-item-proyectos').classList.remove('active');
-
-      if(viewName === 'estudio') {
-        document.getElementById('view-estudio').classList.add('active');
-        document.getElementById('nav-item-estudio').classList.add('active');
-      } else if(viewName === 'proyectos') {
-        document.getElementById('view-proyectos').classList.add('active');
-        document.getElementById('nav-item-proyectos').classList.add('active');
-      }
-    }
-
-    function returnToHero() {
-      document.getElementById('view-estudio').classList.remove('active');
-      document.getElementById('view-proyectos').classList.remove('active');
-      document.getElementById('main-fixed-nav').style.display = 'none';
-      document.getElementById('hero-selection').classList.add('active');
+      const navBtn = document.getElementById('nav-' + sectionId);
+      if(navBtn) navBtn.classList.add('active');
     }
 
     function openProjectDetail(id) {
-      const data = projectsData[id];
-      if(!data) return;
+      const p = projects[id];
+      if(!p) return;
 
-      document.getElementById('detail-hero-img').src = data.heroImg;
-      document.getElementById('detail-title').innerText = data.title;
-      document.getElementById('detail-desc').innerText = data.desc;
-      document.getElementById('tech-arch').innerText = data.arch;
-      document.getElementById('tech-loc').innerText = data.loc;
-      document.getElementById('tech-area').innerText = data.area;
-      document.getElementById('tech-year').innerText = data.year;
-      document.getElementById('detail-gal-1').src = data.gal1;
-      document.getElementById('detail-gal-2').src = data.gal2;
+      document.getElementById('m-hero-img').src = p.hero;
+      document.getElementById('m-title').innerText = p.title;
+      document.getElementById('m-text').innerText = p.text;
+      document.getElementById('m-loc').innerText = p.loc;
+      document.getElementById('m-area').innerText = p.area;
+      document.getElementById('m-year').innerText = p.year;
+      document.getElementById('m-gal-1').src = p.g1;
+      document.getElementById('m-gal-2').src = p.g2;
 
-      document.getElementById('project-detail-view').classList.add('active');
+      document.getElementById('project-modal').classList.add('active');
     }
 
     function closeProjectDetail() {
-      document.getElementById('project-detail-view').classList.remove('active');
+      document.getElementById('project-modal').classList.remove('active');
     }
   </script>
 </body>
