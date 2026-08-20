@@ -5,326 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OWN — Arquitectura & Diseño</title>
   
-  <!-- TIPOGRAFÍAS SELECCIONADAS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Playfair Display SC', serif; background-color: #ffffff; color: #0f0f0f; overflow-x: hidden; width: 100vw; }
+    button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    body {
-      font-family: 'Playfair Display SC', serif;
-      background-color: #ffffff;
-      color: #0f0f0f;
-      overflow-x: hidden;
-      width: 100vw;
-    }
-
-    button {
-      background: none;
-      border: none;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
+    /* --- ANIMACIÓN ZOOM INFINITO (KEN BURNS) --- */
+    @keyframes zoom-ken-burns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15); }
     }
 
     /* --- NAV MINIMALISTA --- */
-    .nav-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+    .nav-bar { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 6vw; z-index: 10000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 0, 0, 0.04); }
+    .brand-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #000; cursor: pointer; transition: letter-spacing 0.5s ease; }
+    .brand-logo:hover { letter-spacing: 0.4em; }
+    .nav-menu { display: flex; gap: 4rem; }
+    .nav-item { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #888888; transition: color 0.4s ease; position: relative; }
+    .nav-item::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background-color: #000; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .nav-item:hover, .nav-item.active { color: #000; }
+    .nav-item.active::after, .nav-item:hover::after { width: 100%; }
+
+    /* --- SECCIONES --- */
+    .page-section { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; opacity: 0; visibility: hidden; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s; z-index: 1; overflow-y: auto; }
+    .page-section.active { opacity: 1; visibility: visible; z-index: 2; }
+
+    #section-home { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff; }
+    .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(7rem, 28vw, 24rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: #0f0f0f; cursor: pointer; user-select: none; animation: floatBreath 7s ease-in-out infinite alternate; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.8s; }
+    .hero-title-interactive:hover { letter-spacing: -0.02em; transform: scale(1.02); }
+    @keyframes floatBreath { 0% { transform: translateY(0px) scale(1); opacity: 0.92; } 100% { transform: translateY(-8px) scale(1.015); opacity: 1; } }
+    .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 3.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.35em; color: #a0a0a0; }
+
+    /* --- PROYECTOS & HERO IMAGE FUERA DE LA IMAGEN --- */
+    .projects-container {
+      padding-top: 140px; /* Espacio para que el nav fijo no lo tape */
+    }
+
+    .projects-header-outside {
+      padding: 0 6vw 4vh 6vw;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 2.5rem 6vw;
-      z-index: 10000;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      align-items: flex-end;
     }
 
-    /* OWN del inicio/header con Space Grotesk */
-    .brand-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #000;
-      cursor: pointer;
-      transition: letter-spacing 0.5s ease;
-    }
-
-    .brand-logo:hover {
-      letter-spacing: 0.4em;
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 4rem;
-    }
-
-    .nav-item {
+    .projects-header-outside h1 {
       font-family: 'Familjen Grotesk', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #888888;
-      transition: color 0.4s ease;
-      position: relative;
-    }
-
-    .nav-item::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background-color: #000;
-      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .nav-item:hover, .nav-item.active {
-      color: #000;
-    }
-
-    .nav-item.active::after, .nav-item:hover::after {
-      width: 100%;
-    }
-
-    /* --- SECCIONES PRINCIPALES --- */
-    .page-section {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
-      z-index: 1;
-      overflow-y: auto;
-    }
-
-    .page-section.active {
-      opacity: 1;
-      visibility: visible;
-      z-index: 2;
-    }
-
-    /* --- HOME INTERACTIVO --- */
-    #section-home {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #ffffff;
-    }
-
-    /* OWN gigante del comienzo con Space Grotesk */
-    .hero-title-interactive {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(7rem, 28vw, 24rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      line-height: 0.8;
-      color: #0f0f0f;
-      cursor: pointer;
-      user-select: none;
-      animation: floatBreath 7s ease-in-out infinite alternate;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.8s;
-    }
-
-    .hero-title-interactive:hover {
-      letter-spacing: -0.02em;
-      transform: scale(1.02);
-    }
-
-    @keyframes floatBreath {
-      0% {
-        transform: translateY(0px) scale(1);
-        opacity: 0.92;
-      }
-      100% {
-        transform: translateY(-8px) scale(1.015);
-        opacity: 1;
-      }
-    }
-
-    .hero-subtext {
-      font-family: 'Playfair Display SC', serif;
-      margin-top: 3.5rem;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.35em;
-      color: #a0a0a0;
-    }
-
-    /* --- SECCIÓN PROYECTOS --- */
-    .projects-hero-banner {
-      width: 100vw;
-      height: 85vh;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .projects-hero-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .projects-hero-caption {
-      position: absolute;
-      bottom: 5rem;
-      left: 6vw;
-      color: #ffffff;
-      z-index: 10;
-    }
-
-    /* H1 en Mayúsculas con Familjen Grotesk */
-    .projects-hero-caption h1 {
-      font-family: 'Familjen Grotesk', sans-serif;
-      font-size: clamp(2.2rem, 5.5vw, 5rem);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
       font-weight: 700;
       letter-spacing: -0.01em;
       text-transform: uppercase;
-      line-height: 0.95;
+      line-height: 1;
     }
 
-    .projects-hero-caption p {
+    .projects-header-outside p {
       font-family: 'Playfair Display SC', serif;
       font-size: 0.75rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      opacity: 0.9;
-      margin-top: 1.2rem;
+      color: #777;
     }
 
-    /* CARRUSEL HORIZONTAL */
-    .projects-horizontal-wrapper {
-      padding: 12vh 0;
-      background-color: #fafafa;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .section-label {
-      font-family: 'Familjen Grotesk', sans-serif;
-      padding: 0 6vw 3rem 6vw;
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #a0a0a0;
-      font-weight: 600;
-    }
-
-    .projects-horizontal-scroll {
-      display: flex;
-      align-items: flex-start;
+    /* Imagen con tu ajuste de altura y zoom */
+    .hero-image {
       width: 100vw;
-      overflow-x: auto;
-      padding: 0 6vw;
-      scrollbar-width: none;
-      user-select: none;
-    }
-
-    .projects-horizontal-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .project-card-fluid {
-      flex: 0 0 auto;
-      width: clamp(340px, 36vw, 560px);
-      margin-right: 5vw;
-      cursor: pointer;
-    }
-
-    .project-image-container {
-      width: 100%;
-      height: 50vh;
+      height: 80vh; 
+      min-height: 500px;
       overflow: hidden;
-      background-color: #f0f0f0;
+      margin-bottom: 30px;
+      position: relative;
     }
 
-    .project-image-container img {
+    .hero-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center; 
+      filter: grayscale(10%);
+      animation: zoom-ken-burns 30s ease-in-out infinite alternate;
       transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    
+    /* RESTO DE ESTILOS */
+    .projects-horizontal-wrapper { padding: 8vh 0; background-color: #fafafa; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .section-label { font-family: 'Familjen Grotesk', sans-serif; padding: 0 6vw 3rem 6vw; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #a0a0a0; font-weight: 600; }
+    .projects-horizontal-scroll { display: flex; align-items: flex-start; width: 100vw; overflow-x: auto; padding: 0 6vw; scrollbar-width: none; }
+    .project-card-fluid { flex: 0 0 auto; width: clamp(340px, 36vw, 560px); margin-right: 5vw; cursor: pointer; }
+    .project-image-container { width: 100%; height: 50vh; overflow: hidden; background-color: #f0f0f0; }
+    .project-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .project-card-fluid:hover .project-image-container img { transform: scale(1.05); }
+    .project-info-fluid { margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: baseline; }
+    .project-name { font-family: 'Familjen Grotesk', sans-serif; font-size: clamp(1.1rem, 1.5vw, 1.5rem); font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: #0f0f0f; }
+    .project-location { font-family: 'Playfair Display SC', serif; font-size: 0.72rem; letter-spacing: 0.2em; color: #999999; text-transform: uppercase; }
 
-    .project-card-fluid:hover .project-image-container img {
-      transform: scale(1.05);
-    }
-
-    .project-info-fluid {
-      margin-top: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .project-name {
-      font-family: 'Familjen Grotesk', sans-serif;
-      font-size: clamp(1.1rem, 1.5vw, 1.5rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: #0f0f0f;
-    }
-
-    .project-location {
-      font-family: 'Playfair Display SC', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: #999999;
-      text-transform: uppercase;
-    }
-
-    /* GRILLA DETALLES */
-    .projects-asymmetric-section {
-      padding: 12vh 6vw 15vh 6vw;
-      background-color: #ffffff;
-    }
-
-    .asymmetric-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 2vw;
-      margin-top: 2rem;
-    }
-
-    .grid-item {
-      position: relative;
-      overflow: hidden;
-      background-color: #f5f5f5;
-      cursor: zoom-in;
-    }
-
-    .grid-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 1s ease, filter 0.8s ease;
-      filter: grayscale(15%);
-    }
-
-    .grid-item:hover img {
-      transform: scale(1.04);
-      filter: grayscale(0%);
-    }
-
+    .projects-asymmetric-section { padding: 12vh 6vw 15vh 6vw; background-color: #ffffff; }
+    .asymmetric-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; margin-top: 2rem; }
+    .grid-item { position: relative; overflow: hidden; background-color: #f5f5f5; cursor: zoom-in; }
+    .grid-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease, filter 0.8s ease; filter: grayscale(15%); }
+    .grid-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
     .grid-item-1 { grid-column: span 4; height: 38vh; }
     .grid-item-2 { grid-column: span 4; height: 38vh; }
     .grid-item-3 { grid-column: span 4; height: 38vh; }
@@ -333,197 +114,41 @@
     .grid-item-6 { grid-column: span 4; height: 38vh; }
     .grid-item-7 { grid-column: span 4; height: 38vh; }
     .grid-item-8 { grid-column: span 4; height: 38vh; }
+    .grid-item-title { font-family: 'Playfair Display SC', serif; position: absolute; bottom: 1.5rem; left: 1.5rem; color: #ffffff; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.4); pointer-events: none; }
+    
+    #section-estudio { background-color: #ffffff; }
+    .estudio-container { max-width: 1300px; margin: 0 auto; padding: 180px 6vw 120px 6vw; }
+    .estudio-hero-quote { font-family: 'Playfair Display SC', serif; font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.4; letter-spacing: 0.02em; margin-bottom: 7rem; color: #0f0f0f; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 4rem; }
+    .pillar-title { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.2rem; }
+    .pillar-desc { font-family: 'Playfair Display SC', serif; font-size: 0.88rem; line-height: 1.7; color: #555555; }
 
-    .grid-item-title {
-      font-family: 'Playfair Display SC', serif;
-      position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      color: #ffffff;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
-      pointer-events: none;
-    }
+    #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; }
+    #project-modal.active { opacity: 1; visibility: visible; }
+    .modal-close-btn { font-family: 'Familjen Grotesk', sans-serif; position: fixed; top: 2.5rem; right: 6vw; z-index: 21000; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.8rem 1.8rem; background: #ffffff; border: 1px solid rgba(0,0,0,0.1); }
+    .modal-hero-img { width: 100vw; height: 85vh; object-fit: cover; }
+    .modal-body-full { width: 100vw; padding: 6vh 6vw 120px 6vw; }
+    .sheet-meta-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin: 4rem 0; }
+    .meta-box span { font-family: 'Familjen Grotesk', sans-serif; display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #a0a0a0; font-weight: 600; }
+    .meta-box strong { font-family: 'Playfair Display SC', serif; font-size: 1.1rem; margin-top: 0.5rem; display: block; }
+    .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
+    .sheet-text-p { font-family: 'Playfair Display SC', serif; font-size: clamp(1.1rem, 1.6vw, 1.6rem); line-height: 1.6; color: #0f0f0f; }
+    .sheet-sketch-img { width: 100%; height: 55vh; object-fit: cover; background-color: #f9f9f9; }
 
-    /* --- ESTUDIO --- */
-    #section-estudio {
-      background-color: #ffffff;
-    }
+    #image-lightbox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(10,10,10,0.96); z-index: 30000; opacity: 0; visibility: hidden; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s; cursor: zoom-out; }
+    #image-lightbox.active { opacity: 1; visibility: visible; }
+    #image-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
 
-    .estudio-container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 180px 6vw 120px 6vw;
-    }
-
-    .estudio-hero-quote {
-      font-family: 'Playfair Display SC', serif;
-      font-size: clamp(1.8rem, 3.2vw, 3rem);
-      line-height: 1.4;
-      letter-spacing: 0.02em;
-      margin-bottom: 7rem;
-      color: #0f0f0f;
-    }
-
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4rem;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      padding-top: 4rem;
-    }
-
-    .pillar-title {
-      font-family: 'Familjen Grotesk', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1.2rem;
-    }
-
-    .pillar-desc {
-      font-family: 'Playfair Display SC', serif;
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: #555555;
-    }
-
-    /* --- MODAL DETALLE --- */
-    #project-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #ffffff;
-      z-index: 20000;
-      opacity: 0;
-      visibility: hidden;
-      overflow-y: auto;
-      transition: opacity 0.6s ease, visibility 0.6s;
-    }
-
-    #project-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-close-btn {
-      font-family: 'Familjen Grotesk', sans-serif;
-      position: fixed;
-      top: 2.5rem;
-      right: 6vw;
-      z-index: 21000;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.8rem 1.8rem;
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    .modal-hero-img {
-      width: 100vw;
-      height: 85vh;
-      object-fit: cover;
-    }
-
-    .modal-body-full {
-      width: 100vw;
-      padding: 6vh 6vw 120px 6vw;
-    }
-
-    .sheet-meta-grid-full {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      padding: 3rem 0;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      margin: 4rem 0;
-    }
-
-    .meta-box span {
-      font-family: 'Familjen Grotesk', sans-serif;
-      display: block;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #a0a0a0;
-      font-weight: 600;
-    }
-
-    .meta-box strong {
-      font-family: 'Playfair Display SC', serif;
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-      display: block;
-    }
-
-    .sheet-grid-2-full {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6vw;
-      align-items: center;
-    }
-
-    .sheet-text-p {
-      font-family: 'Playfair Display SC', serif;
-      font-size: clamp(1.1rem, 1.6vw, 1.6rem);
-      line-height: 1.6;
-      color: #0f0f0f;
-    }
-
-    .sheet-sketch-img {
-      width: 100%;
-      height: 55vh;
-      object-fit: cover;
-      background-color: #f9f9f9;
-    }
-
-    /* LIGHTBOX ZOOM */
-    #image-lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(10,10,10,0.96);
-      z-index: 30000;
-      opacity: 0;
-      visibility: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.4s ease, visibility 0.4s;
-      cursor: zoom-out;
-    }
-
-    #image-lightbox.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    #image-lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-    }
-
-    @media (max-width: 900px) {
-      .asymmetric-grid { display: flex; flex-direction: column; }
-      .grid-item { width: 100% !important; height: 35vh !important; }
-      .pillars-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 2rem; }
+    @media (max-width: 900px) { 
+      .projects-header-outside { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .asymmetric-grid { display: flex; flex-direction: column; } 
+      .grid-item { width: 100% !important; height: 35vh !important; } 
+      .pillars-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 2rem; } 
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV ESTUDIO -->
   <nav class="nav-bar">
     <div class="brand-logo" onclick="switchSection('home')">OWN</div>
     <div class="nav-menu">
@@ -540,13 +165,19 @@
 
   <!-- 2. PROYECTOS -->
   <section id="section-proyectos" class="page-section">
-    
-    <div class="projects-hero-banner">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture">
-      <div class="projects-hero-caption">
+    <div class="projects-container">
+
+      <!-- BANNER DE IMAGEN CON ALTURA Y ZOOM INFINITO -->
+      <div class="hero-image">
+        <img src="img/CLARODELUZ/clarodeluz-4.jpg" alt="OWN Architecture">
+      </div>
+      
+      <!-- TÍTULO FUERA DE LA IMAGEN (AQUÍ ESTÁ EL CAMBIO) -->
+      <div class="projects-header-outside">
         <h1>Obras Seleccionadas<br>2024—2026</h1>
         <p>Espacios donde la materia y el silencio dialogan</p>
       </div>
+
     </div>
 
     <!-- SECCIÓN HORIZONTAL -->
@@ -828,4 +459,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
