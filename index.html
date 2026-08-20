@@ -3,143 +3,779 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallardo Llopis Style — Proyectos</title>
-  <link rel="stylesheet" href="style.css">
+  <title>OWN — Arquitectura & Diseño</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ffffff;
+      color: #111111;
+      overflow-x: hidden;
+      width: 100vw;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    /* --- NAVEGACIÓN FIJA --- */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.5rem 4vw;
+      z-index: 10000;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+      pointer-events: auto;
+    }
+
+    .brand-logo {
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 3.5rem;
+    }
+
+    .nav-item {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #777777;
+      transition: color 0.4s ease;
+      position: relative;
+      padding-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: #111111;
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: #111111;
+    }
+
+    .nav-item.active::after, .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* --- SECCIONES PRINCIPALES --- */
+    .page-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    .page-section.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    /* --- HOME / PORTADA --- */
+    #section-home {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero-title-interactive {
+      font-size: clamp(5rem, 22vw, 18rem);
+      font-weight: 200;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      color: #111111;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-title-interactive:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-subtext {
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      color: #888888;
+      font-weight: 300;
+    }
+
+    /* --- SECCIÓN PROYECTOS --- */
+    .projects-hero-banner {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .projects-hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+
+    .projects-hero-caption {
+      position: absolute;
+      bottom: 4rem;
+      left: 5vw;
+      color: #ffffff;
+      z-index: 10;
+    }
+
+    .projects-hero-caption h2 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .projects-hero-caption p {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    .projects-horizontal-wrapper {
+      padding: 8vh 0;
+      background-color: #fafafa;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .section-label {
+      padding: 0 5vw 2rem 5vw;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #888888;
+    }
+
+    .projects-horizontal-scroll {
+      display: flex;
+      align-items: center;
+      width: 100vw;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 5vw;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .projects-horizontal-scroll:active {
+      cursor: grabbing;
+    }
+
+    .projects-horizontal-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-card-fluid {
+      flex: 0 0 auto;
+      width: clamp(280px, 32vw, 500px);
+      margin-right: 4vw;
+      position: relative;
+    }
+
+    .project-image-container {
+      width: 100%;
+      height: 42vh;
+      overflow: hidden;
+      background-color: #eaeaea;
+    }
+
+    .project-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .project-card-fluid:hover .project-image-container img {
+      transform: scale(1.04);
+    }
+
+    .project-info-fluid {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-name {
+      font-size: clamp(1rem, 1.5vw, 1.4rem);
+      font-weight: 200;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .project-location {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #777777;
+      text-transform: uppercase;
+    }
+
+    .projects-asymmetric-section {
+      padding: 8vh 5vw 12vh 5vw;
+      background-color: #ffffff;
+    }
+
+    .asymmetric-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5vw;
+      margin-top: 2rem;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      background-color: #f4f4f4;
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease, filter 0.6s ease;
+      filter: grayscale(15%);
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+
+    .grid-item-1 { grid-column: span 4; height: 32vh; }
+    .grid-item-2 { grid-column: span 4; height: 32vh; }
+    .grid-item-3 { grid-column: span 4; height: 32vh; }
+    
+    .grid-item-4 { grid-column: span 7; height: 40vh; }
+    .grid-item-5 { grid-column: span 5; height: 40vh; }
+    
+    .grid-item-6 { grid-column: span 3; height: 30vh; }
+    .grid-item-7 { grid-column: span 6; height: 30vh; }
+    .grid-item-8 { grid-column: span 3; height: 30vh; }
+
+    .grid-item-9 { grid-column: span 12; height: 45vh; }
+
+    .grid-item-title {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      color: #ffffff;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* --- SECCIÓN ESTUDIO --- */
+    #section-estudio {
+      background-color: #ffffff;
+    }
+
+    .estudio-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 160px 5vw 120px 5vw;
+    }
+
+    .estudio-hero-quote {
+      font-size: clamp(2rem, 4.5vw, 4rem);
+      font-weight: 200;
+      line-height: 1.25;
+      margin-bottom: 6rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      border-top: 1px solid #eeeeee;
+      padding-top: 4rem;
+    }
+
+    .pillar-title {
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #666666;
+      font-weight: 300;
+    }
+
+    /* --- MODAL FICHA TÉCNICA Y DIAGRAMACIÓN --- */
+    #project-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffffff;
+      z-index: 20000;
+      opacity: 0;
+      visibility: hidden;
+      overflow-y: auto;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+
+    #project-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-close-btn {
+      position: fixed;
+      top: 2.5rem;
+      right: 4vw;
+      z-index: 21000;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+    }
+
+    .modal-hero-img {
+      width: 100%;
+      height: 75vh;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 5vw 120px 5vw;
+    }
+
+    /* ESTILOS INTERNOS DE FICHA TÉCNICA (ESTILO GALLARDO LLOPIS) */
+    .sheet-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      margin: 3rem 0;
+    }
+
+    .meta-box span {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #888;
+    }
+
+    .meta-box strong {
+      font-size: 0.95rem;
+      font-weight: 300;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    .sheet-section {
+      margin-bottom: 5rem;
+    }
+
+    .sheet-section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 2rem;
+    }
+
+    .sheet-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .sheet-text-p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #333;
+      font-weight: 300;
+    }
+
+    .sheet-sketch-img, .sheet-exploded-img {
+      width: 100%;
+      height: auto;
+      background-color: #f8f8f8;
+      border: 1px solid #eeeeee;
+    }
+
+    .exploded-layers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .layer-item {
+      padding-left: 1.5rem;
+      border-left: 2px solid #111;
+    }
+
+    .layer-item h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .layer-item p {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      .asymmetric-grid { display: flex; flex-direction: column; }
+      .grid-item { width: 100% !important; height: 35vh !important; }
+      .pillars-grid, .sheet-meta-grid, .sheet-grid-2 { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navegación Fija -->
-  <nav class="main-nav">
-    <div class="logo">GALLARDO LLOPIS</div>
-    <div class="menu">
-      <a href="#proyectos" class="active">Proyectos</a>
-      <a href="#estudio">Estudio</a>
-      <a href="#contacto">Contacto</a>
+  <!-- NAVEGACIÓN PERMANENTE -->
+  <nav class="nav-bar">
+    <div class="brand-logo" onclick="switchSection('home')">OWN</div>
+    <div class="nav-menu">
+      <button class="nav-item" id="nav-estudio" onclick="switchSection('estudio')">Estudio</button>
+      <button class="nav-item" id="nav-proyectos" onclick="switchSection('proyectos')">Proyectos</button>
     </div>
   </nav>
 
-  <!-- Contenedor Principal con Scroll Horizontal / Secuencial -->
-  <main class="projects-container" id="projectsContainer">
+  <!-- 1. HOME -->
+  <section id="section-home" class="page-section active">
+    <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
+    <div class="hero-subtext">Arquitectura & Diseño Contemporáneo</div>
+  </section>
 
-    <!-- PROYECTO 1 -->
-    <article class="project-card" id="proyecto-1">
-      
-      <header class="project-header">
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" alt="Casa entre los Pinos">
-        </div>
-        <div class="header-titles">
-          <h1 class="project-title">Casa entre los Pinos</h1>
-          <p class="project-location">Valencia, España — 2024</p>
-        </div>
-      </header>
+  <!-- 2. PROYECTOS -->
+  <section id="section-proyectos" class="page-section">
+    
+    <!-- 1. FOTO PANORÁMICA FULLSCREEN -->
+    <div class="projects-hero-banner">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture">
+      <div class="projects-hero-caption">
+        <h2>Obras Selección 2024—2026</h2>
+        <p>Espacios donde el material y la luz dialogan</p>
+      </div>
+    </div>
 
-      <section class="project-meta">
-        <div class="meta-item"><span class="meta-label">Arquitectos</span><span class="meta-value">Gallardo Llopis</span></div>
-        <div class="meta-item"><span class="meta-label">Superficie</span><span class="meta-value">450 m²</span></div>
-        <div class="meta-item"><span class="meta-label">Fotografía</span><span class="meta-value">Mariela Apollonio</span></div>
-        <div class="meta-item"><span class="meta-label">Categoría</span><span class="meta-value">Residencial</span></div>
-      </section>
-
-      <section class="project-section grid-2-cols">
-        <div class="concept-text">
-          <h2>Concepto y Desplazamiento</h2>
-          <p>La vivienda se inserta en el pinar respetando la topografía natural mediante una serie de plataformas horizontales que se desplazan para generar voladizos y sombras. El recorrido de acceso se concibe como una secuencia progresiva donde la masa de hormigón comprime el espacio antes de abrirse hacia las vistas panorámicas.</p>
-        </div>
-        <div class="concept-sketch">
-          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Croquis de desplazamiento">
-          <span class="caption">Esquema vectorial de vectores de circulación y vistas.</span>
-        </div>
-      </section>
-
-      <section class="project-section tectonic-section">
-        <h2>Desglose Tectónico</h2>
-        <div class="grid-exploded">
-          <div class="exploded-image">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80" alt="Vista Axonométrica Explotada">
+    <!-- 2. DESPLAZAMIENTO HORIZONTAL -->
+    <div class="projects-horizontal-wrapper">
+      <div class="section-label">01 / Proyectos Destacados (Arrastrar horizontalmente)</div>
+      <div class="projects-horizontal-scroll" id="scroll-container">
+        
+        <div class="project-card-fluid" onclick="handleCardClick(1)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
           </div>
-          <div class="exploded-layers">
-            <div class="layer-card"><h3>01. Cubierta / Piel</h3><p>Losa superior de hormigón blanco con lucernarios orientados al norte.</p></div>
-            <div class="layer-card"><h3>02. Plano Habitable</h3><p>Cerramiento continuo de vidrio con perfilería oculta.</p></div>
-            <div class="layer-card"><h3>03. Estructura</h3><p>Muros de carga y losas postesadas con voladizos de 6 metros.</p></div>
-            <div class="layer-card"><h3>04. Zócalo</h3><p>Muro de mampostería en piedra local anclado al terreno.</p></div>
+          <div class="project-info-fluid">
+            <div class="project-name">Torre en Conill</div>
+            <div class="project-location">Valencia</div>
           </div>
         </div>
-      </section>
 
-      <section class="project-section">
-        <h2>Secuencia Espacial</h2>
-        <div class="gallery-grid">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="Acceso">
-          <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80" alt="Patio interior">
-        </div>
-      </section>
-
-    </article>
-
-    <!-- PROYECTO 2 -->
-    <article class="project-card" id="proyecto-2">
-      
-      <header class="project-header">
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=80" alt="Casa del Horizon Vertical">
-        </div>
-        <div class="header-titles">
-          <h1 class="project-title">Casa del Horizon Vertical</h1>
-          <p class="project-location">Jávea, Alicante — 2023</p>
-        </div>
-      </header>
-
-      <section class="project-meta">
-        <div class="meta-item"><span class="meta-label">Arquitectos</span><span class="meta-value">Gallardo Llopis</span></div>
-        <div class="meta-item"><span class="meta-label">Superficie</span><span class="meta-value">620 m²</span></div>
-        <div class="meta-item"><span class="meta-label">Fotografía</span><span class="meta-value">Fernando Guerra</span></div>
-        <div class="meta-item"><span class="meta-label">Categoría</span><span class="meta-value">Residencial</span></div>
-      </section>
-
-      <section class="project-section grid-2-cols">
-        <div class="concept-text">
-          <h2>Concepto y Desplazamiento</h2>
-          <p>Una masa tectónica de hormigón blanco emerge de la ladera rocosa. El acceso no es un evento puntual, sino un recorrido ascendente helicoidal: una rampa exterior semiabierta comprime el espacio verticalmente antes de liberar la mirada hacia el mar Balear a través de un plano de agua en voladizo.</p>
-        </div>
-        <div class="concept-sketch">
-          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="Croquis del proyecto 2">
-          <span class="caption">Trazo rotundo en L horizontal perforado por un cilindro de luz.</span>
-        </div>
-      </section>
-
-      <section class="project-section tectonic-section">
-        <h2>Desglose Tectónico</h2>
-        <div class="grid-exploded">
-          <div class="exploded-image">
-            <img src="https://images.unsplash.com/photo-1600573472591-ee6b81645685?auto=format&fit=crop&w=1000&q=80" alt="Vista Axonométrica Explotada 2">
+        <div class="project-card-fluid" onclick="handleCardClick(2)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
           </div>
-          <div class="exploded-layers">
-            <div class="layer-card"><h3>01. Parasoles</h3><p>Lamas orientables de aluminio extruido en tono cañón de escopeta.</p></div>
-            <div class="layer-card"><h3>02. Volumen Superior</h3><p>Cuerpo volado de hormigón encofrado con tabla de pino.</p></div>
-            <div class="layer-card"><h3>03. Núcleo Vertical</h3><p>Caja de ascensor y escalera helicoidal de acero corten.</p></div>
-            <div class="layer-card"><h3>04. Vaso de Piscina</h3><p>Losa suspendida de 12 metros de luz con frente de metacrilato.</p></div>
+          <div class="project-info-fluid">
+            <div class="project-name">Villa Pedralbes</div>
+            <div class="project-location">Barcelona</div>
           </div>
         </div>
-      </section>
 
-      <section class="project-section">
-        <h2>Secuencia Espacial</h2>
-        <div class="gallery-grid">
-          <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80" alt="Vista mar">
-          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80" alt="Voladizo">
+        <div class="project-card-fluid" onclick="handleCardClick(3)">
+          <div class="project-image-container">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+          </div>
+          <div class="project-info-fluid">
+            <div class="project-name">Residencia Brava</div>
+            <div class="project-location">Girona</div>
+          </div>
         </div>
-      </section>
 
-    </article>
+      </div>
+    </div>
 
-  </main>
+    <!-- 3. GRILLA COMPACTA CON MÁS FOTOGRAFÍAS -->
+    <div class="projects-asymmetric-section">
+      <div class="section-label">02 / Perspectivas & Catálogo Fotográfico</div>
+      <div class="asymmetric-grid">
+        
+        <div class="grid-item grid-item-1" onclick="openProjectDetail(1)">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop" alt="Estructura">
+          <div class="grid-item-title">Torre en Conill</div>
+        </div>
 
-  <!-- Indicador de desplazamiento (Navegación entre fichas) -->
-  <div class="project-indicator">
-    <span id="currentProject">01</span> / <span id="totalProjects">02</span>
+        <div class="grid-item grid-item-2" onclick="openProjectDetail(2)">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1000&auto=format&fit=crop" alt="Interiorismo">
+          <div class="grid-item-title">Villa Pedralbes</div>
+        </div>
+
+        <div class="grid-item grid-item-3" onclick="openProjectDetail(3)">
+          <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop" alt="Texturas">
+          <div class="grid-item-title">Residencia Brava</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 3. ESTUDIO -->
+  <section id="section-estudio" class="page-section">
+    <div class="estudio-container">
+      <div class="estudio-hero-quote">
+        Proyectamos arquitectura silenciosa, donde la precisión de la materia y la pureza de la luz definen el espacio.
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-item">
+          <div class="pillar-title">Geometría Ligera</div>
+          <div class="pillar-desc">Buscamos reducir el proyecto a sus líneas esenciales, eliminando lo superfluo.</div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-title">Materia & Luz</div>
+          <div class="pillar-desc">Trabajamos el hormigón, vidrio y piedra como elementos continuos en diálogo con el sol.</div>
+        </div>
+        <div class="pillar-item">
+          <div class="pillar-title">Sostenibilidad</div>
+          <div class="pillar-desc">Integración pasiva en el entorno con máxima eficiencia energética.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE PROYECTO FICHA COMPLETA -->
+  <div id="project-modal">
+    <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
+    <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
+    <div class="modal-body" id="m-content">
+      <!-- El contenido completo de la ficha se inyecta dinámicamente aquí -->
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const projects = {
+      1: {
+        title: "Torre en Conill",
+        location: "Valencia, España",
+        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "480 m²",
+        photo: "Mariela Apollonio",
+        year: "2025",
+        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo: una rampa contenida entre muros ciegos comprime la escala espacial antes de liberar el horizonte hacia la piscina en voladizo.",
+        sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop",
+        explodedImg: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop",
+        layers: [
+          { title: "01. Cubierta & Lucernarios", desc: "Losa superior de hormigón blanco con tres hendiduras cenitales orientadas al norte." },
+          { title: "02. Plano Vidriado Habitable", desc: "Fachada de vidrio continuo continuo sin montantes verticales en zona de día." },
+          { title: "03. Muros de Carga", desc: "Pantallas de hormigón encofrado con tabla de pino marcando la dirección de marcha." },
+          { title: "04. Zócalo Tectónico", desc: "Basamento de mampostería de piedra seca que asienta la casa en el terreno." }
+        ]
+      },
+      2: {
+        title: "Villa Pedralbes",
+        location: "Barcelona, España",
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "650 m²",
+        photo: "Fernando Guerra",
+        year: "2024",
+        conceptText: "Adaptándose a un desnivel del 30%, la casa se organiza en terrazas escalonadas centrípetas. Las circulaciones se transforman en balconadas interiores agrupadas alrededor de un patio arbolado que proyecta sombras variables a lo largo del día.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop",
+        explodedImg: "https://images.unsplash.com/photo-1600573472591-ee6b81645685?q=80&w=1000&auto=format&fit=crop",
+        layers: [
+          { title: "01. Protecciones Solares", desc: "Lamas de aluminio orientables para tamizar el sol de poniente." },
+          { title: "02. Volúmenes Suspendidos", desc: "Cajas de dormiorios en voladizo sobre la lámina de agua." },
+          { title: "03. Núcleo de Circulación", desc: "Escalera helicoidal y ascensor integrados en un prisma de acero corten." },
+          { title: "04. Cimentación / Bancal", desc: "Muros bancal que encuadran las vistas a la bahía." }
+        ]
+      },
+      3: {
+        title: "Residencia Brava",
+        location: "Girona, España",
+        hero: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1800&auto=format&fit=crop",
+        architects: "OWN Studio",
+        area: "390 m²",
+        photo: "Adrià Goula",
+        year: "2024",
+        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado. El desplazamiento tangencial genera pasillos de sombra profunda y una conexión visual continua con el mar Balear.",
+        sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop",
+        explodedImg: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1000&auto=format&fit=crop",
+        layers: [
+          { title: "01. Cubierta Vegetal", desc: "Extensión de flora autóctona como aislante térmico natural." },
+          { title: "02. Plano de Sombra", desc: "Gran porche volado de 8 metros sobre el jardín sin pilares." },
+          { title: "03. Estructura de Hormigón", desc: "Masa continua tratada con pino lavado al ácido." },
+          { title: "04. Vaso de Agua", desc: "Piscina integrada que actúa como espejo del paisaje litoral." }
+        ]
+      }
+    };
+
+    function switchSection(sectionId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+      const target = document.getElementById('section-' + sectionId);
+      if(target) target.classList.add('active');
+
+      const navBtn = document.getElementById('nav-' + sectionId);
+      if(navBtn) navBtn.classList.add('active');
+    }
+
+    /* SCROLL HORIZONTAL */
+    const slider = document.getElementById('scroll-container');
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let isDragging = false;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      isDragging = false;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => { isDown = false; });
+    slider.addEventListener('mouseup', () => { isDown = false; });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.8;
+      if (Math.abs(walk) > 5) {
+        isDragging = true;
+        e.preventDefault();
+      }
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    function handleCardClick(id) {
+      if (!isDragging) openProjectDetail(id);
+    }
+
+    function openProjectDetail(id) {
+      const p = projects[id];
+      if(!p) return;
+
+      document.getElementById('m-hero-img').src = p.hero;
+
+      // Generar plantilla interna de la ficha técnica
+      let layersHtml = p.layers.map(l => `
+        <div class="layer-item">
+          <h4>${l.title}</h4>
+          <p>${l.desc}</p>
+        </div>
+      `).join('');
+
+      let contentHtml = `
+        <h1 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 200; text-transform: uppercase;">${p.title}</h1>
+        <p style="font-size: 0.85rem; letter-spacing: 0.25em; color: #888; text-transform: uppercase; margin-top: 0.5rem;">${p.location}</p>
+
+        <div class="sheet-meta-grid">
+          <div class="meta-box"><span>Arquitectura</span><strong>${p.architects}</strong></div>
+          <div class="meta-box"><span>Superficie</span><strong>${p.area}</strong></div>
+          <div class="meta-box"><span>Fotografía</span><strong>${p.photo}</strong></div>
+          <div class="meta-box"><span>Año</span><strong>${p.year}</strong></div>
+        </div>
+
+        <div class="sheet-section sheet-grid-2">
+          <div>
+            <div class="sheet-section-title">01 / Concepto & Desplazamiento</div>
+            <p class="sheet-text-p">${p.conceptText}</p>
+          </div>
+          <div>
+            <img class="sheet-sketch-img" src="${p.sketchImg}" alt="Croquis de recorrido">
+          </div>
+        </div>
+
+        <div class="sheet-section">
+          <div class="sheet-section-title">02 / Desglose Tectónico (Vista Explotada)</div>
+          <div class="sheet-grid-2">
+            <img class="sheet-exploded-img" src="${p.explodedImg}" alt="Axonometría Explotada">
+            <div class="exploded-layers-list">
+              ${layersHtml}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('m-content').innerHTML = contentHtml;
+      document.getElementById('project-modal').classList.add('active');
+    }
+
+    function closeProjectDetail() {
+      document.getElementById('project-modal').classList.remove('active');
+    }
+  </script>
 </body>
 </html>
