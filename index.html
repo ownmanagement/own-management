@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OWN — Arquitectura & Diseño</title>
   
-  <!-- FUENTES EDITORIALES: Playfair Display (Serif) + Plus Jakarta Sans (Sans-serif) -->
+  <!-- TIPOGRAFÍAS DE ESTUDIO DE ARQUITECTURA: Syne + Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -19,9 +19,9 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #fcfcfc;
-      color: #1a1a1a;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffffff;
+      color: #0f0f0f;
       overflow-x: hidden;
       width: 100vw;
     }
@@ -34,7 +34,7 @@
       cursor: pointer;
     }
 
-    /* --- NAVEGACIÓN ESTILO EDITORIAL --- */
+    /* --- NAV MINIMALISTA ESTILO ESTUDIO --- */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -43,59 +43,57 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2.2rem 5vw;
+      padding: 2.5rem 6vw;
       z-index: 10000;
-      background: rgba(252, 252, 252, 0.75);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
 
     .brand-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: #111;
+      color: #000;
       cursor: pointer;
-      transition: opacity 0.3s;
+      transition: letter-spacing 0.5s ease;
     }
 
     .brand-logo:hover {
-      opacity: 0.6;
+      letter-spacing: 0.6em;
     }
 
     .nav-menu {
       display: flex;
-      gap: 3.5rem;
+      gap: 4rem;
     }
 
     .nav-item {
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 0.68rem;
+      font-weight: 300;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: #777;
+      letter-spacing: 0.35em;
+      color: #888888;
       transition: color 0.4s ease;
       position: relative;
-      padding-bottom: 4px;
     }
 
     .nav-item::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 50%;
+      bottom: -6px;
+      left: 0;
       width: 0;
       height: 1px;
-      background-color: #111;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      transform: translateX(-50%);
+      background-color: #000;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .nav-item:hover, .nav-item.active {
-      color: #111;
+      color: #000;
     }
 
     .nav-item.active::after, .nav-item:hover::after {
@@ -111,7 +109,7 @@
       height: 100vh;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
       z-index: 1;
       overflow-y: auto;
     }
@@ -122,54 +120,52 @@
       z-index: 2;
     }
 
-    /* --- HOME INTERACTIVO Y ANIMADO --- */
+    /* --- HOME INTERACTIVO Y ESCULTÓRICO --- */
     #section-home {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
-      background-color: #f7f6f4;
+      background-color: #ffffff;
     }
 
     .hero-title-interactive {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(6rem, 25vw, 22rem);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(7rem, 28vw, 24rem);
       font-weight: 400;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       line-height: 0.8;
-      color: #111111;
+      color: #0f0f0f;
       cursor: pointer;
       user-select: none;
-      animation: breathe 6s ease-in-out infinite alternate;
-      transition: letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s ease;
+      animation: floatBreath 7s ease-in-out infinite alternate;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.8s;
     }
 
     .hero-title-interactive:hover {
-      letter-spacing: 0.05em;
+      letter-spacing: 0.02em;
       transform: scale(1.02);
     }
 
-    @keyframes breathe {
+    @keyframes floatBreath {
       0% {
-        transform: scale(1);
-        opacity: 0.9;
+        transform: translateY(0px) scale(1);
+        opacity: 0.92;
       }
       100% {
-        transform: scale(1.03);
+        transform: translateY(-8px) scale(1.015);
         opacity: 1;
-        text-shadow: 0 10px 40px rgba(0,0,0,0.05);
       }
     }
 
     .hero-subtext {
       margin-top: 3.5rem;
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       text-transform: uppercase;
-      letter-spacing: 0.45em;
-      color: #888888;
-      font-weight: 400;
+      letter-spacing: 0.5em;
+      color: #a0a0a0;
+      font-weight: 300;
     }
 
     /* --- SECCIÓN PROYECTOS --- */
@@ -184,7 +180,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.9);
     }
 
     .projects-hero-caption {
@@ -196,36 +191,37 @@
     }
 
     .projects-hero-caption h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5.5vw, 5rem);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 4.5rem);
       font-weight: 400;
-      font-style: italic;
-      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
     }
 
     .projects-hero-caption p {
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
+      font-size: 0.68rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      opacity: 0.85;
+      opacity: 0.8;
       margin-top: 1rem;
-      font-weight: 300;
+      font-weight: 200;
     }
 
-    /* CARRUSEL HORIZONTAL EDITORIAL */
+    /* CARRUSEL HORIZONTAL MINIMALISTA */
     .projects-horizontal-wrapper {
-      padding: 10vh 0;
-      background-color: #f7f6f4;
+      padding: 12vh 0;
+      background-color: #fafafa;
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .section-label {
       padding: 0 6vw 3rem 6vw;
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: #999999;
-      font-weight: 500;
+      color: #a0a0a0;
+      font-weight: 300;
     }
 
     .projects-horizontal-scroll {
@@ -244,17 +240,16 @@
 
     .project-card-fluid {
       flex: 0 0 auto;
-      width: clamp(340px, 38vw, 580px);
-      margin-right: 4vw;
+      width: clamp(340px, 36vw, 560px);
+      margin-right: 5vw;
       cursor: pointer;
-      group: url('');
     }
 
     .project-image-container {
       width: 100%;
-      height: 52vh;
+      height: 50vh;
       overflow: hidden;
-      background-color: #e5e5e5;
+      background-color: #f0f0f0;
     }
 
     .project-image-container img {
@@ -265,47 +260,38 @@
     }
 
     .project-card-fluid:hover .project-image-container img {
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
 
-    /* TÍTULOS DE PROYECTOS EDITORIALES */
+    /* TÍTULOS DE PROYECTOS TIPO ARQUITECTURA PURA */
     .project-info-fluid {
-      margin-top: 1.8rem;
-    }
-
-    .project-number {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: #aaa;
-      margin-bottom: 0.3rem;
-      display: block;
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
     }
 
     .project-name {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 2vw, 2rem);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.1rem, 1.6vw, 1.6rem);
       font-weight: 400;
-      font-style: italic;
-      color: #111;
-      transition: color 0.3s;
-    }
-
-    .project-card-fluid:hover .project-name {
-      color: #666;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #0f0f0f;
     }
 
     .project-location {
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      color: #888;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: #999999;
       text-transform: uppercase;
-      margin-top: 0.4rem;
+      font-weight: 300;
     }
 
-    /* GRILLA EDITORIAL / ZOOM */
+    /* GRILLA DETALLES */
     .projects-asymmetric-section {
-      padding: 10vh 6vw 15vh 6vw;
-      background-color: #fcfcfc;
+      padding: 12vh 6vw 15vh 6vw;
+      background-color: #ffffff;
     }
 
     .asymmetric-grid {
@@ -318,7 +304,7 @@
     .grid-item {
       position: relative;
       overflow: hidden;
-      background-color: #eee;
+      background-color: #f5f5f5;
       cursor: zoom-in;
     }
 
@@ -327,18 +313,17 @@
       height: 100%;
       object-fit: cover;
       transition: transform 1s ease, filter 0.8s ease;
-      filter: grayscale(20%);
+      filter: grayscale(15%);
     }
 
     .grid-item:hover img {
-      transform: scale(1.05);
+      transform: scale(1.04);
       filter: grayscale(0%);
     }
 
     .grid-item-1 { grid-column: span 4; height: 38vh; }
     .grid-item-2 { grid-column: span 4; height: 38vh; }
     .grid-item-3 { grid-column: span 4; height: 38vh; }
-    
     .grid-item-4 { grid-column: span 7; height: 45vh; }
     .grid-item-5 { grid-column: span 5; height: 45vh; }
 
@@ -347,16 +332,17 @@
       bottom: 1.5rem;
       left: 1.5rem;
       color: #ffffff;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
       pointer-events: none;
+      font-weight: 300;
     }
 
     /* --- ESTUDIO --- */
     #section-estudio {
-      background-color: #fcfcfc;
+      background-color: #ffffff;
     }
 
     .estudio-container {
@@ -366,33 +352,36 @@
     }
 
     .estudio-hero-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.8rem);
       font-weight: 400;
-      line-height: 1.25;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
       margin-bottom: 7rem;
-      color: #111;
+      color: #0f0f0f;
     }
 
     .pillars-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4rem;
-      border-top: 1px solid rgba(0,0,0,0.1);
+      border-top: 1px solid rgba(0,0,0,0.08);
       padding-top: 4rem;
     }
 
     .pillar-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-style: italic;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       margin-bottom: 1.2rem;
     }
 
     .pillar-desc {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       line-height: 1.8;
-      color: #666;
+      color: #777777;
       font-weight: 300;
     }
 
@@ -403,7 +392,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #fcfcfc;
+      background-color: #ffffff;
       z-index: 20000;
       opacity: 0;
       visibility: hidden;
@@ -419,15 +408,14 @@
     .modal-close-btn {
       position: fixed;
       top: 2.5rem;
-      right: 5vw;
+      right: 6vw;
       z-index: 21000;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       padding: 0.8rem 1.8rem;
       background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.1);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.08);
     }
 
     .modal-hero-img {
@@ -455,13 +443,14 @@
       display: block;
       font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: #999;
+      letter-spacing: 0.3em;
+      color: #a0a0a0;
+      font-weight: 300;
     }
 
     .meta-box strong {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
       font-weight: 400;
       margin-top: 0.5rem;
       display: block;
@@ -475,18 +464,18 @@
     }
 
     .sheet-text-p {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Syne', sans-serif;
       font-size: clamp(1.2rem, 1.8vw, 2rem);
-      line-height: 1.6;
-      color: #222;
+      line-height: 1.5;
+      color: #0f0f0f;
       font-weight: 400;
     }
 
-    .sheet-sketch-img, .sheet-exploded-img {
+    .sheet-sketch-img {
       width: 100%;
       height: 55vh;
       object-fit: cover;
-      background-color: #f4f4f4;
+      background-color: #f9f9f9;
     }
 
     /* LIGHTBOX ZOOM */
@@ -496,7 +485,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(15,15,15,0.95);
+      background-color: rgba(10,10,10,0.96);
       z-index: 30000;
       opacity: 0;
       visibility: hidden;
@@ -527,7 +516,7 @@
 </head>
 <body>
 
-  <!-- NAV EDITORIAL -->
+  <!-- NAV ESTUDIO -->
   <nav class="nav-bar">
     <div class="brand-logo" onclick="switchSection('home')">OWN</div>
     <div class="nav-menu">
@@ -539,7 +528,7 @@
   <!-- 1. HOME -->
   <section id="section-home" class="page-section active">
     <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
-    <div class="hero-subtext">Arquitectura & Estética Contemporánea</div>
+    <div class="hero-subtext">Arquitectura & Proyección Tectónica</div>
   </section>
 
   <!-- 2. PROYECTOS -->
@@ -548,14 +537,14 @@
     <div class="projects-hero-banner">
       <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="OWN Architecture">
       <div class="projects-hero-caption">
-        <h2>Obras Seleccionadas <br>2024—2026</h2>
+        <h2>Obras Seleccionadas<br>2024—2026</h2>
         <p>Espacios donde la materia y el silencio dialogan</p>
       </div>
     </div>
 
     <!-- SECCIÓN HORIZONTAL -->
     <div class="projects-horizontal-wrapper">
-      <div class="section-label">I. Colección de Obras Destacadas</div>
+      <div class="section-label">01 / Proyectos Destacados</div>
       <div class="projects-horizontal-scroll" id="scroll-container">
         
         <div class="project-card-fluid" onclick="openProjectDetail(1)">
@@ -563,9 +552,8 @@
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
           </div>
           <div class="project-info-fluid">
-            <span class="project-number">N° 01</span>
             <div class="project-name">Torre en Conill</div>
-            <div class="project-location">Valencia, España</div>
+            <div class="project-location">Valencia</div>
           </div>
         </div>
 
@@ -574,9 +562,8 @@
             <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
           </div>
           <div class="project-info-fluid">
-            <span class="project-number">N° 02</span>
             <div class="project-name">Villa Pedralbes</div>
-            <div class="project-location">Barcelona, España</div>
+            <div class="project-location">Barcelona</div>
           </div>
         </div>
 
@@ -585,9 +572,8 @@
             <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
           </div>
           <div class="project-info-fluid">
-            <span class="project-number">N° 03</span>
             <div class="project-name">Residencia Brava</div>
-            <div class="project-location">Girona, España</div>
+            <div class="project-location">Girona</div>
           </div>
         </div>
 
@@ -596,9 +582,8 @@
             <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
           </div>
           <div class="project-info-fluid">
-            <span class="project-number">N° 04</span>
             <div class="project-name">Refugio Hormigón</div>
-            <div class="project-location">Alicante, España</div>
+            <div class="project-location">Alicante</div>
           </div>
         </div>
 
@@ -607,7 +592,7 @@
 
     <!-- GRILLA ZOOM -->
     <div class="projects-asymmetric-section">
-      <div class="section-label">II. Detalles & Texturas</div>
+      <div class="section-label">02 / Fragmentos & Espacialidad</div>
       <div class="asymmetric-grid">
         
         <div class="grid-item grid-item-1" onclick="openLightbox('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1800&auto=format&fit=crop')">
@@ -644,20 +629,20 @@
   <section id="section-estudio" class="page-section">
     <div class="estudio-container">
       <div class="estudio-hero-quote">
-        “Proyectamos una arquitectura silenciosa, donde la precisión de los materiales y la pureza de la luz construyen atmósferas atemporales.”
+        Proyectamos una arquitectura esencial, centrada en la precisión del detalle y la interacción pura de la luz con la materia.
       </div>
       <div class="pillars-grid">
         <div class="pillar-item">
           <div class="pillar-title">Geometría Ligera</div>
-          <div class="pillar-desc">Reducimos el proyecto a sus líneas esenciales, eliminando todo ornamento para permitir que el espacio respire.</div>
+          <div class="pillar-desc">Sintetizamos la complejidad formal en volúmenes puros y líneas fluidas que respetan el entorno.</div>
         </div>
         <div class="pillar-item">
           <div class="pillar-title">Materia & Luz</div>
-          <div class="pillar-desc">Trabajamos el hormigón, el vidrio y la piedra en estado puro, creando diálogos continuos con el sol.</div>
+          <div class="pillar-desc">Exploramos el hormigón, el vidrio y la piedra en su estado más honesto y continuo.</div>
         </div>
         <div class="pillar-item">
           <div class="pillar-title">Sostenibilidad</div>
-          <div class="pillar-desc">Integración pasiva con el entorno natural, optimizando la luz solar y la eficiencia térmica.</div>
+          <div class="pillar-desc">Estrategias pasivas que optimizan la ventilación natural y la captación solar.</div>
         </div>
       </div>
     </div>
@@ -685,7 +670,7 @@
         area: "480 m²",
         photo: "Mariela Apollonio",
         year: "2025",
-        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo: una rampa contenida entre muros ciegos comprime la escala espacial antes de liberar el horizonte hacia la piscina en voladizo.",
+        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo que comprime la escala antes de liberar la vista hacia el horizonte.",
         sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
       },
       2: {
@@ -696,7 +681,7 @@
         area: "650 m²",
         photo: "Fernando Guerra",
         year: "2024",
-        conceptText: "Adaptándose a un desnivel del 30%, la casa se organiza en terrazas escalonadas centrípetas. Las circulaciones se transforman en balconadas interiores agrupadas alrededor de un patio arbolado que proyecta sombras variables.",
+        conceptText: "Adaptándose a un desnivel del 30%, la casa se organiza en terrazas escalonadas centrípetas articuladas alrededor de un patio interior.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
       },
       3: {
@@ -707,7 +692,7 @@
         area: "390 m²",
         photo: "Adrià Goula",
         year: "2024",
-        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado. El desplazamiento tangencial genera pasillos de sombra profunda.",
+        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado.",
         sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
       },
       4: {
@@ -718,7 +703,7 @@
         area: "310 m²",
         photo: "Mariela Apollonio",
         year: "2025",
-        conceptText: "Estructura introvertida diseñada para proteger el interior del intenso sol de la comarca, organizando la vida en torno a un patio interior arbolado.",
+        conceptText: "Estructura introvertida diseñada para proteger el interior del intenso sol de la comarca.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
       }
     };
@@ -734,7 +719,7 @@
       if(navBtn) navBtn.classList.add('active');
     }
 
-    /* AUTO SCROLL SUAVE AL MOVER EL MOUSE */
+    /* AUTO SCROLL SUAVE */
     const slider = document.getElementById('scroll-container');
     let autoScrollSpeed = 0;
     let animFrameId = null;
@@ -781,8 +766,8 @@
       document.getElementById('m-hero-img').src = p.hero;
 
       let contentHtml = `
-        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-style: italic;">${p.title}</h1>
-        <p style="font-size: 0.75rem; letter-spacing: 0.3em; color: #888; text-transform: uppercase; margin-top: 0.8rem;">${p.location}</p>
+        <h1 style="font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 400; text-transform: uppercase;">${p.title}</h1>
+        <p style="font-size: 0.65rem; letter-spacing: 0.35em; color: #a0a0a0; text-transform: uppercase; margin-top: 0.8rem; font-weight: 300;">${p.location}</p>
 
         <div class="sheet-meta-grid-full">
           <div class="meta-box"><span>Arquitectura</span><strong>${p.architects}</strong></div>
@@ -793,7 +778,7 @@
 
         <div class="sheet-grid-2-full">
           <div>
-            <div style="font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #999; margin-bottom: 2rem;">Concepto Arquitectónico</div>
+            <div style="font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: #a0a0a0; margin-bottom: 2rem; font-weight: 300;">Concepto Arquitectónico</div>
             <p class="sheet-text-p">${p.conceptText}</p>
           </div>
           <div>
