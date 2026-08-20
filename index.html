@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+# Correction script for navigation and horizontal drag scroll interaction
+
+html_fixed = """<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -33,7 +35,7 @@
       cursor: pointer;
     }
 
-    /* --- NAVEGACIÓN PRINCIPAL (MINIMALISTA Y FLUIDA) --- */
+    /* --- NAVEGACIÓN PERMANENTE CORREGIDA --- */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -45,11 +47,6 @@
       padding: 2.5rem 4vw;
       z-index: 10000;
       background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
-      pointer-events: none;
-    }
-
-    .nav-bar * {
-      pointer-events: auto;
     }
 
     .brand-logo {
@@ -70,9 +67,10 @@
       text-transform: uppercase;
       letter-spacing: 0.25em;
       color: #777777;
-      transition: color 0.4s ease, opacity 0.4s ease;
+      transition: color 0.4s ease;
       position: relative;
       padding-bottom: 4px;
+      cursor: pointer;
     }
 
     .nav-item::after {
@@ -103,7 +101,7 @@
       height: 100vh;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+      transition: opacity 0.6s ease, visibility 0.6s;
       z-index: 1;
       overflow: hidden;
     }
@@ -114,7 +112,7 @@
       z-index: 2;
     }
 
-    /* --- 1. HERO / SPLASH FLUIDO --- */
+    /* --- 1. HERO --- */
     #section-home {
       display: flex;
       flex-direction: column;
@@ -146,10 +144,9 @@
       letter-spacing: 0.4em;
       color: #888888;
       font-weight: 300;
-      animation: fadeIn 2s ease;
     }
 
-    /* --- 2. PROYECTOS: EXPERIENCIA HORIZONTAL Y FLUIDA --- */
+    /* --- 2. PROYECTOS: DESPLAZAMIENTO HORIZONTAL + DRAG & DROP --- */
     #section-proyectos {
       background-color: #fafafa;
     }
@@ -162,8 +159,13 @@
       overflow-x: auto;
       overflow-y: hidden;
       padding: 0 10vw 0 12vw;
-      scroll-snap-type: x mandatory;
       scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .projects-horizontal-scroll:active {
+      cursor: grabbing;
     }
 
     .projects-horizontal-scroll::-webkit-scrollbar {
@@ -172,12 +174,9 @@
 
     .project-card-fluid {
       flex: 0 0 auto;
-      width: clamp(350px, 45vw, 750px);
+      width: clamp(320px, 42vw, 700px);
       margin-right: 8vw;
-      scroll-snap-align: center;
-      cursor: pointer;
       position: relative;
-      group: project;
     }
 
     .project-image-container {
@@ -192,12 +191,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
       filter: grayscale(15%);
+      pointer-events: none;
     }
 
     .project-card-fluid:hover .project-image-container img {
-      transform: scale(1.05);
+      transform: scale(1.04);
       filter: grayscale(0%);
     }
 
@@ -232,7 +232,7 @@
       font-weight: 300;
     }
 
-    /* --- 3. ESTUDIO: EXPERIENCIA EDITORIAL DIVERSIFICADA --- */
+    /* --- 3. ESTUDIO --- */
     #section-estudio {
       background-color: #ffffff;
       overflow-y: auto;
@@ -371,7 +371,7 @@
       font-weight: 300;
     }
 
-    /* --- DETALLE DE PROYECTO (MODAL / OVERLAY EGANTE) --- */
+    /* --- DETALLE DE PROYECTO --- */
     #project-modal {
       position: fixed;
       top: 0;
@@ -513,18 +513,18 @@
     </div>
   </nav>
 
-  <!-- 1. SECCIÓN HOME / PORTADA -->
+  <!-- 1. SECCIÓN HOME -->
   <section id="section-home" class="page-section active">
     <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
     <div class="hero-subtext">Arquitectura & Diseño Contemporáneo</div>
   </section>
 
-  <!-- 2. SECCIÓN PROYECTOS (DESPLAZAMIENTO HORIZONTAL FLUIDO) -->
+  <!-- 2. SECCIÓN PROYECTOS -->
   <section id="section-proyectos" class="page-section">
-    <div class="projects-horizontal-scroll">
+    <div class="projects-horizontal-scroll" id="scroll-container">
       
       <!-- Proyecto 1 -->
-      <div class="project-card-fluid" onclick="openProjectDetail(1)">
+      <div class="project-card-fluid" onclick="handleCardClick(1)">
         <div class="project-image-container">
           <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Casa en Torre en Conill">
         </div>
@@ -538,7 +538,7 @@
       </div>
 
       <!-- Proyecto 2 -->
-      <div class="project-card-fluid" onclick="openProjectDetail(2)">
+      <div class="project-card-fluid" onclick="handleCardClick(2)">
         <div class="project-image-container">
           <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
         </div>
@@ -552,7 +552,7 @@
       </div>
 
       <!-- Proyecto 3 -->
-      <div class="project-card-fluid" onclick="openProjectDetail(3)">
+      <div class="project-card-fluid" onclick="handleCardClick(3)">
         <div class="project-image-container">
           <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Costa Brava">
         </div>
@@ -568,7 +568,7 @@
     </div>
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO (DISEÑO EDITORIAL & AMPLIO) -->
+  <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="estudio-container">
       
@@ -577,7 +577,7 @@
       </div>
 
       <div class="video-fluid-frame">
-        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&controls=0&mute=1&loop=1" title="OWN Process Video" allowfullscreen></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgWgXcQ?autoplay=0&controls=0&mute=1&loop=1" title="OWN Process Video" allowfullscreen></iframe>
       </div>
 
       <div class="pillars-grid">
@@ -706,6 +706,54 @@
       if(navBtn) navBtn.classList.add('active');
     }
 
+    /* --- SISTEMA DRAG & DROP Y RUEDA PARA EL SCROLL HORIZONTAL --- */
+    const slider = document.getElementById('scroll-container');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let isDragging = false;
+
+    // Scroll con la rueda del ratón (transformar scroll vertical en horizontal)
+    slider.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        slider.scrollLeft += e.deltaY * 1.5;
+      }
+    }, { passive: false });
+
+    // Arrastre con el ratón (Drag)
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      isDragging = false;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2; // Velocidad de arrastre
+      if (Math.abs(walk) > 5) {
+        isDragging = true;
+      }
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    function handleCardClick(id) {
+      if (!isDragging) {
+        openProjectDetail(id);
+      }
+    }
+
     function openProjectDetail(id) {
       const p = projects[id];
       if(!p) return;
@@ -728,3 +776,9 @@
   </script>
 </body>
 </html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_fixed)
+
+print("Versión corregida guardada.")
