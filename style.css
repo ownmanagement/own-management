@@ -1,29 +1,11 @@
-/* 1. Modifica el contenedor para que no sea un bloque rígido de 100vh */
-.projects-container {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-}
-
-/* 2. Permite que la tarjeta crezca más allá de 100vh si la imagen lo necesita */
-.project-card {
-  width: 100vw;
-  min-height: 100vh; /* Se mantiene como base */
-  height: auto;      /* IMPORTANTE: permite que crezca según su contenido */
-  scroll-snap-align: start;
-  padding: 100px 8vw 80px 8vw;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-}
-
 /* 3. Ajuste de la imagen para que gane altura real */
 .hero-image {
   width: 100%;
-  height: 60vh; /* Si quieres más altura aún, prueba con 70vh o 80vh */
-  min-height: 400px; /* Asegura que no se vuelva invisible en pantallas pequeñas */
+  /* CAMBIO: Sube este valor. 80vh a 90vh dará una sensación mucho más vertical y cinematográfica */
+  height: 85vh; 
+  /* Si quieres que sea un cuadrado perfecto en pantallas grandes, podrías usar aspect-ratio: 1 / 1; en lugar de height */
+  
+  min-height: 500px; /* Aumentamos el mínimo para que no se vea achatada en laptops pequeñas */
   overflow: hidden;
   margin-bottom: 30px;
   position: relative;
@@ -32,8 +14,15 @@
 .hero-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Esto es lo que evita que se deforme, pero recorta los bordes */
+  object-fit: cover;
+  
+  /* 
+     TIP: Si la imagen es un edificio, a veces el 'center' corta el techo o la base.
+     Puedes usar 'top', 'bottom' o porcentajes (ej: 50% 30%) 
+     para ajustar el enfoque vertical.
+  */
   object-position: center; 
+  
   filter: grayscale(10%);
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
