@@ -11,320 +11,231 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    body { font-family: 'Playfair Display SC', serif; background-color: #ffffff; color: #0f0f0f; overflow-x: hidden; width: 100vw; }
+    body { font-family: 'Playfair Display SC', serif; background-color: #ffffff; color: #0f0f0f; overflow: hidden; width: 100vw; height: 100vh; }
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- ANIMACIÓN ZOOM INFINITO (KEN BURNS) --- */
     @keyframes zoom-ken-burns {
       0% { transform: scale(1); }
-      100% { transform: scale(1.4); }
+      100% { transform: scale(1.15); }
     }
 
-    /* --- NAV MINIMALISTA (INTEGRADO SIN FRANJAS) --- */
-    .nav-bar { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 6vw; z-index: 10000; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: none; }
+    /* --- NAV MINIMALISTA --- */
+    .nav-bar { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 6vw; z-index: 10000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .brand-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #000; cursor: pointer; transition: letter-spacing 0.5s ease; }
     .brand-logo:hover { letter-spacing: 0.4em; }
-    .nav-menu { display: flex; gap: 2.5rem; }
-    .nav-item { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #888888; transition: color 0.4s ease; position: relative; }
-    .nav-item::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background-color: #000; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-    .nav-item:hover, .nav-item.active { color: #000; }
-    .nav-item.active::after, .nav-item:hover::after { width: 100%; }
+    .nav-back-btn { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #666; transition: color 0.3s; cursor: pointer; }
+    .nav-back-btn:hover { color: #000; }
 
-    /* --- SECCIONES --- */
-    .page-section { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; opacity: 0; visibility: hidden; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s; z-index: 1; overflow-y: auto; }
+    /* --- SECCIONES GENERALES --- */
+    .page-section { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; opacity: 0; visibility: hidden; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s; z-index: 1; overflow-y: auto; background-color: #ffffff; }
     .page-section.active { opacity: 1; visibility: visible; z-index: 2; }
 
-    #section-home { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff; }
-    .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(7rem, 28vw, 24rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.8; color: #0f0f0f; cursor: pointer; user-select: none; animation: floatBreath 7s ease-in-out infinite alternate; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.8s; }
-    .hero-title-interactive:hover { letter-spacing: -0.02em; transform: scale(1.02); }
-    @keyframes floatBreath { 0% { transform: translateY(0px) scale(1); opacity: 0.92; } 100% { transform: translateY(-8px) scale(1.015); opacity: 1; } }
-    .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 3.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.35em; color: #a0a0a0; }
+    /* --- 1. HOME --- */
+    #section-home { display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+    .home-bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.65) grayscale(20%); animation: zoom-ken-burns 25s ease-in-out infinite alternate; }
+    .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
+    .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(5rem, 20vw, 18rem); font-weight: 700; letter-spacing: -0.03em; line-height: 0.8; cursor: pointer; user-select: none; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .hero-title-interactive:hover { letter-spacing: 0.02em; transform: scale(1.03); }
+    .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4em; color: #e0e0e0; }
 
-    /* --- PROYECTOS & HERO IMAGE SIN ESPACIO BLANCO --- */
-    .projects-container { padding-top: 0; }
-    .projects-header-outside { padding: 4vh 6vw; display: flex; justify-content: space-between; align-items: flex-end; }
-    .projects-header-outside h1 { font-family: 'Familjen Grotesk', sans-serif; font-size: clamp(2.2rem, 5vw, 4.5rem); font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase; line-height: 1; }
-    .projects-header-outside p { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #777; }
+    /* --- 2. DIVISIÓN DINÁMICA TIPO JADOT --- */
+    #section-split { display: flex; width: 100vw; height: 100vh; overflow: hidden; position: relative; }
+    .split-pane { height: 100%; position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; padding: 6vw; transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1); flex: 1; }
+    .split-pane::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); transition: background 0.6s ease; z-index: 1; }
+    .split-pane:hover::before { background: rgba(0,0,0,0.15); }
+    .split-pane img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); z-index: 0; }
+    .split-pane:hover img { transform: scale(1.06); }
+    .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
+    .split-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 4.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; transition: transform 0.4s ease; }
+    .split-desc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #e0e0e0; opacity: 0.8; transition: opacity 0.4s ease; }
+    .split-pane:hover .split-title { transform: translateY(-4px); }
 
-    .hero-image { width: 100vw; height: 95vh; min-height: 600px; overflow: hidden; margin-bottom: 30px; position: relative; }
-    .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(10%); animation: zoom-ken-burns 30s ease-in-out infinite alternate; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    /* --- 3. CONTENIDO ESTUDIO --- */
+    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1400px; margin: 0 auto; }
+    .section-header-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .section-intro-text { font-family: 'Playfair Display SC', serif; font-size: clamp(1rem, 1.4vw, 1.4rem); line-height: 1.6; color: #444; max-width: 800px; margin-bottom: 5rem; }
     
-    .projects-horizontal-wrapper { padding: 8vh 0; background-color: #fafafa; border-bottom: 1px solid rgba(0,0,0,0.05); }
-    .section-label { font-family: 'Familjen Grotesk', sans-serif; padding: 0 6vw 3rem 6vw; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #a0a0a0; font-weight: 600; }
-    .projects-horizontal-scroll { display: flex; align-items: flex-start; width: 100vw; overflow-x: auto; padding: 0 6vw; scrollbar-width: none; }
-    .project-card-fluid { flex: 0 0 auto; width: clamp(340px, 36vw, 560px); margin-right: 5vw; cursor: pointer; }
-    .project-image-container { width: 100%; height: 50vh; overflow: hidden; background-color: #f0f0f0; }
-    .project-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .project-card-fluid:hover .project-image-container img { transform: scale(1.05); }
-    .project-info-fluid { margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: baseline; }
-    .project-name { font-family: 'Familjen Grotesk', sans-serif; font-size: clamp(1.1rem, 1.5vw, 1.5rem); font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: #0f0f0f; }
-    .project-location { font-family: 'Playfair Display SC', serif; font-size: 0.72rem; letter-spacing: 0.2em; color: #999999; text-transform: uppercase; }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3vw; }
+    .team-card { position: relative; }
+    .team-img-container { width: 100%; height: 50vh; overflow: hidden; background: #eee; }
+    .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: transform 1s ease; }
+    .team-card:hover .team-img-container img { transform: scale(1.04); }
+    .team-info { margin-top: 1.2rem; }
+    .team-name { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; }
+    .team-role { font-family: 'Playfair Display SC', serif; font-size: 0.72rem; letter-spacing: 0.15em; color: #888; margin-top: 0.3rem; text-transform: uppercase; }
 
-    /* --- GRILLA ASIMÉTRICA AMPLIADA --- */
-    .projects-asymmetric-section { padding: 12vh 6vw 15vh 6vw; background-color: #ffffff; }
-    .asymmetric-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; margin-top: 2rem; }
-    .grid-item { position: relative; overflow: hidden; background-color: #f5f5f5; cursor: zoom-in; margin-bottom: 2vw; }
-    .grid-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease, filter 0.8s ease; filter: grayscale(15%); }
-    .grid-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
-    
-    /* Patrones de asimetría */
-    .grid-item-1 { grid-column: span 4; height: 38vh; }
-    .grid-item-2 { grid-column: span 4; height: 38vh; }
-    .grid-item-3 { grid-column: span 4; height: 38vh; }
-    .grid-item-4 { grid-column: span 7; height: 45vh; }
-    .grid-item-5 { grid-column: span 5; height: 45vh; }
-    .grid-item-6 { grid-column: span 3; height: 52vh; }
-    .grid-item-7 { grid-column: span 6; height: 52vh; }
-    .grid-item-8 { grid-column: span 3; height: 52vh; }
-    .grid-item-9 { grid-column: span 5; height: 40vh; }
-    .grid-item-10 { grid-column: span 7; height: 40vh; }
-    .grid-item-11 { grid-column: span 4; height: 46vh; }
-    .grid-item-12 { grid-column: span 8; height: 46vh; }
+    /* --- 4. CONTENIDO PROYECTOS --- */
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4vw; }
+    .project-item { cursor: pointer; }
+    .project-thumb { width: 100%; height: 55vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
+    .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(10%); }
+    .project-item:hover .project-thumb img { transform: scale(1.04); filter: grayscale(0%); }
+    .project-meta-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .project-card-title { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; }
+    .project-card-loc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: #777; text-transform: uppercase; }
 
-    .grid-item-title { font-family: 'Playfair Display SC', serif; position: absolute; bottom: 1.5rem; left: 1.5rem; color: #ffffff; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.4); pointer-events: none; }
-    
-    #section-estudio { background-color: #ffffff; }
-    .estudio-container { max-width: 1300px; margin: 0 auto; padding: 180px 6vw 120px 6vw; }
-    .estudio-hero-quote { font-family: 'Playfair Display SC', serif; font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.4; letter-spacing: 0.02em; margin-bottom: 7rem; color: #0f0f0f; }
-    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 4rem; }
-    .pillar-title { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.2rem; }
-    .pillar-desc { font-family: 'Playfair Display SC', serif; font-size: 0.88rem; line-height: 1.7; color: #555555; }
-
+    /* --- MODAL DE MEMORIAS --- */
     #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; }
     #project-modal.active { opacity: 1; visibility: visible; }
-    .modal-close-btn { font-family: 'Familjen Grotesk', sans-serif; position: fixed; top: 2rem; right: 6vw; z-index: 21000; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.6rem 1.4rem; background: #ffffff; border: 1px solid rgba(0,0,0,0.1); }
+    .modal-close-btn { font-family: 'Familjen Grotesk', sans-serif; position: fixed; top: 2rem; right: 6vw; z-index: 21000; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.6rem 1.4rem; background: #ffffff; border: 1px solid rgba(0,0,0,0.1); cursor: pointer; }
     .modal-hero-img { width: 100vw; height: 85vh; object-fit: cover; }
-    .modal-body-full { width: 100vw; padding: 6vh 6vw 120px 6vw; }
+    .modal-body-full { width: 100vw; padding: 6vh 6vw 120px 6vw; max-width: 1400px; margin: 0 auto; }
     .sheet-meta-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin: 4rem 0; }
     .meta-box span { font-family: 'Familjen Grotesk', sans-serif; display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #a0a0a0; font-weight: 600; }
     .meta-box strong { font-family: 'Playfair Display SC', serif; font-size: 1.1rem; margin-top: 0.5rem; display: block; }
     .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
-    .sheet-text-p { font-family: 'Playfair Display SC', serif; font-size: clamp(1.1rem, 1.6vw, 1.6rem); line-height: 1.6; color: #0f0f0f; }
+    .sheet-text-p { font-family: 'Playfair Display SC', serif; font-size: clamp(1.1rem, 1.5vw, 1.5rem); line-height: 1.7; color: #1a1a1a; }
     .sheet-sketch-img { width: 100%; height: 55vh; object-fit: cover; background-color: #f9f9f9; }
 
-    #image-lightbox { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(10,10,10,0.96); z-index: 30000; opacity: 0; visibility: hidden; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s; cursor: zoom-out; }
-    #image-lightbox.active { opacity: 1; visibility: visible; }
-    #image-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
-
-    @media (max-width: 900px) { 
-      .projects-header-outside { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .asymmetric-grid { display: flex; flex-direction: column; } 
-      .grid-item { width: 100% !important; height: 35vh !important; } 
-      .pillars-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 2rem; } 
+    @media (max-width: 900px) {
+      #section-split { flex-direction: column; }
+      .team-grid, .projects-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <nav class="nav-bar">
-    <div class="brand-logo" onclick="switchSection('home')">OWN</div>
-    <div class="nav-menu">
-      <button class="nav-item" id="nav-estudio" onclick="switchSection('estudio')">Estudio</button>
-      <button class="nav-item" id="nav-proyectos" onclick="switchSection('proyectos')">Proyectos</button>
-    </div>
-  </nav>
-
-  <!-- 1. HOME -->
+  <!-- 1. HOME / ENTRADA -->
   <section id="section-home" class="page-section active">
-    <div class="hero-title-interactive" onclick="switchSection('proyectos')">OWN</div>
-    <div class="hero-subtext">Arquitectura & Diseño</div>
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" class="home-bg-image" alt="OWN Arquitectura">
+    <div class="home-overlay-content">
+      <div class="hero-title-interactive" onclick="switchSection('split')">OWN</div>
+      <div class="hero-subtext">Arquitectura & Diseño — Iniciar Exploración</div>
+    </div>
   </section>
 
-  <!-- 2. PROYECTOS -->
-  <section id="section-proyectos" class="page-section">
-    <div class="projects-container">
-
-      <div class="hero-image">
-        <img src="img/miralpeix.jpg" alt="OWN Architecture">
-      </div>
-      
-      <div class="projects-header-outside">
-        <h1>Obras Seleccionadas</h1>
-        <p>Espacios donde la materia y el silencio dialogan</p>
-      </div>
-
-    </div>
-
-    <!-- SECCIÓN HORIZONTAL -->
-    <div class="projects-horizontal-wrapper">
-      <div class="section-label">01 / Proyectos Destacados</div>
-      <div class="projects-horizontal-scroll" id="scroll-container">
-        
-        <div class="project-card-fluid" onclick="openProjectDetail(1)">
-          <div class="project-image-container">
-            <img src="img/CLARODELUZ/clarodeluz-4.jpg" alt="Casa Claro de luz">
-          </div>
-          <div class="project-info-fluid">
-            <div class="project-name">Casa Claro de luz</div>
-            <div class="project-location">Barcelona</div>
-          </div>
-        </div>
-
-        <div class="project-card-fluid" onclick="openProjectDetail(2)">
-          <div class="project-image-container">
-            <img src="img/FUYU/fuyu-4.jpg" alt="Casa Fuyu">
-          </div>
-          <div class="project-info-fluid">
-            <div class="project-name">Casa Fuyu</div>
-            <div class="project-location">Barcelona</div>
-          </div>
-        </div>
-
-        <div class="project-card-fluid" onclick="openProjectDetail(3)">
-          <div class="project-image-container">
-            <img src="img/PASSACAGLIA/passacaglia-4.jpg" alt="Casa Passacaglia">
-          </div>
-          <div class="project-info-fluid">
-            <div class="project-name">Casa Passacaglia</div>
-            <div class="project-location">Barcelona</div>
-          </div>
-        </div>
-
-        <div class="project-card-fluid" onclick="openProjectDetail(4)">
-          <div class="project-image-container">
-            <img src="img/BRISADELUZ/brisadeluz-4.jpg" alt="Casa Brisa de Luz">
-          </div>
-          <div class="project-info-fluid">
-            <div class="project-name">Casa Brisa de Luz</div>
-            <div class="project-location">Barcelona</div>
-          </div>
-        </div>
-
+  <!-- 2. DIVISIÓN DE PANTALLA DINÁMICA (ESTUDIO / PROYECTOS) -->
+  <section id="section-split" class="page-section">
+    
+    <!-- Columna Izquierda: Estudio -->
+    <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
+      <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Estudio OWN">
+      <div class="split-content">
+        <div class="split-title">Estudio</div>
+        <div class="split-desc">Filosofía, espacio y equipo</div>
       </div>
     </div>
 
-    <!-- GRILLA ASIMÉTRICA AMPLIADA CON 9 IMÁGENES EXTRA -->
-    <div class="projects-asymmetric-section">
-      <div class="section-label">02 / Fragmentos & Espacialidad</div>
-      <div class="asymmetric-grid">
-        
-        <!-- Fila 1 (Originales) -->
-        <div class="grid-item grid-item-1" onclick="openLightbox('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/BRISADELUZ/brisadeluz-4.jpg" alt="Estructura">
-          <div class="grid-item-title">Estructura & Encofrado</div>
-        </div>
-
-        <div class="grid-item grid-item-2" onclick="openLightbox('https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/JP/jp-4.jpg" alt="Interiorismo">
-          <div class="grid-item-title">Luz Cenital</div>
-        </div>
-
-        <div class="grid-item grid-item-3" onclick="openLightbox('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/PASSACAGLIA/passacaglia-4.jpg" alt="Texturas">
-          <div class="grid-item-title">Materia Continua</div>
-        </div>
-
-        <!-- Fila 2 (Originales) -->
-        <div class="grid-item grid-item-4" onclick="openLightbox('https://images.unsplash.com/photo-1600566753086-35f13ebc6746?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/FUYU/fuyu-4.jpg" alt="Piscina">
-          <div class="grid-item-title">Plano de Agua</div>
-        </div>
-
-        <div class="grid-item grid-item-5" onclick="openLightbox('https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/PASSACAGLIA/passacaglia-2.jpg" alt="Fachada">
-          <div class="grid-item-title">Fachada Norte</div>
-        </div>
-
-        <!-- Fila 3 (Originales) -->
-        <div class="grid-item grid-item-6" onclick="openLightbox('https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1000&auto=format&fit=crop" alt="Patio Central">
-          <div class="grid-item-title">Patio Central</div>
-        </div>
-
-        <div class="grid-item grid-item-7" onclick="openLightbox('https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1800&auto=format&fit=crop')">
-          <img src="img/FUYU/fuyu-1.jpg" alt="Detalle Tectónico">
-          <div class="grid-item-title">Detalle Tectónico</div>
-        </div>
-
-        <div class="grid-item grid-item-8" onclick="openLightbox('https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?q=80&w=1000&auto=format&fit=crop" alt="Perspectiva">
-          <div class="grid-item-title">Sombra & Vacío</div>
-        </div>
-
-        <!-- 9 NUEVAS IMÁGENES ASIMÉTRICAS AÑADIDAS -->
-        <div class="grid-item grid-item-9" onclick="openLightbox('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1000&auto=format&fit=crop" alt="Salón Minimalista">
-          <div class="grid-item-title">Ágora Interior</div>
-        </div>
-
-        <div class="grid-item grid-item-10" onclick="openLightbox('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Voladizo">
-          <div class="grid-item-title">Voladizo de Hormigón</div>
-        </div>
-
-        <div class="grid-item grid-item-11" onclick="openLightbox('https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1000&auto=format&fit=crop" alt="Escalera helicoidal">
-          <div class="grid-item-title">Geometria Ascendente</div>
-        </div>
-
-        <div class="grid-item grid-item-12" onclick="openLightbox('https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop" alt="Atardecer Arquitectónico">
-          <div class="grid-item-title">Crepúsculo & Materia</div>
-        </div>
-
-        <div class="grid-item grid-item-1" onclick="openLightbox('https://images.unsplash.com/photo-1600595452534-f67312f41ca2?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600595452534-f67312f41ca2?q=80&w=1000&auto=format&fit=crop" alt="Pasillo de Luz">
-          <div class="grid-item-title">Transición Lineal</div>
-        </div>
-
-        <div class="grid-item grid-item-2" onclick="openLightbox('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="Terraza Abierta">
-          <div class="grid-item-title">Horizonte Abierto</div>
-        </div>
-
-        <div class="grid-item grid-item-3" onclick="openLightbox('https://images.unsplash.com/photo-1600607687644-c7171b42498bf?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498bf?q=80&w=1000&auto=format&fit=crop" alt="Doble Altura">
-          <div class="grid-item-title">Doble Altura</div>
-        </div>
-
-        <div class="grid-item grid-item-4" onclick="openLightbox('https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600573472591-ee6c563aaec9?q=80&w=1200&auto=format&fit=crop" alt="Patio Interno">
-          <div class="grid-item-title">Patio Contemplativo</div>
-        </div>
-
-        <div class="grid-item grid-item-5" onclick="openLightbox('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1800&auto=format&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1000&auto=format&fit=crop" alt="Bloque Monolítico">
-          <div class="grid-item-title">Monolito Pétreo</div>
-        </div>
-
+    <!-- Columna Derecha: Proyectos -->
+    <div class="split-pane" id="pane-proyectos" onclick="switchSection('proyectos')">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop" alt="Proyectos OWN">
+      <div class="split-content">
+        <div class="split-title">Proyectos</div>
+        <div class="split-desc">Obras seleccionadas & memorias</div>
       </div>
     </div>
 
   </section>
 
-  <!-- 3. ESTUDIO -->
+  <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
-    <div class="estudio-container">
-      <div class="estudio-hero-quote">
-        Proyectamos una arquitectura esencial, centrada en la precisión del detalle y la interacción pura de la luz con la materia.
-      </div>
-      <div class="pillars-grid">
-        <div class="pillar-item">
-          <div class="pillar-title">Geometría Ligera</div>
-          <div class="pillar-desc">Sintetizamos la complejidad formal en volúmenes puros y líneas fluidas que respetan el entorno.</div>
+    <nav class="nav-bar">
+      <div class="brand-logo" onclick="switchSection('split')">OWN</div>
+      <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
+    </nav>
+    
+    <div class="section-inner">
+      <h1 class="section-header-title">El Estudio</h1>
+      <p class="section-intro-text">
+        Fundado bajo la premisa de la síntesis formal, OWN Studio concibe la arquitectura como un ejercicio de reducción y proporción rigurosa, donde cada material se expresa con absoluta honestidad constructiva.
+      </p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-img-container">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+          </div>
+          <div class="team-info">
+            <div class="team-name">Elena Vance</div>
+            <div class="team-role">Socia Fundadora / Directora de Proyectos</div>
+          </div>
         </div>
-        <div class="pillar-item">
-          <div class="pillar-title">Materia & Luz</div>
-          <div class="pillar-desc">Exploramos el hormigón, el vidrio y la piedra en su estado más honesto y continuo.</div>
+
+        <div class="team-card">
+          <div class="team-img-container">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+          </div>
+          <div class="team-info">
+            <div class="team-name">Marc Aureli</div>
+            <div class="team-role">Socio / Director de Diseño Técnico</div>
+          </div>
         </div>
-        <div class="pillar-item">
-          <div class="pillar-title">Sostenibilidad</div>
-          <div class="pillar-desc">Estrategias pasivas que optimizan la ventilación natural y la captación solar.</div>
+
+        <div class="team-card">
+          <div class="team-img-container">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Equipo Estudio">
+          </div>
+          <div class="team-info">
+            <div class="team-name">Oficina Central</div>
+            <div class="team-role">Espacio de trabajo y experimentación material</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MODAL PROYECTO -->
+  <!-- 4. SECCIÓN PROYECTOS -->
+  <section id="section-proyectos" class="page-section">
+    <nav class="nav-bar">
+      <div class="brand-logo" onclick="switchSection('split')">OWN</div>
+      <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
+    </nav>
+
+    <div class="section-inner">
+      <h1 class="section-header-title">Obras Seleccionadas</h1>
+      <p class="section-intro-text">
+        Seleccione un proyecto para acceder a su memoria descriptiva, datos técnicos, croquis y detalles constructivos originales.
+      </p>
+
+      <div class="projects-grid">
+        <div class="project-item" onclick="openProjectDetail(1)">
+          <div class="project-thumb">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
+          </div>
+          <div class="project-meta-row">
+            <div class="project-card-title">Torre en Conill</div>
+            <div class="project-card-loc">Valencia</div>
+          </div>
+        </div>
+
+        <div class="project-item" onclick="openProjectDetail(2)">
+          <div class="project-thumb">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+          </div>
+          <div class="project-meta-row">
+            <div class="project-card-title">Villa Pedralbes</div>
+            <div class="project-card-loc">Barcelona</div>
+          </div>
+        </div>
+
+        <div class="project-item" onclick="openProjectDetail(3)">
+          <div class="project-thumb">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+          </div>
+          <div class="project-meta-row">
+            <div class="project-card-title">Residencia Brava</div>
+            <div class="project-card-loc">Girona</div>
+          </div>
+        </div>
+
+        <div class="project-item" onclick="openProjectDetail(4)">
+          <div class="project-thumb">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
+          </div>
+          <div class="project-meta-row">
+            <div class="project-card-title">Refugio Hormigón</div>
+            <div class="project-card-loc">Alicante</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE MEMORIAS -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="Project Detail" class="modal-hero-img">
     <div class="modal-body-full" id="m-content"></div>
-  </div>
-
-  <!-- LIGHTBOX ZOOM -->
-  <div id="image-lightbox" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" alt="Zoom Photo">
   </div>
 
   <script>
@@ -337,7 +248,7 @@
         area: "480 m²",
         photo: "Mariela Apollonio",
         year: "2025",
-        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo que comprime la escala antes de liberar la vista hacia el horizonte.",
+        conceptText: "La vivienda se articula mediante el desplazamiento longitudinal de tres plataformas de hormigón. El recorrido de acceso es un evento progresivo que comprime la escala antes de liberar la vista hacia el horizonte y la arboleda exterior.",
         sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
       },
       2: {
@@ -348,7 +259,7 @@
         area: "650 m²",
         photo: "Fernando Guerra",
         year: "2024",
-        conceptText: "Adaptándose a un desnivel del 30%, la casa se organiza en terrazas escalonadas centrípetas articuladas alrededor de un patio interior.",
+        conceptText: "Adaptándose a un desnivel pronunciado, la casa se organiza en terrazas escalonadas centrípetas articuladas alrededor de un patio interior que introduce vegetación tropical y regula el clima de forma pasiva.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
       },
       3: {
@@ -359,7 +270,7 @@
         area: "390 m²",
         photo: "Adrià Goula",
         year: "2024",
-        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado.",
+        conceptText: "Un pliegue monolítico de hormigón teñido que emerge directamente de la roca del acantilado, mimetizándose con los tonos minerales de la costa y abriendo grandes vanos hacia el mar Mediterráneo.",
         sketchImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
       },
       4: {
@@ -370,62 +281,42 @@
         area: "310 m²",
         photo: "Mariela Apollonio",
         year: "2025",
-        conceptText: "Estructura introvertida diseñada para proteger el interior del intenso sol de la comarca.",
+        conceptText: "Estructura introvertida diseñada específicamente para proteger el interior del intenso calor estival, utilizando celosías de piedra y patios de sombra que generan corrientes de aire fresco de manera natural.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop"
       }
     };
 
     function switchSection(sectionId) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
       const target = document.getElementById('section-' + sectionId);
-      if(target) target.classList.add('active');
-
-      const navBtn = document.getElementById('nav-' + sectionId);
-      if(navBtn) navBtn.classList.add('active');
-    }
-
-    /* AUTO SCROLL SUAVE */
-    const slider = document.getElementById('scroll-container');
-    let autoScrollSpeed = 0;
-    let animFrameId = null;
-
-    function stepScroll() {
-      if (autoScrollSpeed !== 0) {
-        slider.scrollLeft += autoScrollSpeed;
-        animFrameId = requestAnimationFrame(stepScroll);
-      } else {
-        cancelAnimationFrame(animFrameId);
-        animFrameId = null;
+      if(target) {
+        target.classList.add('active');
+        window.scrollTo(0, 0);
       }
     }
 
-    slider.addEventListener('mousemove', (e) => {
-      const rect = slider.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const width = rect.width;
-      const threshold = 0.25;
-      const maxSpeed = 12;
+    /* CONTROL INTERACTIVO DE PANTALLA PARTIDA TIPO JADOT */
+    const paneEstudio = document.getElementById('pane-estudio');
+    const paneProyectos = document.getElementById('pane-proyectos');
 
-      if (mouseX < width * threshold) {
-        const factor = (width * threshold - mouseX) / (width * threshold);
-        autoScrollSpeed = -maxSpeed * factor;
-      } else if (mouseX > width * (1 - threshold)) {
-        const factor = (mouseX - width * (1 - threshold)) / (width * threshold);
-        autoScrollSpeed = maxSpeed * factor;
-      } else {
-        autoScrollSpeed = 0;
-      }
+    if(paneEstudio && paneProyectos) {
+      paneEstudio.addEventListener('mouseenter', () => {
+        paneEstudio.style.flex = '2.2';
+        paneProyectos.style.flex = '0.8';
+      });
 
-      if (autoScrollSpeed !== 0 && !animFrameId) {
-        animFrameId = requestAnimationFrame(stepScroll);
-      }
-    });
+      paneProyectos.addEventListener('mouseenter', () => {
+        paneProyectos.style.flex = '2.2';
+        paneEstudio.style.flex = '0.8';
+      });
 
-    slider.addEventListener('mouseleave', () => { autoScrollSpeed = 0; });
+      const splitSection = document.getElementById('section-split');
+      splitSection.addEventListener('mouseleave', () => {
+        paneEstudio.style.flex = '1';
+        paneProyectos.style.flex = '1';
+      });
+    }
 
-    /* MODAL */
     function openProjectDetail(id) {
       const p = projects[id];
       if(!p) return;
@@ -433,7 +324,7 @@
       document.getElementById('m-hero-img').src = p.hero;
 
       let contentHtml = `
-        <h1 style="font-family: 'Familjen Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase;">${p.title}</h1>
+        <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 700; text-transform: uppercase;">${p.title}</h1>
         <p style="font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; color: #a0a0a0; text-transform: uppercase; margin-top: 0.8rem;">${p.location}</p>
 
         <div class="sheet-meta-grid-full">
@@ -445,11 +336,11 @@
 
         <div class="sheet-grid-2-full">
           <div>
-            <div style="font-family: 'Familjen Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #a0a0a0; margin-bottom: 2rem;">Concepto Arquitectónico</div>
+            <div style="font-family: 'Familjen Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #a0a0a0; margin-bottom: 2rem;">Memoria del Proyecto</div>
             <p class="sheet-text-p">${p.conceptText}</p>
           </div>
           <div>
-            <img class="sheet-sketch-img" src="${p.sketchImg}" alt="Croquis">
+            <img class="sheet-sketch-img" src="${p.sketchImg}" alt="Esquema Técnico">
           </div>
         </div>
       `;
@@ -460,16 +351,6 @@
 
     function closeProjectDetail() {
       document.getElementById('project-modal').classList.remove('active');
-    }
-
-    /* LIGHTBOX */
-    function openLightbox(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('image-lightbox').classList.add('active');
-    }
-
-    function closeLightbox() {
-      document.getElementById('image-lightbox').classList.remove('active');
     }
   </script>
 </body>
