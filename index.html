@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -33,7 +33,7 @@
       cursor: pointer;
     }
 
-    /* --- NAVEGACIÓN FIJA --- */
+    /* --- NAVEGACIÓN MEJORADA CON BORDES Y CRISTAL BLANCO --- */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -42,33 +42,42 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2.5rem 4vw;
+      padding: 1.5rem 4vw;
       z-index: 10000;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+      background: rgba(255, 255, 255, 0.85); /* Fondo blanco traslúcido */
+      backdrop-filter: blur(12px);            /* Desfoque tipo cristal */
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.9); /* Borde blanco brillante */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       pointer-events: auto;
     }
 
     .brand-logo {
-      font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
+      font-size: 1.2rem;
+      font-weight: 600; /* Mayor grosor para destacar sobre la foto */
+      letter-spacing: 0.35em;
       text-transform: uppercase;
+      color: #000000;
       cursor: pointer;
     }
 
     .nav-menu {
       display: flex;
-      gap: 3.5rem;
+      gap: 2.5rem;
     }
 
     .nav-item {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500; /* Mayor legibilidad */
       text-transform: uppercase;
       letter-spacing: 0.25em;
-      color: #777777;
-      transition: color 0.4s ease;
+      color: #222222;
+      transition: all 0.3s ease;
       position: relative;
-      padding-bottom: 4px;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.8); /* Borde individual a los botones */
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 2px;
       cursor: pointer;
     }
 
@@ -78,13 +87,15 @@
       bottom: 0;
       left: 0;
       width: 0%;
-      height: 1px;
-      background-color: #111111;
+      height: 2px;
+      background-color: #000000;
       transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .nav-item:hover, .nav-item.active {
-      color: #111111;
+      color: #000000;
+      background: #ffffff;
+      border-color: #ffffff;
     }
 
     .nav-item.active::after, .nav-item:hover::after {
@@ -157,7 +168,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.9);
+      filter: none;
     }
 
     .projects-hero-caption {
@@ -166,6 +177,7 @@
       left: 5vw;
       color: #ffffff;
       z-index: 10;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
     }
 
     .projects-hero-caption h2 {
@@ -179,7 +191,7 @@
       font-size: 0.8rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      opacity: 0.8;
+      opacity: 0.9;
       margin-top: 0.5rem;
     }
 
