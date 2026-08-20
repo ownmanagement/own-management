@@ -1,11 +1,8 @@
 /* 3. Ajuste de la imagen para que gane altura real */
 .hero-image {
   width: 100%;
-  /* CAMBIO: Sube este valor. 80vh a 90vh dará una sensación mucho más vertical y cinematográfica */
-  height: 100vh; 
-  /* Si quieres que sea un cuadrado perfecto en pantallas grandes, podrías usar aspect-ratio: 1 / 1; en lugar de height */
-  
-  min-height: 500px; /* Aumentamos el mínimo para que no se vea achatada en laptops pequeñas */
+  height: 100vh; /* Mantienes tu altura cinematográfica */
+  min-height: 500px;
   overflow: hidden;
   margin-bottom: 30px;
   position: relative;
@@ -15,14 +12,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  
-  /* 
-     TIP: Si la imagen es un edificio, a veces el 'center' corta el techo o la base.
-     Puedes usar 'top', 'bottom' o porcentajes (ej: 50% 30%) 
-     para ajustar el enfoque vertical.
-  */
   object-position: center; 
-  
   filter: grayscale(10%);
+  
+  /* Aplicamos la animación de zoom infinito */
+  animation: zoom-ken-burns 30s ease-in-out infinite alternate;
+  
+  /* Mantenemos tu transición original por si la usas con otros disparadores */
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Definición del Keyframe para el zoom suave */
+@keyframes zoom-ken-burns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.15); /* Ajusta a 1.1 o 1.2 según prefieras la intensidad */
+  }
 }
