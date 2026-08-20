@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OWN — Arquitectura Mediterránea de Lujo</title>
   
+  <!-- FUENTES: Syne (Menú potente), Marcellus (Títulos elegantes) y Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Syne:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -45,7 +46,6 @@
       padding: 2.5rem 6vw;
       z-index: 10000;
       background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
-      transition: background 0.4s ease;
     }
 
     .brand-logo {
@@ -68,6 +68,7 @@
       gap: 3.5rem;
     }
 
+    /* Menú más presente, en negrita y con carácter */
     .nav-item {
       font-family: 'Syne', sans-serif;
       font-size: 0.85rem;
@@ -98,7 +99,7 @@
       width: 100%;
     }
 
-    /* Estilo para secciones claras */
+    /* Estilo de menú cuando estamos en secciones claras */
     .dark-nav .brand-logo { color: #1A1918; }
     .dark-nav .nav-item { color: #57534E; }
     .dark-nav .nav-item:hover, .dark-nav .nav-item.active { color: #1A1918; }
@@ -125,7 +126,7 @@
       z-index: 2;
     }
 
-    /* --- 1. HOME: HERO PANTALLA COMPLETA --- */
+    /* --- HOME: IMAGEN HERO A PANTALLA COMPLETA --- */
     #section-home {
       position: relative;
       width: 100vw;
@@ -212,7 +213,7 @@
       transform: translateY(-3px);
     }
 
-    /* --- 2. PROYECTOS (CARRUSEL ORIGINAL) --- */
+    /* --- PROYECTOS --- */
     #section-proyectos {
       background-color: #F4F1EA;
       padding-top: 140px;
@@ -290,102 +291,50 @@
       text-transform: uppercase;
     }
 
-    /* --- 3. ESTUDIO / ARCHIVO (GRILLA ESTILO FRAN SILVESTRE) --- */
+    /* --- ESTUDIO --- */
     #section-estudio {
       background-color: #F4F1EA;
-      padding-top: 120px;
-      position: relative;
+      padding-top: 160px;
     }
 
-    /* Titular gigante de fondo que se descubre tras las imágenes */
-    .bg-watermark-container {
-      position: sticky;
-      top: 90px;
-      width: 100%;
-      text-align: center;
-      z-index: 1;
-      pointer-events: none;
-      user-select: none;
+    .estudio-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 6vw 120px 6vw;
     }
 
-    .bg-watermark-text {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(4rem, 16vw, 18rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: rgba(26, 25, 24, 0.08);
-      line-height: 0.8;
-      text-transform: uppercase;
-    }
-
-    .estudio-intro-text {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-      margin: 0 auto 4rem auto;
-      padding: 0 6vw;
-      text-align: center;
+    .estudio-hero-quote {
       font-family: 'Marcellus', serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      line-height: 1.3;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      line-height: 1.25;
+      margin-bottom: 5rem;
       color: #1A1918;
     }
 
-    /* Grilla de 6 Columnas con separaciones estrechas */
-    .fs-mosaic-grid {
-      position: relative;
-      z-index: 2;
-      padding: 0 3vw 120px 3vw;
+    .pillars-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      border-top: 2px solid #1A1918;
+      padding-top: 3rem;
     }
 
-    .fs-mosaic-item {
-      position: relative;
-      overflow: hidden;
-      background-color: #E2D9CC;
-      cursor: pointer;
-    }
-
-    .fs-mosaic-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .fs-mosaic-item:hover img {
-      transform: scale(1.05);
-    }
-
-    /* Alturas desiguales para ritmo dinámico */
-    .ratio-short { height: 260px; }
-    .ratio-medium { height: 360px; }
-    .ratio-tall { height: 460px; }
-
-    .fs-item-hover-info {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      display: flex;
-      align-items: flex-end;
-      padding: 1.2rem;
-      color: #FFFFFF;
-    }
-
-    .fs-mosaic-item:hover .fs-item-hover-info { opacity: 1; }
-
-    .fs-hover-title {
-      font-family: 'Marcellus', serif;
-      font-size: 1.1rem;
+    .pillar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
     }
 
-    /* --- MODAL DETALLE --- */
+    .pillar-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #57534E;
+    }
+
+    /* --- MODAL PROYECTO --- */
     #project-modal {
       position: fixed;
       top: 0;
@@ -425,12 +374,8 @@
 
     .modal-body-full { padding: 5vh 6vw 100px 6vw; }
 
-    @media (max-width: 1200px) {
-      .fs-mosaic-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 600px) {
-      .fs-mosaic-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    @media (max-width: 900px) {
+      .pillars-grid { grid-template-columns: 1fr; }
       .hero-bottom-bar { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     }
   </style>
@@ -446,7 +391,7 @@
     </div>
   </nav>
 
-  <!-- 1. HOME -->
+  <!-- 1. HOME (IMAGEN A PANTALLA COMPLETA) -->
   <section id="section-home" class="page-section active">
     <div class="hero-bg-wrapper">
       <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2400&auto=format&fit=crop" alt="Villa Mediterránea de Lujo">
@@ -500,82 +445,26 @@
     </div>
   </section>
 
-  <!-- 3. ESTUDIO (AQUÍ ESTÁ LA NUEVA GRILLA TIPO FRAN SILVESTRE) -->
+  <!-- 3. ESTUDIO -->
   <section id="section-estudio" class="page-section">
-    
-    <!-- Texto gigante al hacer scroll -->
-    <div class="bg-watermark-container">
-      <div class="bg-watermark-text">ARCHIVE</div>
-    </div>
-
-    <div class="estudio-intro-text">
-      Exploración formal de la materia, la geometría y las texturas del Mediterráneo.
-    </div>
-
-    <!-- Grilla de 6 Columnas Denso -->
-    <div class="fs-mosaic-grid">
-      
-      <div class="fs-mosaic-item ratio-medium">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">I. Volúmenes</div></div>
+    <div class="estudio-container">
+      <div class="estudio-hero-quote">
+        Creamos espacios atemporales donde la piedra calcárea, la madera noble y el silencio definen la verdadera elegancia del Mediterráneo.
       </div>
-
-      <div class="fs-mosaic-item ratio-short">
-        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">II. Cal y Sombra</div></div>
+      <div class="pillars-grid">
+        <div>
+          <div class="pillar-title">Materia Noble</div>
+          <div class="pillar-desc">Piedra seca de cantera local, morteros de cal natural y maderas tratadas que envejecen con dignidad.</div>
+        </div>
+        <div>
+          <div class="pillar-title">Geometría y Luz</div>
+          <div class="pillar-desc">Volúmenes limpios diseñados para capturar la brisa marina y tamizar la luz solar en sombras serenas.</div>
+        </div>
+        <div>
+          <div class="pillar-title">Paisajismo Nativo</div>
+          <div class="pillar-desc">Integración total con el entorno mediante olivos, lavandas y láminas de agua que conectan con el mar.</div>
+        </div>
       </div>
-
-      <div class="fs-mosaic-item ratio-tall">
-        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">III. Patios</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-short">
-        <img src="https://images.unsplash.com/photo-1600566753086-35f13ebc6746?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">IV. Geometría</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-medium">
-        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">V. Horizonte</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-tall">
-        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">VI. Umbral</div></div>
-      </div>
-
-      <!-- Fila Inferior -->
-      <div class="fs-mosaic-item ratio-short">
-        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">VII. Texturas</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-tall">
-        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">VIII. Cantera</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-medium">
-        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">IX. Vacíos</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-short">
-        <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">X. Agua</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-tall">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">XI. Silencio</div></div>
-      </div>
-
-      <div class="fs-mosaic-item ratio-medium">
-        <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=800&auto=format&fit=crop" alt="Fragmento">
-        <div class="fs-item-hover-info"><div class="fs-hover-title">XII. Piedra</div></div>
-      </div>
-
     </div>
   </section>
 
@@ -603,6 +492,7 @@
       const navBtn = document.getElementById('nav-' + sectionId);
       if(navBtn) navBtn.classList.add('active');
 
+      // Adaptar color del menú según la sección
       const navBar = document.getElementById('main-nav');
       if (sectionId === 'home') {
         navBar.classList.remove('dark-nav');
