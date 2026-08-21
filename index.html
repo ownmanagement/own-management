@@ -76,7 +76,7 @@
     .hero-title-interactive:hover { letter-spacing: 0.02em; transform: scale(1.03); }
     .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4em; color: #e0e0e0; }
 
-    /* --- 2. DIVISIÓN DE PANTALLA DINÁMICA (B/N A COLOR) --- */
+    /* --- 2. DIVISIÓN DE PANTALLA CON PREVISUALIZACIÓN DE CONTENIDO --- */
     #section-split { 
       width: 100vw; 
       height: 100vh; 
@@ -96,7 +96,36 @@
       transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
     }
     
-    /* Capa oscura sutil para contraste tipográfico */
+    /* Contenedor interno de la previsualización en miniatura que actúa como fondo */
+    .preview-bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 40px;
+      align-content: center;
+      filter: grayscale(100%) brightness(0.4);
+      transform: scale(1.05);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+      pointer-events: none;
+    }
+    .split-pane:hover .preview-bg-container {
+      transform: scale(1);
+      filter: grayscale(0%) brightness(0.7);
+    }
+    .preview-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    /* Capa oscura superpuesta para asegurar legibilidad del texto */
     .split-pane::before { 
       content: ''; 
       position: absolute; 
@@ -104,34 +133,17 @@
       left: 0; 
       width: 100%; 
       height: 100%; 
-      background: rgba(0,0,0,0.35); 
+      background: rgba(0,0,0,0.5); 
       transition: background 0.6s ease; 
       z-index: 1; 
     }
     .split-pane:hover::before { 
-      background: rgba(0,0,0,0.1); 
-    }
-
-    /* Imagen en Blanco y Negro inicial, pasa a color en hover */
-    .split-pane img { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-      filter: grayscale(100%) brightness(0.9); 
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease; 
-      z-index: 0; 
-    }
-    .split-pane:hover img { 
-      transform: scale(1.06); 
-      filter: grayscale(0%) brightness(1); 
+      background: rgba(0,0,0,0.25); 
     }
 
     .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
-    .split-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 4.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; transition: transform 0.4s ease; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-    .split-desc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #e0e0e0; opacity: 0.8; transition: opacity 0.4s ease; }
+    .split-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 4.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; transition: transform 0.4s ease; text-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+    .split-desc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #e0e0e0; opacity: 0.9; transition: opacity 0.4s ease; }
     .split-pane:hover .split-title { transform: translateY(-4px); }
 
     /* --- CONTENEDORES CON SCROLL --- */
@@ -196,18 +208,34 @@
     </div>
   </section>
 
-  <!-- 2. DIVISIÓN DE PANTALLA DINÁMICA (B/N CON REVELACIÓN A COLOR) -->
+  <!-- 2. DIVISIÓN DE PANTALLA CON PREVISUALIZACIÓN DE CONTENIDO -->
   <section id="section-split" class="page-section">
+    <!-- Mitad Estudio (Fondo con miniaturas de los trabajadores) -->
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
-      <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Previsualización Estudio OWN">
+      <div class="preview-bg-container">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Trabajador 1">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Trabajador 2">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Trabajador 3">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Trabajador 4">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Trabajador 5">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Estudio">
+      </div>
       <div class="split-content">
         <div class="split-title">Estudio</div>
         <div class="split-desc">Filosofía, espacio y equipo</div>
       </div>
     </div>
 
+    <!-- Mitad Proyectos (Fondo con miniaturas de los proyectos) -->
     <div class="split-pane" id="pane-proyectos" onclick="switchSection('proyectos')">
-      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop" alt="Previsualización Proyectos OWN">
+      <div class="preview-bg-container">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto 1">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto 2">
+        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto 3">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto 4">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto Sketch">
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" class="preview-thumb" alt="Proyecto Detalle">
+      </div>
       <div class="split-content">
         <div class="split-title">Proyectos</div>
         <div class="split-desc">Obras seleccionadas & memorias</div>
