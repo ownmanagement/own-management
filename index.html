@@ -12,7 +12,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
     
-    /* BLOQUEO TOTAL DE SCROLL GLOBAL EN LA VISTA PRINCIPAL */
     html, body { 
       font-family: 'Playfair Display SC', serif; 
       background-color: #ffffff; 
@@ -24,7 +23,6 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- ANIMACIÓN KEN BURNS --- */
     @keyframes zoom-ken-burns {
       0% { transform: scale(1); }
       100% { transform: scale(1.15); }
@@ -50,7 +48,7 @@
     .nav-back-btn { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #666; transition: color 0.3s; cursor: pointer; }
     .nav-back-btn:hover { color: #000; }
 
-    /* --- CONTROL DE VISTAS (OCULTO POR DEFECTO, SOLO .active SE MUESTRA) --- */
+    /* --- GESTIÓN DE VISTAS --- */
     .page-section { 
       display: none; 
       width: 100vw; 
@@ -64,7 +62,7 @@
       display: flex; 
     }
 
-    /* --- 1. HOME CON IMAGEN PRINCIPAL DE FONDO --- */
+    /* --- 1. HOME --- */
     #section-home { 
       flex-direction: column; 
       justify-content: center; 
@@ -95,7 +93,7 @@
     .split-desc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #e0e0e0; opacity: 0.8; transition: opacity 0.4s ease; }
     .split-pane:hover .split-title { transform: translateY(-4px); }
 
-    /* --- CONTENEDORES INTERNOS CON SCROLL PROPIO --- */
+    /* --- CONTENEDORES CON SCROLL --- */
     .scrollable-content-wrapper {
       width: 100vw;
       height: 100vh;
@@ -103,20 +101,21 @@
       background-color: #ffffff;
     }
 
-    /* --- 3 & 4. CONTENIDO ESTUDIO Y PROYECTOS --- */
     .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1400px; margin: 0 auto; }
     .section-header-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; text-transform: uppercase; margin-bottom: 1.5rem; }
     .section-intro-text { font-family: 'Playfair Display SC', serif; font-size: clamp(1rem, 1.4vw, 1.4rem); line-height: 1.6; color: #444; max-width: 800px; margin-bottom: 5rem; }
     
+    /* --- EQUIPO (5 TRABAJADORES EN BLANCO Y NEGRO) --- */
     .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3vw; }
     .team-card { position: relative; }
-    .team-img-container { width: 100%; height: 50vh; overflow: hidden; background: #eee; }
-    .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: transform 1s ease; }
-    .team-card:hover .team-img-container img { transform: scale(1.04); }
+    .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; }
+    .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
+    .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(40%); }
     .team-info { margin-top: 1.2rem; }
     .team-name { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; }
     .team-role { font-family: 'Playfair Display SC', serif; font-size: 0.72rem; letter-spacing: 0.15em; color: #888; margin-top: 0.3rem; text-transform: uppercase; }
 
+    /* --- PROYECTOS --- */
     .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4vw; }
     .project-item { cursor: pointer; }
     .project-thumb { width: 100%; height: 55vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
@@ -156,7 +155,7 @@
     </div>
   </section>
 
-  <!-- 2. DIVISIÓN DE PANTALLA DINÁMICA (ESTUDIO / PROYECTOS) -->
+  <!-- 2. DIVISIÓN DE PANTALLA DINÁMICA -->
   <section id="section-split" class="page-section">
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
       <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Estudio OWN">
@@ -175,7 +174,7 @@
     </div>
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO -->
+  <!-- 3. SECCIÓN ESTUDIO (5 TRABAJADORES EN B/N) -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -192,31 +191,51 @@
         <div class="team-grid">
           <div class="team-card">
             <div class="team-img-container">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Elena Vance">
             </div>
             <div class="team-info">
               <div class="team-name">Elena Vance</div>
-              <div class="team-role">Socia Fundadora / Directora de Proyectos</div>
+              <div class="team-role">Socia Fundadora</div>
             </div>
           </div>
 
           <div class="team-card">
             <div class="team-img-container">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Marc Aureli">
             </div>
             <div class="team-info">
               <div class="team-name">Marc Aureli</div>
-              <div class="team-role">Socio / Director de Diseño Técnico</div>
+              <div class="team-role">Director Técnico</div>
             </div>
           </div>
 
           <div class="team-card">
             <div class="team-img-container">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Equipo Estudio">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Sofía Larsson">
             </div>
             <div class="team-info">
-              <div class="team-name">Oficina Central</div>
-              <div class="team-role">Espacio de trabajo y experimentación material</div>
+              <div class="team-name">Sofía Larsson</div>
+              <div class="team-role">Diseño de Interiores</div>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-img-container">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop" alt="Lucas Beltrán">
+            </div>
+            <div class="team-info">
+              <div class="team-name">Lucas Beltrán</div>
+              <div class="team-role">Arquitecto Senior</div>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-img-container">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop" alt="Clara Mendonça">
+            </div>
+            <div class="team-info">
+              <div class="team-name">Clara Mendonça</div>
+              <div class="team-role">Gestión de Proyectos</div>
             </div>
           </div>
         </div>
@@ -343,7 +362,6 @@
       const target = document.getElementById('section-' + sectionId);
       if(target) {
         target.classList.add('active');
-        // Reiniciar el scroll interno de la sección si lo tuviera
         const scroller = target.querySelector('.scrollable-content-wrapper');
         if(scroller) scroller.scrollTop = 0;
       }
