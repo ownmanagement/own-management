@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@600&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -38,8 +38,17 @@
       backdrop-filter: blur(10px); 
       -webkit-backdrop-filter: blur(10px); 
     }
-    .brand-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #000; cursor: pointer; transition: letter-spacing 0.5s ease; }
-    .brand-logo:hover { letter-spacing: 0.4em; }
+    .brand-logo { 
+      font-family: 'Montserrat', sans-serif; 
+      font-size: 1.1rem; 
+      font-weight: 600; 
+      letter-spacing: 0.35em; 
+      text-transform: uppercase; 
+      color: #000; 
+      cursor: pointer; 
+      transition: letter-spacing 0.5s ease; 
+    }
+    .brand-logo:hover { letter-spacing: 0.5em; }
     .nav-back-btn { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #666; transition: color 0.3s; cursor: pointer; }
     .nav-back-btn:hover { color: #000; }
 
@@ -57,7 +66,7 @@
       display: flex; 
     }
 
-    /* --- 1. HOME CON VIDEO DE DRON/LOOP GARANTIZADO --- */
+    /* --- 1. HOME CON VIDEO DE DRON / LOOP GARANTIZADO --- */
     #section-home { 
       flex-direction: column; 
       justify-content: center; 
@@ -80,8 +89,21 @@
       filter: brightness(0.55) contrast(1.1) grayscale(15%); 
     }
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
-    .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(5rem, 20vw, 18rem); font-weight: 700; letter-spacing: -0.03em; line-height: 0.8; cursor: pointer; user-select: none; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .hero-title-interactive:hover { letter-spacing: 0.02em; transform: scale(1.03); }
+    
+    /* Aplicando Montserrat Semibold 600 con espaciado amplio al logo principal */
+    .hero-title-interactive { 
+      font-family: 'Montserrat', sans-serif; 
+      font-size: clamp(4.5rem, 16vw, 15rem); 
+      font-weight: 600; 
+      letter-spacing: 0.25em; 
+      line-height: 0.8; 
+      cursor: pointer; 
+      user-select: none; 
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+      padding-left: 0.25em; /* Compensar visualmente el letter-spacing para el centrado */
+    }
+    .hero-title-interactive:hover { letter-spacing: 0.35em; transform: scale(1.03); }
     .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4em; color: #e0e0e0; }
 
     /* --- 2. DIVISIÓN DE PANTALLA --- */
@@ -204,10 +226,10 @@
 </head>
 <body>
 
-  <!-- 1. HOME CON VIDEO DE FONDO ESTILO DRON / ARQUITECTURA -->
+  <!-- 1. HOME CON VIDEO DE DRON Y LOGO MONTSERRAT -->
   <section id="section-home" class="page-section active">
     <video autoplay muted loop playsinline class="home-bg-video">
-      <source src="img/video.mov" type="video/mp4">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-buildings-and-traffic-41580-large.mp4" type="video/mp4">
     </video>
     <div class="home-overlay-content">
       <div class="hero-title-interactive" onclick="switchSection('split')">OWN</div>
@@ -217,9 +239,9 @@
 
   <!-- 2. DIVISIÓN DE PANTALLA -->
   <section id="section-split" class="page-section">
-    <!-- Mitad Estudio (Con tu foto exacta de equipo) -->
+    <!-- Mitad Estudio -->
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
-      <img src="img/imagen.jpg" alt="Retrato de Estudio Grupal">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop" alt="Retrato de Estudio Grupal">
       <div class="split-content">
         <div class="split-title">Estudio</div>
         <div class="split-desc">Elena Vance, Marc Aureli, Sofía Larsson y equipo — Conozca la filosofía y el personal.</div>
