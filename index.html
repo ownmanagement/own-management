@@ -1,3 +1,6 @@
+Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todos los títulos y elementos principales de la interfaz, junto con una **grilla asimétrica** completamente renovada que ahora incluye **8 proyectos** detallados.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,18 +11,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- FUENTES NUEVAS: -->
-  <!-- 1. Space Grotesk (Reemplazo minimalista de Montserrat para títulos) -->
-  <!-- 2. Familjen Grotesk (Reemplazo legible para subtítulo de inicio) -->
-  <!-- 3. Playfair Display (Original, mantenida para párrafos y detalles) -->
-  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- FUENTES: Inter (Títulos), Familjen Grotesk (Subtítulos limpios), Playfair Display (Cuerpo/Detalle) -->
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* --- RESET Y ESTILOS BASE --- */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
     
     html, body { 
-      /* Se mantiene Playfair Display como base elegante para cuerpo de texto */
       font-family: 'Playfair Display', serif; 
       background-color: #ffffff; 
       color: #0f0f0f; 
@@ -30,17 +28,14 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- APLICACIÓN DE FUENTES NUEVAS --- */
-
-    /* Títulos grandes (Reemplazo de Montserrat por Space Grotesk) */
+    /* Títulos y elementos principales con Inter */
     h1, h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title {
-        font-family: 'Space Grotesk', sans-serif !important; 
+        font-family: 'Inter', sans-serif !important; 
         text-transform: uppercase;
-        letter-spacing: 0.05em; /* Ligeramente ajustado para limpieza */
-        font-weight: 600; /* Semibold para buena presencia sin ser pesado */
+        letter-spacing: 0.03em; 
+        font-weight: 600; 
     }
 
-    /* --- NAV MINIMALISTA --- */
     .nav-bar { 
       position: fixed; 
       top: 0; 
@@ -59,17 +54,18 @@
     .nav-bar > * { pointer-events: auto; }
 
     .brand-logo { 
+        font-family: 'Inter', sans-serif !important;
         font-size: 1.1rem; 
-        letter-spacing: 0.3em; 
+        letter-spacing: 0.25em; 
         color: #000; 
         cursor: pointer; 
         transition: letter-spacing 0.5s ease; 
-        font-weight: 700; /* Un poco más de peso para el logo */
+        font-weight: 700; 
     }
-    .brand-logo:hover { letter-spacing: 0.4em; }
+    .brand-logo:hover { letter-spacing: 0.35em; }
     
     .nav-back-btn { 
-        font-family: 'Familjen Grotesk', sans-serif; /* Usando la nueva sans-serif */
+        font-family: 'Familjen Grotesk', sans-serif; 
         font-size: 0.8rem; 
         font-weight: 600; 
         text-transform: uppercase; 
@@ -79,7 +75,6 @@
     }
     .nav-back-btn:hover { color: #000; }
 
-    /* --- GESTIÓN DE VISTAS --- */
     .page-section { 
       display: none; 
       width: 100vw; 
@@ -93,7 +88,6 @@
       display: flex; 
     }
 
-    /* --- 1. HOME --- */
     #section-home { 
       flex-direction: column; 
       justify-content: center; 
@@ -118,7 +112,7 @@
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
     
     .hero-title-interactive { 
-        font-family: 'Space Grotesk', sans-serif !important; 
+        font-family: 'Inter', sans-serif !important; 
         font-size: clamp(5rem, 20vw, 18rem); 
         font-weight: 700; 
         letter-spacing: -0.02em; 
@@ -131,7 +125,6 @@
     .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
     
     .hero-subtext { 
-        /* CAMBIO DE LETRA AQUÍ: De Playfair SC a Familjen Grotesk */
         font-family: 'Familjen Grotesk', sans-serif; 
         margin-top: 2.5rem; 
         font-size: 0.9rem; 
@@ -142,7 +135,6 @@
         opacity: 0.9;
     }
 
-    /* --- 2. SPLIT SCREEN --- */
     #section-split { 
       width: 100vw; 
       height: 100vh; 
@@ -194,7 +186,6 @@
 
     .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
     
-    /* Títulos de sección (Space Grotesk aplicado globalmente arriba) */
     .split-title { 
         font-size: clamp(2rem, 4vw, 4.5rem); 
         margin-bottom: 0.5rem; 
@@ -203,7 +194,7 @@
     }
     
     .split-desc { 
-        font-family: 'Playfair Display', serif; /* Párrafo mantenido */
+        font-family: 'Playfair Display', serif; 
         font-size: 0.9rem; 
         letter-spacing: 0.02em; 
         color: #e0e0e0; 
@@ -211,12 +202,11 @@
         max-width: 380px;
         line-height: 1.6;
         transition: opacity 0.5s ease, transform 0.5s ease; 
-        text-transform: none; /* Corregido para que no sea mayúscula la descripción */
+        text-transform: none; 
     }
     .split-pane:hover .split-title { transform: translateY(-4px); }
     .split-pane:hover .split-desc { opacity: 1; transform: translateY(-2px); }
 
-    /* --- CONTENEDORES CON SCROLL --- */
     .scrollable-content-wrapper {
       width: 100vw;
       height: 100vh;
@@ -224,7 +214,7 @@
       background-color: #ffffff;
     }
 
-    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1400px; margin: 0 auto; }
+    .section-inner { padding: 140px 6vw 120px 6vw; max-width: 1400px; margin: 0 auto; }
     
     .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
     .section-intro-text { 
@@ -237,7 +227,6 @@
         font-weight: 400;
     }
     
-    /* --- EQUIPO --- */
     .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; }
     .team-card { position: relative; }
     .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
@@ -255,14 +244,34 @@
         font-weight: 400;
     }
 
-    /* --- PROYECTOS --- */
-    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6vw 4vw; }
-    .project-item { cursor: pointer; }
-    .project-thumb { width: 100%; height: 60vh; overflow: hidden; background: #eee; margin-bottom: 2rem; }
+    /* --- GRILLA ASIMÉTRICA DE PROYECTOS (8 PROYECTOS) --- */
+    .projects-grid-asym {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 5vw 3vw;
+    }
+
+    .project-item { cursor: pointer; display: flex; flex-direction: column; }
+    
+    /* Patrón asimétrico para los 8 proyectos */
+    .project-item:nth-child(1) { grid-column: span 7; }
+    .project-item:nth-child(2) { grid-column: span 5; margin-top: 8vh; }
+    .project-item:nth-child(3) { grid-column: span 5; }
+    .project-item:nth-child(4) { grid-column: span 7; margin-top: -6vh; }
+    .project-item:nth-child(5) { grid-column: span 8; }
+    .project-item:nth-child(6) { grid-column: span 4; margin-top: 10vh; }
+    .project-item:nth-child(7) { grid-column: span 6; }
+    .project-item:nth-child(8) { grid-column: span 6; margin-top: -8vh; }
+
+    .project-thumb { width: 100%; height: 55vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
+    .project-item:nth-child(1) .project-thumb, .project-item:nth-child(4) .project-thumb { height: 65vh; }
+    .project-item:nth-child(5) .project-thumb { height: 60vh; }
+
     .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(10%); }
     .project-item:hover .project-thumb img { transform: scale(1.04); filter: grayscale(0%); }
+    
     .project-meta-row { display: flex; justify-content: space-between; align-items: baseline; }
-    .project-card-title { font-size: 1.4rem; letter-spacing: 0.2em; }
+    .project-card-title { font-size: 1.3rem; letter-spacing: 0.15em; }
     .project-card-loc { 
         font-family: 'Familjen Grotesk', sans-serif; 
         font-size: 0.85rem; 
@@ -272,7 +281,6 @@
         font-weight: 400;
     }
 
-    /* --- MODAL DE MEMORIAS --- */
     #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; pointer-events: none; }
     #project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
     .modal-close-btn { 
@@ -295,7 +303,10 @@
     .modal-hero-img { width: 100vw; height: 90vh; object-fit: cover; }
     .modal-body-full { width: 100vw; padding: 10vh 6vw 150px 6vw; max-width: 1400px; margin: 0 auto; }
     
-    .modal-title { font-size: clamp(3rem, 6vw, 6remline-height: 1.1; 
+    .modal-title { 
+        font-family: 'Inter', sans-serif !important;
+        font-size: clamp(3rem, 6vw, 6rem); 
+        line-height: 1.1; 
         font-weight: 600; 
         letter-spacing: 0.02em; 
         text-transform: uppercase; 
@@ -321,9 +332,10 @@
     .sheet-text-p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.5vw, 1.5vw); line-height: 1.8; color: #333; margin-bottom: 2rem; font-weight: 400; }
     .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
 
-    /* --- RESPONSIVE --- */
     @media (max-width: 1000px) {
       .team-grid, .sheet-meta-grid-full { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
+      .projects-grid-asym { display: flex; flex-direction: column; gap: 4rem; }
+      .project-item { grid-column: span 12 !important; margin-top: 0 !important; }
     }
     @media (max-width: 800px) {
       #section-split { flex-direction: column; }
@@ -331,7 +343,7 @@
       .brand-logo { font-size: 1rem; }
       .section-inner { padding: 120px 5vw 80px 5vw; }
       .section-intro-text { margin-bottom: 4rem; font-size: 1.3rem;}
-      .team-grid, .projects-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
+      .team-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
       .team-img-container, .project-thumb { height: 50vh; }
       .modal-body-full { padding: 8vh 5vw 100px 5vw; }
       .sheet-sketch-img { height: 50vh; }
@@ -341,7 +353,6 @@
 </head>
 <body>
 
-  <!-- 1. HOME -->
   <section id="section-home" class="page-section active">
     <video autoplay muted loop playsinline class="home-bg-video">
       <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-buildings-and-traffic-41580-large.mp4" type="video/mp4">
@@ -352,7 +363,6 @@
     </div>
   </section>
 
-  <!-- 2. SPLIT SCREEN -->
   <section id="section-split" class="page-section">
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
       <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600" alt="Estudio">
@@ -370,7 +380,6 @@
     </div>
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -409,7 +418,6 @@
     </div>
   </section>
 
-  <!-- 4. SECCIÓN PROYECTOS -->
   <section id="section-proyectos" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -418,7 +426,9 @@
       </nav>
       <div class="section-inner">
         <h2 class="section-header-title">Obras Recientes</h2>
-        <div class="projects-grid">
+        
+        <!-- Grilla Asimétrica con 8 Proyectos -->
+        <div class="projects-grid-asym">
           <div class="project-item" onclick="openProjectDetail(1)">
             <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400" alt="Casa en Conill"></div>
             <div class="project-meta-row">
@@ -433,12 +443,54 @@
               <p class="project-card-loc">Barcelona</p>
             </div>
           </div>
+          <div class="project-item" onclick="openProjectDetail(3)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400" alt="Casa Cantábrica"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Casa Cantábrica</h4>
+              <p class="project-card-loc">Santander</p>
+            </div>
+          </div>
+          <div class="project-item" onclick="openProjectDetail(4)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400" alt="Pabellón Dalt Vila"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Pabellón Dalt Vila</h4>
+              <p class="project-card-loc">Ibiza</p>
+            </div>
+          </div>
+          <div class="project-item" onclick="openProjectDetail(5)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1400" alt="Residencia Boreal"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Residencia Boreal</h4>
+              <p class="project-card-loc">Madrid</p>
+            </div>
+          </div>
+          <div class="project-item" onclick="openProjectDetail(6)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400" alt="Casa Rústica Sotogrande"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Casa Sotogrande</h4>
+              <p class="project-card-loc">Cádiz</p>
+            </div>
+          </div>
+          <div class="project-item" onclick="openProjectDetail(7)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1400" alt="Loft Industrial Poblenou"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Loft Poblenou</h4>
+              <p class="project-card-loc">Barcelona</p>
+            </div>
+          </div>
+          <div class="project-item" onclick="openProjectDetail(8)">
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400" alt="Refugio de la Sierra"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Refugio de la Sierra</h4>
+              <p class="project-card-loc">Ávila</p>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- 5. MODAL DETALLE -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="" class="modal-hero-img">
@@ -455,7 +507,7 @@
         area: "480 m²",
         photo: "Mariela Apollonio",
         year: "2023",
-        conceptText: "La vivienda se articula mediante el desplazamiento de dos volúmenes puros de hormigón. El proyecto busca la máxima conexión visual con el campo de golf circundante mediante grandes ventanales.",
+        conceptText: "La vivienda se articula mediante el desplazamiento de dos volúmenes puros de hormigón. El proyecto busca la máxima conexión visual con el entorno circundante mediante grandes ventanales.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
       },
       2: {
@@ -467,6 +519,72 @@
         photo: "Simón García",
         year: "2022",
         conceptText: "Reforma integral de vivienda histórica. Se respetaron los elementos protegidos mientras se vaciaba el interior para crear espacios diáfanos y contemporáneos bañados en luz natural.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+      },
+      3: {
+        title: "Casa Cantábrica",
+        location: "Santander, España",
+        hero: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000",
+        architects: "OWN / Elena Vance",
+        area: "410 m²",
+        photo: "Aitor Ortiz",
+        year: "2023",
+        conceptText: "Diseñada para resistir el clima atlántico, la volumetría de zinc oscuro contrasta con la calidez interior del roble macizo, abriéndose completamente hacia los acantilados.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      4: {
+        title: "Pabellón Dalt Vila",
+        location: "Ibiza, España",
+        hero: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000",
+        architects: "OWN / Marc Aureli",
+        area: "320 m²",
+        photo: "Salva López",
+        year: "2021",
+        conceptText: "Un juego de patios y celosías de piedra seca que reinterpretaciones la arquitectura vernácula ibicenca bajo un prisma estrictamente contemporáneo y minimalista.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+      },
+      5: {
+        title: "Residencia Boreal",
+        location: "Madrid, España",
+        hero: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000",
+        architects: "OWN / Sofía Larsson",
+        area: "720 m²",
+        photo: "Javier Callejas",
+        year: "2024",
+        conceptText: "Estructura horizontal integrada en la topografía arbolada. Las fachadas acristaladas de suelo a techo difuminan los límites entre el interior doméstico y el jardín.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      6: {
+        title: "Casa Sotogrande",
+        location: "Cádiz, España",
+        hero: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2000",
+        architects: "OWN / Elena Vance",
+        area: "530 m²",
+        photo: "Fernando Alda",
+        year: "2022",
+        conceptText: "Grandes voladizos de hormigón visto que protegen del sol andaluz, generando porches sombreados y frescos conectados a una lámina de agua longitudinal.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+      },
+      7: {
+        title: "Loft Poblenou",
+        location: "Barcelona, España",
+        hero: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000",
+        architects: "OWN / Marc Aureli",
+        area: "260 m²",
+        photo: "José Hevia",
+        year: "2023",
+        conceptText: "Conversión de antigua nave industrial en estudio-vivienda. Se recuperaron las cerchas metálicas originales y los muros de ladrillo manual enfoscados en blanco.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      8: {
+        title: "Refugio de la Sierra",
+        location: "Ávila, España",
+        hero: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000",
+        architects: "OWN / Sofía Larsson",
+        area: "300 m²",
+        photo: "Alejandro Gómez",
+        year: "2021",
+        conceptText: "Pura abstracción formal revestida en piedra local del lugar. Un volumen compacto y monolítico diseñado para soportar los rigurosos inviernos de montaña.",
         sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
       }
     };
@@ -537,3 +655,5 @@
   </script>
 </body>
 </html>
+
+```
