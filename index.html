@@ -23,11 +23,6 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    @keyframes zoom-ken-burns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.15); }
-    }
-
     /* --- NAV MINIMALISTA --- */
     .nav-bar { 
       position: fixed; 
@@ -62,7 +57,7 @@
       display: flex; 
     }
 
-    /* --- 1. HOME --- */
+    /* --- 1. HOME CON VIDEO FIABLE --- */
     #section-home { 
       flex-direction: column; 
       justify-content: center; 
@@ -70,13 +65,25 @@
       position: relative; 
       overflow: hidden; 
     }
-    .home-bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.65) grayscale(20%); animation: zoom-ken-burns 25s ease-in-out infinite alternate; }
+    .home-bg-video { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      min-width: 100%; 
+      min-height: 100%; 
+      width: auto; 
+      height: auto; 
+      transform: translate(-50%, -50%); 
+      object-fit: cover; 
+      z-index: 1; 
+      filter: brightness(0.6) grayscale(20%); 
+    }
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
     .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(5rem, 20vw, 18rem); font-weight: 700; letter-spacing: -0.03em; line-height: 0.8; cursor: pointer; user-select: none; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .hero-title-interactive:hover { letter-spacing: 0.02em; transform: scale(1.03); }
     .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4em; color: #e0e0e0; }
 
-    /* --- 2. DIVISIÓN DE PANTALLA ULTRA-SUTIL --- */
+    /* --- 2. DIVISIÓN DE PANTALLA --- */
     #section-split { 
       width: 100vw; 
       height: 100vh; 
@@ -96,7 +103,7 @@
       transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
     }
     
-    /* Imagen de fondo sutil (Blanco y Negro puro que pasa a color) */
+    /* Imagen de fondo (B/N puro que pasa a color) */
     .split-pane img { 
       position: absolute; 
       top: 0; 
@@ -104,7 +111,7 @@
       width: 100%; 
       height: 100%; 
       object-fit: cover; 
-      filter: grayscale(100%) brightness(0.85); 
+      filter: grayscale(100%) brightness(0.9); 
       transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease; 
       z-index: 0; 
     }
@@ -113,7 +120,7 @@
       filter: grayscale(0%) brightness(0.95); 
     }
 
-    /* Velo oscuro muy ligero para garantizar contraste tipográfico */
+    /* Velo oscuro muy ligero para contraste tipográfico */
     .split-pane::before { 
       content: ''; 
       position: absolute; 
@@ -131,8 +138,6 @@
 
     .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
     .split-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 4.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 0.5rem; transition: transform 0.4s ease; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-    
-    /* Subtexto dinámico que revela el contenido interior sutilmente al pasar el cursor */
     .split-desc { 
       font-family: 'Playfair Display SC', serif; 
       font-size: 0.75rem; 
@@ -159,7 +164,7 @@
     .section-header-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; text-transform: uppercase; margin-bottom: 1.5rem; }
     .section-intro-text { font-family: 'Playfair Display SC', serif; font-size: clamp(1rem, 1.4vw, 1.4rem); line-height: 1.6; color: #444; max-width: 800px; margin-bottom: 5rem; }
     
-    /* --- EQUIPO (5 TRABAJADORES EN BLANCO Y NEGRO) --- */
+    /* --- EQUIPO --- */
     .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3vw; }
     .team-card { position: relative; }
     .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; }
@@ -200,20 +205,23 @@
 </head>
 <body>
 
-  <!-- 1. HOME / ENTRADA -->
+  <!-- 1. HOME CON VIDEO FIABLE -->
   <section id="section-home" class="page-section active">
-    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" class="home-bg-image" alt="OWN Arquitectura">
+    <video autoplay muted loop playsinline class="home-bg-video">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+    </video>
     <div class="home-overlay-content">
       <div class="hero-title-interactive" onclick="switchSection('split')">OWN</div>
       <div class="hero-subtext">Arquitectura & Diseño — Iniciar Exploración</div>
     </div>
   </section>
 
-  <!-- 2. DIVISIÓN DE PANTALLA CON TEXTO DESCRIPTIVO DISCRETO -->
+  <!-- 2. DIVISIÓN DE PANTALLA -->
   <section id="section-split" class="page-section">
     <!-- Mitad Estudio -->
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop" alt="Equipo del Estudio">
+      <!-- Retrato de equipo grupal de frente, estudio minimalista -->
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop" alt="Retrato de Estudio Grupal">
       <div class="split-content">
         <div class="split-title">Estudio</div>
         <div class="split-desc">Elena Vance, Marc Aureli, Sofía Larsson y equipo — Conozca la filosofía y el personal.</div>
@@ -230,7 +238,7 @@
     </div>
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO (5 TRABAJADORES EN B/N) -->
+  <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
