@@ -7,20 +7,341 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   
-  <!-- Enlace al archivo de estilos CSS -->
-  <link rel="stylesheet" href="style.css">
+  <!-- FUENTES NUEVAS: -->
+  <!-- 1. Space Grotesk (Reemplazo minimalista de Montserrat para títulos) -->
+  <!-- 2. Familjen Grotesk (Reemplazo legible para subtítulo de inicio) -->
+  <!-- 3. Playfair Display (Original, mantenida para párrafos y detalles) -->
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- RESET Y ESTILOS BASE --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    
+    html, body { 
+      /* Se mantiene Playfair Display como base elegante para cuerpo de texto */
+      font-family: 'Playfair Display', serif; 
+      background-color: #ffffff; 
+      color: #0f0f0f; 
+      width: 100vw; 
+      height: 100vh; 
+      overflow: hidden; 
+    }
+
+    button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
+
+    /* --- APLICACIÓN DE FUENTES NUEVAS --- */
+
+    /* Títulos grandes (Reemplazo de Montserrat por Space Grotesk) */
+    h1, h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title {
+        font-family: 'Space Grotesk', sans-serif !important; 
+        text-transform: uppercase;
+        letter-spacing: 0.05em; /* Ligeramente ajustado para limpieza */
+        font-weight: 600; /* Semibold para buena presencia sin ser pesado */
+    }
+
+    /* --- NAV MINIMALISTA --- */
+    .nav-bar { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1.5rem 6vw; 
+      z-index: 10000; 
+      background: rgba(255, 255, 255, 0.85); 
+      backdrop-filter: blur(10px); 
+      -webkit-backdrop-filter: blur(10px); 
+      pointer-events: none; 
+    }
+    .nav-bar > * { pointer-events: auto; }
+
+    .brand-logo { 
+        font-size: 1.1rem; 
+        letter-spacing: 0.3em; 
+        color: #000; 
+        cursor: pointer; 
+        transition: letter-spacing 0.5s ease; 
+        font-weight: 700; /* Un poco más de peso para el logo */
+    }
+    .brand-logo:hover { letter-spacing: 0.4em; }
+    
+    .nav-back-btn { 
+        font-family: 'Familjen Grotesk', sans-serif; /* Usando la nueva sans-serif */
+        font-size: 0.8rem; 
+        font-weight: 600; 
+        text-transform: uppercase; 
+        letter-spacing: 0.15em; 
+        color: #666; 
+        transition: color 0.3s; 
+    }
+    .nav-back-btn:hover { color: #000; }
+
+    /* --- GESTIÓN DE VISTAS --- */
+    .page-section { 
+      display: none; 
+      width: 100vw; 
+      height: 100vh; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #ffffff; 
+    }
+    .page-section.active { 
+      display: flex; 
+    }
+
+    /* --- 1. HOME --- */
+    #section-home { 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      position: relative; 
+      overflow: hidden; 
+      background-color: #000;
+    }
+    .home-bg-video { 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      min-width: 100%; 
+      min-height: 100%; 
+      width: auto; 
+      height: auto; 
+      transform: translate(-50%, -50%); 
+      object-fit: cover; 
+      z-index: 1; 
+      filter: brightness(0.55) contrast(1.1) grayscale(15%); 
+    }
+    .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
+    
+    .hero-title-interactive { 
+        font-family: 'Space Grotesk', sans-serif !important; 
+        font-size: clamp(5rem, 20vw, 18rem); 
+        font-weight: 700; 
+        letter-spacing: -0.02em; 
+        line-height: 0.8; 
+        cursor: pointer; 
+        user-select: none; 
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
+        text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    }
+    .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
+    
+    .hero-subtext { 
+        /* CAMBIO DE LETRA AQUÍ: De Playfair SC a Familjen Grotesk */
+        font-family: 'Familjen Grotesk', sans-serif; 
+        margin-top: 2.5rem; 
+        font-size: 0.9rem; 
+        text-transform: uppercase; 
+        letter-spacing: 0.35em; 
+        color: #ffffff; 
+        font-weight: 400;
+        opacity: 0.9;
+    }
+
+    /* --- 2. SPLIT SCREEN --- */
+    #section-split { 
+      width: 100vw; 
+      height: 100vh; 
+      position: relative; 
+    }
+    .split-pane { 
+      flex: 1; 
+      height: 100%; 
+      position: relative; 
+      overflow: hidden; 
+      cursor: pointer; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: flex-end; 
+      padding: 6vw; 
+      transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
+    }
+    
+    .split-pane img { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      filter: grayscale(100%) brightness(0.9); 
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease; 
+      z-index: 0; 
+    }
+    .split-pane:hover img { 
+      transform: scale(1.05); 
+      filter: grayscale(0%) brightness(0.95); 
+    }
+
+    .split-pane::before { 
+      content: ''; 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.25); 
+      transition: background 0.6s ease; 
+      z-index: 1; 
+    }
+    .split-pane:hover::before { 
+      background: rgba(0,0,0,0.1); 
+    }
+
+    .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
+    
+    /* Títulos de sección (Space Grotesk aplicado globalmente arriba) */
+    .split-title { 
+        font-size: clamp(2rem, 4vw, 4.5rem); 
+        margin-bottom: 0.5rem; 
+        transition: transform 0.4s ease; 
+        text-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    }
+    
+    .split-desc { 
+        font-family: 'Playfair Display', serif; /* Párrafo mantenido */
+        font-size: 0.9rem; 
+        letter-spacing: 0.02em; 
+        color: #e0e0e0; 
+        opacity: 0.9; 
+        max-width: 380px;
+        line-height: 1.6;
+        transition: opacity 0.5s ease, transform 0.5s ease; 
+        text-transform: none; /* Corregido para que no sea mayúscula la descripción */
+    }
+    .split-pane:hover .split-title { transform: translateY(-4px); }
+    .split-pane:hover .split-desc { opacity: 1; transform: translateY(-2px); }
+
+    /* --- CONTENEDORES CON SCROLL --- */
+    .scrollable-content-wrapper {
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      background-color: #ffffff;
+    }
+
+    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1400px; margin: 0 auto; }
+    
+    .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
+    .section-intro-text { 
+        font-family: 'Playfair Display', serif; 
+        font-size: clamp(1.1rem, 1.6vw, 1.6rem); 
+        line-height: 1.8; 
+        color: #333; 
+        max-width: 900px; 
+        margin-bottom: 6rem; 
+        font-weight: 400;
+    }
+    
+    /* --- EQUIPO --- */
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; }
+    .team-card { position: relative; }
+    .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
+    .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
+    .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(0%); }
+    
+    .team-name { font-size: 1.2rem; letter-spacing: 0.15em; }
+    .team-role { 
+        font-family: 'Familjen Grotesk', sans-serif; 
+        font-size: 0.85rem; 
+        letter-spacing: 0.05em; 
+        color: #666; 
+        margin-top: 0.5rem; 
+        text-transform: uppercase; 
+        font-weight: 400;
+    }
+
+    /* --- PROYECTOS --- */
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6vw 4vw; }
+    .project-item { cursor: pointer; }
+    .project-thumb { width: 100%; height: 60vh; overflow: hidden; background: #eee; margin-bottom: 2rem; }
+    .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(10%); }
+    .project-item:hover .project-thumb img { transform: scale(1.04); filter: grayscale(0%); }
+    .project-meta-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .project-card-title { font-size: 1.4rem; letter-spacing: 0.2em; }
+    .project-card-loc { 
+        font-family: 'Familjen Grotesk', sans-serif; 
+        font-size: 0.85rem; 
+        letter-spacing: 0.1em; 
+        color: #777; 
+        text-transform: uppercase; 
+        font-weight: 400;
+    }
+
+    /* --- MODAL DE MEMORIAS --- */
+    #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; pointer-events: none; }
+    #project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
+    .modal-close-btn { 
+        font-family: 'Familjen Grotesk', sans-serif; 
+        position: fixed; 
+        top: 2rem; 
+        right: 6vw; 
+        z-index: 21000; 
+        font-size: 0.8rem; 
+        font-weight: 600; 
+        letter-spacing: 0.2em; 
+        text-transform: uppercase; 
+        padding: 0.8rem 1.6rem; 
+        background: #ffffff; 
+        border: 1px solid rgba(0,0,0,0.1); 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+    }
+    .modal-close-btn:hover { background: #000; color: #fff; border-color: #000; }
+    .modal-hero-img { width: 100vw; height: 90vh; object-fit: cover; }
+    .modal-body-full { width: 100vw; padding: 10vh 6vw 150px 6vw; max-width: 1400px; margin: 0 auto; }
+    
+    .modal-title { font-size: clamp(3rem, 6vw, 6remline-height: 1.1; 
+        font-weight: 600; 
+        letter-spacing: 0.02em; 
+        text-transform: uppercase; 
+        margin-bottom: 1.5rem; 
+    }
+    .modal-subtitle { 
+        font-family: 'Familjen Grotesk', sans-serif; 
+        font-size: 1rem; 
+        letter-spacing: 0.3em; 
+        color: #aaa; 
+        text-transform: uppercase; 
+        margin-bottom: 8vh; 
+        display: block; 
+        font-weight: 400;
+    }
+
+    .sheet-meta-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 4rem 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin: 8vh 0; }
+    .meta-box span { font-family: 'Familjen Grotesk', sans-serif; display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; font-weight: 600; }
+    .meta-box strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-top: 0.8rem; display: block; font-weight: 400; }
+    
+    .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; margin-top: 10vh;}
+    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.2em; margin-bottom: 2rem; color: #333; font-weight: 600;}
+    .sheet-text-p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.5vw, 1.5vw); line-height: 1.8; color: #333; margin-bottom: 2rem; font-weight: 400; }
+    .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 1000px) {
+      .team-grid, .sheet-meta-grid-full { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
+    }
+    @media (max-width: 800px) {
+      #section-split { flex-direction: column; }
+      .nav-bar { padding: 1rem 5vw; }
+      .brand-logo { font-size: 1rem; }
+      .section-inner { padding: 120px 5vw 80px 5vw; }
+      .section-intro-text { margin-bottom: 4rem; font-size: 1.3rem;}
+      .team-grid, .projects-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
+      .team-img-container, .project-thumb { height: 50vh; }
+      .modal-body-full { padding: 8vh 5vw 100px 5vw; }
+      .sheet-sketch-img { height: 50vh; }
+      .modal-close-btn { top: auto; bottom: 2rem; left: 5vw; right: auto; width: 90vw; text-align: center;}
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAVEGACIÓN GLOBAL -->
-  <nav class="nav-bar">
-    <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
-    <button class="nav-back-btn" onclick="switchSection('split')">← Menú</button>
-  </nav>
-
-  <!-- HOME -->
+  <!-- 1. HOME -->
   <section id="section-home" class="page-section active">
     <video autoplay muted loop playsinline class="home-bg-video">
       <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-buildings-and-traffic-41580-large.mp4" type="video/mp4">
@@ -31,75 +352,188 @@
     </div>
   </section>
 
-  <!-- SPLIT SCREEN -->
+  <!-- 2. SPLIT SCREEN -->
   <section id="section-split" class="page-section">
     <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
-      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop" alt="Estudio">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600" alt="Estudio">
       <div class="split-content">
         <h2 class="split-title">Estudio</h2>
-        <p class="split-desc">Filosofía, equipo y enfoque.</p>
+        <p class="split-desc">Filosofía, equipo y metodología.</p>
       </div>
     </div>
     <div class="split-pane" id="pane-proyectos" onclick="switchSection('proyectos')">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop" alt="Proyectos">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600" alt="Proyectos">
       <div class="split-content">
         <h2 class="split-title">Proyectos</h2>
-        <p class="split-desc">Obras seleccionadas y memorias.</p>
+        <p class="split-desc">Obras y memorias técnicas.</p>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN ESTUDIO -->
+  <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
+      <nav class="nav-bar">
+        <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
+        <button class="nav-back-btn" onclick="switchSection('split')">← Volver</button>
+      </nav>
       <div class="section-inner">
-        <h2 class="section-header-title">Filosofía</h2>
-        <p class="section-intro-text">Entendemos la arquitectura como un ejercicio de síntesis entre el rigor constructivo, la sensibilidad contextual y la habitabilidad. Cada proyecto es una respuesta única a un lugar y un programa específicos.</p>
+        <h2 class="section-header-title">El Estudio</h2>
+        <p class="section-intro-text">
+          Fundado en 2010, OWN es un taller de arquitectura enfocado en la síntesis entre el rigor constructivo y la sensibilidad espacial. Creemos en el diseño atemporal que dialoga con su entorno.
+        </p>
         <div class="team-grid">
           <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop" alt="Elena Vance"></div>
-            <h4 class="team-name">Elena Vance</h4><p class="team-role">Directora Creativa</p>
+            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
+            <div class="team-info">
+              <h4 class="team-name">Elena Vance</h4>
+              <p class="team-role">Socia Fundadora</p>
+            </div>
           </div>
           <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Marc Aureli"></div>
-            <h4 class="team-name">Marc Aureli</h4><p class="team-role">Director Técnico</p>
+            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Marc Aureli"></div>
+            <div class="team-info">
+              <h4 class="team-name">Marc Aureli</h4>
+              <p class="team-role">Socio Fundador</p>
+            </div>
           </div>
           <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" alt="Sofía Larsson"></div>
-            <h4 class="team-name">Sofía Larsson</h4><p class="team-role">Arquitecta Senior</p>
+            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" alt="Sofía Larsson"></div>
+            <div class="team-info">
+              <h4 class="team-name">Sofía Larsson</h4>
+              <p class="team-role">Arquitecta Senior</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN PROYECTOS -->
+  <!-- 4. SECCIÓN PROYECTOS -->
   <section id="section-proyectos" class="page-section">
     <div class="scrollable-content-wrapper">
+      <nav class="nav-bar">
+        <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
+        <button class="nav-back-btn" onclick="switchSection('split')">← Volver</button>
+      </nav>
       <div class="section-inner">
-        <h2 class="section-header-title">Obras</h2>
+        <h2 class="section-header-title">Obras Recientes</h2>
         <div class="projects-grid">
           <div class="project-item" onclick="openProjectDetail(1)">
-            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Casa en Conill"></div>
-            <div class="project-meta-row"><h4 class="project-card-title">Casa en Conill</h4><p class="project-card-loc">Valencia</p></div>
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400" alt="Casa en Conill"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Casa en Conill</h4>
+              <p class="project-card-loc">Valencia</p>
+            </div>
           </div>
           <div class="project-item" onclick="openProjectDetail(2)">
-            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes"></div>
-            <div class="project-meta-row"><h4 class="project-card-title">Villa Pedralbes</h4><p class="project-card-loc">Barcelona</p></div>
+            <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400" alt="Villa Pedralbes"></div>
+            <div class="project-meta-row">
+              <h4 class="project-card-title">Villa Pedralbes</h4>
+              <p class="project-card-loc">Barcelona</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MODAL PROYECTO -->
+  <!-- 5. MODAL DETALLE -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="" class="modal-hero-img">
     <div class="modal-body-full" id="m-content"></div>
   </div>
 
-  <!-- Enlace al archivo de lógica JavaScript -->
-  <script src="script.js"></script>
+  <script>
+    const projectDatabase = {
+      1: {
+        title: "Casa en Conill",
+        location: "Valencia, España",
+        hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000",
+        architects: "OWN / Elena Vance, Marc Aureli",
+        area: "480 m²",
+        photo: "Mariela Apollonio",
+        year: "2023",
+        conceptText: "La vivienda se articula mediante el desplazamiento de dos volúmenes puros de hormigón. El proyecto busca la máxima conexión visual con el campo de golf circundante mediante grandes ventanales.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      2: {
+        title: "Villa Pedralbes",
+        location: "Barcelona, España",
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000",
+        architects: "OWN / Sofía Larsson",
+        area: "650 m²",
+        photo: "Simón García",
+        year: "2022",
+        conceptText: "Reforma integral de vivienda histórica. Se respetaron los elementos protegidos mientras se vaciaba el interior para crear espacios diáfanos y contemporáneos bañados en luz natural.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+      }
+    };
+
+    function switchSection(sectionId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById('section-' + sectionId);
+      if(target) {
+        target.classList.add('active');
+        const scroller = target.querySelector('.scrollable-content-wrapper');
+        if(scroller) scroller.scrollTop = 0;
+      }
+    }
+
+    const paneE = document.getElementById('pane-estudio');
+    const paneP = document.getElementById('pane-proyectos');
+    if(window.innerWidth > 800) {
+      paneE.addEventListener('mouseenter', () => { paneE.style.flex = '2.5'; paneP.style.flex = '0.5'; });
+      paneE.addEventListener('mouseleave', () => { paneE.style.flex = '1'; paneP.style.flex = '1'; });
+      paneP.addEventListener('mouseenter', () => { paneP.style.flex = '2.5'; paneE.style.flex = '0.5'; });
+      paneP.addEventListener('mouseleave', () => { paneP.style.flex = '1'; paneE.style.flex = '1'; });
+    }
+
+    const modal = document.getElementById('project-modal');
+    const mImg = document.getElementById('m-hero-img');
+    const mContent = document.getElementById('m-content');
+
+    function openProjectDetail(id) {
+      const p = projectDatabase[id];
+      if(!p) return;
+      mImg.src = p.hero;
+      mImg.alt = p.title;
+      mContent.innerHTML = `
+        <span class="modal-subtitle">MEMORIA DE PROYECTO</span>
+        <h2 class="modal-title">${p.title}</h2>
+        <p style="font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #777; margin-bottom: 2rem;">${p.location}</p>
+        
+        <div class="sheet-meta-grid-full">
+          <div class="meta-box"><span>Arquitectura</span><strong>${p.architects}</strong></div>
+          <div class="meta-box"><span>Superficie</span><strong>${p.area}</strong></div>
+          <div class="meta-box"><span>Fotografía</span><strong>${p.photo}</strong></div>
+          <div class="meta-box"><span>Año</span><strong>${p.year}</strong></div>
+        </div>
+
+        <div class="sheet-grid-2-full">
+          <div class="sheet-text-block">
+            <h3>Concepto</h3>
+            <p class="sheet-text-p">${p.conceptText}</p>
+          </div>
+          <div>
+            <img src="${p.sketchImg}" alt="Croquis" class="sheet-sketch-img">
+          </div>
+        </div>
+      `;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectDetail() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => mImg.src = "", 500);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.classList.contains('active')) closeProjectDetail();
+    });
+  </script>
 </body>
 </html>
