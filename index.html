@@ -11,7 +11,17 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    body { font-family: 'Playfair Display SC', serif; background-color: #ffffff; color: #0f0f0f; overflow-x: hidden; width: 100vw; height: 100vh; }
+    
+    /* BLOQUEO TOTAL DE SCROLL GLOBAL EN LA VISTA PRINCIPAL */
+    html, body { 
+      font-family: 'Playfair Display SC', serif; 
+      background-color: #ffffff; 
+      color: #0f0f0f; 
+      width: 100vw; 
+      height: 100vh; 
+      overflow: hidden; 
+    }
+
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
     /* --- ANIMACIÓN KEN BURNS --- */
@@ -21,26 +31,60 @@
     }
 
     /* --- NAV MINIMALISTA --- */
-    .nav-bar { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 6vw; z-index: 10000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .nav-bar { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1.5rem 6vw; 
+      z-index: 10000; 
+      background: rgba(255, 255, 255, 0.85); 
+      backdrop-filter: blur(10px); 
+      -webkit-backdrop-filter: blur(10px); 
+    }
     .brand-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #000; cursor: pointer; transition: letter-spacing 0.5s ease; }
     .brand-logo:hover { letter-spacing: 0.4em; }
     .nav-back-btn { font-family: 'Familjen Grotesk', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #666; transition: color 0.3s; cursor: pointer; }
     .nav-back-btn:hover { color: #000; }
 
-    /* --- SECCIONES GENERALES --- */
-    .page-section { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; opacity: 0; visibility: hidden; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s; z-index: 1; overflow-y: auto; background-color: #ffffff; pointer-events: none; }
-    .page-section.active { opacity: 1; visibility: visible; z-index: 2; pointer-events: auto; }
+    /* --- CONTROL DE VISTAS (OCULTO POR DEFECTO, SOLO .active SE MUESTRA) --- */
+    .page-section { 
+      display: none; 
+      width: 100vw; 
+      height: 100vh; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #ffffff; 
+    }
+    .page-section.active { 
+      display: flex; 
+    }
 
     /* --- 1. HOME CON IMAGEN PRINCIPAL DE FONDO --- */
-    #section-home { display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+    #section-home { 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      position: relative; 
+      overflow: hidden; 
+    }
     .home-bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.65) grayscale(20%); animation: zoom-ken-burns 25s ease-in-out infinite alternate; }
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
     .hero-title-interactive { font-family: 'Space Grotesk', sans-serif; font-size: clamp(5rem, 20vw, 18rem); font-weight: 700; letter-spacing: -0.03em; line-height: 0.8; cursor: pointer; user-select: none; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .hero-title-interactive:hover { letter-spacing: 0.02em; transform: scale(1.03); }
     .hero-subtext { font-family: 'Playfair Display SC', serif; margin-top: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4em; color: #e0e0e0; }
 
-    /* --- 2. DIVISIÓN DE PANTALLA DINÁMICA (ESTILO LORENZ / JADOT) --- */
-    #section-split { display: flex; width: 100vw; height: 100vh; overflow: hidden; position: relative; }
+    /* --- 2. DIVISIÓN DE PANTALLA DINÁMICA --- */
+    #section-split { 
+      width: 100vw; 
+      height: 100vh; 
+      overflow: hidden; 
+      position: relative; 
+    }
     .split-pane { flex: 1; height: 100%; position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; padding: 6vw; transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
     .split-pane::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); transition: background 0.6s ease; z-index: 1; }
     .split-pane:hover::before { background: rgba(0,0,0,0.15); }
@@ -51,7 +95,15 @@
     .split-desc { font-family: 'Playfair Display SC', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: #e0e0e0; opacity: 0.8; transition: opacity 0.4s ease; }
     .split-pane:hover .split-title { transform: translateY(-4px); }
 
-    /* --- 3. CONTENIDO ESTUDIO --- */
+    /* --- CONTENEDORES INTERNOS CON SCROLL PROPIO --- */
+    .scrollable-content-wrapper {
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      background-color: #ffffff;
+    }
+
+    /* --- 3 & 4. CONTENIDO ESTUDIO Y PROYECTOS --- */
     .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1400px; margin: 0 auto; }
     .section-header-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; text-transform: uppercase; margin-bottom: 1.5rem; }
     .section-intro-text { font-family: 'Playfair Display SC', serif; font-size: clamp(1rem, 1.4vw, 1.4rem); line-height: 1.6; color: #444; max-width: 800px; margin-bottom: 5rem; }
@@ -65,7 +117,6 @@
     .team-name { font-family: 'Familjen Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; }
     .team-role { font-family: 'Playfair Display SC', serif; font-size: 0.72rem; letter-spacing: 0.15em; color: #888; margin-top: 0.3rem; text-transform: uppercase; }
 
-    /* --- 4. CONTENIDO PROYECTOS --- */
     .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4vw; }
     .project-item { cursor: pointer; }
     .project-thumb { width: 100%; height: 55vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
@@ -126,45 +177,47 @@
 
   <!-- 3. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
-    <nav class="nav-bar">
-      <div class="brand-logo" onclick="switchSection('split')">OWN</div>
-      <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
-    </nav>
-    
-    <div class="section-inner">
-      <h1 class="section-header-title">El Estudio</h1>
-      <p class="section-intro-text">
-        Fundado bajo la premisa de la síntesis formal, OWN Studio concibe la arquitectura como un ejercicio de reducción y proporción rigurosa, donde cada material se expresa con absoluta honestidad constructiva.
-      </p>
+    <div class="scrollable-content-wrapper">
+      <nav class="nav-bar">
+        <div class="brand-logo" onclick="switchSection('split')">OWN</div>
+        <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
+      </nav>
+      
+      <div class="section-inner">
+        <h1 class="section-header-title">El Estudio</h1>
+        <p class="section-intro-text">
+          Fundado bajo la premisa de la síntesis formal, OWN Studio concibe la arquitectura como un ejercicio de reducción y proporción rigurosa, donde cada material se expresa con absoluta honestidad constructiva.
+        </p>
 
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-img-container">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-img-container">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+            </div>
+            <div class="team-info">
+              <div class="team-name">Elena Vance</div>
+              <div class="team-role">Socia Fundadora / Directora de Proyectos</div>
+            </div>
           </div>
-          <div class="team-info">
-            <div class="team-name">Elena Vance</div>
-            <div class="team-role">Socia Fundadora / Directora de Proyectos</div>
-          </div>
-        </div>
 
-        <div class="team-card">
-          <div class="team-img-container">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+          <div class="team-card">
+            <div class="team-img-container">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Arquitecto Socio">
+            </div>
+            <div class="team-info">
+              <div class="team-name">Marc Aureli</div>
+              <div class="team-role">Socio / Director de Diseño Técnico</div>
+            </div>
           </div>
-          <div class="team-info">
-            <div class="team-name">Marc Aureli</div>
-            <div class="team-role">Socio / Director de Diseño Técnico</div>
-          </div>
-        </div>
 
-        <div class="team-card">
-          <div class="team-img-container">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Equipo Estudio">
-          </div>
-          <div class="team-info">
-            <div class="team-name">Oficina Central</div>
-            <div class="team-role">Espacio de trabajo y experimentación material</div>
+          <div class="team-card">
+            <div class="team-img-container">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Equipo Estudio">
+            </div>
+            <div class="team-info">
+              <div class="team-name">Oficina Central</div>
+              <div class="team-role">Espacio de trabajo y experimentación material</div>
+            </div>
           </div>
         </div>
       </div>
@@ -173,55 +226,57 @@
 
   <!-- 4. SECCIÓN PROYECTOS -->
   <section id="section-proyectos" class="page-section">
-    <nav class="nav-bar">
-      <div class="brand-logo" onclick="switchSection('split')">OWN</div>
-      <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
-    </nav>
+    <div class="scrollable-content-wrapper">
+      <nav class="nav-bar">
+        <div class="brand-logo" onclick="switchSection('split')">OWN</div>
+        <button class="nav-back-btn" onclick="switchSection('split')">← Volver al menú</button>
+      </nav>
 
-    <div class="section-inner">
-      <h1 class="section-header-title">Obras Seleccionadas</h1>
-      <p class="section-intro-text">
-        Seleccione un proyecto para acceder a su memoria descriptiva, datos técnicos, croquis y detalles constructivos originales.
-      </p>
+      <div class="section-inner">
+        <h1 class="section-header-title">Obras Seleccionadas</h1>
+        <p class="section-intro-text">
+          Seleccione un proyecto para acceder a su memoria descriptiva, datos técnicos, croquis y detalles constructivos originales.
+        </p>
 
-      <div class="projects-grid">
-        <div class="project-item" onclick="openProjectDetail(1)">
-          <div class="project-thumb">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
+        <div class="projects-grid">
+          <div class="project-item" onclick="openProjectDetail(1)">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill">
+            </div>
+            <div class="project-meta-row">
+              <div class="project-card-title">Torre en Conill</div>
+              <div class="project-card-loc">Valencia</div>
+            </div>
           </div>
-          <div class="project-meta-row">
-            <div class="project-card-title">Torre en Conill</div>
-            <div class="project-card-loc">Valencia</div>
-          </div>
-        </div>
 
-        <div class="project-item" onclick="openProjectDetail(2)">
-          <div class="project-thumb">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+          <div class="project-item" onclick="openProjectDetail(2)">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes">
+            </div>
+            <div class="project-meta-row">
+              <div class="project-card-title">Villa Pedralbes</div>
+              <div class="project-card-loc">Barcelona</div>
+            </div>
           </div>
-          <div class="project-meta-row">
-            <div class="project-card-title">Villa Pedralbes</div>
-            <div class="project-card-loc">Barcelona</div>
-          </div>
-        </div>
 
-        <div class="project-item" onclick="openProjectDetail(3)">
-          <div class="project-thumb">
-            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+          <div class="project-item" onclick="openProjectDetail(3)">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava">
+            </div>
+            <div class="project-meta-row">
+              <div class="project-card-title">Residencia Brava</div>
+              <div class="project-card-loc">Girona</div>
+            </div>
           </div>
-          <div class="project-meta-row">
-            <div class="project-card-title">Residencia Brava</div>
-            <div class="project-card-loc">Girona</div>
-          </div>
-        </div>
 
-        <div class="project-item" onclick="openProjectDetail(4)">
-          <div class="project-thumb">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
-          </div>
-          <div class="project-meta-row">
-            <div class="project-card-title">Refugio Hormigón</div>
-            <div class="project-card-loc">Alicante</div>
+          <div class="project-item" onclick="openProjectDetail(4)">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón">
+            </div>
+            <div class="project-meta-row">
+              <div class="project-card-title">Refugio Hormigón</div>
+              <div class="project-card-loc">Alicante</div>
+            </div>
           </div>
         </div>
       </div>
@@ -288,7 +343,9 @@
       const target = document.getElementById('section-' + sectionId);
       if(target) {
         target.classList.add('active');
-        window.scrollTo(0, 0);
+        // Reiniciar el scroll interno de la sección si lo tuviera
+        const scroller = target.querySelector('.scrollable-content-wrapper');
+        if(scroller) scroller.scrollTop = 0;
       }
     }
 
