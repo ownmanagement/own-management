@@ -1,6 +1,3 @@
-Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todos los títulos y elementos principales de la interfaz, junto con una **grilla asimétrica** completamente renovada que ahora incluye **8 proyectos** detallados.
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +8,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- FUENTES: Inter (Títulos), Familjen Grotesk (Subtítulos limpios), Playfair Display (Cuerpo/Detalle) -->
+  <!-- FUENTES: Inter, Familjen Grotesk, Playfair Display -->
   <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
@@ -44,7 +41,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
-      padding: 1.5rem 6vw; 
+      padding: 1.5rem 4vw; 
       z-index: 10000; 
       background: rgba(255, 255, 255, 0.85); 
       backdrop-filter: blur(10px); 
@@ -149,7 +146,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
       display: flex; 
       flex-direction: column; 
       justify-content: flex-end; 
-      padding: 6vw; 
+      padding: 4vw; 
       transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
     }
     
@@ -214,7 +211,12 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
       background-color: #ffffff;
     }
 
-    .section-inner { padding: 140px 6vw 120px 6vw; max-width: 1400px; margin: 0 auto; }
+    /* Ancho completo expandido para toda la web */
+    .section-inner { 
+      padding: 140px 4vw 120px 4vw; 
+      width: 100%; 
+      margin: 0 auto; 
+    }
     
     .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
     .section-intro-text { 
@@ -222,14 +224,14 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
         font-size: clamp(1.1rem, 1.6vw, 1.6rem); 
         line-height: 1.8; 
         color: #333; 
-        max-width: 900px; 
+        max-width: 1000px; 
         margin-bottom: 6rem; 
         font-weight: 400;
     }
     
-    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3vw; }
     .team-card { position: relative; }
-    .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
+    .team-img-container { width: 100%; height: 50vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
     .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
     .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(0%); }
     
@@ -244,28 +246,29 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
         font-weight: 400;
     }
 
-    /* --- GRILLA ASIMÉTRICA DE PROYECTOS (8 PROYECTOS) --- */
+    /* --- GRILLA ASIMÉTRICA DE PROYECTOS (ANCHO COMPLETO - 8 PROYECTOS) --- */
     .projects-grid-asym {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 5vw 3vw;
+      gap: 6vw 2.5vw;
+      width: 100%;
     }
 
     .project-item { cursor: pointer; display: flex; flex-direction: column; }
     
-    /* Patrón asimétrico para los 8 proyectos */
+    /* Patrón asimétrico dinámico ocupando todo el ancho */
     .project-item:nth-child(1) { grid-column: span 7; }
-    .project-item:nth-child(2) { grid-column: span 5; margin-top: 8vh; }
+    .project-item:nth-child(2) { grid-column: span 5; margin-top: 10vh; }
     .project-item:nth-child(3) { grid-column: span 5; }
-    .project-item:nth-child(4) { grid-column: span 7; margin-top: -6vh; }
+    .project-item:nth-child(4) { grid-column: span 7; margin-top: -8vh; }
     .project-item:nth-child(5) { grid-column: span 8; }
-    .project-item:nth-child(6) { grid-column: span 4; margin-top: 10vh; }
+    .project-item:nth-child(6) { grid-column: span 4; margin-top: 12vh; }
     .project-item:nth-child(7) { grid-column: span 6; }
-    .project-item:nth-child(8) { grid-column: span 6; margin-top: -8vh; }
+    .project-item:nth-child(8) { grid-column: span 6; margin-top: -10vh; }
 
-    .project-thumb { width: 100%; height: 55vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
-    .project-item:nth-child(1) .project-thumb, .project-item:nth-child(4) .project-thumb { height: 65vh; }
-    .project-item:nth-child(5) .project-thumb { height: 60vh; }
+    .project-thumb { width: 100%; height: 65vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem; }
+    .project-item:nth-child(1) .project-thumb, .project-item:nth-child(4) .project-thumb { height: 75vh; }
+    .project-item:nth-child(5) .project-thumb { height: 70vh; }
 
     .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(10%); }
     .project-item:hover .project-thumb img { transform: scale(1.04); filter: grayscale(0%); }
@@ -287,7 +290,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
         font-family: 'Familjen Grotesk', sans-serif; 
         position: fixed; 
         top: 2rem; 
-        right: 6vw; 
+        right: 4vw; 
         z-index: 21000; 
         font-size: 0.8rem; 
         font-weight: 600; 
@@ -301,7 +304,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
     }
     .modal-close-btn:hover { background: #000; color: #fff; border-color: #000; }
     .modal-hero-img { width: 100vw; height: 90vh; object-fit: cover; }
-    .modal-body-full { width: 100vw; padding: 10vh 6vw 150px 6vw; max-width: 1400px; margin: 0 auto; }
+    .modal-body-full { width: 100%; padding: 10vh 4vw 150px 4vw; margin: 0 auto; }
     
     .modal-title { 
         font-family: 'Inter', sans-serif !important;
@@ -333,21 +336,21 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
     .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
 
     @media (max-width: 1000px) {
-      .team-grid, .sheet-meta-grid-full { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
+      .team-grid, .sheet-meta-grid-full { grid-template-columns: repeat(2, 1fr); gap: 4vw;}
       .projects-grid-asym { display: flex; flex-direction: column; gap: 4rem; }
       .project-item { grid-column: span 12 !important; margin-top: 0 !important; }
     }
     @media (max-width: 800px) {
       #section-split { flex-direction: column; }
-      .nav-bar { padding: 1rem 5vw; }
+      .nav-bar { padding: 1rem 4vw; }
       .brand-logo { font-size: 1rem; }
-      .section-inner { padding: 120px 5vw 80px 5vw; }
+      .section-inner { padding: 120px 4vw 80px 4vw; }
       .section-intro-text { margin-bottom: 4rem; font-size: 1.3rem;}
       .team-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
       .team-img-container, .project-thumb { height: 50vh; }
-      .modal-body-full { padding: 8vh 5vw 100px 5vw; }
+      .modal-body-full { padding: 8vh 4vw 100px 4vw; }
       .sheet-sketch-img { height: 50vh; }
-      .modal-close-btn { top: auto; bottom: 2rem; left: 5vw; right: auto; width: 90vw; text-align: center;}
+      .modal-close-btn { top: auto; bottom: 2rem; left: 4vw; right: auto; width: 92vw; text-align: center;}
     }
   </style>
 </head>
@@ -427,7 +430,7 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
       <div class="section-inner">
         <h2 class="section-header-title">Obras Recientes</h2>
         
-        <!-- Grilla Asimétrica con 8 Proyectos -->
+        <!-- Grilla Asimétrica con 8 Proyectos (Ancho Completo) -->
         <div class="projects-grid-asym">
           <div class="project-item" onclick="openProjectDetail(1)">
             <div class="project-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400" alt="Casa en Conill"></div>
@@ -655,5 +658,3 @@ Aquí tienes el código actualizado con la tipografía **Inter** aplicada a todo
   </script>
 </body>
 </html>
-
-```
