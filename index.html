@@ -216,7 +216,7 @@
       background-color: #ffffff;
     }
 
-    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1500px; margin: 0 auto; }
+    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1650px; margin: 0 auto; }
     
     .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
     .section-intro-text { 
@@ -225,11 +225,30 @@
         line-height: 1.8; 
         color: #333; 
         max-width: 900px; 
-        margin-bottom: 6rem; 
+        margin-bottom: 5rem; 
         font-weight: 400;
     }
     
-    /* --- EQUIPO --- */
+    /* --- ESTUDIO: FOTO GRUPAL Y EQUIPO --- */
+    .team-group-photo-container {
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      margin-bottom: 6rem;
+      background: #eee;
+    }
+    .team-group-photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter 0.8s ease, transform 1s ease;
+    }
+    .team-group-photo-container:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.02);
+    }
+
     .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; }
     .team-card { position: relative; }
     .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
@@ -247,18 +266,19 @@
         font-weight: 400;
     }
 
-    /* --- PROYECTOS (DIAGRAMACIÓN RADICAL 3 COLUMNAS) --- */
+    /* --- PROYECTOS (DIAGRAMACIÓN 4 COLUMNAS ASIMÉTRICAS) --- */
     #proyectos-radical {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 120px 60px;
-      max-width: 1500px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 120px 40px;
+      max-width: 1650px;
       margin: 0 auto;
     }
 
     .columna-1 { display: flex; flex-direction: column; gap: 140px; margin-top: 0px; }
-    .columna-2 { display: flex; flex-direction: column; gap: 140px; margin-top: 200px; }
-    .columna-3 { display: flex; flex-direction: column; gap: 140px; margin-top: 80px; }
+    .columna-2 { display: flex; flex-direction: column; gap: 140px; margin-top: 180px; }
+    .columna-3 { display: flex; flex-direction: column; gap: 140px; margin-top: 60px; }
+    .columna-4 { display: flex; flex-direction: column; gap: 140px; margin-top: 240px; }
 
     .marco {
       position: relative;
@@ -290,9 +310,9 @@
       z-index: 100;
     }
 
-    .h-sm { height: 320px; }
-    .h-md { height: 460px; }
-    .h-lg { height: 600px; }
+    .h-sm { height: 260px; }
+    .h-md { height: 380px; }
+    .h-lg { height: 500px; }
 
     .meta { 
       margin-top: 18px; 
@@ -359,20 +379,23 @@
     .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
 
     /* --- RESPONSIVE --- */
+    @media (max-width: 1200px) {
+      #proyectos-radical { grid-template-columns: repeat(2, 1fr); gap: 80px; }
+      .columna-1, .columna-2, .columna-3, .columna-4 { margin-top: 0 !important; gap: 80px; }
+    }
     @media (max-width: 1000px) {
       .team-grid, .sheet-meta-grid-full { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
-      #proyectos-radical { grid-template-columns: 1fr; gap: 80px; }
-      .columna-1, .columna-2, .columna-3 { margin-top: 0 !important; gap: 80px; }
-      .h-sm, .h-md, .h-lg { height: 400px; }
+      .h-sm, .h-md, .h-lg { height: 350px; }
     }
     @media (max-width: 800px) {
       #section-split { flex-direction: column; }
       .nav-bar { padding: 1rem 5vw; }
       .brand-logo { font-size: 1rem; }
       .section-inner { padding: 120px 5vw 80px 5vw; }
-      .section-intro-text { margin-bottom: 4rem; font-size: 1.3rem;}
+      .section-intro-text { margin-bottom: 3rem; font-size: 1.3rem;}
+      #proyectos-radical { grid-template-columns: 1fr; gap: 60px; }
       .team-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
-      .team-img-container { height: 50vh; }
+      .team-img-container, .team-group-photo-container { height: 40vh; }
       .modal-body-full { padding: 8vh 5vw 100px 5vw; }
       .sheet-sketch-img { height: 50vh; }
       .modal-close-btn { top: auto; bottom: 2rem; left: 5vw; right: auto; width: 90vw; text-align: center;}
@@ -422,6 +445,12 @@
         <p class="section-intro-text">
           Fundado en 2010, OWN es un taller de arquitectura enfocado en la síntesis entre el rigor constructivo y la sensibilidad espacial. Creemos en el diseño atemporal que dialoga con su entorno.
         </p>
+
+        <!-- Fotografía Grupal -->
+        <div class="team-group-photo-container">
+          <img src="img/imagen.jpg" alt="Equipo OWN al completo">
+        </div>
+
         <div class="team-grid">
           <div class="team-card">
             <div class="team-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
@@ -449,7 +478,7 @@
     </div>
   </section>
 
-  <!-- 4. SECCIÓN PROYECTOS -->
+  <!-- 4. SECCIÓN PROYECTOS (4 COLUMNAS) -->
   <section id="section-proyectos" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -466,29 +495,29 @@
               <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2000" alt="Casa Conill" class="imagen-zoom h-lg">
               <div class="meta"><span>01</span> Casa Conill</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(4)">
-              <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" alt="Dalt Vila" class="imagen-zoom h-sm">
-              <div class="meta"><span>04</span> Dalt Vila</div>
+            <div class="marco" onclick="openProjectDetail(5)">
+              <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=2000" alt="Residencia Oria" class="imagen-zoom h-sm">
+              <div class="meta"><span>05</span> Residencia Oria</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(7)">
-              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" alt="Pabellón Norte" class="imagen-zoom h-md">
-              <div class="meta"><span>07</span> Pabellón Norte</div>
+            <div class="marco" onclick="openProjectDetail(9)">
+              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=2000" alt="Casa Cíes" class="imagen-zoom h-md">
+              <div class="meta"><span>09</span> Casa Cíes</div>
             </div>
           </div>
 
-          <!-- Columna 2 (Desplazada hacia abajo) -->
+          <!-- Columna 2 -->
           <div class="columna-2">
             <div class="marco" onclick="openProjectDetail(2)">
               <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" alt="Pedralbes" class="imagen-zoom h-md">
               <div class="meta"><span>02</span> Pedralbes</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(5)">
-              <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=2000" alt="Residencia Oria" class="imagen-zoom h-lg">
-              <div class="meta"><span>05</span> Residencia Oria</div>
+            <div class="marco" onclick="openProjectDetail(6)">
+              <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=2000" alt="Acantilado" class="imagen-zoom h-lg">
+              <div class="meta"><span>06</span> Acantilado</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(8)">
-              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" alt="Sotogrande" class="imagen-zoom h-sm">
-              <div class="meta"><span>08</span> Sotogrande</div>
+            <div class="marco" onclick="openProjectDetail(10)">
+              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" alt="Patio Central" class="imagen-zoom h-sm">
+              <div class="meta"><span>10</span> Patio Central</div>
             </div>
           </div>
 
@@ -498,13 +527,29 @@
               <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000" alt="Cantábrica" class="imagen-zoom h-sm">
               <div class="meta"><span>03</span> Cantábrica</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(6)">
-              <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=2000" alt="Acantilado" class="imagen-zoom h-lg">
-              <div class="meta"><span>06</span> Acantilado</div>
+            <div class="marco" onclick="openProjectDetail(7)">
+              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" alt="Pabellón Norte" class="imagen-zoom h-md">
+              <div class="meta"><span>07</span> Pabellón Norte</div>
             </div>
-            <div class="marco" onclick="openProjectDetail(9)">
-              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=2000" alt="Casa Cíes" class="imagen-zoom h-md">
-              <div class="meta"><span>09</span> Casa Cíes</div>
+            <div class="marco" onclick="openProjectDetail(11)">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" alt="Casa Aljibe" class="imagen-zoom h-lg">
+              <div class="meta"><span>11</span> Casa Aljibe</div>
+            </div>
+          </div>
+
+          <!-- Columna 4 -->
+          <div class="columna-4">
+            <div class="marco" onclick="openProjectDetail(4)">
+              <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" alt="Dalt Vila" class="imagen-zoom h-lg">
+              <div class="meta"><span>04</span> Dalt Vila</div>
+            </div>
+            <div class="marco" onclick="openProjectDetail(8)">
+              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" alt="Sotogrande" class="imagen-zoom h-sm">
+              <div class="meta"><span>08</span> Sotogrande</div>
+            </div>
+            <div class="marco" onclick="openProjectDetail(12)">
+              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000" alt="Torre Muga" class="imagen-zoom h-md">
+              <div class="meta"><span>12</span> Torre Muga</div>
             </div>
           </div>
         </div>
@@ -618,8 +663,41 @@
         area: "450 m²",
         photo: "Aitor Ortiz",
         year: "2023",
-        conceptText: "Refugio atlántico protegido de los vientos dominantes mediante muros de mampostería seca en seco.",
+        conceptText: "Refugio atlántico protegido de los vientos dominantes mediante muros de mampostería en seco.",
         sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      10: {
+        title: "Patio Central",
+        location: "Sevilla, España",
+        hero: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2000",
+        architects: "OWN / Marc Aureli, Sofía Larsson",
+        area: "380 m²",
+        photo: "Mariela Apollonio",
+        year: "2024",
+        conceptText: "Inspirado en la tipología de casa patio andaluza, optimizando la ventilación cruzada y la inercia térmica.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+      },
+      11: {
+        title: "Casa Aljibe",
+        location: "Málaga, España",
+        hero: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000",
+        architects: "OWN / Elena Vance",
+        area: "510 m²",
+        photo: "Simón García",
+        year: "2023",
+        conceptText: "Estructura enterrada parcialmente que aprovecha el terreno natural para la climatización pasiva.",
+        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+      },
+      12: {
+        title: "Torre Muga",
+        location: "Bilbao, España",
+        hero: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000",
+        architects: "OWN / Sofía Larsson",
+        area: "890 m²",
+        photo: "Aitor Ortiz",
+        year: "2022",
+        conceptText: "Edificio de uso mixto con fachada cerámica ventilada que dialoga con el pasado industrial de la ría.",
+        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
       }
     };
 
