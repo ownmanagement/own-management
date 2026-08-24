@@ -689,7 +689,7 @@
         area: "380 m²",
         photo: "Mariela Apollonio",
         year: "2024",
-        conceptTest: "Inspirado en la tipología de casa patio andaluza, optimizando la ventilación cruzada y la inercia térmica.",
+        conceptText: "Inspirado en la tipología de casa patio andaluza, optimizando la ventilación cruzada y la inercia térmica.",
         sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
       },
       11: {
@@ -770,7 +770,8 @@
       document.body.style.overflow = 'hidden';
     }
 
-    fnction closeProjectDetail() {
+    // Corregido: Se cambió "fnction" por "function"
+    function closeProjectDetail() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
       setTimeout(() => mImg.src = "", 500);
