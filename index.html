@@ -12,9 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* --- IMPORTACIÓN DE LA TIPOGRAFÍA SUISSE (TRIAL) --- */
+    /* --- IMPORTACIÓN DE LA TIPOGRAFÍA SUISSE INTL TRIAL BOLD --- */
     @font-face {
-      font-family: 'Suisse';
+      font-family: 'Suisse Intl Trial Bold';
       src: local('SwissTypefaces Suisse'), local('SuisseIntl-Bold'), url('https://cdn.jsdelivr.net/gh/swisstypefaces/trial@main/SuisseIntl-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
@@ -35,9 +35,9 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- APLICACIÓN DE SUISSE BOLD Y CORRECCIÓN DE ESTIRAMIENTO PARA OWN --- */
+    /* --- APLICACIÓN DE SUISSE INTL TRIAL BOLD --- */
     .brand-logo, .hero-title-interactive {
-        font-family: 'Suisse', 'Inter', sans-serif !important;
+        font-family: 'Suisse Intl Trial Bold', 'Inter', sans-serif !important;
         font-weight: 700 !important;
         font-stretch: normal !important;
         transform: none !important;
@@ -48,6 +48,7 @@
         text-transform: uppercase;
         letter-spacing: 0.03em;
         font-weight: 600;
+        text-shadow: none !important; /* Eliminada sombra en títulos generales */
     }
 
     /* --- NAV MINIMALISTA --- */
@@ -133,7 +134,7 @@
         cursor: pointer; 
         user-select: none; 
         transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
-        text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        text-shadow: none !important; /* Eliminada sombra */
     }
     .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
     
@@ -204,7 +205,7 @@
         font-size: clamp(2.2rem, 4vw, 4.5rem); 
         margin-bottom: 0.5rem; 
         transition: transform 0.4s ease; 
-        text-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+        text-shadow: none !important; /* Eliminada sombra */
     }
     
     .split-desc { 
@@ -372,6 +373,7 @@
         letter-spacing: 0.01em; 
         text-transform: uppercase; 
         margin-bottom: 1.5rem; 
+        text-shadow: none !important; /* Eliminada sombra */
     }
     .modal-subtitle { 
         font-family: 'Inter', sans-serif; 
@@ -770,7 +772,6 @@
       document.body.style.overflow = 'hidden';
     }
 
-    // Corregido: Se cambió "fnction" por "function"
     function closeProjectDetail() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
