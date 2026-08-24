@@ -48,7 +48,7 @@
         text-transform: uppercase;
         letter-spacing: 0.03em;
         font-weight: 600;
-        text-shadow: none !important; /* Eliminada sombra en títulos generales */
+        text-shadow: none !important;
     }
 
     /* --- NAV MINIMALISTA --- */
@@ -134,7 +134,7 @@
         cursor: pointer; 
         user-select: none; 
         transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
-        text-shadow: none !important; /* Eliminada sombra */
+        text-shadow: none !important; 
     }
     .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
     
@@ -205,7 +205,7 @@
         font-size: clamp(2.2rem, 4vw, 4.5rem); 
         margin-bottom: 0.5rem; 
         transition: transform 0.4s ease; 
-        text-shadow: none !important; /* Eliminada sombra */
+        text-shadow: none !important; 
     }
     
     .split-desc { 
@@ -343,9 +343,10 @@
 
     .meta span { opacity: 0.4; }
 
-    /* --- MODAL DE MEMORIAS --- */
+    /* --- MODAL DE MEMORIAS DINÁMICO --- */
     #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; pointer-events: none; }
     #project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
+    
     .modal-close-btn { 
         font-family: 'Inter', sans-serif; 
         position: fixed; 
@@ -363,6 +364,7 @@
         transition: all 0.3s ease;
     }
     .modal-close-btn:hover { background: #000; color: #fff; border-color: #000; }
+    
     .modal-hero-img { width: 100vw; height: 90vh; object-fit: cover; }
     .modal-body-full { width: 100vw; padding: 10vh 6vw 150px 6vw; max-width: 1400px; margin: 0 auto; }
     
@@ -373,7 +375,7 @@
         letter-spacing: 0.01em; 
         text-transform: uppercase; 
         margin-bottom: 1.5rem; 
-        text-shadow: none !important; /* Eliminada sombra */
+        text-shadow: none !important; 
     }
     .modal-subtitle { 
         font-family: 'Inter', sans-serif; 
@@ -390,10 +392,18 @@
     .meta-box span { font-family: 'Inter', sans-serif; display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; font-weight: 500; }
     .meta-box strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-top: 0.8rem; display: block; font-weight: 400; }
     
-    .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; margin-top: 10vh;}
-    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; font-weight: 600;}
-    .sheet-text-p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.5vw, 1.5vw); line-height: 1.8; color: #333; margin-bottom: 2rem; font-weight: 400; }
-    .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
+    /* Clases para los bloques dinámicos asimétricos */
+    .dynamic-block { margin-top: 10vh; }
+    .block-text-centered { max-width: 900px; margin: 10vh auto; text-align: center; }
+    .block-text-centered h3 { font-size: 1.4rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; }
+    .block-text-centered p { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 1.8vw, 1.7rem); line-height: 1.8; color: #222; }
+
+    .block-full-img { width: 100%; height: 75vh; object-fit: cover; }
+    
+    .block-split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
+    .block-split-2 img { width: 100%; height: 60vh; object-fit: cover; }
+    .block-split-text h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; }
+    .block-split-text p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.4vw, 1.4rem); line-height: 1.8; color: #333; }
 
     /* --- RESPONSIVE --- */
     @media (max-width: 1200px) {
@@ -411,10 +421,10 @@
       .section-inner { padding: 120px 5vw 80px 5vw; }
       .section-intro-text { margin-bottom: 3rem; font-size: 1.2rem;}
       #proyectos-radical { grid-template-columns: 1fr; gap: 60px; }
-      .team-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
+      .team-grid, .sheet-meta-grid-full, .block-split-2 { grid-template-columns: 1fr; gap: 3rem; }
       .team-img-container, .team-group-photo-container { height: 40vh; }
       .modal-body-full { padding: 8vh 5vw 100px 5vw; }
-      .sheet-sketch-img { height: 50vh; }
+      .block-full-img, .block-split-2 img { height: 50vh; }
       .modal-close-btn { top: auto; bottom: 2rem; left: 5vw; right: auto; width: 90vw; text-align: center;}
     }
   </style>
@@ -575,7 +585,7 @@
     </div>
   </section>
 
-  <!-- 5. MODAL DETALLE -->
+  <!-- 5. MODAL DETALLE DINÁMICO -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="" class="modal-hero-img">
@@ -592,8 +602,28 @@
         area: "480 m²",
         photo: "OWN",
         year: "2023",
-        conceptText: "El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        // BLOQUES DINÁMICOS ASIMÉTRICOS (Puedes ordenar, quitar o añadir tipos: 'text', 'image', 'split')
+        blocks: [
+          {
+            type: "text",
+            title: "El Concepto y la Luz",
+            content: "El proyecto responde con delicadeza a su entorno, buscando privacidad sin encierro. Las fachadas que miran hacia las casas vecinas se cierran con sobriedad, mientras que el interior se abre con naturalidad al jardín y al sol."
+          },
+          {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600"
+          },
+          {
+            type: "split",
+            title: "Materialidad y Geometría",
+            content: "La elección de los materiales responde a una paleta austera: hormigón visto texturizado por encofrado de madera y grandes paños vidriados que diluyen los límites entre el interior y el exterior.",
+            image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+          },
+          {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1600"
+          }
+        ]
       },
       2: {
         title: "Casa Brisa de Luz",
@@ -603,8 +633,17 @@
         area: "650 m²",
         photo: "OWN",
         year: "2022",
-        conceptText: "Brisa de Luz es el equilibrio perfecto entre luz, paisaje y privacidad; una propuesta residencial concebida para vivir el Mediterráneo en todas sus dimensiones, desde el sol radiante del día hasta el brillo sereno de la noche.",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Atmósfera Mediterránea",
+            content: "Brisa de Luz es el equilibrio perfecto entre luz, paisaje y privacidad; una propuesta residencial concebida para vivir el Mediterráneo en todas sus dimensiones."
+          },
+          {
+            type: "image",
+            url: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+          }
+        ]
       },
       3: {
         title: "Casa FUYU",
@@ -614,8 +653,13 @@
         area: "410 m²",
         photo: "OWN",
         year: "2024",
-        conceptText: "Fuyū no busca imponerse, sino formar parte del paisaje. Una casa que flota más que se apoya, y que se integra desde la calma y la ligereza.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Silencio y Gravedad",
+            content: "Fuyū no busca imponerse, sino formar parte del paisaje. Una casa que flota más que se apoya, integrándose desde la calma."
+          }
+        ]
       },
       4: {
         title: "Casa Infinita",
@@ -625,8 +669,13 @@
         area: "320 m²",
         photo: "OWN",
         year: "2021",
-        conceptText: "Infinita, una casa donde la arquitectura se convierte en paisaje, y el paisaje en parte esencial del habitar.",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Continuidad Espacial",
+            content: "Infinita es una casa donde la arquitectura se convierte en paisaje y el paisaje en parte esencial del habitar."
+          }
+        ]
       },
       5: {
         title: "Casa Claroscuro",
@@ -636,8 +685,13 @@
         area: "750 m²",
         photo: "OWN",
         year: "2023",
-        conceptText: "Casa Claroscuro no es una reforma que impone una imagen, sino una que revela. Un ejercicio de contención, estructura y luz, donde la arquitectura nueva se retira lo justo para que la historia del edificio vuelva a respirar.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Reforma y Memoria",
+            content: "Un ejercicio de contención, estructura y luz, donde la arquitectura nueva se retira lo justo para que la historia del edificio vuelva a respirar."
+          }
+        ]
       },
       6: {
         title: "Casa Passacaglia",
@@ -647,8 +701,13 @@
         area: "520 m²",
         photo: "Aitor Ortiz",
         year: "2022",
-        conceptText: "Casa Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical.",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Coreografía Constructiva",
+            content: "Casa Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical."
+          }
+        ]
       },
       7: {
         title: "Casa Invertida",
@@ -658,8 +717,13 @@
         area: "290 m²",
         photo: "OWN",
         year: "2024",
-        conceptText: "La inversión no es un gesto formal, sino una respuesta precisa al lugar.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Inversión Topográfica",
+            content: "La inversión no es un gesto formal, sino una respuesta precisa al lugar y a las vistas sobre el valle."
+          }
+        ]
       },
       8: {
         title: "Casa Vilaclara",
@@ -669,8 +733,13 @@
         area: "600 m²",
         photo: "OWN",
         year: "2021",
-        conceptText: "Una casa que se ilumina desde dentro",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Luz Interna",
+            content: "Una casa que se ilumina desde dentro a través de patios de luces estratégicamente dispuestos."
+          }
+        ]
       },
       9: {
         title: "Casa Cíes",
@@ -680,8 +749,13 @@
         area: "450 m²",
         photo: "Aitor Ortiz",
         year: "2023",
-        conceptText: "Refugio atlántico protegido de los vientos dominantes mediante muros de mampostería en seco.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Refugio Atlántico",
+            content: "Protegido de los vientos dominantes mediante robustos muros de mampostería en seco."
+          }
+        ]
       },
       10: {
         title: "Patio Central",
@@ -691,8 +765,13 @@
         area: "380 m²",
         photo: "Mariela Apollonio",
         year: "2024",
-        conceptText: "Inspirado en la tipología de casa patio andaluza, optimizando la ventilación cruzada y la inercia térmica.",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Tradición y Clima",
+            content: "Inspirado en la tipología de casa patio andaluza, optimizando la ventilación cruzada y la inercia térmica."
+          }
+        ]
       },
       11: {
         title: "Casa Aljibe",
@@ -702,8 +781,13 @@
         area: "510 m²",
         photo: "Simón García",
         year: "2023",
-        conceptText: "Estructura enterrada parcialmente que aprovecha el terreno natural para la climatización pasiva.",
-        sketchImg: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Climatización Pasiva",
+            content: "Estructura enterrada parcialmente que aprovecha el terreno natural para la estabilización térmica."
+          }
+        ]
       },
       12: {
         title: "Torre Muga",
@@ -713,8 +797,13 @@
         area: "890 m²",
         photo: "Aitor Ortiz",
         year: "2022",
-        conceptText: "Edificio de uso mixto con fachada cerámica ventilada que dialoga con el pasado industrial de la ría.",
-        sketchImg: "https://images.unsplash.com/photo-1472214103451-9394bd127776?q=80&w=1200"
+        blocks: [
+          {
+            type: "text",
+            title: "Pasado Industrial",
+            content: "Edificio de uso mixto con fachada cerámica ventilada que dialoga directamente con la historia industrial de la ría."
+          }
+        ]
       }
     };
 
@@ -746,7 +835,9 @@
       if(!p) return;
       mImg.src = p.hero;
       mImg.alt = p.title;
-      mContent.innerHTML = `
+
+      // Generar la cabecera y la cuadrícula técnica de metadatos
+      let htmlContent = `
         <span class="modal-subtitle">MEMORIA DE PROYECTO</span>
         <h2 class="modal-title">${p.title}</h2>
         <p style="font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #777; margin-bottom: 2rem; font-weight: 300;">${p.location}</p>
@@ -757,17 +848,41 @@
           <div class="meta-box"><span>Fotografía</span><strong>${p.photo}</strong></div>
           <div class="meta-box"><span>Año</span><strong>${p.year}</strong></div>
         </div>
-
-        <div class="sheet-grid-2-full">
-          <div class="sheet-text-block">
-            <h3>Concepto</h3>
-            <p class="sheet-text-p">${p.conceptText}</p>
-          </div>
-          <div>
-            <img src="${p.sketchImg}" alt="Croquis" class="sheet-sketch-img">
-          </div>
-        </div>
       `;
+
+      // Iterar de forma dinámica sobre los bloques personalizados de cada proyecto
+      if (p.blocks && p.blocks.length > 0) {
+        p.blocks.forEach(block => {
+          if (block.type === 'text') {
+            htmlContent += `
+              <div class="dynamic-block block-text-centered">
+                <h3>${block.title}</h3>
+                <p>${block.content}</p>
+              </div>
+            `;
+          } else if (block.type === 'image') {
+            htmlContent += `
+              <div class="dynamic-block">
+                <img src="${block.url}" alt="Detalle de proyecto" class="block-full-img">
+              </div>
+            `;
+          } else if (block.type === 'split') {
+            htmlContent += `
+              <div class="dynamic-block block-split-2">
+                <div class="block-split-text">
+                  <h3>${block.title}</h3>
+                  <p>${block.content}</p>
+                </div>
+                <div>
+                  <img src="${block.image}" alt="Croquis o detalle">
+                </div>
+              </div>
+            `;
+          }
+        });
+      }
+
+      mContent.innerHTML = htmlContent;
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
