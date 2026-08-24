@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- Fuentes: Inter para textos generales y Playfair Display para memorias -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Fuentes: Inter, Playfair Display (solo para destacar) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
 
   <style>
     /* --- IMPORTACIÓN DE LA TIPOGRAFÍA SUISSE INTL TRIAL BOLD --- */
@@ -36,11 +36,12 @@
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
     /* --- APLICACIÓN DE SUISSE INTL TRIAL BOLD --- */
-    .brand-logo, .hero-title-interactive {
+    .brand-logo, .hero-title-interactive, .modal-title {
         font-family: 'Suisse Intl Trial Bold', 'Inter', sans-serif !important;
         font-weight: 700 !important;
         font-stretch: normal !important;
-        transform: none !important;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
     }
 
     h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title, .archive-title {
@@ -48,7 +49,6 @@
         text-transform: uppercase;
         letter-spacing: 0.03em;
         font-weight: 600;
-        text-shadow: none !important;
     }
 
     /* --- NAV MINIMALISTA --- */
@@ -134,7 +134,6 @@
         cursor: pointer; 
         user-select: none; 
         transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
-        text-shadow: none !important; 
     }
     .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
     
@@ -205,7 +204,6 @@
         font-size: clamp(2.2rem, 4vw, 4.5rem); 
         margin-bottom: 0.5rem; 
         transition: transform 0.4s ease; 
-        text-shadow: none !important; 
     }
     
     .split-desc { 
@@ -244,7 +242,7 @@
         font-weight: 300;
     }
     
-    /* --- ESTUDIO: FOTO GRUPAL Y EQUIPO --- */
+    /* --- ESTUDIO --- */
     .team-group-photo-container {
       width: 100%;
       height: 60vh;
@@ -281,7 +279,7 @@
         font-weight: 400;
     }
 
-    /* --- PROYECTOS (DIAGRAMACIÓN 4 COLUMNAS ASIMÉTRICAS) --- */
+    /* --- PROYECTOS (4 COLUMNAS) --- */
     #proyectos-radical {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -343,7 +341,7 @@
 
     .meta span { opacity: 0.4; }
 
-    /* --- MODAL DE MEMORIAS DINÁMICO --- */
+    /* --- MODAL DE MEMORIAS --- */
     #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; pointer-events: none; }
     #project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
     
@@ -371,11 +369,8 @@
     .modal-title { 
         font-size: clamp(3rem, 6vw, 6rem); 
         line-height: 1.05; 
-        font-weight: 600; 
-        letter-spacing: 0.01em; 
-        text-transform: uppercase; 
+        font-weight: 700; 
         margin-bottom: 1.5rem; 
-        text-shadow: none !important; 
     }
     .modal-subtitle { 
         font-family: 'Inter', sans-serif; 
@@ -390,20 +385,30 @@
 
     .sheet-meta-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 4rem 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin: 8vh 0; }
     .meta-box span { font-family: 'Inter', sans-serif; display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; font-weight: 500; }
-    .meta-box strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-top: 0.8rem; display: block; font-weight: 400; }
+    .meta-box strong { font-family: 'Inter', sans-serif; font-size: 1.1rem; margin-top: 0.8rem; display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
     
-    /* Clases para los bloques dinámicos asimétricos */
+    /* Bloques dinámicos: Tipografía Inter general y Playfair Display exclusivamente para destacar la frase seleccionada (.highlight-quote) */
     .dynamic-block { margin-top: 12vh; }
     .block-text-centered { max-width: 900px; margin: 12vh auto; text-align: center; }
-    .block-text-centered h3 { font-size: 1.4rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; }
-    .block-text-centered p { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 1.8vw, 1.7rem); line-height: 1.8; color: #222; }
+    .block-text-centered h3 { font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 1.5rem; color: #666; font-weight: 600; }
+    .block-text-centered p { font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.2vw, 1.25rem); line-height: 1.8; color: #333; font-weight: 300; }
+
+    .highlight-quote {
+      font-family: 'Playfair Display', serif !important;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.3rem, 1.7vw, 1.6rem) !important;
+      color: #111 !important;
+      display: block;
+      margin-top: 1rem;
+    }
 
     .block-full-img { width: 100%; height: 75vh; object-fit: cover; }
     
     .block-split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
     .block-split-2 img { width: 100%; height: 60vh; object-fit: cover; background-color: #f9f9f9; }
-    .block-split-text h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; font-weight: 600; }
-    .block-split-text p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.4vw, 1.4rem); line-height: 1.8; color: #333; font-weight: 400; }
+    .block-split-text h3 { font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 1.5rem; color: #666; font-weight: 600; }
+    .block-split-text p { font-family: 'Inter', sans-serif; font-size: clamp(1rem, 1.2vw, 1.25rem); line-height: 1.8; color: #333; font-weight: 300; }
 
     /* --- RESPONSIVE --- */
     @media (max-width: 1200px) {
@@ -585,7 +590,7 @@
     </div>
   </section>
 
-  <!-- 5. MODAL DETALLE DINÁMICO -->
+  <!-- 5. MODAL DETALLE -->
   <div id="project-modal">
     <button class="modal-close-btn" onclick="closeProjectDetail()">Cerrar ✕</button>
     <img id="m-hero-img" src="" alt="" class="modal-hero-img">
@@ -603,7 +608,7 @@
         photo: "OWN",
         year: "2023",
         blocks: [
-          { type: "split", title: "El Vacío como Refugio", content: "El proyecto responde con delicadeza a su entorno medieval, buscando privacidad sin encierro. Las fachadas que miran hacia la calle se cierran con sobriedad de piedra, mientras que el interior se abre con naturalidad al patio central.", image: "img/CLARODELUZ/clarodeluz-1.jpg" },
+          { type: "split", title: "El Vacío como Refugio", content: "El proyecto responde con delicadeza a su entorno medieval, buscando privacidad sin encierro. Las fachadas que miran hacia la calle se cierran con sobriedad de piedra, mientras que el interior se abre con naturalidad al patio central.", quote: "«La luz natural penetra generando un juego dinámico de sombras.»", image: "img/CLARODELUZ/clarodeluz-1.jpg" },
           { type: "text", title: "Materialidad y Luz Cenital", content: "La luz natural penetra a través de lucernarios cenitales estratégicamente dispuestos, generando un juego dinámico de sombras y texturas sobre los paramentos de hormigón visto." },
           { type: "image", url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "text", title: "Conexión Doméstica", content: "Los espacios comunes se disponen en continuidad visual directa con el jardín trasero." },
@@ -621,7 +626,7 @@
         year: "2021",
         blocks: [
           { type: "image", url: "img/INFINITA/infinita-1.jpg" },
-          { type: "split", title: "Continuidad Espacial", content: "Infinita es una casa donde la arquitectura se convierte en horizonte continuo. La planta baja discurre sin interrupciones físicas entre el interior doméstico y la lámina de agua del jardín.", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" },
+          { type: "split", title: "Continuidad Espacial", content: "Infinita es una casa donde la arquitectura se convierte en horizonte continuo. La planta baja discurre sin interrupciones físicas entre el interior doméstico y la lámina de agua del jardín.", quote: "«La arquitectura se convierte en horizonte continuo.»", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" },
           { type: "text", title: "Horizontalidad Radical", content: "Losas descolgadas de gran canto estructuran vistas panorámicas ininterrumpidas sobre el paisaje urbano lejano." },
           { type: "image", url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
           { type: "text", title: "Eficiencia y Confort", content: "El aislamiento perimetral continuo minimiza los puentes térmicos en toda la envolvente." },
@@ -638,7 +643,7 @@
         year: "2024",
         blocks: [
           { type: "text", title: "Estrategia Topográfica", content: "La inversión funcional sitúa la zona de noche en la planta inferior, semienterrada y fresca, liberando la cubierta para albergar las áreas sociales con vistas panorámicas sobre el valle." },
-          { type: "split", title: "La Tectonicidad del Terreno", content: "Los muros de contención de hormigón ciclópeo actúan como cimiento emocional y físico de toda la intervención.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "La Tectonicidad del Terreno", content: "Los muros de contención de hormigón ciclópeo actúan como cimiento emocional y físico de toda la intervención.", quote: "«El terreno actúa como cimiento emocional y físico.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "image", url: "img/SANTQUIRZE/sq-1.jpg" },
           { type: "text", title: "Cubierta Jardín", content: "La cubierta superior se vegeta extensivamente para integrarse con la topografía local." },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
@@ -654,12 +659,12 @@
         photo: "Aitor Ortiz",
         year: "2022",
         blocks: [
-          { type: "split", title: "Resignificación Vernácula", content: "Un ejercicio de respeto estricto hacia la arquitectura tradicional pitiusa, reinterpretando los espesores de los muros de cal y los vanos verticalizados.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Resignificación Vernácula", content: "Un ejercicio de respeto estricto hacia la arquitectura tradicional pitiusa, reinterpretando los espesores de los muros de cal y los vanos verticalizados.", quote: "«Un ejercicio de respeto estricto hacia la arquitectura tradicional.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
           { type: "text", title: "Patios de Luz", content: "Los patios interiores actúan como reguladores térmicos naturales durante los meses de verano." },
           { type: "image", url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
           { type: "text", title: "Materiales Locales", content: "Se emplearon morteros de cal artesanal y piedra seca autóctona." },
-          { type: "text", title: "Vistas al Mar", caption: "Orientación optimizada hacia el horizonte marino." }
+          { type: "text", title: "Vistas al Mar", content: "Orientación optimizada hacia el horizonte marino." }
         ]
       },
       5: {
@@ -671,7 +676,7 @@
         photo: "OWN",
         year: "2022",
         blocks: [
-          { type: "split", title: "Atmósferas Mediterráneas", content: "Brisa de Luz es el equilibrio perfecto entre la claridad y la sombra tamizada mediante celosías cerámicas hechas a mano.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Atmósferas Mediterráneas", content: "Brisa de Luz es el equilibrio perfecto entre la claridad y la sombra tamizada mediante celosías cerámicas hechas a mano.", quote: "«El equilibrio perfecto entre la claridad y la sombra.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "text", title: "Sostenibilidad Pasiva", content: "La inercia térmica de los cerramientos masivos garantiza un confort térmico óptimo durante los meses estivales." },
           { type: "image", url: "img/BRISADELUZ/brisadeluz-1.jpg" },
           { type: "text", title: "Piscina Desbordante", content: "El agua actúa como espejo reflectante de la fachada principal." },
@@ -689,7 +694,7 @@
         year: "2023",
         blocks: [
           { type: "image", url: "img/JP/jp-1.jpg" },
-          { type: "split", title: "Contención y Memoria", content: "Una intervención respetuosa en un tejido histórico consolidado donde los artesonados originales recuperan el protagonismo.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Contención y Memoria", content: "Una intervención respetuosa en un tejido histórico consolidado donde los artesonados originales recuperan el protagonismo.", quote: "«Los artesonados originales recuperan el protagonismo.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "text", title: "Jardín Oculto", content: "Un remanso de paz protegido del bullicio urbano en la parte posterior." },
           { type: "image", url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
           { type: "text", title: "Escalera Principal", content: "Pieza escultórica central en madera de roble macizo." },
@@ -705,7 +710,7 @@
         photo: "OWN",
         year: "2021",
         blocks: [
-          { type: "split", title: "Fragmentación del Volumen", content: "El programa se descompone en tres crujías desplazadas entre sí, adaptándose a la pendiente natural del bosque de pinos.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Fragmentación del Volumen", content: "El programa se descompone en tres crujías desplazadas entre sí, adaptándose a la pendiente natural del bosque de pinos.", quote: "«Adaptándose a la pendiente natural del bosque.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "image", url: "img/VILACLARA/vilaclara-1.jpg" },
           { type: "text", title: "Integración Forestal", content: "Ningún árbol nativo fue talado durante el proceso de cimentación." },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
@@ -723,7 +728,7 @@
         year: "2023",
         blocks: [
           { type: "text", title: "Horizontes Abiertos", content: "Grandes vuelos de hormigón blanco protegen los espacios de estar del sol implacable del sur." },
-          { type: "split", title: "Materialidad Mineral", content: "Pisos de piedra caliza apomazada que unifican el interior y las vastas terrazas exteriores.", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" },
+          { type: "split", title: "Materialidad Mineral", content: "Pisos de piedra caliza apomazada que unifican el interior y las vastas terrazas exteriores.", quote: "«Pisos de piedra caliza que unifican el interior y el exterior.»", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=2000" },
           { type: "image", url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "text", title: "Patio Andaluz", content: "Reinterpretación contemporánea del patio porticado tradicional." },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
@@ -739,13 +744,12 @@
         photo: "OWN",
         year: "2024",
         blocks: [
-          { type: "split", title: "Liviandad Estructural", content: "Fuyū ('flotar' en japonés) explora los límites de la estructura metálica ligera integrada sutilmente en la masa forestal.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Liviandad Estructural", content: "Fuyū ('flotar' en japonés) explora los límites de la estructura metálica ligera integrada sutilmente en la masa forestal.", quote: "«Explora los límites de la estructura metálica ligera.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "image", url: "img/FUYU/fuyu-2.jpg" },
           { type: "text", title: "Plataforma Elevada", content: "La vivienda se eleva sobre pilotes metálicos para minimizar el impacto sobre el suelo." },
           { type: "image", url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
-          { type: "text", title: "Carpintería Minimalista",
-          content: "Marcos ocultos que funden el interior con el dosel arbóreo." },
-          { type: "text", title: "Acabados Interiores", content: "PANELES de abedul natural en todas las estancias principales." }
+          { type: "text", title: "Carpintería Minimalista", content: "Marcos ocultos que funden el interior con el dosel arbóreo." },
+          { type: "text", title: "Acabados Interiores", content: "Paneles de abedul natural en todas las estancias principales." }
         ]
       },
       10: {
@@ -758,7 +762,7 @@
         year: "2022",
         blocks: [
           { type: "image", url: "img/PASSACAGLIA/Passacaglia-1.jpg" },
-          { type: "split", title: "Ritmo y Proporción", content: "Un juego de alturas y dobles espacios articulados mediante una escalera central escultórica.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Ritmo y Proporción", content: "Un juego de alturas y dobles espacios articulados mediante una escalera central escultórica.", quote: "«Un juego de alturas articulado mediante una escalera escultórica.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "text", title: "Acústica Cuidadosa", content: "Tratamiento fónico especializado en techos para espacios de doble altura." },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
           { type: "text", title: "Fachada Ventilada", content: "Paneles de granito gris anclados mediante perfilería de aluminio." },
@@ -774,7 +778,7 @@
         photo: "Simón García",
         year: "2023",
         blocks: [
-          { type: "split", title: "Arquitectura Hídrica", content: "Inspirada en las infraestructuras hidráulicas tradicionales, incorpora un gran aljibe central como corazón bioclimático.", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
+          { type: "split", title: "Arquitectura Hídrica", content: "Inspirada en las infraestructuras hidráulicas tradicionales, incorpora un gran aljibe central como corazón bioclimático.", quote: "«Incorpora un gran aljibe central como corazón bioclimático.»", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
           { type: "image", url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
           { type: "text", title: "Circulación de Agua", content: "El flujo de agua recorre los patios creando un sonido relajante constante." },
           { type: "image", url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000" },
@@ -792,7 +796,7 @@
         year: "2022",
         blocks: [
           { type: "text", title: "Escala Urbana", content: "Una fachada de cerámica esmaltada en tonos oscuros dialoga directamente con el pasado portuario de la ría." },
-          { type: "split", title: "Estructuras Libres", content: "Plantas diáfanas soportadas por un núcleo central de hormigón que permiten total flexibilidad de uso.", image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
+          { type: "split", title: "Estructuras Libres", content: "Plantas diáfanas soportadas por un núcleo central de hormigón que permiten total flexibilidad de uso.", quote: "«Plantas diáfanas soportadas por un núcleo central de hormigón.»", image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=2000" },
           { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000" },
           { type: "text", title: "Vistas Portuarias", content: "Orientaciones cruzadas hacia los muelles industriales restaurados." },
           { type: "image", url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000" },
@@ -863,10 +867,11 @@
               <div class="dynamic-block block-split-2">
                 <div class="block-split-text">
                   <h3>${block.title}</h3>
-                  <p class="sheet-text-p">${block.content}</p>
+                  <p>${block.content}</p>
+                  <span class="highlight-quote">${block.quote}</span>
                 </div>
                 <div>
-                  <img src="${block.image}" alt="Croquis o detalle" class="sheet-sketch-img">
+                  <img src="${block.image}" alt="Croquis o detalle">
                 </div>
               </div>
             `;
