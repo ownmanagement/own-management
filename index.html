@@ -1,12 +1,3 @@
-Aquí tienes el código completo y modificado de tu web.
-
-Se han realizado los siguientes cambios tipográficos según tus indicaciones:
-
-1. **Títulos principales y cabeceras:** Se ha cambiado la tipografía de títulos a **Syne** (cargada desde Google Fonts) para darle ese toque vanguardista, geométrico y editorial tan característico de los estudios de arquitectura contemporáneos.
-2. **Textos generales (Cuerpo):** Se ha cambiado la base a **Inter** para asegurar una legibilidad impecable, limpia y moderna en pantallas.
-3. **Excepción en Memorias de Proyecto:** Se ha mantenido **Playfair Display** de forma intencionada en los párrafos de concepto y descripciones dentro de las memorias de proyecto para conservar ese contraste elegante de alta gama.
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,8 +8,8 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- Fuentes: Syne (Títulos), Inter (Textos generales) y Playfair Display (Excepción para memorias) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <!-- Fuentes: Montserrat (Bold para la marca OWN), Inter (Textos generales) y Playfair Display (Excepción para memorias) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
     /* --- RESET Y ESTILOS BASE --- */
@@ -35,12 +26,19 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- APLICACIÓN DE FUENTES (TÍTULOS EN SYNE) --- */
-    h1, h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title, .archive-title {
-        font-family: 'Syne', sans-serif !important; 
+    /* --- APLICACIÓN DE FUENTES Y CORRECCIÓN DE ESTIRAMIENTO PARA OWN --- */
+    .brand-logo, .hero-title-interactive {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
+        font-stretch: normal;
+        transform: none !important;
+    }
+
+    h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title, .archive-title {
+        font-family: 'Inter', sans-serif !important; 
         text-transform: uppercase;
         letter-spacing: 0.03em;
-        font-weight: 700;
+        font-weight: 600;
     }
 
     /* --- NAV MINIMALISTA --- */
@@ -62,13 +60,11 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
     .nav-bar > * { pointer-events: auto; }
 
     .brand-logo { 
-        font-family: 'Syne', sans-serif;
-        font-size: 1.1rem; 
+        font-size: 1.2rem; 
         letter-spacing: 0.25em; 
         color: #000; 
         cursor: pointer; 
         transition: letter-spacing 0.5s ease; 
-        font-weight: 800; 
     }
     .brand-logo:hover { letter-spacing: 0.35em; }
     
@@ -122,9 +118,7 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
     
     .hero-title-interactive { 
-        font-family: 'Syne', sans-serif !important; 
         font-size: clamp(5rem, 20vw, 18rem); 
-        font-weight: 800; 
         letter-spacing: -0.02em; 
         line-height: 0.8; 
         cursor: pointer; 
@@ -327,13 +321,14 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
 
     .meta { 
       margin-top: 18px; 
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.7rem; 
       letter-spacing: 0.2em; 
       text-transform: uppercase; 
       color: #111; 
       display: flex;
       justify-content: space-between;
+      font-weight: 500;
     }
 
     .meta span { opacity: 0.4; }
@@ -364,7 +359,7 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
     .modal-title { 
         font-size: clamp(3rem, 6vw, 6rem); 
         line-height: 1.05; 
-        font-weight: 800; 
+        font-weight: 600; 
         letter-spacing: 0.01em; 
         text-transform: uppercase; 
         margin-bottom: 1.5rem; 
@@ -385,7 +380,7 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
     .meta-box strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-top: 0.8rem; display: block; font-weight: 400; }
     
     .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; margin-top: 10vh;}
-    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; font-weight: 700;}
+    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; font-weight: 600;}
     .sheet-text-p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.5vw, 1.5vw); line-height: 1.8; color: #333; margin-bottom: 2rem; font-weight: 400; }
     .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
 
@@ -778,5 +773,3 @@ Se han realizado los siguientes cambios tipográficos según tus indicaciones:
   </script>
 </body>
 </html>
-
-```
