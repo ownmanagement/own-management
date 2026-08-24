@@ -1,3 +1,12 @@
+Aquí tienes el código completo y modificado de tu web.
+
+Se han realizado los siguientes cambios tipográficos según tus indicaciones:
+
+1. **Títulos principales y cabeceras:** Se ha cambiado la tipografía de títulos a **Syne** (cargada desde Google Fonts) para darle ese toque vanguardista, geométrico y editorial tan característico de los estudios de arquitectura contemporáneos.
+2. **Textos generales (Cuerpo):** Se ha cambiado la base a **Inter** para asegurar una legibilidad impecable, limpia y moderna en pantallas.
+3. **Excepción en Memorias de Proyecto:** Se ha mantenido **Playfair Display** de forma intencionada en los párrafos de concepto y descripciones dentro de las memorias de proyecto para conservar ese contraste elegante de alta gama.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,15 +17,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Fuentes: Syne (Títulos), Inter (Textos generales) y Playfair Display (Excepción para memorias) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
 
   <style>
     /* --- RESET Y ESTILOS BASE --- */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
     
     html, body { 
-      font-family: 'Playfair Display', serif; 
+      font-family: 'Inter', sans-serif; 
       background-color: #ffffff; 
       color: #0f0f0f; 
       width: 100vw; 
@@ -26,12 +35,12 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- APLICACIÓN DE FUENTES --- */
+    /* --- APLICACIÓN DE FUENTES (TÍTULOS EN SYNE) --- */
     h1, h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title, .archive-title {
-        font-family: 'Space Grotesk', sans-serif !important; 
+        font-family: 'Syne', sans-serif !important; 
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
+        letter-spacing: 0.03em;
+        font-weight: 700;
     }
 
     /* --- NAV MINIMALISTA --- */
@@ -53,19 +62,20 @@
     .nav-bar > * { pointer-events: auto; }
 
     .brand-logo { 
+        font-family: 'Syne', sans-serif;
         font-size: 1.1rem; 
-        letter-spacing: 0.3em; 
+        letter-spacing: 0.25em; 
         color: #000; 
         cursor: pointer; 
         transition: letter-spacing 0.5s ease; 
-        font-weight: 700; 
+        font-weight: 800; 
     }
-    .brand-logo:hover { letter-spacing: 0.4em; }
+    .brand-logo:hover { letter-spacing: 0.35em; }
     
     .nav-back-btn { 
-        font-family: 'Familjen Grotesk', sans-serif; 
-        font-size: 0.8rem; 
-        font-weight: 600; 
+        font-family: 'Inter', sans-serif; 
+        font-size: 0.75rem; 
+        font-weight: 500; 
         text-transform: uppercase; 
         letter-spacing: 0.15em; 
         color: #666; 
@@ -112,9 +122,9 @@
     .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
     
     .hero-title-interactive { 
-        font-family: 'Space Grotesk', sans-serif !important; 
+        font-family: 'Syne', sans-serif !important; 
         font-size: clamp(5rem, 20vw, 18rem); 
-        font-weight: 700; 
+        font-weight: 800; 
         letter-spacing: -0.02em; 
         line-height: 0.8; 
         cursor: pointer; 
@@ -125,13 +135,13 @@
     .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
     
     .hero-subtext { 
-        font-family: 'Familjen Grotesk', sans-serif; 
+        font-family: 'Inter', sans-serif; 
         margin-top: 2.5rem; 
-        font-size: 0.9rem; 
+        font-size: 0.85rem; 
         text-transform: uppercase; 
         letter-spacing: 0.35em; 
         color: #ffffff; 
-        font-weight: 400;
+        font-weight: 300;
         opacity: 0.9;
     }
 
@@ -188,15 +198,15 @@
     .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
     
     .split-title { 
-        font-size: clamp(2rem, 4vw, 4.5rem); 
+        font-size: clamp(2.2rem, 4vw, 4.5rem); 
         margin-bottom: 0.5rem; 
         transition: transform 0.4s ease; 
         text-shadow: 0 4px 15px rgba(0,0,0,0.4); 
     }
     
     .split-desc { 
-        font-family: 'Playfair Display', serif; 
-        font-size: 0.9rem; 
+        font-family: 'Inter', sans-serif; 
+        font-size: 0.85rem; 
         letter-spacing: 0.02em; 
         color: #e0e0e0; 
         opacity: 0.9; 
@@ -204,6 +214,7 @@
         line-height: 1.6;
         transition: opacity 0.5s ease, transform 0.5s ease; 
         text-transform: none; 
+        font-weight: 300;
     }
     .split-pane:hover .split-title { transform: translateY(-4px); }
     .split-pane:hover .split-desc { opacity: 1; transform: translateY(-2px); }
@@ -220,13 +231,13 @@
     
     .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
     .section-intro-text { 
-        font-family: 'Playfair Display', serif; 
-        font-size: clamp(1.1rem, 1.6vw, 1.6rem); 
+        font-family: 'Inter', sans-serif; 
+        font-size: clamp(1.05rem, 1.4vw, 1.4rem); 
         line-height: 1.8; 
         color: #333; 
         max-width: 900px; 
         margin-bottom: 5rem; 
-        font-weight: 400;
+        font-weight: 300;
     }
     
     /* --- ESTUDIO: FOTO GRUPAL Y EQUIPO --- */
@@ -255,10 +266,10 @@
     .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
     .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(0%); }
     
-    .team-name { font-size: 1.2rem; letter-spacing: 0.15em; }
+    .team-name { font-size: 1.2rem; letter-spacing: 0.1em; }
     .team-role { 
-        font-family: 'Familjen Grotesk', sans-serif; 
-        font-size: 0.85rem; 
+        font-family: 'Inter', sans-serif; 
+        font-size: 0.8rem; 
         letter-spacing: 0.05em; 
         color: #666; 
         margin-top: 0.5rem; 
@@ -316,9 +327,9 @@
 
     .meta { 
       margin-top: 18px; 
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.65rem; 
-      letter-spacing: 0.25em; 
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem; 
+      letter-spacing: 0.2em; 
       text-transform: uppercase; 
       color: #111; 
       display: flex;
@@ -331,13 +342,13 @@
     #project-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; z-index: 20000; opacity: 0; visibility: hidden; overflow-y: auto; transition: opacity 0.6s ease, visibility 0.6s; pointer-events: none; }
     #project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
     .modal-close-btn { 
-        font-family: 'Familjen Grotesk', sans-serif; 
+        font-family: 'Inter', sans-serif; 
         position: fixed; 
         top: 2rem; 
         right: 6vw; 
         z-index: 21000; 
-        font-size: 0.8rem; 
-        font-weight: 600; 
+        font-size: 0.75rem; 
+        font-weight: 500; 
         letter-spacing: 0.2em; 
         text-transform: uppercase; 
         padding: 0.8rem 1.6rem; 
@@ -352,29 +363,29 @@
     
     .modal-title { 
         font-size: clamp(3rem, 6vw, 6rem); 
-        line-height: 1.1; 
-        font-weight: 600; 
-        letter-spacing: 0.02em; 
+        line-height: 1.05; 
+        font-weight: 800; 
+        letter-spacing: 0.01em; 
         text-transform: uppercase; 
         margin-bottom: 1.5rem; 
     }
     .modal-subtitle { 
-        font-family: 'Familjen Grotesk', sans-serif; 
-        font-size: 1rem; 
+        font-family: 'Inter', sans-serif; 
+        font-size: 0.8rem; 
         letter-spacing: 0.3em; 
         color: #aaa; 
         text-transform: uppercase; 
         margin-bottom: 8vh; 
         display: block; 
-        font-weight: 400;
+        font-weight: 500;
     }
 
     .sheet-meta-grid-full { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 4rem 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin: 8vh 0; }
-    .meta-box span { font-family: 'Familjen Grotesk', sans-serif; display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; font-weight: 600; }
+    .meta-box span { font-family: 'Inter', sans-serif; display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; font-weight: 500; }
     .meta-box strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-top: 0.8rem; display: block; font-weight: 400; }
     
     .sheet-grid-2-full { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; margin-top: 10vh;}
-    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.2em; margin-bottom: 2rem; color: #333; font-weight: 600;}
+    .sheet-text-block h3 { font-size: 1.2rem; letter-spacing: 0.15em; margin-bottom: 2rem; color: #333; font-weight: 700;}
     .sheet-text-p { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 1.5vw, 1.5vw); line-height: 1.8; color: #333; margin-bottom: 2rem; font-weight: 400; }
     .sheet-sketch-img { width: 100%; height: 70vh; object-fit: cover; background-color: #f9f9f9; }
 
@@ -392,7 +403,7 @@
       .nav-bar { padding: 1rem 5vw; }
       .brand-logo { font-size: 1rem; }
       .section-inner { padding: 120px 5vw 80px 5vw; }
-      .section-intro-text { margin-bottom: 3rem; font-size: 1.3rem;}
+      .section-intro-text { margin-bottom: 3rem; font-size: 1.2rem;}
       #proyectos-radical { grid-template-columns: 1fr; gap: 60px; }
       .team-grid, .sheet-meta-grid-full, .sheet-grid-2-full { grid-template-columns: 1fr; gap: 3rem; }
       .team-img-container, .team-group-photo-container { height: 40vh; }
@@ -732,7 +743,7 @@
       mContent.innerHTML = `
         <span class="modal-subtitle">MEMORIA DE PROYECTO</span>
         <h2 class="modal-title">${p.title}</h2>
-        <p style="font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #777; margin-bottom: 2rem;">${p.location}</p>
+        <p style="font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #777; margin-bottom: 2rem; font-weight: 300;">${p.location}</p>
         
         <div class="sheet-meta-grid-full">
           <div class="meta-box"><span>Arquitectura</span><strong>${p.architects}</strong></div>
@@ -767,3 +778,5 @@
   </script>
 </body>
 </html>
+
+```
