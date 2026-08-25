@@ -363,7 +363,15 @@
     }
     .modal-close-btn:hover { background: #000; color: #fff; border-color: #000; }
     
-    .modal-hero-img { width: 100vw; height: 90vh; object-fit: cover; }
+    /* MODIFICACIÓN PRINCIPAL AQUÍ: ancho total cubierto pero altura optimizada y responsiva */
+    .modal-hero-img { 
+        width: 100vw; 
+        max-height: 65vh; 
+        height: auto; 
+        object-fit: cover; 
+        display: block;
+    }
+
     .modal-body-full { width: 100vw; padding: 10vh 6vw 150px 6vw; max-width: 1400px; margin: 0 auto; }
     
     .modal-title { 
