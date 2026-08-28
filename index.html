@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     @font-face {
@@ -92,7 +92,6 @@
       overflow: hidden;
     }
 
-    /* Lienzo flotante de planos que siguen al mouse de forma sutil */
     .interactive-canvas-bg {
       position: absolute;
       inset: 0;
@@ -230,7 +229,7 @@
     .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1650px; margin: 0 auto; }
     
     .section-header-title { 
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2.5rem, 5vw, 4.5rem); 
       margin-bottom: 2rem; 
       text-transform: uppercase;
@@ -248,12 +247,12 @@
         font-weight: 300;
     }
     
-    /* ESTUDIO */
+    /* ESTUDIO: FOTO GRUPAL ARRIBA, EQUIPO ABAJO */
     .team-group-photo-container {
       width: 100%;
-      height: 60vh;
+      height: 55vh;
       overflow: hidden;
-      margin-bottom: 6rem;
+      margin-bottom: 5rem;
       background: #eee;
     }
     .team-group-photo-container img {
@@ -268,76 +267,88 @@
       transform: scale(1.02);
     }
 
-    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; }
-    .team-card { position: relative; }
-    .team-img-container { width: 100%; height: 45vh; overflow: hidden; background: #eee; margin-bottom: 1.5rem;}
-    .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
-    .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(0%); }
-    
-    .team-name { font-family: 'Inter', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
-    .team-role { font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em; color: #666; margin-top: 0.5rem; text-transform: uppercase; font-weight: 400; }
+    .team-grid-compact { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 3vw; 
+    }
+    .team-card-compact { position: relative; }
+    .team-img-small { width: 100%; height: 28vh; overflow: hidden; background: #eee; margin-bottom: 1rem; }
+    .team-img-small img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 0.6s ease, filter 0.5s ease; }
+    .team-card-compact:hover .team-img-small img { transform: scale(1.04); filter: grayscale(0%); }
+    .team-name { font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+    .team-role { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #666; margin-top: 0.3rem; text-transform: uppercase; font-weight: 400; }
 
-    /* PROYECTOS (4 COLUMNAS) */
-    #proyectos-radical {
+    /* PROYECTOS: GRILLA ASIMÉTRICA DINÁMICA */
+    .projects-asymmetric-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 120px 40px;
-      max-width: 1650px;
-      margin: 0 auto;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 40px;
+      margin-top: 2rem;
     }
 
-    .columna-1 { display: flex; flex-direction: column; gap: 140px; }
-    .columna-2 { display: flex; flex-direction: column; gap: 140px; margin-top: 180px; }
-    .columna-3 { display: flex; flex-direction: column; gap: 140px; margin-top: 60px; }
-    .columna-4 { display: flex; flex-direction: column; gap: 140px; margin-top: 240px; }
-
-    .marco {
+    .project-card-item {
       position: relative;
-      overflow: visible;
-      transition: z-index 0s;
-      width: 100%;
       cursor: pointer;
     }
+    
+    /* Posicionamiento asimétrico para romper la monotonía */
+    .p-item-1 { grid-column: span 7; }
+    .p-item-2 { grid-column: span 5; margin-top: 80px; }
+    .p-item-3 { grid-column: span 4; }
+    .p-item-4 { grid-column: span 8; margin-top: -60px; }
+    .p-item-5 { grid-column: span 6; }
+    .p-item-6 { grid-column: span 6; margin-top: 100px; }
 
-    .imagen-zoom {
+    .project-card-thumb {
       width: 100%;
-      height: auto;
+      height: 420px;
+      overflow: hidden;
+      background: #f0f0f0;
+      position: relative;
+    }
+    .p-item-1 .project-card-thumb { height: 520px; }
+    .p-item-4 .project-card-thumb { height: 480px; }
+
+    .project-card-thumb img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       filter: grayscale(100%);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease, box-shadow 0.6s ease;
-      display: block;
-      position: relative;
-      z-index: 1;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
     }
 
-    .marco:hover { z-index: 100; }
-    .marco:hover .imagen-zoom {
-      transform: scale(1.25);
+    .project-card-item:hover .project-card-thumb img {
+      transform: scale(1.05);
       filter: grayscale(0%);
-      box-shadow: 0 35px 70px rgba(0,0,0,0.25);
-      z-index: 100;
     }
 
-    .h-sm { height: 260px; }
-    .h-md { height: 380px; }
-    .h-lg { height: 500px; }
-
-    .meta { 
-      margin-top: 18px; 
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem; 
-      letter-spacing: 0.2em; 
-      text-transform: uppercase; 
-      color: #111; 
+    .project-card-info {
+      margin-top: 1rem;
       display: flex;
       justify-content: space-between;
-      font-weight: 500;
+      align-items: baseline;
     }
-    .meta span { opacity: 0.4; }
 
-    /* DETALLE DE PROYECTO */
+    .project-card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-card-loc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #666;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* --- VISTA DE MEMORIA Y DETALLE DE PROYECTO --- */
     .project-detail-view {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       position: relative;
       width: 100vw;
       min-height: 3800px;
@@ -361,11 +372,11 @@
     .reg-mark { position: absolute; font-family: monospace; font-size: 0.7rem; color: #666; letter-spacing: 0.1em; pointer-events: none; z-index: 2; }
     .canvas-container { position: relative; width: 100vw; min-height: 3800px; padding: 5vw; z-index: 3; }
     .header-block { position: absolute; top: 8vw; left: 10%; width: 26vw; max-width: 350px; font-size: 0.9rem; line-height: 1.6; }
-    .header-block strong { display: block; font-weight: 600; margin-bottom: 6px; }
+    .header-block strong { display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 6px; }
 
     .zoom-container { overflow: hidden; position: relative; }
     .zoom-container img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-    .zoom-container:hover img { transform: scale(1.25); }
+    .zoom-container:hover img { transform: scale(1.15); }
 
     .item-01 { position: absolute; top: 22vw; left: 10%; width: 22vw; height: 28vw; min-width: 220px; min-height: 280px; cursor: pointer; }
     .item-01 img { filter: grayscale(100%) contrast(110%); }
@@ -380,8 +391,8 @@
     .blueprint-label { position: absolute; bottom: 12px; left: 15px; font-family: monospace; font-size: 0.65rem; color: #8ecae6; letter-spacing: 0.1em; text-transform: uppercase; }
     .image-label { position: absolute; bottom: -28px; right: 0; font-size: 0.8rem; font-weight: 500; z-index: 5; }
 
-    .main-title { position: absolute; top: 25vw; left: 38%; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; }
-    .edge-element-left { position: absolute; top: 60vw; left: -40px; width: 28vw; height: 14vw; background: #fafafa; padding: 24px; display: flex; align-items: center; justify-content: flex-end; font-size: 0.85 font-weight: 500; }
+    .main-title { position: absolute; top: 25vw; left: 38%; font-family: 'Montserrat', sans-serif; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; }
+    .edge-element-left { position: absolute; top: 60vw; left: -40px; width: 28vw; height: 14vw; background: #fafafa; padding: 24px; display: flex; align-items: center; justify-content: flex-end; font-size: 0.85rem; font-weight: 500; }
     .edge-element-right { position: absolute; top: 44vw; right: -40px; width: 30vw; height: 13vw; background: #fafafa; padding: 24px; display: flex; align-items: center; justify-content: flex-start; font-size: 0.85rem; font-weight: 500; }
 
     .item-02 { position: absolute; top: 48vw; left: 42%; width: 22vw; height: 28vw; min-width: 220px; min-height: 280px; }
@@ -392,17 +403,14 @@
     .footer-section { position: absolute; top: 142vw; left: 5%; right: 5%; width: 90vw; height: 42vw; min-height: 420px; }
     .footer-image { position: relative; width: 100%; height: 100%; }
     .footer-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .overflow-title { position: absolute; bottom: -3.5vw; left: 3vw; font-size: clamp(3rem, 9vw, 8.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.05em; z-index: 5; color: #111111; }
+    .overflow-title { position: absolute; bottom: -3.5vw; left: 3vw; font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 9vw, 8.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.05em; z-index: 5; color: #111111; }
 
     .reveal { opacity: 0; transform: translateY(90px) scale(0.96); filter: blur(4px); transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.active { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
 
-    @media (max-width: 1200px) {
-      #proyectos-radical { grid-template-columns: repeat(2, 1fr); gap: 80px; }
-      .columna-1, .columna-2, .columna-3, .columna-4 { margin-top: 0 !important; gap: 80px; }
-    }
     @media (max-width: 1000px) {
-      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
+      .team-grid-compact { grid-template-columns: repeat(1, 1fr); gap: 4vw; }
+      .projects-asymmetric-grid { display: flex; flex-direction: column; gap: 40px; }
       .home-center-stage { flex-direction: column; align-items: flex-start; gap: 3rem; }
       .home-interactive-menu { text-align: left; }
     }
@@ -415,12 +423,11 @@
 
   <!-- 1. HOME INTERACTIVA Y SORPRESIVA -->
   <section id="section-home" class="page-section active">
-    <!-- Lienzo interactivo trasero con imágenes que siguen al mouse -->
     <div class="interactive-canvas-bg" id="canvasBg">
-      <img src="img/CLARODELUZ/clarodeluz-1.jpg" class="floating-blueprint" data-index="0" alt="Blueprint">
-      <img src="img/INFINITA/infinita-1.jpg" class="floating-blueprint" data-index="1" alt="Blueprint">
-      <img src="img/BRISA/brisa-2.jpg" class="floating-blueprint" data-index="2" alt="Blueprint">
-      <img src="img/JP/jp-1.jpg" class="floating-blueprint" data-index="3" alt="Blueprint">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="0" alt="Blueprint">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="1" alt="Blueprint">
+      <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="2" alt="Blueprint">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="3" alt="Blueprint">
     </div>
 
     <div class="home-content-wrapper">
@@ -450,7 +457,7 @@
     </div>
   </section>
 
-  <!-- 2. SECCIÓN ESTUDIO -->
+  <!-- 2. SECCIÓN ESTUDIO (FOTO GRUPAL ARRIBA, EQUIPO ABAJO) -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -463,38 +470,34 @@
           Fundado bajo la premisa de la síntesis formal, OWN Studio concibe cada proyecto como un ejercicio de reducción y proporción rigurosa, donde la materia se expresa con honestidad estructural.
         </p>
 
+        <!-- Foto Grupal Arriba -->
         <div class="team-group-photo-container">
-          <img src="img/imagen.jpg" alt="Equipo OWN al completo">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" alt="Equipo OWN al completo">
         </div>
 
-        <div class="team-grid">
-          <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
-            <div class="team-info">
-              <h4 class="team-name">Elena Vance</h4>
-              <p class="team-role">Socia Fundadora / Dirección Creativa</p>
-            </div>
+        <!-- Retratos Individuales Abajo y Más Pequeños -->
+        <div class="team-grid-compact">
+          <div class="team-card-compact">
+            <div class="team-img-small"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
+            <h4 class="team-name">Elena Vance</h4>
+            <p class="team-role">Socia Fundadora / Dirección Creativa</p>
           </div>
-          <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Marc Aureli"></div>
-            <div class="team-info">
-              <h4 class="team-name">Marc Aureli</h4>
-              <p class="team-role">Socio Fundador / Dirección Técnica</p>
-            </div>
+          <div class="team-card-compact">
+            <div class="team-img-small"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Marc Aureli"></div>
+            <h4 class="team-name">Marc Aureli</h4>
+            <p class="team-role">Socio Fundador / Dirección Técnica</p>
           </div>
-          <div class="team-card">
-            <div class="team-img-container"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" alt="Sofía Larsson"></div>
-            <div class="team-info">
-              <h4 class="team-name">Sofía Larsson</h4>
-              <p class="team-role">Arquitecta Senior</p>
-            </div>
+          <div class="team-card-compact">
+            <div class="team-img-small"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" alt="Sofía Larsson"></div>
+            <h4 class="team-name">Sofía Larsson</h4>
+            <p class="team-role">Arquitecta Senior</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. SECCIÓN PROYECTOS (4 COLUMNAS) -->
+  <!-- 3. SECCIÓN PROYECTOS (GRILLA ASIMÉTRICA DINÁMICA) -->
   <section id="section-proyectos" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -504,64 +507,52 @@
       <div class="section-inner">
         <h2 class="section-header-title">Archivo de Proyectos</h2>
         
-        <div id="proyectos-radical">
-          <div class="columna-1">
-            <div class="marco" onclick="openProjectDetail(1)">
-              <img src="img/CLARODELUZ/clarodeluz-1.jpg" alt="Casa Claro de Luz" class="imagen-zoom h-lg">
-              <div class="meta"><span>01</span> Casa Claro de Luz</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(5)">
-              <img src="img/BRISADELUZ/brisadeluz-1.jpg" alt="Casa Brisa de Luz" class="imagen-zoom h-sm">
-              <div class="meta"><span>05</span> Casa Brisa de Luz</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(9)">
-              <img src="img/FUYU/fuyu-2.jpg" alt="Casa FUYU" class="imagen-zoom h-md">
-              <div class="meta"><span>09</span> Casa FUYU</div>
+        <div class="projects-asymmetric-grid">
+          <div class="project-card-item p-item-1" onclick="openProjectDetail(1)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Torre en Conill</span>
+              <span class="project-card-loc">Valencia</span>
             </div>
           </div>
 
-          <div class="columna-2">
-            <div class="marco" onclick="openProjectDetail(2)">
-              <img src="img/INFINITA/infinita-1.jpg" alt="CASA INFINITA" class="imagen-zoom h-md">
-              <div class="meta"><span>02</span> CASA INFINITA</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(6)">
-              <img src="img/JP/jp-1.jpg" alt="Casa Claroscuro" class="imagen-zoom h-lg">
-              <div class="meta"><span>06</span> Casa Claroscuro</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(10)">
-              <img src="img/PASSACAGLIA/passacaglia-4.jpg" alt="Casa Passacaglia" class="imagen-zoom h-sm">
-              <div class="meta"><span>10</span> Casa Passacaglia</div>
+          <div class="project-card-item p-item-2" onclick="openProjectDetail(2)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Villa Pedralbes</span>
+              <span class="project-card-loc">Barcelona</span>
             </div>
           </div>
 
-          <div class="columna-3">
-            <div class="marco" onclick="openProjectDetail(3)">
-              <img src="img/SANTQUIRZE/sq-1.jpg" alt="Casa Invertida" class="imagen-zoom h-sm">
-              <div class="meta"><span>03</span> Casa Invertida</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(7)">
-              <img src="img/VILACLARA/vilaclara-1.jpg" alt="Casa Vilaclara" class="imagen-zoom h-md">
-              <div class="meta"><span>07</span> Casa Vilaclara</div>
-            </div>
-            <div class="marco" onclick="openProjectDetail(11)">
-              <img src="img/TARADELL/tara-2.jpg" alt="Casa Taradell" class="imagen-zoom h-lg">
-              <div class="meta"><span>11</span> Casa Taradell</div>
+          <div class="project-card-item p-item-3" onclick="openProjectDetail(3)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Residencia Brava</span>
+              <span class="project-card-loc">Girona</span>
             </div>
           </div>
 
-          <div class="columna-4">
-            <div class="marco" onclick="openProjectDetail(4)">
-              <img src="img/BRISA/brisa-2.jpg" alt="Brisa del Alba" class="imagen-zoom h-lg">
-              <div class="meta"><span>04</span> Brisa del Alba</div>
+          <div class="project-card-item p-item-4" onclick="openProjectDetail(4)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Refugio Hormigón</span>
+              <span class="project-card-loc">Alicante</span>
             </div>
-            <div class="marco" onclick="openProjectDetail(8)">
-              <img src="img/cancabasa.jpg" alt="Cancabasa" class="imagen-zoom h-sm">
-              <div class="meta"><span>08</span> Cancabasa</div>
+          </div>
+
+          <div class="project-card-item p-item-5" onclick="openProjectDetail(5)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop" alt="Casa Claro de Luz"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Casa Claro de Luz</span>
+              <span class="project-card-loc">Besalú</span>
             </div>
-            <div class="marco" onclick="openProjectDetail(12)">
-              <img src="img/miralpeix.jpg" alt="Miralpeix" class="imagen-zoom h-md">
-              <div class="meta"><span>12</span> Miralpeix</div>
+          </div>
+
+          <div class="project-card-item p-item-6" onclick="openProjectDetail(6)">
+            <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop" alt="Casa Claroscuro"></div>
+            <div class="project-card-info">
+              <span class="project-card-title">Casa Claroscuro</span>
+              <span class="project-card-loc">Sarrià</span>
             </div>
           </div>
         </div>
@@ -570,7 +561,7 @@
     </div>
   </section>
 
-  <!-- 4. VISTA DE DETALLE DE PROYECTO -->
+  <!-- 4. VISTA DE MEMORIA Y DETALLE DE PROYECTO (RESTAURADA) -->
   <section id="section-project-detail" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
@@ -585,8 +576,8 @@
 
         <div class="canvas-container">
           <div class="header-block reveal">
-            <strong id="det-subtitle">ESTUDIO / MATRIZ 15X10</strong>
-            Geometría de precisión, detalles constructivos y proporciones espaciales.
+            <strong id="det-subtitle">ESTUDIO / MEMORIA DESCRIPTIVA</strong>
+            Geometría de precisión, detalles constructivos y proporciones espaciales originales.
           </div>
 
           <div class="item-01 zoom-container reveal" style="transition-delay: 0.1s;">
@@ -605,7 +596,7 @@
 
           <div class="main-title reveal" id="det-title" style="transition-delay: 0.2s;">NOMBRE</div>
 
-          <div class="edge-element-left reveal" style="transition-delay: 0.15s;"><span>[ PLANTA NORTE // 15.4M ]</span></div>
+          <div class="edge-element-left reveal" style="transition-delay: 0.15s;"><span>[ PLANTA NORTE // MEMORIA ]</span></div>
           <div class="edge-element-right reveal" style="transition-delay: 0.1s;"><span>AXIS_02 // SECCIÓN TRANSVERSAL</span></div>
 
           <div class="item-02 zoom-container reveal"><img id="det-img-2" src="" alt="Proyecto Arquitectura 02"><div class="image-label">02</div></div>
@@ -613,27 +604,27 @@
           <div class="middle-right-card zoom-container reveal"><img id="det-img-4" src="" alt="Detalle Constructivo"><div class="image-label">04</div></div>
 
           <div class="item-drawing-1 zoom-container reveal" style="transition-delay: 0.15s;">
-            <img id="det-drawing-1" src="" alt="Dibujo Técnico 01">
+            <img id="det-drawing-1" src="" alt="Croquis Técnico 01">
             <div class="blueprint-sketch-overlay">
               <svg viewBox="0 0 300 200"><rect x="20" y="20" width="260" height="160" stroke-dasharray="5 3" /><circle cx="150" cy="100" r="45" /></svg>
               <div class="blueprint-label">DIAGRAMA</div>
             </div>
-            <div class="image-label">DIBUJO 01</div>
+            <div class="image-label">CROQUIS 01</div>
           </div>
 
           <div class="item-drawing-2 zoom-container reveal" style="transition-delay: 0.2s;">
-            <img id="det-drawing-2" src="" alt="Dibujo Técnico 02">
+            <img id="det-drawing-2" src="" alt="Croquis Técnico 02">
             <div class="blueprint-sketch-overlay">
               <svg viewBox="0 0 300 200"><circle cx="150" cy="100" r="70" stroke-dasharray="3 3" /></svg>
               <div class="blueprint-label">SECCIÓN</div>
             </div>
-            <div class="image-label">DIBUJO 02</div>
+            <div class="image-label">CROQUIS 02</div>
           </div>
 
           <div class="footer-section reveal">
             <div class="footer-image">
-              <img id="det-img-footer" src="" alt="Gran Edificio Arquitectura Color">
-              <div class="overflow-title" id="det-overflow-title">BIABIA BLA</div>
+              <img id="det-img-footer" src="" alt="Memoria Final de Proyecto">
+              <div class="overflow-title" id="det-overflow-title">OWN</div>
             </div>
           </div>
         </div>
@@ -643,21 +634,14 @@
 
   <script>
     const projectDatabase = {
-      1: { title: "Casa Claro de Luz", subtitle: "BESALÚ, ESPAÑA / 480 M²", ref: "+ REF. 01 // CLARO DE LUZ", img1: "img/CLARODELUZ/clarodeluz-1.jpg", img2: "img/CLARODELUZ/clarodeluz-2.jpg", img3: "img/CLARODELUZ/clarodeluz-3.jpg", img4: "img/CLARODELUZ/clarodeluz-5.jpg", drawing1: "img/CLARODELUZ/croquisclaro-1.jpg", drawing2: "img/CLARODELUZ/croquisclaro-2.jpg", footerImg: "img/CLARODELUZ/clarodeluz-6.jpg", overflow: "CLARO LUZ" },
-      2: { title: "Casa Infinita", subtitle: "BARCELONA, ESPAÑA / 320 M²", ref: "+ REF. 02 // INFINITA", img1: "img/INFINITA/infinita-1.jpg", img2: "img/INFINITA/infinita-2.jpg", img3: "img/INFINITA/infinita-5.jpg", img4: "img/INFINITA/infinita-7.jpg", drawing1: "img/INFINITA/infinita-2.jpg", drawing2: "img/INFINITA/infinita-5.jpg", footerImg: "img/INFINITA/infinita-1.jpg", overflow: "INFINITA" },
-      3: { title: "Casa Invertida", subtitle: "SANT QUIRZE, ESPAÑA / 290 M²", ref: "+ REF. 03 // INVERTIDA", img1: "img/SANTQUIRZE/sq-1.jpg", img2: "img/SANTQUIRZE/sq-2.jpg", img3: "img/SANTQUIRZE/sq-3.jpg", img4: "img/SANTQUIRZE/sq-5.jpg", drawing1: "img/SANTQUIRZE/sq-2.jpg", drawing2: "img/SANTQUIRZE/sq-3.jpg", footerImg: "img/SANTQUIRZE/sq-1.jpg", overflow: "INVERTIDA" },
-      4: { title: "Brisa del Alba", subtitle: "CANYELLES, ESPAÑA / 440 M²", ref: "+ REF. 04 // BRISA", img1: "img/BRISA/brisa-2.jpg", img2: "img/BRISA/brisa-3.jpg", img3: "img/BRISA/brisa-4.jpg", img4: "img/BRISA/brisa-6.jpg", drawing1: "img/BRISA/brisa-3.jpg", drawing2: "img/BRISA/brisa-4.jpg", footerImg: "img/BRISA/brisa-2.jpg", overflow: "BRISA ALBA" },
-      5: { title: "Casa Brisa de Luz", subtitle: "SANT PERE DE RIBES / 650 M²", ref: "+ REF. 05 // BRISA LUZ", img1: "img/BRISADELUZ/brisadeluz-1.jpg", img2: "img/BRISADELUZ/brisadeluz-3.jpg", img3: "img/BRISADELUZ/brisadeluz-4.jpg", img4: "img/BRISADELUZ/brisadeluz-1.jpg", drawing1: "img/BRISADELUZ/brisadeluz-3.jpg", drawing2: "img/BRISADELUZ/brisadeluz-4.jpg", footerImg: "img/BRISADELUZ/brisadeluz-1.jpg", overflow: "BRISA LUZ" },
-      6: { title: "Casa Claroscuro", subtitle: "SARRIÀ, BARCELONA / 750 M²", ref: "+ REF. 06 // CLAROSCURO", img1: "img/JP/jp-1.jpg", img2: "img/JP/jp-2.jpg", img3: "img/JP/jp-3.jpg", img4: "img/JP/jp-4.jpg", drawing1: "img/JP/jp-2.jpg", drawing2: "img/JP/jp-3.jpg", footerImg: "img/JP/jp-1.jpg", overflow: "CLAROSCURO" },
-      7: { title: "Casa Vilaclara", subtitle: "CANYELLES, ESPAÑA / 600 M²", ref: "+ REF. 07 // VILACLARA", img1: "img/VILACLARA/vilaclara-1.jpg", img2: "img/VILACLARA/vilaclara-3.jpg", img3: "img/VILACLARA/vilaclara-1.jpg", img4: "img/VILACLARA/vilaclara-3.jpg", drawing1: "img/VILACLARA/vilaclara-3.jpg", drawing2: "img/VILACLARA/vilaclara-1.jpg", footerImg: "img/VILACLARA/vilaclara-1.jpg", overflow: "VILACLARA" },
-      8: { title: "Casa Cancabasa", subtitle: "CÁDIZ, ESPAÑA / 820 M²", ref: "+ REF. 08 // CANCABASA", img1: "img/cancabasa.jpg", img2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000", img3: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000", img4: "img/cancabasa.jpg", drawing1: "img/cancabasa.jpg", drawing2: "img/cancabasa.jpg", footerImg: "img/cancabasa.jpg", overflow: "CANCABASA" },
-      9: { title: "Casa FUYU", subtitle: "SANT FELIU / 410 M²", ref: "+ REF. 09 // FUYU", img1: "img/FUYU/fuyu-2.jpg", img2: "img/FUYU/fuyu-4.jpg", img3: "img/FUYU/fuyu-1.jpg", img4: "img/FUYU/fuyu-3.jpg", drawing1: "img/FUYU/fuyu-4.jpg", drawing2: "img/FUYU/fuyu-1.jpg", footerImg: "img/FUYU/fuyu-2.jpg", overflow: "FUYU" },
-      10: { title: "Casa Passacaglia", subtitle: "BARCELONA, ESPAÑA / 520 M²", ref: "+ REF. 10 // PASSACAGLIA", img1: "img/PASSACAGLIA/passacaglia-4.jpg", img2: "img/PASSACAGLIA/passacaglia-5.jpg", img3: "img/PASSACAGLIA/passacaglia-2.jpg", img4: "img/PASSACAGLIA/passacaglia-3.jpg", drawing1: "img/PASSACAGLIA/passacaglia-5.jpg", drawing2: "img/PASSACAGLIA/passacaglia-2.jpg", footerImg: "img/PASSACAGLIA/passacaglia-4.jpg", overflow: "PASSACAGLIA" },
-      11: { title: "Casa Taradell", subtitle: "MÁLAGA, ESPAÑA / 510 M²", ref: "+ REF. 11 // TARADELL", img1: "img/TARADELL/tara-2.jpg", img2: "img/TARADELL/tara-4.jpg", img3: "img/TARADELL/tara-1.jpg", img4: "img/TARADELL/tara-3.jpg", drawing1: "img/TARADELL/tara-4.jpg", drawing2: "img/TARADELL/tara-1.jpg", footerImg: "img/TARADELL/tara-2.jpg", overflow: "TARADELL" },
-      12: { title: "Casa Miralpeix", subtitle: "BILBAO, ESPAÑA / 890 M²", ref: "+ REF. 12 // MIRALPEIX", img1: "img/miralpeix.jpg", img2: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=2000", img3: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=2000", img4: "img/miralpeix.jpg", drawing1: "img/miralpeix.jpg", drawing2: "img/miralpeix.jpg", footerImg: "img/miralpeix.jpg", overflow: "MIRALPEIX" }
+      1: { title: "Torre en Conill", subtitle: "VALENCIA, ESPAÑA / 480 M²", ref: "+ REF. 01 // TORRE EN CONILL", img1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", overflow: "TORRE CONILL" },
+      2: { title: "Villa Pedralbes", subtitle: "BARCELONA, ESPAÑA / 620 M²", ref: "+ REF. 02 // PEDRALBES", img1: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", overflow: "PEDRALBES" },
+      3: { title: "Residencia Brava", subtitle: "GIRONA, ESPAÑA / 390 M²", ref: "+ REF. 03 // BRAVA", img1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", overflow: "BRAVA" },
+      4: { title: "Refugio Hormigón", subtitle: "ALICANTE, ESPAÑA / 310 M²", ref: "+ REF. 04 // HORMIGÓN", img1: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", overflow: "HORMIGÓN" },
+      5: { title: "Casa Claro de Luz", subtitle: "BESALÚ, ESPAÑA / 450 M²", ref: "+ REF. 05 // CLARO DE LUZ", img1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", overflow: "CLARO LUZ" },
+      6: { title: "Casa Claroscuro", subtitle: "SARRIÀ, BARCELONA / 510 M²", ref: "+ REF. 06 // CLAROSCURO", img1: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop", overflow: "CLAROSCURO" }
     };
 
-    // --- LÓGICA DE INTERACCIÓN DEL MOUSE Y HOME ---
     const cursor = document.getElementById('cursor');
     const blueprints = document.querySelectorAll('.floating-blueprint');
     const homeSection = document.getElementById('section-home');
@@ -667,7 +651,6 @@
       cursor.style.top = e.clientY + 'px';
 
       if (homeSection.classList.contains('active')) {
-        // Distribuir de forma aleatoria/suave los planos ocultos según la posición del cursor
         blueprints.forEach((bp, index) => {
           const speed = (index + 1) * 0.04;
           const x = e.clientX + (index % 2 === 0 ? 1 : -1) * 120 + (Math.sin(e.clientX * speed) * 40);
@@ -679,13 +662,11 @@
       }
     });
 
-    // Activar efecto hover en elementos interactivos
     document.querySelectorAll('[data-hover], .interactive-link, .brand-logo').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
     });
 
-    // Mostrar un plano aleatorio al mover el cursor por la home de forma dinámica
     let activeBlueprintIndex = 0;
     homeSection.addEventListener('mousemove', () => {
       if(Math.random() < 0.1) {
@@ -710,7 +691,7 @@
       if(!p) return;
 
       document.getElementById('det-ref').innerText = p.ref;
-      document.getElementById('det-subtitle').innerHTML = `<strong>ESTUDIO / MATRIZ 15X10</strong>${p.subtitle}`;
+      document.getElementById('det-subtitle').innerHTML = `<strong>ESTUDIO / MEMORIA DESCRIPTIVA</strong>${p.subtitle}`;
       document.getElementById('det-title').innerText = p.title;
       document.getElementById('det-img-1').src = p.img1;
       document.getElementById('det-img-2').src = p.img2;
