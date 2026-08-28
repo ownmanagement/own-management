@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OWN — Arquitectura & Diseño</title>
+  <title>OWN Studio — Arquitectura & Diseño</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Fuentes: Inter, Playfair Display y Space Grotesk para las fichas técnicas -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* --- IMPORTACIÓN DE LA TIPOGRAFÍA SUISSE INTL TRIAL BOLD --- */
@@ -26,8 +24,8 @@
     
     html, body { 
       font-family: 'Inter', sans-serif; 
-      background-color: #ffffff; 
-      color: #0f0f0f; 
+      background-color: #000000; 
+      color: #ffffff; 
       width: 100vw; 
       height: 100vh; 
       overflow: hidden; 
@@ -35,23 +33,126 @@
 
     button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
 
-    /* --- APLICACIÓN DE SUISSE INTL TRIAL BOLD --- */
-    .brand-logo, .hero-title-interactive {
+    .brand-logo {
         font-family: 'Suisse Intl Trial Bold', 'Inter', sans-serif !important;
         font-weight: 700 !important;
-        font-stretch: normal !important;
+        letter-spacing: 0.25em;
         text-transform: uppercase;
-        letter-spacing: -0.01em;
+        color: #fff;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    .brand-logo:hover { color: #3b42c4; }
+
+    /* --- GESTIÓN DE VISTAS --- */
+    .page-section { 
+      display: none; 
+      width: 100vw; 
+      height: 100vh; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #ffffff; 
+      color: #0f0f0f;
+    }
+    .page-section.active { 
+      display: flex; 
     }
 
-    h2, h3, h4, .split-title, .team-name, .project-card-title, .section-header-title, .archive-title {
-        font-family: 'Inter', sans-serif !important; 
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-        font-weight: 600;
+    /* --- NUEVA HOME RADICAL Y ASIMÉTRICA --- */
+    #section-home {
+      background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5vw 6vw;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* --- NAV MINIMALISTA --- */
+    .home-grid-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      height: 100%;
+      z-index: 2;
+      position: relative;
+    }
+
+    .home-left-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .home-brand-huge {
+      font-family: 'Suisse Intl Trial Bold', sans-serif;
+      font-size: clamp(6rem, 18vw, 16rem);
+      line-height: 0.75;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 2rem;
+      user-select: none;
+    }
+
+    .home-manifesto {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.9rem, 1.2vw, 1.15rem);
+      font-weight: 300;
+      line-height: 1.6;
+      color: #a0a0a0;
+      max-width: 450px;
+      letter-spacing: 0.01em;
+    }
+
+    .home-right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .home-nav-link {
+      font-family: 'Suisse Intl Trial Bold', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      display: inline-block;
+    }
+
+    .home-nav-link span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #3b42c4; /* Toque de luz azul eléctrico */
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    .home-nav-link:hover {
+      color: #ffffff;
+      transform: translateX(-15px);
+    }
+
+    .home-coords {
+      position: absolute;
+      bottom: 5vw;
+      left: 6vw;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: #555;
+      letter-spacing: 0.15em;
+    }
+
+    /* --- NAV GENERAL INTERIOR --- */
     .nav-bar { 
       position: fixed; 
       top: 0; 
@@ -68,16 +169,8 @@
       pointer-events: none; 
     }
     .nav-bar > * { pointer-events: auto; }
+    .nav-bar .brand-logo { color: #000; }
 
-    .brand-logo { 
-        font-size: 1.2rem; 
-        letter-spacing: 0.25em; 
-        color: #000; 
-        cursor: pointer; 
-        transition: letter-spacing 0.5s ease; 
-    }
-    .brand-logo:hover { letter-spacing: 0.35em; }
-    
     .nav-back-btn { 
         font-family: 'Inter', sans-serif; 
         font-size: 0.75rem; 
@@ -89,138 +182,6 @@
     }
     .nav-back-btn:hover { color: #000; }
 
-    /* --- GESTIÓN DE VISTAS --- */
-    .page-section { 
-      display: none; 
-      width: 100vw; 
-      height: 100vh; 
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: #ffffff; 
-    }
-    .page-section.active { 
-      display: flex; 
-    }
-
-    /* --- 1. HOME --- */
-    #section-home { 
-      flex-direction: column; 
-      justify-content: center; 
-      align-items: center; 
-      position: relative; 
-      overflow: hidden; 
-      background-color: #000;
-    }
-    .home-bg-video { 
-      position: absolute; 
-      top: 50%; 
-      left: 50%; 
-      min-width: 100%; 
-      min-height: 100%; 
-      width: auto; 
-      height: auto; 
-      transform: translate(-50%, -50%); 
-      object-fit: cover; 
-      z-index: 1; 
-      filter: brightness(0.55) contrast(1.1) grayscale(15%); 
-    }
-    .home-overlay-content { position: relative; z-index: 2; text-align: center; color: #ffffff; }
-    
-    .hero-title-interactive { 
-        font-size: clamp(5rem, 20vw, 18rem); 
-        letter-spacing: -0.02em; 
-        line-height: 0.8; 
-        cursor: pointer; 
-        user-select: none; 
-        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing: 0.6s; 
-    }
-    .hero-title-interactive:hover { letter-spacing: 0.01em; transform: scale(1.03); }
-    
-    .hero-subtext { 
-        font-family: 'Inter', sans-serif; 
-        margin-top: 2.5rem; 
-        font-size: 0.85rem; 
-        text-transform: uppercase; 
-        letter-spacing: 0.35em; 
-        color: #ffffff; 
-        font-weight: 300;
-        opacity: 0.9;
-    }
-
-    /* --- 2. SPLIT SCREEN --- */
-    #section-split { 
-      width: 100vw; 
-      height: 100vh; 
-      position: relative; 
-    }
-    .split-pane { 
-      flex: 1; 
-      height: 100%; 
-      position: relative; 
-      overflow: hidden; 
-      cursor: pointer; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: flex-end; 
-      padding: 6vw; 
-      transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1); 
-    }
-    
-    .split-pane img { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-      filter: grayscale(100%) brightness(0.9); 
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease; 
-      z-index: 0; 
-    }
-    .split-pane:hover img { 
-      transform: scale(1.05); 
-      filter: grayscale(0%) brightness(0.95); 
-    }
-
-    .split-pane::before { 
-      content: ''; 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: rgba(0,0,0,0.25); 
-      transition: background 0.6s ease; 
-      z-index: 1; 
-    }
-    .split-pane:hover::before { 
-      background: rgba(0,0,0,0.1); 
-    }
-
-    .split-content { position: relative; z-index: 2; color: #ffffff; pointer-events: none; }
-    
-    .split-title { 
-        font-size: clamp(2.2rem, 4vw, 4.5rem); 
-        margin-bottom: 0.5rem; 
-        transition: transform 0.4s ease; 
-    }
-    
-    .split-desc { 
-        font-family: 'Inter', sans-serif; 
-        font-size: 0.85rem; 
-        letter-spacing: 0.02em; 
-        color: #e0e0e0; 
-        opacity: 0.9; 
-        max-width: 380px;
-        line-height: 1.6;
-        transition: opacity 0.5s ease, transform 0.5s ease; 
-        text-transform: none; 
-        font-weight: 300;
-    }
-    .split-pane:hover .split-title { transform: translateY(-4px); }
-    .split-pane:hover .split-desc { opacity: 1; transform: translateY(-2px); }
-
     /* --- CONTENEDORES CON SCROLL --- */
     .scrollable-content-wrapper {
       width: 100vw;
@@ -231,7 +192,15 @@
 
     .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1650px; margin: 0 auto; }
     
-    .section-header-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; }
+    .section-header-title { 
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem); 
+      margin-bottom: 2rem; 
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    
     .section-intro-text { 
         font-family: 'Inter', sans-serif; 
         font-size: clamp(1.05rem, 1.4vw, 1.4rem); 
@@ -268,7 +237,13 @@
     .team-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: transform 1s ease, filter 0.5s ease; }
     .team-card:hover .team-img-container img { transform: scale(1.04); filter: grayscale(0%); }
     
-    .team-name { font-size: 1.2rem; letter-spacing: 0.1em; }
+    .team-name { 
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem; 
+      letter-spacing: 0.1em; 
+      text-transform: uppercase;
+      font-weight: 600;
+    }
     .team-role { 
         font-family: 'Inter', sans-serif; 
         font-size: 0.8rem; 
@@ -340,12 +315,12 @@
     }
     .meta span { opacity: 0.4; }
 
-    /* --- ESTILOS DE LA PLANTILLA MATRIZ 15X10 (DETALLE DE PROYECTO AMPLIADA) --- */
+    /* --- VISTA DE DETALLE DE PROYECTO (MATRIZ 15X10) --- */
     .project-detail-view {
       font-family: 'Space Grotesk', sans-serif;
       position: relative;
       width: 100vw;
-      min-height: 3800px; /* Ampliado para dar espacio a los nuevos dibujos */
+      min-height: 3800px;
       background-color: #ffffff;
       color: #111111;
       overflow-x: hidden;
@@ -420,7 +395,6 @@
       transform: scale(1.25);
     }
 
-    /* Elemento 01: Fotografía / Dibujo principal con blueprint interactivo */
     .item-01 {
       position: absolute;
       top: 22vw;
@@ -454,7 +428,8 @@
     }
 
     .item-01:hover .blueprint-sketch-overlay,
-    .item-drawing:hover .blueprint-sketch-overlay {
+    .item-drawing-1:hover .blueprint-sketch-overlay,
+    .item-drawing-2:hover .blueprint-sketch-overlay {
       opacity: 1;
       pointer-events: auto;
     }
@@ -462,7 +437,7 @@
     .blueprint-sketch-overlay svg {
       width: 85%;
       height: 85%;
-      stroke: #e0fbfc;
+      stroke: #3b42c4; /* Detalle de plano con nuestro azul eléctrico */
       stroke-width: 1.5;
       fill: none;
       stroke-linecap: round;
@@ -556,7 +531,6 @@
       min-height: 280px;
     }
 
-    /* --- NUEVOS HUECOS PARA DIBUJOS TÉCNICOS ADICIONALES --- */
     .item-drawing-1 {
       position: absolute;
       top: 108vw;
@@ -567,9 +541,7 @@
       min-height: 200px;
       cursor: pointer;
     }
-    .item-drawing-1 img {
-      filter: grayscale(100%) contrast(115%);
-    }
+    .item-drawing-1 img { filter: grayscale(100%) contrast(115%); }
 
     .item-drawing-2 {
       position: absolute;
@@ -581,9 +553,7 @@
       min-height: 200px;
       cursor: pointer;
     }
-    .item-drawing-2 img {
-      filter: grayscale(100%) contrast(115%);
-    }
+    .item-drawing-2 img { filter: grayscale(100%) contrast(115%); }
 
     .middle-right-card {
       position: absolute;
@@ -597,7 +567,7 @@
 
     .footer-section {
       position: absolute;
-      top: 142vw; /* Desplazado hacia abajo para dar cabida a los dibujos */
+      top: 142vw;
       left: 5%;
       right: 5%;
       width: 90vw;
@@ -654,62 +624,54 @@
     }
     @media (max-width: 1000px) {
       .team-grid { grid-template-columns: repeat(2, 1fr); gap: 6vw;}
-      .h-sm, .h-md, .h-lg { height: 350px; }
+      .home-grid-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .home-right-col { align-items: flex-start; text-align: left; }
     }
     @media (max-width: 800px) {
-      #section-split { flex-direction: column; }
       .nav-bar { padding: 1rem 5vw; }
       .brand-logo { font-size: 1rem; }
       .section-inner { padding: 120px 5vw 80px 5vw; }
-      .section-intro-text { margin-bottom: 3rem; font-size: 1.2rem;}
       #proyectos-radical { grid-template-columns: 1fr; gap: 60px; }
       .team-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .team-img-container, .team-group-photo-container { height: 40vh; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. HOME -->
+  <!-- 1. HOME: NUEVO DISEÑO RADICAL Y ASIMÉTRICO (Adiós al Split) -->
   <section id="section-home" class="page-section active">
-    <video autoplay muted loop playsinline class="home-bg-video">
-      <source src="img/video.mov" type="video/mp4">
-    </video>
-    <div class="home-overlay-content">
-      <h1 class="hero-title-interactive" onclick="switchSection('split')">OWN</h1>
-      <p class="hero-subtext">Arquitectura & Diseño</p>
-    </div>
-  </section>
-
-  <!-- 2. SPLIT SCREEN -->
-  <section id="section-split" class="page-section">
-    <div class="split-pane" id="pane-estudio" onclick="switchSection('estudio')">
-      <img src="img/imagen.jpg" alt="Estudio">
-      <div class="split-content">
-        <h2 class="split-title">Estudio</h2>
-        <p class="split-desc">Filosofía, equipo y metodología.</p>
+    <div class="home-coords">+ SYNC. 2026 // ARCHIVO GENERAL DE AUTOR</div>
+    <div class="home-grid-layout">
+      <div class="home-left-col">
+        <h1 class="home-brand-huge">OWN</h1>
+        <p class="home-manifesto">
+          Arquitectura de escala humana y lujo silencioso. Reducimos la forma a su mínima expresión constructiva, dialogando con la materia cruda y la luz.
+        </p>
       </div>
-    </div>
-    <div class="split-pane" id="pane-proyectos" onclick="switchSection('proyectos')">
-      <img src="img/miralpeix.jpg" alt="Proyectos">
-      <div class="split-content">
-        <h2 class="split-title">Proyectos</h2>
-        <p class="split-desc">Obras y memorias técnicas.</p>
+      <div class="home-right-col">
+        <div class="home-nav-link" onclick="switchSection('estudio')">
+          Estudio
+          <span>// Filosofía y Taller</span>
+        </div>
+        <div class="home-nav-link" onclick="switchSection('proyectos')">
+          Proyectos
+          <span>// Archivo y Memorias</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. SECCIÓN ESTUDIO -->
+  <!-- 2. SECCIÓN ESTUDIO -->
   <section id="section-estudio" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
-        <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
-        <button class="nav-back-btn" onclick="switchSection('split')">← Volver</button>
+        <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
+        <button class="nav-back-btn" onclick="switchSection('home')">← Volver al Inicio</button>
       </nav>
       <div class="section-inner">
         <h2 class="section-header-title">El Estudio</h2>
         <p class="section-intro-text">
-          Fundado en 2010, OWN es un taller de arquitectura enfocado en la síntesis entre el rigor constructivo y la sensibilidad espacial. Creemos en el diseño atemporal que dialoga con su entorno.
+          Fundado bajo la premisa de la síntesis formal, OWN Studio concibe cada proyecto como un ejercicio de reducción y proporción rigurosa, donde la materia se expresa con honestidad estructural.
         </p>
 
         <!-- Fotografía Grupal -->
@@ -722,14 +684,14 @@
             <div class="team-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
             <div class="team-info">
               <h4 class="team-name">Elena Vance</h4>
-              <p class="team-role">Socia Fundadora</p>
+              <p class="team-role">Socia Fundadora / Dirección Creativa</p>
             </div>
           </div>
           <div class="team-card">
             <div class="team-img-container"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Marc Aureli"></div>
             <div class="team-info">
               <h4 class="team-name">Marc Aureli</h4>
-              <p class="team-role">Socio Fundador</p>
+              <p class="team-role">Socio Fundador / Dirección Técnica</p>
             </div>
           </div>
           <div class="team-card">
@@ -744,12 +706,12 @@
     </div>
   </section>
 
-  <!-- 4. SECCIÓN PROYECTOS (4 COLUMNAS) -->
+  <!-- 3. SECCIÓN PROYECTOS (4 COLUMNAS) -->
   <section id="section-proyectos" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
-        <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
-        <button class="nav-back-btn" onclick="switchSection('split')">← Volver</button>
+        <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
+        <button class="nav-back-btn" onclick="switchSection('home')">← Volver al Inicio</button>
       </nav>
       <div class="section-inner">
         <h2 class="section-header-title">Archivo de Proyectos</h2>
@@ -824,11 +786,11 @@
     </div>
   </section>
 
-  <!-- 5. VISTA DE DETALLE DE PROYECTO (MATRIZ 15X10 AMPLIADA CON HUECOS PARA DIBUJOS) -->
+  <!-- 4. VISTA DE DETALLE DE PROYECTO (MATRIZ 15X10) -->
   <section id="section-project-detail" class="page-section">
     <div class="scrollable-content-wrapper">
       <nav class="nav-bar">
-        <h3 class="brand-logo" onclick="switchSection('split')">OWN</h3>
+        <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
         <button class="nav-back-btn" onclick="switchSection('proyectos')">← Volver al Archivo</button>
       </nav>
 
@@ -839,15 +801,14 @@
         <div class="reg-mark" style="top: 20px; right: 100px;">SCALE 1:100</div>
 
         <div class="canvas-container">
-          <!-- Header descriptive text block -->
           <div class="header-block reveal">
             <strong id="det-subtitle">ESTUDIO / MATRIZ 15X10</strong>
             Geometría de precisión, detalles constructivos y proporciones espaciales distribuidas en proporción estructural pura.
           </div>
 
-          <!-- Image 01 (B&W with Hover Blueprint) -->
+          <!-- Image 01 -->
           <div class="item-01 zoom-container reveal" style="transition-delay: 0.1s;">
-            <img id="det-img-1" src="" alt="Proyecto Arquitectura 01 B&W">
+            <img id="det-img-1" src="" alt="Proyecto Arquitectura 01">
             <div class="blueprint-sketch-overlay">
               <svg viewBox="0 0 200 250">
                 <rect x="25" y="30" width="150" height="190" stroke-dasharray="4 2" />
@@ -862,41 +823,34 @@
             <div class="image-label">01</div>
           </div>
 
-          <!-- Central Name / Title -->
+          <!-- Central Title -->
           <div class="main-title reveal" id="det-title" style="transition-delay: 0.2s;">
             NOMBRE
           </div>
 
-          <!-- Edge breaking element left -->
           <div class="edge-element-left reveal" style="transition-delay: 0.15s;">
             <span>[ PLANTA NORTE // 15.4M ]</span>
           </div>
 
-          <!-- Edge breaking element right -->
           <div class="edge-element-right reveal" style="transition-delay: 0.1s;">
             <span>AXIS_02 // SECCIÓN TRANSVERSAL</span>
           </div>
 
-          <!-- Center Image 02 -->
           <div class="item-02 zoom-container reveal">
             <img id="det-img-2" src="" alt="Proyecto Arquitectura 02">
             <div class="image-label">02</div>
           </div>
 
-          <!-- Center Image 03 -->
           <div class="item-03 zoom-container reveal">
             <img id="det-img-3" src="" alt="Proyecto Arquitectura 03">
             <div class="image-label">03</div>
           </div>
 
-          <!-- Middle right vertical card -->
           <div class="middle-right-card zoom-container reveal">
             <img id="det-img-4" src="" alt="Detalle Constructivo">
             <div class="image-label">04</div>
           </div>
 
-          <!-- --- NUEVOS ESPACIOS PARA DIBUJOS TÉCNICOS (IZQUIERDA Y DERECHA) --- -->
-          
           <!-- Dibujo Técnico 01 -->
           <div class="item-drawing-1 zoom-container reveal" style="transition-delay: 0.15s;">
             <img id="det-drawing-1" src="" alt="Dibujo Técnico 01">
@@ -926,7 +880,6 @@
             <div class="image-label">DIBUJO 02</div>
           </div>
 
-          <!-- Large image at the end -->
           <div class="footer-section reveal">
             <div class="footer-image">
               <img id="det-img-footer" src="" alt="Gran Edificio Arquitectura Color">
@@ -948,8 +901,8 @@
         img2: "img/CLARODELUZ/clarodeluz-2.jpg",
         img3: "img/CLARODELUZ/clarodeluz-3.jpg",
         img4: "img/CLARODELUZ/clarodeluz-5.jpg",
-        drawing1: "img/CLARODELUZ/croquisclaro-1.jpg", // Puedes cambiar por la ruta de tus dibujos
-        drawing2: "img/CLARODELUZ/croquisclaro-2.jpg", // Puedes cambiar por la ruta de tus dibujos
+        drawing1: "img/CLARODELUZ/croquisclaro-1.jpg",
+        drawing2: "img/CLARODELUZ/croquisclaro-2.jpg",
         footerImg: "img/CLARODELUZ/clarodeluz-6.jpg",
         overflow: "CLARO LUZ"
       },
@@ -1135,15 +1088,6 @@
           reveals.forEach(el => el.classList.add('active'));
         }, 50);
       }, 50);
-    }
-
-    const paneE = document.getElementById('pane-estudio');
-    const paneP = document.getElementById('pane-proyectos');
-    if(window.innerWidth > 800) {
-      paneE.addEventListener('mouseenter', () => { paneE.style.flex = '2.5'; paneP.style.flex = '0.5'; });
-      paneE.addEventListener('mouseleave', () => { paneE.style.flex = '1'; paneP.style.flex = '1'; });
-      paneP.addEventListener('mouseenter', () => { paneP.style.flex = '2.5'; paneE.style.flex = '0.5'; });
-      paneP.addEventListener('mouseleave', () => { paneP.style.flex = '1'; paneP.style.flex = '1'; });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
