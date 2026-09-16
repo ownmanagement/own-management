@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
     <title>OWN ARCHITECTURE</title>
 
-    <!--
-        NUEVA DIRECCIÓN TIPOGRÁFICA
-        Manrope: identidad, títulos y navegación
-        Inter: lectura y textos largos
-    -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
-        /* ============================================================
+
+        /* ==========================================================
            RESET
-        ============================================================ */
+        ========================================================== */
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -33,7 +32,7 @@
         body {
             background: #11110f;
             color: #181816;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
@@ -45,659 +44,942 @@
             background: #f4f2ed;
         }
 
-        body.story-active,
         body.modal-active {
             overflow: hidden;
         }
 
+        button,
+        a,
+        input,
+        textarea {
+            font: inherit;
+        }
 
-        /* ============================================================
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            display: block;
+        }
+
+
+        /* ==========================================================
            CURSOR
-        ============================================================ */
+        ========================================================== */
 
-        #custom-cursor {
+        @media (pointer: fine) {
+
+            * {
+                cursor: none !important;
+            }
+
+            #custom-cursor {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 8px;
+                height: 8px;
+
+                background: #111;
+
+                border-radius: 50%;
+
+                pointer-events: none;
+
+                z-index: 99999;
+
+                transform: translate(-50%, -50%);
+
+                opacity: 0;
+
+                transition:
+                    width .25s cubic-bezier(.16,1,.3,1),
+                    height .25s cubic-bezier(.16,1,.3,1),
+                    opacity .2s ease,
+                    background .25s ease;
+            }
+
+            #custom-cursor.visible {
+                opacity: 1;
+            }
+
+            #custom-cursor.hovered {
+                width: 28px;
+                height: 28px;
+            }
+
+            body.dark-cursor #custom-cursor {
+                background: #f5f3ee;
+            }
+
+        }
+
+
+        /* ==========================================================
+           01. PORTADA — VIDEO + OWN
+        ========================================================== */
+
+        .intro-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 8px;
-            background: #161614;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition:
-                width .25s cubic-bezier(.16,1,.3,1),
-                height .25s cubic-bezier(.16,1,.3,1),
-                opacity .25s ease;
-            opacity: 0;
-        }
 
-        #custom-cursor.visible {
-            opacity: 1;
-        }
-
-        #custom-cursor.hovered {
-            width: 28px;
-            height: 28px;
-        }
-
-
-        /* ============================================================
-           PEQUEÑAS ETIQUETAS
-        ============================================================ */
-
-        .mono-tag {
-            font-family: 'Manrope', sans-serif;
-            font-size: .66rem;
-            text-transform: uppercase;
-            letter-spacing: .2em;
-            font-weight: 500;
-            color: #7d7a72;
-        }
-
-
-        /* ============================================================
-           LANDING / SPLIT
-        ============================================================ */
-
-        .entry-split-container {
-            position: fixed;
             inset: 0;
+
             width: 100vw;
             height: 100vh;
             height: 100dvh;
+
+            z-index: 5000;
+
+            background: #000;
+
+            overflow: hidden;
+
             display: flex;
-            z-index: 2000;
-            background: #11110f;
+            align-items: center;
+            justify-content: center;
+
             transition:
-                transform 1s cubic-bezier(.77, 0, .175, 1),
-                opacity .8s ease;
+                opacity .9s ease,
+                transform 1s cubic-bezier(.77,0,.175,1);
         }
 
-        .entry-split-container.hidden {
-            transform: translateY(-100%);
+        .intro-screen.hidden {
             opacity: 0;
+            transform: translateY(-100%);
             pointer-events: none;
         }
 
-        .split-pane {
-            position: relative;
-            flex: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .intro-video {
+            position: absolute;
 
-            padding:
-                clamp(70px, 10vh, 120px)
-                6%
-                clamp(45px, 7vh, 75px);
+            top: 50%;
+            left: 50%;
+
+            width: 100%;
+            height: 100%;
+
+            min-width: 100%;
+            min-height: 100%;
+
+            transform: translate(-50%, -50%);
+
+            object-fit: cover;
+
+            filter:
+                brightness(.57)
+                contrast(1.04)
+                saturate(.86);
+
+            z-index: 0;
+        }
+
+        .intro-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.08),
+                    rgba(0,0,0,.18)
+                );
+
+            z-index: 1;
+        }
+
+        .intro-own {
+            position: relative;
+
+            z-index: 2;
+
+            border: none;
+            background: none;
+
+            color: #ffffff;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: clamp(7rem, 25vw, 26rem);
+
+            font-weight: 600;
+
+            line-height: .7;
+
+            letter-spacing: -.075em;
+
+            text-transform: uppercase;
 
             transition:
-                flex .8s cubic-bezier(.16,1,.3,1),
-                filter .6s ease;
+                transform .8s cubic-bezier(.16,1,.3,1),
+                letter-spacing .8s cubic-bezier(.16,1,.3,1),
+                opacity .4s ease;
+        }
+
+        @media (hover:hover) {
+
+            .intro-own:hover {
+                transform: scale(1.025);
+                letter-spacing: -.055em;
+            }
+
+        }
+
+
+        /* ==========================================================
+           02. ESTUDIO / PROYECTOS
+        ========================================================== */
+
+        .entry-split-container {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+
+            display: flex;
+
+            background: #11110f;
+
+            z-index: 3000;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform: scale(1.025);
+
+            transition:
+                opacity .8s ease,
+                transform 1s cubic-bezier(.16,1,.3,1);
+        }
+
+        .entry-split-container.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+        }
+
+        .entry-split-container.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+
+
+        .split-pane {
+            position: relative;
+
+            flex: 1;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 6%;
 
             overflow: hidden;
+
+            transition:
+                flex .9s cubic-bezier(.16,1,.3,1),
+                filter .6s ease;
         }
 
-        .split-pane.pane-stories {
-            background: #11110f;
+        .pane-estudio {
+            background: #151512;
             color: #f4f2ed;
-            border-right: 1px solid rgba(255,255,255,.12);
+
+            border-right:
+                1px solid rgba(255,255,255,.12);
         }
 
-        .split-pane.pane-visuals {
-            background: #e9e5dd;
+        .pane-proyectos {
+            background: #e9e5dc;
             color: #181816;
         }
 
         .pane-bg {
             position: absolute;
+
             inset: 0;
+
             width: 100%;
             height: 100%;
+
             background-size: cover;
             background-position: center;
-            opacity: .22;
+
             transition:
                 transform 1.3s cubic-bezier(.16,1,.3,1),
                 opacity .8s ease;
-            z-index: 1;
+
+            z-index: 0;
         }
 
-        .pane-stories .pane-bg {
-            background-image: url('img/croquis.jpg');
-            filter: grayscale(100%);
+        .pane-estudio .pane-bg {
+            background-image: url('img/imagen.jpg');
+
+            filter:
+                grayscale(100%)
+                brightness(.65);
+
+            opacity: .42;
         }
 
-        .pane-visuals .pane-bg {
-            background-image: url('img/HAVANA%2048.jpg');
-            opacity: .18;
-            filter: grayscale(30%);
+        .pane-proyectos .pane-bg {
+            background-image: url('img/miralpeix.jpg');
+
+            filter:
+                grayscale(40%)
+                brightness(.85);
+
+            opacity: .48;
+        }
+
+        .split-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            max-width: 600px;
+        }
+
+        .split-index {
+            display: block;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .62rem;
+
+            font-weight: 500;
+
+            letter-spacing: .22em;
+
+            text-transform: uppercase;
+
+            margin-bottom: 25px;
+
+            opacity: .7;
+        }
+
+        .split-title {
+            font-family: 'Manrope', sans-serif;
+
+            font-size: clamp(3.4rem, 7vw, 8rem);
+
+            font-weight: 400;
+
+            line-height: .86;
+
+            letter-spacing: -.06em;
+
+            text-transform: uppercase;
+
+            margin-bottom: 28px;
+        }
+
+        .split-desc {
+            max-width: 440px;
+
+            font-size: .98rem;
+
+            font-weight: 300;
+
+            line-height: 1.75;
+
+            opacity: .82;
+        }
+
+        .split-action {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-top: 34px;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .64rem;
+
+            font-weight: 600;
+
+            letter-spacing: .18em;
+
+            text-transform: uppercase;
+        }
+
+        .split-action svg {
+            width: 18px;
+            height: 18px;
+
+            transition:
+                transform .4s cubic-bezier(.16,1,.3,1);
         }
 
         @media (hover:hover) {
 
             .entry-split-container:hover .split-pane {
-                flex: .82;
-                filter: brightness(.72);
+                flex: .78;
+                filter: brightness(.75);
             }
 
             .entry-split-container .split-pane:hover {
-                flex: 1.38;
+                flex: 1.22;
                 filter: brightness(1);
             }
 
-            .entry-split-container .split-pane:hover .pane-bg {
-                transform: scale(1.035);
-                opacity: .42;
+            .split-pane:hover .pane-bg {
+                transform: scale(1.04);
+                opacity: .65;
             }
-        }
 
-        .split-content-top,
-        .split-content-bottom {
-            position: relative;
-            z-index: 2;
-        }
+            .split-pane:hover .split-action svg {
+                transform: translateX(9px);
+            }
 
-        .split-content-bottom {
-            max-width: 610px;
-        }
-
-        .split-badge {
-            display: inline-block;
-            font-family: 'Manrope', sans-serif;
-            font-size: .64rem;
-            font-weight: 500;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            padding: 8px 0;
-        }
-
-        .pane-stories .split-badge {
-            color: rgba(255,255,255,.7);
-        }
-
-        .pane-visuals .split-badge {
-            color: rgba(0,0,0,.55);
-        }
-
-        .split-title {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(3.2rem, 7vw, 7.5rem);
-            font-weight: 500;
-            line-height: .88;
-            letter-spacing: -.055em;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-        }
-
-        .split-desc {
-            max-width: 520px;
-            font-size: clamp(.92rem, 1.1vw, 1.06rem);
-            line-height: 1.75;
-            font-weight: 300;
-            opacity: .8;
-        }
-
-        .split-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 36px;
-
-            font-family: 'Manrope', sans-serif;
-            font-size: .67rem;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .split-action svg {
-            width: 17px;
-            height: 17px;
-            transition: transform .4s cubic-bezier(.16,1,.3,1);
-        }
-
-        .split-pane:hover .split-action svg {
-            transform: translateX(10px);
         }
 
 
-        /* ============================================================
-           HEADER
-        ============================================================ */
+        /* ==========================================================
+           HEADER INTERIOR
+        ========================================================== */
 
         header {
             position: fixed;
+
             top: 0;
             left: 0;
+
             width: 100%;
 
             display: flex;
+
             justify-content: space-between;
             align-items: center;
 
-            padding: 25px 6%;
-            z-index: 1000;
+            padding: 26px 6%;
 
-            background: rgba(244,242,237,.88);
+            background:
+                rgba(244,242,237,.89);
+
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
 
-            border-bottom: 1px solid rgba(20,20,18,.08);
+            border-bottom:
+                1px solid rgba(20,20,18,.07);
+
+            z-index: 1000;
 
             opacity: 0;
-            transform: translateY(-20px);
+
+            pointer-events: none;
+
+            transform: translateY(-15px);
 
             transition:
-                opacity .6s ease .35s,
-                transform .6s ease .35s;
+                opacity .5s ease,
+                transform .5s ease;
         }
 
         body.content-active header {
             opacity: 1;
+            pointer-events: all;
             transform: translateY(0);
         }
 
         .logo {
-            font-family: 'Manrope', sans-serif;
-            font-size: .86rem;
-            font-weight: 700;
-            letter-spacing: .25em;
-            text-transform: uppercase;
-            color: #171715;
-        }
+            border: none;
 
-
-        /* ============================================================
-           NAVEGACIÓN
-        ============================================================ */
-
-        .mode-switch-bar {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-
-        .mode-btn {
-            position: relative;
             background: none;
-            border: 0;
-            padding: 5px 0;
 
             font-family: 'Manrope', sans-serif;
-            font-size: .65rem;
-            letter-spacing: .16em;
+
+            font-size: .85rem;
+
+            font-weight: 700;
+
+            letter-spacing: .25em;
+
             text-transform: uppercase;
+
+            color: #181816;
+        }
+
+        .nav {
+            display: flex;
+
+            align-items: center;
+
+            gap: 34px;
+        }
+
+        .nav-btn {
+            position: relative;
+
+            border: none;
+
+            background: transparent;
+
+            color: #8d8980;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .63rem;
+
             font-weight: 500;
 
-            color: #8b887f;
+            letter-spacing: .17em;
+
+            text-transform: uppercase;
+
+            padding: 5px 0;
+
             transition: color .3s ease;
         }
 
-        .mode-btn::after {
+        .nav-btn::after {
             content: '';
+
             position: absolute;
-            bottom: -4px;
+
+            bottom: -5px;
             left: 0;
+
             width: 0;
+
             height: 1px;
-            background: #171715;
-            transition: width .35s cubic-bezier(.16,1,.3,1);
+
+            background: #181816;
+
+            transition:
+                width .35s cubic-bezier(.16,1,.3,1);
         }
 
-        .mode-btn:hover {
-            color: #171715;
+        .nav-btn:hover,
+        .nav-btn.active {
+            color: #181816;
         }
 
-        .mode-btn.active {
-            color: #171715;
-        }
-
-        .mode-btn.active::after {
+        .nav-btn.active::after {
             width: 100%;
         }
 
 
-        /* ============================================================
-           MAIN
-        ============================================================ */
+        /* ==========================================================
+           CONTENIDO GENERAL
+        ========================================================== */
 
-        .main-view-container {
-            position: relative;
-            width: 100%;
+        main {
             opacity: 0;
-            transition: opacity .7s ease .25s;
+
+            transition:
+                opacity .6s ease .2s;
         }
 
-        body.content-active .main-view-container {
+        body.content-active main {
             opacity: 1;
         }
 
-        .gallery-section {
-            padding: 145px 6% 110px;
-            background: #f4f2ed;
+        .main-section {
             min-height: 100vh;
+
+            padding: 150px 6% 120px;
+
+            background: #f4f2ed;
         }
 
-        .gallery-header {
-            margin-bottom: 90px;
-
+        .section-heading {
             display: flex;
-            justify-content: space-between;
+
             align-items: flex-end;
 
-            border-bottom: 1px solid #1b1b18;
-            padding-bottom: 20px;
-        }
-
-        .gallery-header h2 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.7rem, 5vw, 5.5rem);
-            font-weight: 400;
-            letter-spacing: -.055em;
-            line-height: .95;
-            text-transform: uppercase;
-        }
-
-
-        /* ============================================================
-           MEMORIAS
-        ============================================================ */
-
-        .view-stories-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 150px;
-            max-width: 1250px;
-            margin: 0 auto;
-        }
-
-        .story-card-item {
-            display: grid;
-            grid-template-columns: 1.4fr .85fr;
-            align-items: end;
-            gap: 55px;
-
-            border-bottom: 1px solid rgba(20,20,18,.15);
-            padding-bottom: 100px;
-        }
-
-        .story-card-item:nth-child(even) {
-            grid-template-columns: .85fr 1.4fr;
-        }
-
-        .story-card-item:nth-child(even) .story-card-img {
-            order: 2;
-        }
-
-        .story-card-item:last-child {
-            border-bottom: none;
-        }
-
-        .story-card-img {
-            width: 100%;
-            height: 62vh;
-            min-height: 420px;
-            overflow: hidden;
-            background: #ddd9d0;
-        }
-
-        .story-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-
-            filter: grayscale(70%);
-            transition:
-                transform 1.1s cubic-bezier(.16,1,.3,1),
-                filter .8s ease;
-        }
-
-        .story-card-item:hover .story-card-img img {
-            filter: grayscale(0%);
-            transform: scale(1.025);
-        }
-
-        .story-card-content h3 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2rem, 3.6vw, 4rem);
-            font-weight: 400;
-            letter-spacing: -.05em;
-            line-height: 1;
-            margin: 18px 0 24px;
-        }
-
-        .story-card-excerpt {
-            font-size: 1.02rem;
-            line-height: 1.85;
-            color: #57544d;
-            font-weight: 300;
-            margin-bottom: 30px;
-            max-width: 620px;
-        }
-
-        .story-read-more {
-            font-family: 'Manrope', sans-serif;
-            font-size: .66rem;
-            font-weight: 600;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-            color: #181816;
-        }
-
-
-        /* ============================================================
-           PROYECTOS
-        ============================================================ */
-
-        .view-visuals-layout {
-            display: grid;
-            grid-template-columns: repeat(2,1fr);
-            gap: 110px 50px;
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        .visual-card-item {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .visual-card-item:nth-child(even) {
-            margin-top: 110px;
-        }
-
-        .visual-card-img {
-            width: 100%;
-            height: 67vh;
-            min-height: 450px;
-            overflow: hidden;
-            background: #ddd9d0;
-        }
-
-        .visual-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-
-            transition:
-                transform 1.1s cubic-bezier(.16,1,.3,1);
-        }
-
-        .visual-card-item:hover .visual-card-img img {
-            transform: scale(1.025);
-        }
-
-        .visual-card-info {
-            display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-top: 5px;
+
+            gap: 30px;
+
+            padding-bottom: 22px;
+
+            border-bottom:
+                1px solid #181816;
+
+            margin-bottom: 90px;
         }
 
-        .visual-card-info h3 {
+        .section-heading h1 {
             font-family: 'Manrope', sans-serif;
-            font-size: 1.18rem;
+
+            font-size: clamp(3rem, 6vw, 6.2rem);
+
+            font-weight: 400;
+
+            line-height: .9;
+
+            letter-spacing: -.06em;
+
+            text-transform: uppercase;
+        }
+
+        .section-label {
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .62rem;
+
             font-weight: 500;
+
+            letter-spacing: .19em;
+
+            text-transform: uppercase;
+
+            color: #817e76;
+        }
+
+        .content-view {
+            display: none;
+        }
+
+        body.view-projects .projects-view {
+            display: block;
+        }
+
+        body.view-studio .studio-view {
+            display: block;
+        }
+
+        body.view-contact .contact-view {
+            display: block;
+        }
+
+
+        /* ==========================================================
+           PROYECTOS
+        ========================================================== */
+
+        .projects-grid {
+            max-width: 1500px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 110px 50px;
+        }
+
+        .project-card:nth-child(even) {
+            transform: translateY(100px);
+        }
+
+        .project-card {
+            transition:
+                transform .6s cubic-bezier(.16,1,.3,1);
+        }
+
+        .project-image {
+            position: relative;
+
+            width: 100%;
+
+            height: 68vh;
+
+            min-height: 430px;
+
+            overflow: hidden;
+
+            background: #ddd8ce;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 1s cubic-bezier(.16,1,.3,1);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.025);
+        }
+
+        .project-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: baseline;
+
+            gap: 20px;
+
+            padding-top: 17px;
+        }
+
+        .project-info h3 {
+            font-family: 'Manrope', sans-serif;
+
+            font-size: 1.18rem;
+
+            font-weight: 500;
+
             letter-spacing: -.025em;
         }
 
-
-        /* ============================================================
-           ESTUDIO
-        ============================================================ */
-
-        .view-about-layout {
-            max-width: 1250px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
-        }
-
-        .about-statement {
+        .project-info span {
             font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.3rem, 4vw, 4.3rem);
-            font-weight: 300;
-            line-height: 1.22;
-            letter-spacing: -.045em;
-            color: #191917;
-            max-width: 1050px;
-        }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(2,1fr);
-            gap: 100px;
-        }
+            font-size: .61rem;
 
-        .about-col h4 {
-            font-family: 'Manrope', sans-serif;
-            font-size: .72rem;
-            font-weight: 600;
+            font-weight: 500;
+
+            letter-spacing: .16em;
+
             text-transform: uppercase;
-            letter-spacing: .18em;
+
+            color: #8b877f;
+        }
+
+
+        /* ==========================================================
+           ESTUDIO
+        ========================================================== */
+
+        .studio-view {
+            max-width: 1350px;
+
+            margin: 0 auto;
+        }
+
+        .studio-statement {
+            max-width: 1150px;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size:
+                clamp(2.5rem, 4.5vw, 5rem);
+
+            font-weight: 300;
+
+            line-height: 1.17;
+
+            letter-spacing: -.05em;
+
+            color: #181816;
+
+            margin-bottom: 130px;
+        }
+
+        .studio-columns {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 100px;
+
+            max-width: 1050px;
+
+            margin-left: auto;
+
+            margin-bottom: 120px;
+        }
+
+        .studio-column h3 {
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .66rem;
+
+            font-weight: 600;
+
+            letter-spacing: .2em;
+
+            text-transform: uppercase;
+
             margin-bottom: 25px;
         }
 
-        .about-col p {
-            font-size: 1.04rem;
+        .studio-column p {
+            font-size: 1.02rem;
+
             line-height: 1.9;
-            color: #57544e;
+
             font-weight: 300;
-            margin-bottom: 22px;
+
+            color: #55524c;
+
+            margin-bottom: 24px;
         }
 
-        .about-image {
+        .studio-image {
             width: 100%;
-            height: 68vh;
-            background: #ddd9d0;
+
+            height: 72vh;
+
+            min-height: 500px;
+
             overflow: hidden;
+
+            background: #ddd8ce;
         }
 
-        .about-image img {
+        .studio-image img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            filter: grayscale(25%);
+
+            filter: grayscale(20%);
         }
 
 
-        /* ============================================================
+        /* ==========================================================
            CONTACTO
-        ============================================================ */
+        ========================================================== */
 
-        .view-contact-layout {
+        .contact-layout {
             max-width: 1250px;
+
             margin: 0 auto;
 
             display: grid;
+
             grid-template-columns: .8fr 1.2fr;
+
             gap: 130px;
         }
 
-        .contact-info-block h3 {
+        .contact-copy h2 {
             font-family: 'Manrope', sans-serif;
-            font-size: clamp(2rem,3vw,3.4rem);
+
+            font-size:
+                clamp(2.3rem, 4vw, 4.7rem);
+
             font-weight: 400;
-            letter-spacing: -.045em;
-            line-height: 1.05;
+
+            line-height: 1;
+
+            letter-spacing: -.05em;
+
             margin-bottom: 30px;
         }
 
-        .contact-info-block > p {
+        .contact-copy > p {
             font-size: 1rem;
-            line-height: 1.8;
-            color: #5e5b54;
+
             font-weight: 300;
+
+            line-height: 1.8;
+
+            color: #5a5750;
+
+            max-width: 450px;
+
             margin-bottom: 55px;
         }
 
-        .contact-detail-item {
+        .contact-detail {
             margin-bottom: 30px;
         }
 
-        .contact-detail-item label {
+        .contact-detail label {
             display: block;
+
             font-family: 'Manrope', sans-serif;
-            font-size: .64rem;
+
+            font-size: .61rem;
+
             font-weight: 500;
-            color: #918d83;
-            text-transform: uppercase;
+
             letter-spacing: .18em;
+
+            text-transform: uppercase;
+
+            color: #928d84;
+
             margin-bottom: 8px;
         }
 
-        .contact-detail-item p,
-        .contact-detail-item a {
+        .contact-detail p,
+        .contact-detail a {
             font-family: 'Manrope', sans-serif;
+
             font-size: 1rem;
+
             font-weight: 400;
+
             color: #181816;
+
             text-decoration: none;
         }
 
         .contact-form {
             display: flex;
+
             flex-direction: column;
+
             gap: 32px;
         }
 
         .form-group {
             display: flex;
+
             flex-direction: column;
-            gap: 9px;
+
+            gap: 8px;
         }
 
         .form-group label {
             font-family: 'Manrope', sans-serif;
-            font-size: .63rem;
+
+            font-size: .61rem;
+
             font-weight: 500;
-            text-transform: uppercase;
+
             letter-spacing: .17em;
+
+            text-transform: uppercase;
+
             color: #77746d;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 17px 0;
 
             border: none;
-            border-bottom: 1px solid #b9b5ac;
+
+            border-bottom:
+                1px solid #bab5ab;
+
             background: transparent;
 
+            padding: 16px 0;
+
             font-family: 'Inter', sans-serif;
+
             font-size: 1rem;
+
             font-weight: 300;
+
             color: #181816;
 
             outline: none;
-            transition: border-color .3s ease;
+
+            resize: vertical;
+
+            transition:
+                border-color .3s ease;
         }
 
         .form-group input:focus,
@@ -707,254 +989,283 @@
 
         .submit-btn {
             align-self: flex-start;
-            background: #181816;
-            color: #f4f2ed;
 
             border: none;
+
+            background: #181816;
+
+            color: #f4f2ed;
+
             padding: 16px 32px;
 
             font-family: 'Manrope', sans-serif;
-            font-size: .65rem;
-            letter-spacing: .16em;
-            text-transform: uppercase;
+
+            font-size: .62rem;
+
             font-weight: 600;
 
-            margin-top: 12px;
-            transition:
-                transform .35s cubic-bezier(.16,1,.3,1),
-                background .3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            background: #000;
-        }
-
-
-        /* ============================================================
-           VISIBILIDAD VISTAS
-        ============================================================ */
-
-        .layout-block {
-            display: none;
-        }
-
-        body.mode-stories-active .view-stories-layout {
-            display: flex;
-        }
-
-        body.mode-visual-active .view-visuals-layout {
-            display: grid;
-        }
-
-        body.mode-about-active .view-about-layout {
-            display: flex;
-        }
-
-        body.mode-contact-active .view-contact-layout {
-            display: grid;
-        }
-
-
-        /* ============================================================
-           MODAL MEMORIAS
-        ============================================================ */
-
-        .story-container {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-
-            background: #f4f2ed;
-            z-index: 5000;
-
-            opacity: 0;
-            pointer-events: none;
-
-            overflow-y: auto;
-            outline: none;
-
-            transform: translateY(30px);
-
-            transition:
-                transform .7s cubic-bezier(.16,1,.3,1),
-                opacity .45s ease;
-        }
-
-        .story-container.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0);
-        }
-
-        .close-story-btn {
-            position: fixed;
-            top: 28px;
-            right: 5%;
-
-            z-index: 6000;
-
-            background: #f4f2ed;
-            color: #181816;
-            border: none;
-
-            padding: 13px 22px;
-
-            font-family: 'Manrope', sans-serif;
-            font-size: .64rem;
             letter-spacing: .17em;
+
             text-transform: uppercase;
-            font-weight: 600;
 
             transition:
                 transform .3s cubic-bezier(.16,1,.3,1),
                 background .3s ease;
         }
 
-        .close-story-btn:hover {
-            transform: translateY(-2px);
+        .submit-btn:hover {
+            transform: translateY(-3px);
+
+            background: #000;
         }
 
-        .story-header-cover {
+
+        /* ==========================================================
+           FICHA DE PROYECTO / MEMORIA
+        ========================================================== */
+
+        .project-modal {
+            position: fixed;
+
+            inset: 0;
+
             width: 100%;
-            height: 82vh;
-            min-height: 550px;
-            position: relative;
-            background: #11110f;
+            height: 100vh;
+            height: 100dvh;
+
+            overflow-y: auto;
+
+            background: #f4f2ed;
+
+            z-index: 8000;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform: translateY(30px);
+
+            transition:
+                opacity .4s ease,
+                transform .7s cubic-bezier(.16,1,.3,1);
         }
 
-        .story-header-cover img {
+        .project-modal.active {
+            opacity: 1;
+
+            pointer-events: all;
+
+            transform: translateY(0);
+        }
+
+        .project-close {
+            position: fixed;
+
+            top: 28px;
+            right: 5%;
+
+            z-index: 8200;
+
+            border: none;
+
+            background: #f4f2ed;
+
+            color: #181816;
+
+            padding: 13px 22px;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .61rem;
+
+            font-weight: 600;
+
+            letter-spacing: .17em;
+
+            text-transform: uppercase;
+        }
+
+        .project-cover {
+            position: relative;
+
+            height: 85vh;
+
+            min-height: 580px;
+
+            background: #111;
+        }
+
+        .project-cover img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            filter: brightness(.68);
+
+            filter: brightness(.7);
         }
 
-        .story-title-overlay {
+        .project-cover-text {
             position: absolute;
-            bottom: clamp(45px,8vh,90px);
+
             left: 6%;
             right: 6%;
-            color: #f4f2ed;
-            max-width: 1400px;
-            margin: 0 auto;
+            bottom: 8vh;
+
+            color: white;
         }
 
-        .story-title-overlay h2 {
+        .project-cover-category {
             font-family: 'Manrope', sans-serif;
-            font-size: clamp(3rem,7.5vw,8rem);
-            font-weight: 400;
-            letter-spacing: -.06em;
-            line-height: .88;
+
+            font-size: .64rem;
+
+            font-weight: 500;
+
+            letter-spacing: .2em;
+
             text-transform: uppercase;
-            margin-top: 18px;
+
+            opacity: .75;
         }
 
-        .story-editorial-body {
-            padding: 120px 6% 160px;
+        .project-cover-text h2 {
+            font-family: 'Manrope', sans-serif;
+
+            font-size:
+                clamp(4rem, 9vw, 10rem);
+
+            font-weight: 400;
+
+            line-height: .82;
+
+            letter-spacing: -.07em;
+
+            text-transform: uppercase;
+
+            margin-top: 20px;
+        }
+
+        .project-editorial {
             max-width: 1200px;
+
             margin: 0 auto;
+
+            padding: 130px 6% 170px;
 
             display: flex;
+
             flex-direction: column;
-            gap: 120px;
+
+            gap: 130px;
         }
 
-        .story-lead-statement {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(1.8rem,3.2vw,3.2rem);
-            font-weight: 300;
-            line-height: 1.35;
-            letter-spacing: -.035em;
-            color: #191917;
+        .project-statement {
             max-width: 1050px;
-        }
 
-        .story-text-block-narrative {
-            max-width: 850px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .story-chapter-num {
             font-family: 'Manrope', sans-serif;
-            font-size: .65rem;
-            font-weight: 500;
-            letter-spacing: .18em;
-            color: #969188;
-            margin-bottom: 18px;
-            display: block;
-        }
 
-        .story-section-title {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(1.8rem,3vw,3rem);
-            font-weight: 400;
-            letter-spacing: -.04em;
-            margin-bottom: 30px;
-            color: #191917;
-        }
+            font-size:
+                clamp(2rem, 3.6vw, 3.7rem);
 
-        .story-paragraph {
-            font-size: 1.08rem;
-            line-height: 2;
-            color: #48463f;
             font-weight: 300;
+
+            line-height: 1.3;
+
+            letter-spacing: -.04em;
         }
 
-        .story-hero-frame {
+        .project-chapter {
+            max-width: 900px;
+
+            margin: 0 auto;
+
             width: 100%;
-            height: 62vh;
-            min-height: 420px;
-            max-height: 760px;
-
-            margin: 60px 0 0;
-            background: #ddd9d0;
-            overflow: hidden;
         }
 
-        .story-hero-frame img {
+        .chapter-index {
+            display: block;
+
+            font-family: 'Manrope', sans-serif;
+
+            font-size: .62rem;
+
+            font-weight: 500;
+
+            letter-spacing: .2em;
+
+            text-transform: uppercase;
+
+            color: #928e84;
+
+            margin-bottom: 20px;
+        }
+
+        .project-chapter h3 {
+            font-family: 'Manrope', sans-serif;
+
+            font-size:
+                clamp(2rem, 3.3vw, 3.4rem);
+
+            font-weight: 400;
+
+            letter-spacing: -.045em;
+
+            margin-bottom: 28px;
+        }
+
+        .project-chapter-text {
+            font-size: 1.08rem;
+
+            font-weight: 300;
+
+            line-height: 1.95;
+
+            color: #494640;
+        }
+
+        .project-chapter-image {
+            width: 100%;
+
+            height: 64vh;
+
+            min-height: 420px;
+
+            margin-top: 60px;
+
+            overflow: hidden;
+
+            background: #ddd8ce;
+        }
+
+        .project-chapter-image img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            display: block;
         }
 
-        .story-caption {
-            margin-top: 15px;
-
+        .project-caption {
             font-family: 'Manrope', sans-serif;
-            font-size: .63rem;
+
+            font-size: .6rem;
+
             font-weight: 500;
 
-            color: #8b877f;
+            letter-spacing: .16em;
+
             text-transform: uppercase;
-            letter-spacing: .15em;
+
+            color: #8c887e;
+
+            margin-top: 15px;
         }
 
 
-        /* ============================================================
+        /* ==========================================================
            RESPONSIVE
-        ============================================================ */
+        ========================================================== */
 
-        @media (pointer:coarse), (hover:none) {
-
-            * {
-                cursor: auto !important;
-            }
-
-            #custom-cursor {
-                display: none !important;
-            }
-        }
-
-        @media (max-width:1024px) {
-
-            header {
-                padding: 20px 5%;
-            }
+        @media (max-width: 1024px) {
 
             .entry-split-container {
                 flex-direction: column;
@@ -963,181 +1274,270 @@
             .split-pane {
                 min-height: 50vh;
                 min-height: 50dvh;
-                padding: 55px 7% 40px;
+
+                padding: 50px 7% 40px;
+            }
+
+            .pane-estudio {
+                border-right: none;
+
+                border-bottom:
+                    1px solid rgba(255,255,255,.15);
             }
 
             .split-title {
-                font-size: clamp(2.8rem,10vw,5rem);
+                font-size:
+                    clamp(3rem, 9vw, 5.5rem);
             }
 
-            .split-pane.pane-stories {
-                border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,.15);
+            .projects-grid {
+                gap: 90px 30px;
             }
 
-            .story-card-item,
-            .story-card-item:nth-child(even) {
+            .project-card:nth-child(even) {
+                transform: translateY(70px);
+            }
+
+            .studio-columns {
                 grid-template-columns: 1fr;
-                gap: 35px;
-            }
 
-            .story-card-item:nth-child(even) .story-card-img {
-                order: initial;
-            }
-
-            .view-visuals-layout {
-                gap: 70px 30px;
-            }
-
-            .visual-card-item:nth-child(even) {
-                margin-top: 70px;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
                 gap: 45px;
             }
 
-            .view-contact-layout {
+            .contact-layout {
                 grid-template-columns: 1fr;
+
                 gap: 80px;
             }
+
         }
 
-        @media (max-width:768px) {
+
+        @media (max-width: 768px) {
 
             header {
                 flex-direction: column;
-                gap: 15px;
+
                 align-items: flex-start;
+
+                gap: 16px;
+
                 padding: 16px 5%;
             }
 
-            .mode-switch-bar {
+            .nav {
                 width: 100%;
+
                 justify-content: space-between;
+
                 gap: 10px;
             }
 
-            .mode-btn {
+            .nav-btn {
                 font-size: .57rem;
             }
 
-            .gallery-section {
-                padding: 145px 5% 80px;
+            .intro-own {
+                font-size: clamp(6rem, 33vw, 13rem);
             }
 
-            .gallery-header {
-                margin-bottom: 60px;
+            .split-pane {
+                padding:
+                    45px 6%
+                    35px;
             }
 
-            .gallery-header h2 {
-                font-size: 2.7rem;
-            }
-
-            .gallery-header .mono-tag {
+            .split-desc {
                 display: none;
             }
 
-            .view-stories-layout {
-                gap: 80px;
+            .split-action {
+                margin-top: 18px;
             }
 
-            .story-card-item {
-                padding-bottom: 70px;
+            .main-section {
+                padding:
+                    145px 5%
+                    80px;
             }
 
-            .story-card-img {
-                height: 50vh;
-                min-height: 330px;
+            .section-heading {
+                margin-bottom: 60px;
             }
 
-            .view-visuals-layout {
+            .section-heading h1 {
+                font-size: 2.9rem;
+            }
+
+            .section-label {
+                display: none;
+            }
+
+            .projects-grid {
                 grid-template-columns: 1fr;
+
                 gap: 65px;
             }
 
-            .visual-card-item:nth-child(even) {
-                margin-top: 0;
+            .project-card:nth-child(even) {
+                transform: none;
             }
 
-            .visual-card-img {
+            .project-image {
+                height: 54vh;
+
+                min-height: 340px;
+            }
+
+            .studio-statement {
+                font-size: 2.2rem;
+
+                margin-bottom: 80px;
+            }
+
+            .studio-image {
                 height: 55vh;
-                min-height: 350px;
+
+                min-height: 380px;
             }
 
-            .about-statement {
-                font-size: 2rem;
+            .project-cover {
+                height: 68vh;
+
+                min-height: 470px;
             }
 
-            .story-header-cover {
-                height: 65vh;
-                min-height: 450px;
+            .project-editorial {
+                padding:
+                    85px 5%
+                    120px;
+
+                gap: 85px;
             }
 
-            .story-editorial-body {
-                padding: 75px 5% 120px;
-                gap: 80px;
-            }
-
-            .story-hero-frame {
+            .project-chapter-image {
                 height: 42vh;
+
                 min-height: 280px;
             }
 
-            .close-story-btn {
+            .project-close {
                 top: auto;
+
                 bottom: 20px;
-                right: 5%;
+
                 left: 5%;
+                right: 5%;
+
                 width: 90%;
+
                 text-align: center;
             }
+
         }
 
     </style>
 </head>
 
 
-<body class="mode-stories-active">
+<body>
 
+    <!-- CURSOR -->
     <div id="custom-cursor"></div>
 
 
-    <!-- ============================================================
-         ENTRADA
-    ============================================================ -->
+    <!-- ======================================================
+         01. INTRO VIDEO
+    ======================================================= -->
 
-    <section class="entry-split-container" id="entrySplit">
+    <section
+        class="intro-screen"
+        id="introScreen"
+    >
 
-        <div class="split-pane pane-stories" id="selectStories">
+        <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="intro-video"
+        >
+            <source
+                src="img/video.mov"
+                type="video/mp4"
+            >
+        </video>
+
+        <div class="intro-overlay"></div>
+
+        <button
+            class="intro-own"
+            id="introOwn"
+            aria-label="Entrar en OWN Architecture"
+        >
+            OWN
+        </button>
+
+    </section>
+
+
+    <!-- ======================================================
+         02. ESTUDIO / PROYECTOS
+    ======================================================= -->
+
+    <section
+        class="entry-split-container"
+        id="entrySplit"
+    >
+
+        <!-- ESTUDIO -->
+
+        <div
+            class="split-pane pane-estudio"
+            id="selectStudio"
+        >
 
             <div class="pane-bg"></div>
 
-            <div class="split-content-top">
-                <span class="split-badge">
-                    01 — CONCEPTOS Y RELATOS
-                </span>
-            </div>
+            <div class="split-content">
 
-            <div class="split-content-bottom">
+                <span class="split-index">
+                    01 — OWN
+                </span>
 
                 <h2 class="split-title">
-                    MEMORIAS
+                    ESTUDIO
                 </h2>
 
                 <p class="split-desc">
-                    El desarrollo teórico, los fundamentos y el lenguaje conceptual
-                    detrás de cada proyecto.
+                    Filosofía, proceso y una forma de entender
+                    la arquitectura desde la luz, la materia,
+                    la proporción y el lugar.
                 </p>
 
                 <div class="split-action">
-                    VER MEMORIAS
 
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
+                    DESCUBRIR ESTUDIO
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    >
+                        <line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"
+                        ></line>
+
+                        <polyline
+                            points="12 5 19 12 12 19"
+                        ></polyline>
+
                     </svg>
+
                 </div>
 
             </div>
@@ -1145,34 +1545,54 @@
         </div>
 
 
-        <div class="split-pane pane-visuals" id="selectVisuals">
+        <!-- PROYECTOS -->
+
+        <div
+            class="split-pane pane-proyectos"
+            id="selectProjects"
+        >
 
             <div class="pane-bg"></div>
 
-            <div class="split-content-top">
-                <span class="split-badge">
-                    02 — ARQUITECTURA
-                </span>
-            </div>
+            <div class="split-content">
 
-            <div class="split-content-bottom">
+                <span class="split-index">
+                    02 — ARCHITECTURE
+                </span>
 
                 <h2 class="split-title">
                     PROYECTOS
                 </h2>
 
                 <p class="split-desc">
-                    Una selección de viviendas concebidas desde el paisaje,
-                    la materia, la luz y la experiencia de habitar.
+                    Viviendas concebidas desde la relación
+                    entre paisaje, materia, luz y experiencia
+                    de habitar.
                 </p>
 
                 <div class="split-action">
-                    EXPLORAR PROYECTOS
 
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
+                    VER PROYECTOS
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    >
+                        <line
+                            x1="5"
+                            y1="12"
+                            x2="19"
+                            y2="12"
+                        ></line>
+
+                        <polyline
+                            points="12 5 19 12 12 19"
+                        ></polyline>
+
                     </svg>
+
                 </div>
 
             </div>
@@ -1182,487 +1602,494 @@
     </section>
 
 
-    <!-- ============================================================
+    <!-- ======================================================
          HEADER
-    ============================================================ -->
+    ======================================================= -->
 
-    <header id="mainHeader">
+    <header>
 
-        <div class="logo" id="brandLogo">
-            OWN ARCHITECTURE
-        </div>
+        <button
+            class="logo"
+            id="logoButton"
+        >
+            OWN
+        </button>
 
-        <div class="mode-switch-bar">
+        <nav class="nav">
 
-            <button class="mode-btn active" id="btnModeStories">
-                MEMORIAS
-            </button>
-
-            <button class="mode-btn" id="btnModeVisuals">
+            <button
+                class="nav-btn"
+                id="navProjects"
+            >
                 PROYECTOS
             </button>
 
-            <button class="mode-btn" id="btnModeAbout">
+            <button
+                class="nav-btn"
+                id="navStudio"
+            >
                 ESTUDIO
             </button>
 
-            <button class="mode-btn" id="btnModeContact">
+            <button
+                class="nav-btn"
+                id="navContact"
+            >
                 CONTACTO
             </button>
 
-        </div>
+        </nav>
 
     </header>
 
 
-    <!-- ============================================================
+    <!-- ======================================================
          MAIN
-    ============================================================ -->
+    ======================================================= -->
 
-    <main class="main-view-container">
+    <main>
 
-        <section class="gallery-section">
+        <section class="main-section">
 
-            <div class="gallery-header">
+            <div class="section-heading">
 
-                <h2 id="galleryModeTitle">
-                    MEMORIAS
-                </h2>
+                <h1 id="pageTitle">
+                    PROYECTOS
+                </h1>
 
-                <span class="mono-tag" id="galleryModeTag">
-                    RELATOS Y CONCEPTOS
+                <span
+                    class="section-label"
+                    id="pageLabel"
+                >
+                    ARQUITECTURA RESIDENCIAL
                 </span>
 
             </div>
 
 
-            <!-- ======================================================
-                 MEMORIAS
-            ======================================================= -->
-
-            <div class="view-stories-layout layout-block">
-
-
-                <!-- CASA INFINITA -->
-
-                <article
-                    class="story-card-item story-link"
-
-                    data-title="CASA INFINITA"
-
-                    data-category="RESIDENCIAL • BARCELONA"
-
-                    data-statement="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
-
-                    data-sec1-title="Diálogo con la topografía"
-
-                    data-sec1-text="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior."
-
-                    data-sec1-img="img/miranda-6/miranda-6.jpg"
-
-                    data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
-
-                    data-sec2-title="Tectónica y luz cenital"
-
-                    data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
-
-                    data-sec2-img="img/miranda-6/miranda-2.jpg"
-
-                    data-sec2-cap="FIG 02. Detalle de luz difusa y textura"
-
-                    data-hero-img="img/miranda-6/miranda-1.jpg"
-                >
-
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Infinita">
-                    </div>
-
-                    <div class="story-card-content">
-
-                        <span class="mono-tag">
-                            MEMORIA 01 — BARCELONA
-                        </span>
-
-                        <h3>CASA INFINITA</h3>
-
-                        <p class="story-card-excerpt">
-                            Infinita no habita el paisaje: se funde en él,
-                            dibujando en la pendiente una luz que no se acaba.
-                        </p>
-
-                        <span class="story-read-more">
-                            LEER MEMORIA &nbsp; →
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-                <!-- FUYU -->
-
-                <article
-                    class="story-card-item story-link"
-
-                    data-title="FUYU"
-
-                    data-category="RESIDENCIAL • BARCELONA"
-
-                    data-statement="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores."
-
-                    data-sec1-title="La fachada como refugio"
-
-                    data-sec1-text="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando la vida hacia el núcleo."
-
-                    data-sec1-img="img/biguesiriells/bigues-1.jpg"
-
-                    data-sec1-cap="FIG 01. Fachada monolítica sobre el entorno"
-
-                    data-sec2-title="Naturaleza interior"
-
-                    data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos permiten transformar las estancias diáfanas en espacios integrados con la vegetación."
-
-                    data-sec2-img="img/biguesiriells/bigues-2.jpg"
-
-                    data-sec2-cap="FIG 02. Patio central de luz y lámina de agua"
-
-                    data-hero-img="img/biguesiriells/bigues-4.jpg"
-                >
-
-                    <div class="story-card-img">
-                        <img src="img/HAVANA%2048.jpg" alt="Concepto Fuyu">
-                    </div>
-
-                    <div class="story-card-content">
-
-                        <span class="mono-tag">
-                            MEMORIA 02 — BARCELONA
-                        </span>
-
-                        <h3>FUYU</h3>
-
-                        <p class="story-card-excerpt">
-                            Una reflexión sobre la intimidad, el silencio y la
-                            arquitectura como refugio frente al entorno urbano.
-                        </p>
-
-                        <span class="story-read-more">
-                            LEER MEMORIA &nbsp; →
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-                <!-- PASSACAGLIA -->
-
-                <article
-                    class="story-card-item story-link"
-
-                    data-title="PASSACAGLIA"
-
-                    data-category="RESIDENCIAL • BARCELONA"
-
-                    data-statement="Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical."
-
-                    data-sec1-title="Diálogo con el paisaje"
-
-                    data-sec1-text="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios."
-
-                    data-sec1-img="img/havana48/havana1.jpg"
-
-                    data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
-
-                    data-sec2-title="Tectónica y luz cenital"
-
-                    data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
-
-                    data-sec2-img="img/havana48/havana2.jpg"
-
-                    data-sec2-cap="FIG 02. Detalle de luz interior"
-
-                    data-hero-img="img/havana48/havana4.jpg"
-                >
-
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Casa Passacaglia">
-                    </div>
-
-                    <div class="story-card-content">
-
-                        <span class="mono-tag">
-                            MEMORIA 03 — BARCELONA
-                        </span>
-
-                        <h3>PASSACAGLIA</h3>
-
-                        <p class="story-card-excerpt">
-                            Arquitectura entendida como ritmo: repetición,
-                            variación, luz y sombra construyen la experiencia.
-                        </p>
-
-                        <span class="story-read-more">
-                            LEER MEMORIA &nbsp; →
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-                <!-- VILA CLARA -->
-
-                <article
-                    class="story-card-item story-link"
-
-                    data-title="VILA CLARA"
-
-                    data-category="RESIDENCIAL • BARCELONA"
-
-                    data-statement="Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
-
-                    data-sec1-title="Diálogo con la luz"
-
-                    data-sec1-text="Es una pequeña vivienda en Canyelles organizada alrededor de una escalera central. Más que un elemento de circulación, la escalera se convierte en un hueco vertical que introduce la luz natural en el corazón de la casa, conectando las distintas plantas y dando profundidad a los espacios interiores."
-
-                    data-sec1-img="img/mirador-42/mirador-4.jpg"
-
-                    data-sec1-cap="FIG 01. Vista vacío escalera central"
-
-                    data-sec2-title="Tectónica y luz cenital"
-
-                    data-sec2-text="Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
-
-                    data-sec2-img="img/mirador-42/mirador-2.jpg"
-
-                    data-sec2-cap="FIG 02. Detalle de luz interior"
-
-                    data-hero-img="img/mirador-42/mirador-3.jpg"
-                >
-
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Vila Clara">
-                    </div>
-
-                    <div class="story-card-content">
-
-                        <span class="mono-tag">
-                            MEMORIA 04 — BARCELONA
-                        </span>
-
-                        <h3>VILA CLARA</h3>
-
-                        <p class="story-card-excerpt">
-                            Una vivienda articulada alrededor de un vacío vertical
-                            donde circulación, profundidad y luz se encuentran.
-                        </p>
-
-                        <span class="story-read-more">
-                            LEER MEMORIA &nbsp; →
-                        </span>
-
-                    </div>
-
-                </article>
-
-
-                <!-- CLARO DE LUZ -->
-
-                <article
-                    class="story-card-item story-link"
-
-                    data-title="CLARO DE LUZ"
-
-                    data-category="RESIDENCIAL • BARCELONA"
-
-                    data-statement="Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro."
-
-                    data-sec1-title="Diálogo con el entorno"
-
-                    data-sec1-text="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
-
-                    data-sec1-img="img/miranda-6/miranda-1.jpg"
-
-                    data-sec1-cap="FIG 01. Integración con el espacio vegetal"
-
-                    data-sec2-title="Atmósfera interior"
-
-                    data-sec2-text="Cada estancia busca la luz de forma matizada, creando espacios de contemplación y serenidad."
-
-                    data-sec2-img="img/miranda-6/miranda-2.jpg"
-
-                    data-sec2-cap="FIG 02. Interior diáfano"
-
-                    data-hero-img="img/miranda-6/miranda-6.jpg"
-                >
-
-                    <div class="story-card-img">
-                        <img src="img/croquis.jpg" alt="Croquis Claro de Luz">
-                    </div>
-
-                    <div class="story-card-content">
-
-                        <span class="mono-tag">
-                            MEMORIA 05 — BARCELONA
-                        </span>
-
-                        <h3>CLARO DE LUZ</h3>
-
-                        <p class="story-card-excerpt">
-                            Una vivienda que se repliega hacia un jardín interior,
-                            construyendo intimidad a través de luz, sombra y vegetación.
-                        </p>
-
-                        <span class="story-read-more">
-                            LEER MEMORIA &nbsp; →
-                        </span>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-
-            <!-- ======================================================
+            <!-- ==================================================
                  PROYECTOS
-            ======================================================= -->
+            =================================================== -->
 
-            <div class="view-visuals-layout layout-block">
+            <div class="content-view projects-view">
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CASA INFINITA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                <div class="projects-grid">
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>FUYU</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/havana48/havana1.jpg" alt="PASSACAGLIA">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>PASSACAGLIA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                    <!-- CASA INFINITA -->
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/mirador-42/mirador-3.jpg" alt="VILA CLARA">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>VILA CLARA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                    <article
+                        class="project-card project-link"
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/clarodeluz/clarodeluz-1.jpg" alt="CLARO DE LUZ">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLARO DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                        data-title="CASA INFINITA"
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/miranda4/miranda4-1.jpg" alt="BRISA DE LUZ">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DE LUZ</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                        data-category="RESIDENCIAL — BARCELONA"
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/reivissa/reivissa-1.jpg" alt="BRISA DEL ALBA">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>BRISA DEL ALBA</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
-                </div>
+                        data-statement="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
 
-                <div class="visual-card-item">
-                    <div class="visual-card-img">
-                        <img src="img/JP/jp1.jpg" alt="CLAROSCURO">
-                    </div>
-                    <div class="visual-card-info">
-                        <h3>CLAROSCURO</h3>
-                        <span class="mono-tag">BARCELONA</span>
-                    </div>
+                        data-sec1-title="Diálogo con la topografía"
+
+                        data-sec1-text="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior."
+
+                        data-sec1-img="img/miranda-6/miranda-6.jpg"
+
+                        data-sec1-cap="FIG 01 — VOLUMEN PRINCIPAL SOBRE LA LADERA"
+
+                        data-sec2-title="Tectónica y luz"
+
+                        data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
+
+                        data-sec2-img="img/miranda-6/miranda-2.jpg"
+
+                        data-sec2-cap="FIG 02 — LUZ, SOMBRA Y PROFUNDIDAD"
+
+                        data-hero-img="img/miranda-6/miranda-1.jpg"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/miranda-6/miranda-1.jpg"
+                                alt="Casa Infinita"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                CASA INFINITA
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- FUYU -->
+
+                    <article
+                        class="project-card project-link"
+
+                        data-title="FUYU"
+
+                        data-category="RESIDENCIAL — BARCELONA"
+
+                        data-statement="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores."
+
+                        data-sec1-title="La fachada como refugio"
+
+                        data-sec1-text="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando la vida hacia el núcleo."
+
+                        data-sec1-img="img/biguesiriells/bigues-1.jpg"
+
+                        data-sec1-cap="FIG 01 — FACHADA Y REFUGIO"
+
+                        data-sec2-title="Naturaleza interior"
+
+                        data-sec2-text="El volumen se perfora estratégicamente creando patios ajardinados. Paneles correderos permiten transformar las estancias diáfanas en espacios integrados con la vegetación."
+
+                        data-sec2-img="img/biguesiriells/bigues-2.jpg"
+
+                        data-sec2-cap="FIG 02 — PATIO Y LUZ INTERIOR"
+
+                        data-hero-img="img/biguesiriells/bigues-4.jpg"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/biguesiriells/bigues-1.jpg"
+                                alt="FUYU"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                FUYU
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PASSACAGLIA -->
+
+                    <article
+                        class="project-card project-link"
+
+                        data-title="PASSACAGLIA"
+
+                        data-category="RESIDENCIAL — BARCELONA"
+
+                        data-statement="Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical."
+
+                        data-sec1-title="Ritmo y paisaje"
+
+                        data-sec1-text="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en armonía. Repetición y variación rigen la experiencia espacial."
+
+                        data-sec1-img="img/havana48/havana1.jpg"
+
+                        data-sec1-cap="FIG 01 — VOLUMEN Y HORIZONTE"
+
+                        data-sec2-title="Materia y profundidad"
+
+                        data-sec2-text="Un gran porche prolonga el plano habitable, diluyendo los límites entre interior y exterior. La arquitectura conduce la mirada hacia el paisaje."
+
+                        data-sec2-img="img/havana48/havana2.jpg"
+
+                        data-sec2-cap="FIG 02 — ESPACIO INTERIOR"
+
+                        data-hero-img="img/havana48/havana4.jpg"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/havana48/havana1.jpg"
+                                alt="Passacaglia"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                PASSACAGLIA
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- VILA CLARA -->
+
+                    <article
+                        class="project-card project-link"
+
+                        data-title="VILA CLARA"
+
+                        data-category="RESIDENCIAL — CANYELLES"
+
+                        data-statement="Vilaclara es una vivienda donde el vacío se convierte en protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
+
+                        data-sec1-title="El vacío central"
+
+                        data-sec1-text="La vivienda se organiza alrededor de una escalera central. Más que un elemento de circulación, se convierte en un vacío vertical que introduce luz natural en el corazón de la casa."
+
+                        data-sec1-img="img/mirador-42/mirador-4.jpg"
+
+                        data-sec1-cap="FIG 01 — VACÍO CENTRAL"
+
+                        data-sec2-title="Luz cenital"
+
+                        data-sec2-text="La luz conecta las distintas plantas y aporta profundidad a los espacios interiores, convirtiéndose en un material más del proyecto."
+
+                        data-sec2-img="img/mirador-42/mirador-2.jpg"
+
+                        data-sec2-cap="FIG 02 — LUZ INTERIOR"
+
+                        data-hero-img="img/mirador-42/mirador-3.jpg"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/mirador-42/mirador-3.jpg"
+                                alt="Vila Clara"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                VILA CLARA
+                            </h3>
+
+                            <span>
+                                CANYELLES
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CLARO DE LUZ -->
+
+                    <article
+                        class="project-card project-link"
+
+                        data-title="CLARO DE LUZ"
+
+                        data-category="RESIDENCIAL — BARCELONA"
+
+                        data-statement="Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro."
+
+                        data-sec1-title="Un jardín interior"
+
+                        data-sec1-text="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
+
+                        data-sec1-img="img/miranda-6/miranda-1.jpg"
+
+                        data-sec1-cap="FIG 01 — RELACIÓN CON EL JARDÍN"
+
+                        data-sec2-title="Atmósfera"
+
+                        data-sec2-text="Cada estancia busca la luz de forma matizada, creando espacios de contemplación y serenidad."
+
+                        data-sec2-img="img/miranda-6/miranda-2.jpg"
+
+                        data-sec2-cap="FIG 02 — LUZ INTERIOR"
+
+                        data-hero-img="img/miranda-6/miranda-6.jpg"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/clarodeluz/clarodeluz-1.jpg"
+                                alt="Claro de Luz"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                CLARO DE LUZ
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- BRISA DE LUZ -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/miranda4/miranda4-1.jpg"
+                                alt="Brisa de Luz"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                BRISA DE LUZ
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- BRISA DEL ALBA -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/reivissa/reivissa-1.jpg"
+                                alt="Brisa del Alba"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                BRISA DEL ALBA
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CLAROSCURO -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <img
+                                src="img/JP/jp1.jpg"
+                                alt="Claroscuro"
+                            >
+
+                        </div>
+
+                        <div class="project-info">
+
+                            <h3>
+                                CLAROSCURO
+                            </h3>
+
+                            <span>
+                                BARCELONA
+                            </span>
+
+                        </div>
+
+                    </article>
+
                 </div>
 
             </div>
 
 
-            <!-- ======================================================
+            <!-- ==================================================
                  ESTUDIO
-            ======================================================= -->
+            =================================================== -->
 
-            <div class="view-about-layout layout-block">
+            <div class="content-view studio-view">
 
-                <p class="about-statement">
-                    Concebimos la arquitectura como una respuesta esencial al
-                    lugar, la materia y la luz. Buscamos la belleza en la
-                    honestidad de la forma y la precisión de cada detalle.
+                <p class="studio-statement">
+
+                    Concebimos la arquitectura como una respuesta
+                    esencial al lugar, la materia y la luz.
+                    Buscamos la belleza en la honestidad de la forma
+                    y la precisión de cada detalle.
+
                 </p>
 
-                <div class="about-grid">
 
-                    <div class="about-col">
+                <div class="studio-columns">
 
-                        <h4>FILOSOFÍA</h4>
+                    <div class="studio-column">
+
+                        <h3>
+                            FILOSOFÍA
+                        </h3>
 
                         <p>
-                            En OWN ARCHITECTURE abordamos el diseño desde la
-                            introspección teórica y el rigor constructivo.
-                            Creemos en espacios libres de artificio donde
-                            luz, materia y paisaje construyen atmósferas
-                            atemporales.
+                            En OWN abordamos cada proyecto desde su
+                            relación con el territorio, el clima,
+                            la orientación y la forma de habitar.
                         </p>
 
                         <p>
-                            Cada proyecto nace de un diálogo constante con
-                            las condiciones del territorio y las formas del
-                            habitar contemporáneo.
+                            Buscamos espacios serenos y atemporales
+                            en los que arquitectura, paisaje y materia
+                            formen parte de una misma experiencia.
                         </p>
 
                     </div>
 
 
-                    <div class="about-col">
+                    <div class="studio-column">
 
-                        <h4>MÉTODO</h4>
+                        <h3>
+                            MÉTODO
+                        </h3>
 
                         <p>
-                            Entendemos la arquitectura como una disciplina
-                            integral. Desde los primeros croquis hasta la
-                            dirección de obra, trabajamos todas las escalas
-                            como parte de una misma idea.
+                            Entendemos la arquitectura como una
+                            disciplina integral. Desde los primeros
+                            croquis hasta la ejecución de obra,
+                            trabajamos todas las escalas como parte
+                            de una misma idea.
                         </p>
 
                         <p>
-                            Materialidad, estructura, paisaje y detalle
-                            forman un único lenguaje.
+                            Luz, proporción, estructura, materialidad
+                            y detalle se desarrollan simultáneamente.
                         </p>
 
                     </div>
@@ -1670,11 +2097,11 @@
                 </div>
 
 
-                <div class="about-image">
+                <div class="studio-image">
 
                     <img
                         src="img/HAVANA%2048.jpg"
-                        alt="Estudio OWN Architecture"
+                        alt="OWN Architecture"
                     >
 
                 </div>
@@ -1682,91 +2109,153 @@
             </div>
 
 
-            <!-- ======================================================
+            <!-- ==================================================
                  CONTACTO
-            ======================================================= -->
+            =================================================== -->
 
-            <div class="view-contact-layout layout-block">
+            <div class="content-view contact-view">
 
-                <div class="contact-info-block">
+                <div class="contact-layout">
 
-                    <h3>
-                        HABLEMOS DE TU PRÓXIMO PROYECTO
-                    </h3>
 
-                    <p>
-                        Viviendas singulares, arquitectura residencial y
-                        proyectos donde paisaje, materia y espacio puedan
-                        desarrollarse como una única idea.
-                    </p>
+                    <div class="contact-copy">
 
-                    <div class="contact-detail-item">
-                        <label>UBICACIÓN</label>
-                        <p>Barcelona, España</p>
-                    </div>
+                        <h2>
+                            HABLEMOS DE TU PRÓXIMO PROYECTO
+                        </h2>
 
-                    <div class="contact-detail-item">
-                        <label>EMAIL</label>
                         <p>
-                            <a href="mailto:info@ownarchitecture.com">
-                                info@ownarchitecture.com
-                            </a>
+                            Viviendas singulares y proyectos
+                            residenciales donde arquitectura,
+                            paisaje y materia puedan desarrollarse
+                            como una única idea.
                         </p>
+
+
+                        <div class="contact-detail">
+
+                            <label>
+                                UBICACIÓN
+                            </label>
+
+                            <p>
+                                Barcelona, España
+                            </p>
+
+                        </div>
+
+
+                        <div class="contact-detail">
+
+                            <label>
+                                EMAIL
+                            </label>
+
+                            <p>
+
+                                <a
+                                    href="mailto:info@ownarchitecture.com"
+                                >
+                                    info@ownarchitecture.com
+                                </a>
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="contact-detail">
+
+                            <label>
+                                TELÉFONO
+                            </label>
+
+                            <p>
+                                +34 930 000 000
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div class="contact-detail-item">
-                        <label>TELÉFONO</label>
-                        <p>+34 930 000 000</p>
-                    </div>
+
+                    <form
+                        class="contact-form"
+                        onsubmit="
+                            event.preventDefault();
+                            alert('Mensaje enviado correctamente.');
+                        "
+                    >
+
+                        <div class="form-group">
+
+                            <label>
+                                NOMBRE
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Nombre y apellidos"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                EMAIL
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="email@dominio.com"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                PROYECTO
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Vivienda unifamiliar"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                MENSAJE
+                            </label>
+
+                            <textarea
+                                rows="5"
+                                placeholder="Cuéntanos brevemente el proyecto..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                        >
+                            ENVIAR CONSULTA
+                        </button>
+
+                    </form>
 
                 </div>
-
-
-                <form
-                    class="contact-form"
-                    onsubmit="event.preventDefault(); alert('Mensaje enviado correctamente.');"
-                >
-
-                    <div class="form-group">
-                        <label>NOMBRE</label>
-                        <input
-                            type="text"
-                            placeholder="Nombre y apellidos"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label>EMAIL</label>
-                        <input
-                            type="email"
-                            placeholder="email@dominio.com"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label>TIPO DE PROYECTO</label>
-                        <input
-                            type="text"
-                            placeholder="Vivienda unifamiliar"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label>MENSAJE</label>
-                        <textarea
-                            rows="4"
-                            placeholder="Cuéntanos brevemente el proyecto..."
-                            required
-                        ></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-btn">
-                        ENVIAR CONSULTA
-                    </button>
-
-                </form>
 
             </div>
 
@@ -1775,290 +2264,411 @@
     </main>
 
 
-    <!-- ============================================================
-         MODAL MEMORIA
-    ============================================================ -->
+    <!-- ======================================================
+         MODAL PROYECTO
+    ======================================================= -->
 
-    <div class="story-container" id="storyModal">
+    <div
+        class="project-modal"
+        id="projectModal"
+    >
 
-        <button class="close-story-btn" id="closeStoryBtn">
-            ← CERRAR
+        <button
+            class="project-close"
+            id="projectClose"
+        >
+            ← CERRAR PROYECTO
         </button>
 
 
-        <div class="story-header-cover">
+        <div class="project-cover">
 
-            <img id="mHeroImg" src="" alt="">
+            <img
+                id="modalHero"
+                src=""
+                alt=""
+            >
 
-            <div class="story-title-overlay">
+
+            <div class="project-cover-text">
 
                 <span
-                    class="mono-tag"
-                    id="mCategory"
-                    style="color:rgba(255,255,255,.65);"
+                    class="project-cover-category"
+                    id="modalCategory"
                 ></span>
 
-                <h2 id="mTitle"></h2>
+                <h2 id="modalTitle"></h2>
 
             </div>
 
         </div>
 
 
-        <div class="story-editorial-body">
+        <div class="project-editorial">
+
 
             <p
-                class="story-lead-statement"
-                id="mStatement"
+                class="project-statement"
+                id="modalStatement"
             ></p>
 
 
-            <div class="story-text-block-narrative">
+            <!-- CAPITULO 1 -->
 
-                <span class="story-chapter-num">
+            <section class="project-chapter">
+
+                <span class="chapter-index">
                     01 — CONCEPTO
                 </span>
 
-                <h3
-                    class="story-section-title"
-                    id="mSec1Title"
-                ></h3>
+                <h3 id="modalSec1Title"></h3>
 
                 <p
-                    class="story-paragraph"
-                    id="mSec1Text"
+                    class="project-chapter-text"
+                    id="modalSec1Text"
                 ></p>
 
-                <div class="story-hero-frame">
-                    <img id="mSec1Img" src="" alt="">
+
+                <div class="project-chapter-image">
+
+                    <img
+                        id="modalSec1Img"
+                        src=""
+                        alt=""
+                    >
+
                 </div>
 
+
                 <p
-                    class="story-caption"
-                    id="mSec1Cap"
+                    class="project-caption"
+                    id="modalSec1Cap"
                 ></p>
 
-            </div>
+            </section>
 
 
-            <div class="story-text-block-narrative">
+            <!-- CAPITULO 2 -->
 
-                <span class="story-chapter-num">
+            <section class="project-chapter">
+
+                <span class="chapter-index">
                     02 — ARQUITECTURA
                 </span>
 
-                <h3
-                    class="story-section-title"
-                    id="mSec2Title"
-                ></h3>
+                <h3 id="modalSec2Title"></h3>
 
                 <p
-                    class="story-paragraph"
-                    id="mSec2Text"
+                    class="project-chapter-text"
+                    id="modalSec2Text"
                 ></p>
 
-                <div class="story-hero-frame">
-                    <img id="mSec2Img" src="" alt="">
+
+                <div class="project-chapter-image">
+
+                    <img
+                        id="modalSec2Img"
+                        src=""
+                        alt=""
+                    >
+
                 </div>
 
+
                 <p
-                    class="story-caption"
-                    id="mSec2Cap"
+                    class="project-caption"
+                    id="modalSec2Cap"
                 ></p>
 
-            </div>
+            </section>
 
         </div>
 
     </div>
 
 
-    <!-- ============================================================
+    <!-- ======================================================
          JAVASCRIPT
-    ============================================================ -->
+    ======================================================= -->
 
     <script>
 
-        /* CURSOR */
+
+        /* ======================================================
+           CURSOR
+        ======================================================= */
 
         const cursor =
-            document.getElementById('custom-cursor');
-
-        document.addEventListener('mousemove', e => {
-
-            cursor.style.left =
-                e.clientX + 'px';
-
-            cursor.style.top =
-                e.clientY + 'px';
-
-            cursor.classList.add('visible');
-
-        });
-
-
-        const hoverables =
-            document.querySelectorAll(
-                'button, a, .split-pane, .story-card-item, .visual-card-item, input, textarea'
+            document.getElementById(
+                'custom-cursor'
             );
 
-        hoverables.forEach(el => {
 
-            el.addEventListener(
-                'mouseenter',
-                () => cursor.classList.add('hovered')
+        if (cursor) {
+
+            document.addEventListener(
+                'mousemove',
+                e => {
+
+                    cursor.style.left =
+                        e.clientX + 'px';
+
+                    cursor.style.top =
+                        e.clientY + 'px';
+
+                    cursor.classList.add(
+                        'visible'
+                    );
+
+                }
             );
 
-            el.addEventListener(
-                'mouseleave',
-                () => cursor.classList.remove('hovered')
+
+            const hoverables =
+                document.querySelectorAll(
+                    'button, a, .split-pane, .project-card, input, textarea'
+                );
+
+
+            hoverables.forEach(el => {
+
+                el.addEventListener(
+                    'mouseenter',
+                    () => {
+
+                        cursor.classList.add(
+                            'hovered'
+                        );
+
+                    }
+                );
+
+
+                el.addEventListener(
+                    'mouseleave',
+                    () => {
+
+                        cursor.classList.remove(
+                            'hovered'
+                        );
+
+                    }
+                );
+
+            });
+
+        }
+
+
+        /* ======================================================
+           ELEMENTOS
+        ======================================================= */
+
+        const introScreen =
+            document.getElementById(
+                'introScreen'
             );
 
-        });
-
-
-        /* LANDING */
+        const introOwn =
+            document.getElementById(
+                'introOwn'
+            );
 
         const entrySplit =
-            document.getElementById('entrySplit');
+            document.getElementById(
+                'entrySplit'
+            );
 
-        const selectStories =
-            document.getElementById('selectStories');
+        const selectStudio =
+            document.getElementById(
+                'selectStudio'
+            );
 
-        const selectVisuals =
-            document.getElementById('selectVisuals');
+        const selectProjects =
+            document.getElementById(
+                'selectProjects'
+            );
 
 
-        function activateContent(mode) {
+        const navProjects =
+            document.getElementById(
+                'navProjects'
+            );
 
-            entrySplit.classList.add('hidden');
+        const navStudio =
+            document.getElementById(
+                'navStudio'
+            );
+
+        const navContact =
+            document.getElementById(
+                'navContact'
+            );
+
+        const logoButton =
+            document.getElementById(
+                'logoButton'
+            );
+
+
+        const pageTitle =
+            document.getElementById(
+                'pageTitle'
+            );
+
+        const pageLabel =
+            document.getElementById(
+                'pageLabel'
+            );
+
+
+        /* ======================================================
+           INTRO → SPLIT
+        ======================================================= */
+
+        introOwn.addEventListener(
+            'click',
+            () => {
+
+                introScreen.classList.add(
+                    'hidden'
+                );
+
+                entrySplit.classList.add(
+                    'active'
+                );
+
+            }
+        );
+
+
+        /* ======================================================
+           ENTRAR EN CONTENIDO
+        ======================================================= */
+
+        function enterContent(view) {
+
+            entrySplit.classList.remove(
+                'active'
+            );
+
+            entrySplit.classList.add(
+                'hidden'
+            );
 
             document.body.classList.add(
                 'content-active'
             );
 
-            switchMode(mode);
+            setView(view);
 
         }
 
 
-        selectStories.addEventListener(
+        selectStudio.addEventListener(
             'click',
-            () => activateContent('stories')
-        );
+            () => {
 
-
-        selectVisuals.addEventListener(
-            'click',
-            () => activateContent('visuals')
-        );
-
-
-        /* NAVEGACIÓN */
-
-        const btnStories =
-            document.getElementById('btnModeStories');
-
-        const btnVisuals =
-            document.getElementById('btnModeVisuals');
-
-        const btnAbout =
-            document.getElementById('btnModeAbout');
-
-        const btnContact =
-            document.getElementById('btnModeContact');
-
-
-        const titleHeader =
-            document.getElementById('galleryModeTitle');
-
-        const tagHeader =
-            document.getElementById('galleryModeTag');
-
-
-        function switchMode(mode) {
-
-            document.body.classList.remove(
-                'mode-stories-active',
-                'mode-visual-active',
-                'mode-about-active',
-                'mode-contact-active'
-            );
-
-
-            [
-                btnStories,
-                btnVisuals,
-                btnAbout,
-                btnContact
-            ].forEach(
-                btn => btn.classList.remove('active')
-            );
-
-
-            if (mode === 'stories') {
-
-                document.body.classList.add(
-                    'mode-stories-active'
-                );
-
-                btnStories.classList.add('active');
-
-                titleHeader.textContent =
-                    'MEMORIAS';
-
-                tagHeader.textContent =
-                    'RELATOS Y CONCEPTOS';
+                enterContent('studio');
 
             }
+        );
 
 
-            else if (mode === 'visuals') {
+        selectProjects.addEventListener(
+            'click',
+            () => {
+
+                enterContent('projects');
+
+            }
+        );
+
+
+        /* ======================================================
+           NAVEGACION
+        ======================================================= */
+
+        function clearNav() {
+
+            navProjects.classList.remove(
+                'active'
+            );
+
+            navStudio.classList.remove(
+                'active'
+            );
+
+            navContact.classList.remove(
+                'active'
+            );
+
+        }
+
+
+        function setView(view) {
+
+            document.body.classList.remove(
+                'view-projects',
+                'view-studio',
+                'view-contact'
+            );
+
+            clearNav();
+
+
+            if (view === 'projects') {
 
                 document.body.classList.add(
-                    'mode-visual-active'
+                    'view-projects'
                 );
 
-                btnVisuals.classList.add('active');
+                navProjects.classList.add(
+                    'active'
+                );
 
-                titleHeader.textContent =
+                pageTitle.textContent =
                     'PROYECTOS';
 
-                tagHeader.textContent =
+                pageLabel.textContent =
                     'ARQUITECTURA RESIDENCIAL';
 
             }
 
 
-            else if (mode === 'about') {
+            else if (view === 'studio') {
 
                 document.body.classList.add(
-                    'mode-about-active'
+                    'view-studio'
                 );
 
-                btnAbout.classList.add('active');
+                navStudio.classList.add(
+                    'active'
+                );
 
-                titleHeader.textContent =
+                pageTitle.textContent =
                     'ESTUDIO';
 
-                tagHeader.textContent =
+                pageLabel.textContent =
                     'FILOSOFÍA Y MÉTODO';
 
             }
 
 
-            else if (mode === 'contact') {
+            else if (view === 'contact') {
 
                 document.body.classList.add(
-                    'mode-contact-active'
+                    'view-contact'
                 );
 
-                btnContact.classList.add('active');
+                navContact.classList.add(
+                    'active'
+                );
 
-                titleHeader.textContent =
+                pageTitle.textContent =
                     'CONTACTO';
 
-                tagHeader.textContent =
+                pageLabel.textContent =
                     'NUEVOS PROYECTOS';
 
             }
@@ -2072,139 +2682,197 @@
         }
 
 
-        btnStories.addEventListener(
+        navProjects.addEventListener(
             'click',
-            () => switchMode('stories')
+            () => setView('projects')
         );
 
-        btnVisuals.addEventListener(
+        navStudio.addEventListener(
             'click',
-            () => switchMode('visuals')
+            () => setView('studio')
         );
 
-        btnAbout.addEventListener(
+        navContact.addEventListener(
             'click',
-            () => switchMode('about')
-        );
-
-        btnContact.addEventListener(
-            'click',
-            () => switchMode('contact')
+            () => setView('contact')
         );
 
 
-        /* MODAL MEMORIAS */
+        /* ======================================================
+           CLICK EN LOGO → SPLIT
+        ======================================================= */
 
-        const storyLinks =
-            document.querySelectorAll('.story-link');
-
-        const storyModal =
-            document.getElementById('storyModal');
-
-        const closeStoryBtn =
-            document.getElementById('closeStoryBtn');
-
-
-        storyLinks.forEach(link => {
-
-            link.addEventListener('click', () => {
-
-                document.getElementById('mTitle')
-                    .textContent =
-                    link.dataset.title;
-
-                document.getElementById('mCategory')
-                    .textContent =
-                    link.dataset.category;
-
-                document.getElementById('mStatement')
-                    .textContent =
-                    link.dataset.statement;
-
-
-                document.getElementById('mSec1Title')
-                    .textContent =
-                    link.dataset.sec1Title;
-
-                document.getElementById('mSec1Text')
-                    .textContent =
-                    link.dataset.sec1Text;
-
-                document.getElementById('mSec1Img')
-                    .src =
-                    link.dataset.sec1Img;
-
-                document.getElementById('mSec1Cap')
-                    .textContent =
-                    link.dataset.sec1Cap;
-
-
-                document.getElementById('mSec2Title')
-                    .textContent =
-                    link.dataset.sec2Title;
-
-                document.getElementById('mSec2Text')
-                    .textContent =
-                    link.dataset.sec2Text;
-
-                document.getElementById('mSec2Img')
-                    .src =
-                    link.dataset.sec2Img;
-
-                document.getElementById('mSec2Cap')
-                    .textContent =
-                    link.dataset.sec2Cap;
-
-
-                document.getElementById('mHeroImg')
-                    .src =
-                    link.dataset.heroImg;
-
-
-                storyModal.classList.add('active');
-
-                document.body.classList.add(
-                    'story-active'
-                );
-
-
-                storyModal.scrollTop = 0;
-
-            });
-
-        });
-
-
-        closeStoryBtn.addEventListener(
+        logoButton.addEventListener(
             'click',
             () => {
 
-                storyModal.classList.remove('active');
-
                 document.body.classList.remove(
-                    'story-active'
+                    'content-active'
                 );
+
+                entrySplit.classList.remove(
+                    'hidden'
+                );
+
+                requestAnimationFrame(() => {
+
+                    entrySplit.classList.add(
+                        'active'
+                    );
+
+                });
 
             }
         );
 
 
-        /* ESC PARA CERRAR */
+        /* ======================================================
+           MODAL PROYECTOS
+        ======================================================= */
+
+        const projectModal =
+            document.getElementById(
+                'projectModal'
+            );
+
+        const projectClose =
+            document.getElementById(
+                'projectClose'
+            );
+
+        const projectLinks =
+            document.querySelectorAll(
+                '.project-link'
+            );
+
+
+        projectLinks.forEach(project => {
+
+            project.addEventListener(
+                'click',
+                () => {
+
+                    document.getElementById(
+                        'modalTitle'
+                    ).textContent =
+                        project.dataset.title;
+
+
+                    document.getElementById(
+                        'modalCategory'
+                    ).textContent =
+                        project.dataset.category;
+
+
+                    document.getElementById(
+                        'modalStatement'
+                    ).textContent =
+                        project.dataset.statement;
+
+
+                    document.getElementById(
+                        'modalHero'
+                    ).src =
+                        project.dataset.heroImg;
+
+
+                    document.getElementById(
+                        'modalSec1Title'
+                    ).textContent =
+                        project.dataset.sec1Title;
+
+
+                    document.getElementById(
+                        'modalSec1Text'
+                    ).textContent =
+                        project.dataset.sec1Text;
+
+
+                    document.getElementById(
+                        'modalSec1Img'
+                    ).src =
+                        project.dataset.sec1Img;
+
+
+                    document.getElementById(
+                        'modalSec1Cap'
+                    ).textContent =
+                        project.dataset.sec1Cap;
+
+
+                    document.getElementById(
+                        'modalSec2Title'
+                    ).textContent =
+                        project.dataset.sec2Title;
+
+
+                    document.getElementById(
+                        'modalSec2Text'
+                    ).textContent =
+                        project.dataset.sec2Text;
+
+
+                    document.getElementById(
+                        'modalSec2Img'
+                    ).src =
+                        project.dataset.sec2Img;
+
+
+                    document.getElementById(
+                        'modalSec2Cap'
+                    ).textContent =
+                        project.dataset.sec2Cap;
+
+
+                    projectModal.classList.add(
+                        'active'
+                    );
+
+
+                    document.body.classList.add(
+                        'modal-active'
+                    );
+
+
+                    projectModal.scrollTop = 0;
+
+                }
+            );
+
+        });
+
+
+        function closeProjectModal() {
+
+            projectModal.classList.remove(
+                'active'
+            );
+
+            document.body.classList.remove(
+                'modal-active'
+            );
+
+        }
+
+
+        projectClose.addEventListener(
+            'click',
+            closeProjectModal
+        );
+
 
         document.addEventListener(
             'keydown',
-            e => {
+            event => {
 
                 if (
-                    e.key === 'Escape' &&
-                    storyModal.classList.contains('active')
+                    event.key === 'Escape' &&
+                    projectModal.classList.contains(
+                        'active'
+                    )
                 ) {
 
-                    storyModal.classList.remove('active');
-
-                    document.body.classList.remove(
-                        'story-active'
-                    );
+                    closeProjectModal();
 
                 }
 
