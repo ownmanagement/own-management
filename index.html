@@ -1,827 +1,1275 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OWN Studio — Arquitectura & Diseño</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    @font-face {
-      font-family: 'Suisse Intl Trial Bold';
-      src: local('SwissTypefaces Suisse'), local('SuisseIntl-Bold'), url('https://cdn.jsdelivr.net/gh/swisstypefaces/trial@main/SuisseIntl-Bold.woff2') format('woff2');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    
-    html, body { 
-      font-family: 'Inter', sans-serif; 
-      background-color: #030303; 
-      color: #ffffff; 
-      width: 100%; 
-      min-height: 100vh;
-      overflow-x: hidden;
-      cursor: default;
-    }
-
-    button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
-
-    /* --- CURSOR MAGNÉTICO CON ACENTO DE COLOR --- */
-    .custom-cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 20px; height: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
-      z-index: 99999;
-      mix-blend-mode: difference;
-    }
-
-    body.hovering .custom-cursor {
-      width: 55px; height: 55px;
-      background-color: #93c5fd; 
-      border-color: #93c5fd;
-    }
-
-    /* --- SISTEMA DE PÁGINAS INDEPENDIENTES --- */
-    .page-section { 
-      display: none; 
-      width: 100%; 
-      min-height: 100vh; 
-      background-color: #ffffff; 
-      color: #0f0f0f;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    .page-section.active { 
-      display: block; 
-      position: relative;
-    }
-
-    #section-home {
-      background-color: #030303;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 5vw 6vw;
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-    }
-    #section-home.active {
-      position: relative;
-    }
-
-    .interactive-canvas-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    /* IMÁGENES FLOTANTES EN HOME (Ajustadas para alternancia automática) */
-    .floating-blueprint {
-      position: absolute;
-      width: 280px; height: 380px;
-      opacity: 0;
-      transform: scale(0.9) translate(-50%, -50%);
-      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0,0,0.2,1);
-      object-fit: cover;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-      filter: grayscale(85%) contrast(110%);
-    }
-
-    /* Posiciones fijas relativas para que alternen ordenadamente en pantalla */
-    .floating-blueprint:nth-child(1) { top: 30%; left: 25%; }
-    .floating-blueprint:nth-child(2) { top: 60%; left: 75%; }
-    .floating-blueprint:nth-child(3) { top: 40%; left: 70%; }
-    .floating-blueprint:nth-child(4) { top: 65%; left: 30%; }
-
-    /* --- REGLA 1: ARCHIVO DE PROYECTOS (B&N POR DEFECTO -> HOVER AZUL SUAVE ORIGINAL) --- */
-    .project-card-thumb {
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .project-card-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) brightness(0.95) contrast(115%);
-      transition: filter 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .project-card-thumb::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(147, 197, 253, 0.35) 0%, rgba(96, 165, 250, 0.15) 60%, rgba(15, 23, 42, 0.2) 100%);
-      mix-blend-mode: color;
-      opacity: 0; 
-      pointer-events: none;
-      transition: opacity 0.6s ease;
-    }
-
-    .project-card-item:hover .project-card-thumb img {
-      filter: grayscale(0%) brightness(1.02) contrast(105%); 
-      transform: scale(1.04);
-    }
-
-    .project-card-item:hover .project-card-thumb::after {
-      opacity: 1; 
-    }
-
-    /* --- REGLA 2: MEMORIA DE DETALLE --- */
-    .zoom-container {
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .zoom-container img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: filter 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .zoom-container.is-bw img {
-      filter: grayscale(100%) brightness(0.9) contrast(115%);
-    }
-    .zoom-container.is-bw:hover img {
-      filter: grayscale(70%) brightness(1) contrast(110%);
-      transform: scale(1.03);
-    }
-
-    .zoom-container.is-color img {
-      filter: grayscale(0%) brightness(1) contrast(100%);
-    }
-    .zoom-container.is-color:hover img {
-      transform: scale(1.03);
-    }
-
-    .team-img-small, .team-group-photo-container {
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-    .team-img-small img, .team-group-photo-container img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(110%);
-      transition: filter 0.6s ease, transform 0.6s ease;
-    }
-    .team-card-compact:hover .team-img-small img, .team-group-photo-container:hover img {
-      filter: grayscale(0%);
-      transform: scale(1.03);
-    }
-
-    .home-content-wrapper {
-      position: relative;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-between;
-    }
-
-    .home-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-logo {
-      font-family: 'Suisse Intl Trial Bold', 'Inter', sans-serif !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #fff;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    .brand-logo:hover { color: #93c5fd; }
-
-    .nav-bar { 
-      position: fixed; 
-      top: 0; left: 0; 
-      width: 100%; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      padding: 1.5rem 6vw; 
-      z-index: 10000; 
-      background: rgba(255, 255, 255, 0.95); 
-      backdrop-filter: blur(10px); 
-      -webkit-backdrop-filter: blur(10px); 
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    body.light-mode .nav-bar .brand-logo { color: #000000 !important; }
-    body.light-mode .nav-bar .brand-logo:hover { color: #3b82f6 !important; }
-
-    .nav-back-btn { 
-      font-family: 'Inter', sans-serif; 
-      font-size: 0.75rem; 
-      font-weight: 500; 
-      text-transform: uppercase; 
-      letter-spacing: 0.15em; 
-      color: #444; 
-      transition: color 0.3s; 
-    }
-    .nav-back-btn:hover { color: #3b82f6; }
-
-    .home-center-stage {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      width: 100%;
-      padding-bottom: 3vh;
-    }
-
-    .home-huge-title {
-      font-family: 'Suisse Intl Trial Bold', sans-serif;
-      font-size: clamp(5rem, 15vw, 15rem);
-      line-height: 0.75;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      color: #ffffff;
-      user-select: none;
-    }
-
-    .home-interactive-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: right;
-    }
-
-    .interactive-link {
-      font-family: 'Suisse Intl Trial Bold', sans-serif;
-      font-size: clamp(2rem, 4vw, 4.5rem);
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: #777;
-      cursor: pointer;
-      transition: color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-    }
-
-    .interactive-link span {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #888;
-      margin-top: 0.2rem;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .interactive-link:hover {
-      color: #93c5fd;
-      transform: translateX(-8px);
-    }
-
-    .interactive-link:hover span {
-      color: #93c5fd;
-    }
-
-    .home-status-bar {
-      font-family: monospace;
-      font-size: 0.7rem;
-      color: #666;
-      letter-spacing: 0.15em;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .section-inner { padding: 140px 6vw 100px 6vw; max-width: 1650px; margin: 0 auto; }
-    
-    .section-header-title { 
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem); 
-      margin-bottom: 2rem; 
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      color: #000000;
-    }
-    
-    .section-intro-text { 
-      font-family: 'Inter', sans-serif; 
-      font-size: clamp(1.05rem, 1.4vw, 1.4rem); 
-      line-height: 1.8; 
-      color: #333333; 
-      max-width: 900px; 
-      margin-bottom: 5rem; 
-      font-weight: 300;
-    }
-    
-    .team-group-photo-container {
-      width: 100%;
-      height: 55vh;
-      margin-bottom: 5rem;
-    }
-
-    .team-grid-compact { 
-      display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 3vw; 
-    }
-    .team-card-compact { position: relative; cursor: pointer; }
-    .team-img-small { width: 100%; height: 28vh; margin-bottom: 1rem; }
-    
-    .team-name { font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #000; }
-    .team-role { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #555; margin-top: 0.3rem; text-transform: uppercase; font-weight: 400; }
-
-    .projects-asymmetric-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 40px;
-      margin-top: 2rem;
-    }
-
-    .project-card-item {
-      position: relative;
-      cursor: pointer;
-    }
-    
-    .p-item-1 { grid-column: span 7; }
-    .p-item-2 { grid-column: span 5; margin-top: 80px; }
-    .p-item-3 { grid-column: span 4; }
-    .p-item-4 { grid-column: span 8; margin-top: -60px; }
-    .p-item-5 { grid-column: span 6; }
-    .p-item-6 { grid-column: span 6; margin-top: 100px; }
-    .p-item-7 { grid-column: span 7; margin-top: -40px; }
-    .p-item-8 { grid-column: span 5; margin-top: 60px; }
-    .p-item-9 { grid-column: span 6; margin-top: 40px; }
-    .p-item-10 { grid-column: span 6; margin-top: -20px; }
-
-    .project-card-thumb {
-      width: 100%; height: 420px;
-    }
-    .p-item-1 .project-card-thumb { height: 520px; }
-    .p-item-4 .project-card-thumb { height: 480px; }
-    .p-item-7 .project-card-thumb { height: 450px; }
-
-    .project-card-item:hover .project-card-title {
-      color: #3b82f6;
-    }
-
-    .project-card-info {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .project-card-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #000000;
-      transition: color 0.3s ease;
-    }
-
-    .project-card-loc {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      color: #666;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .project-detail-view {
-      font-family: 'Inter', sans-serif;
-      position: relative;
-      width: 100%;
-      min-height: 3800px;
-      background-color: #ffffff;
-      color: #000000;
-    }
-
-    .blueprint-top-guides {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 35vw;
-      background-image: 
-          linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-      background-size: 4vw 4vw;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .reg-mark { position: absolute; font-family: monospace; font-size: 0.7rem; color: #000000; letter-spacing: 0.1em; pointer-events: none; z-index: 2; }
-    .canvas-container { position: relative; width: 100%; min-height: 3800px; padding: 5vw; z-index: 3; }
-    .header-block { position: absolute; top: 8vw; left: 10%; width: 26vw; max-width: 350px; font-size: 0.9rem; line-height: 1.6; color: #333; }
-    .header-block strong { display: block; font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 6px; color: #000; }
-
-    .item-01 { position: absolute; top: 22vw; left: 10%; width: 22vw; height: 28vw; min-width: 220px; min-height: 280px; cursor: pointer; }
-
-    .blueprint-sketch-overlay {
-      position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.85);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 4;
-    }
-    .item-01:hover .blueprint-sketch-overlay, .item-drawing-1:hover .blueprint-sketch-overlay, .item-drawing-2:hover .blueprint-sketch-overlay { opacity: 1; pointer-events: auto; }
-    .blueprint-sketch-overlay svg { width: 85%; height: 85%; stroke: #3b82f6; stroke-width: 1.2; fill: none; }
-    .blueprint-label { position: absolute; bottom: 12px; left: 15px; font-family: monospace; font-size: 0.65rem; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; }
-    .image-label { position: absolute; bottom: -28px; right: 0; font-size: 0.8rem; font-weight: 500; color: #666; z-index: 5; }
-
-    .main-title { position: absolute; top: 25vw; left: 38%; font-family: 'Montserrat', sans-serif; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; color: #000000; }
-    .edge-element-left { position: absolute; top: 60vw; left: -40px; width: 28vw; height: 14vw; background: #fcfcfc; border-left: 2px solid #000000; padding: 24px; display: flex; align-items: center; justify-content: flex-end; font-size: 0.85rem; font-weight: 500; color: #333; }
-    .edge-element-right { position: absolute; top: 44vw; right: -40px; width: 30vw; height: 13vw; background: #fcfcfc; border-right: 2px solid #000000; padding: 24px; display: flex; align-items: center; justify-content: flex-start; font-size: 0.85rem; font-weight: 500; color: #333; }
-
-    .item-02 { position: absolute; top: 48vw; left: 42%; width: 22vw; height: 28vw; min-width: 220px; min-height: 280px; }
-    .item-03 { position: absolute; top: 78vw; left: 42%; width: 22vw; height: 28vw; min-width: 220px; min-height: 280px; }
-    .item-drawing-1 { position: absolute; top: 108vw; left: 10%; width: 36vw; height: 24vw; min-width: 280px; cursor: pointer; }
-    .item-drawing-2 { position: absolute; top: 108vw; right: 10%; width: 36vw; height: 24vw; min-width: 280px; cursor: pointer; }
-    .middle-right-card { position: absolute; top: 94vw; right: 12%; width: 20vw; height: 26vw; min-width: 200px; }
-    .footer-section { position: absolute; top: 142vw; left: 5%; right: 5%; width: 90vw; height: 42vw; min-height: 420px; }
-    .footer-image { position: relative; width: 100%; height: 100%; }
-    .overflow-title { position: absolute; bottom: -3.5vw; left: 3vw; font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 9vw, 8.5rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.05em; z-index: 5; color: #000000; }
-
-    .reveal { opacity: 0; transform: translateY(60px) scale(0.98); filter: blur(3px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.active { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
-
-    @media (max-width: 1000px) {
-      .team-grid-compact { grid-template-columns: repeat(1, 1fr); gap: 4vw; }
-      .projects-asymmetric-grid { display: flex; flex-direction: column; gap: 40px; }
-      .home-center-stage { flex-direction: column; align-items: flex-start; gap: 3rem; }
-      .home-interactive-menu { text-align: left; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Cursor Personalizado -->
-  <div class="custom-cursor" id="cursor"></div>
-
-  <!-- 1. HOME INTERACTIVA -->
-  <section id="section-home" class="page-section active">
-    <div class="interactive-canvas-bg" id="canvasBg">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="0" alt="Blueprint">
-      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="1" alt="Blueprint">
-      <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="2" alt="Blueprint">
-      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" class="floating-blueprint" data-index="3" alt="Blueprint">
-    </div>
-
-    <div class="home-content-wrapper">
-      <div class="home-top-bar">
-        <h3 class="brand-logo" data-hover onclick="switchSection('home')">OWN STUDIO</h3>
-        <div style="font-family: monospace; font-size: 0.7rem; color: #888;">BARCELONA // B&N & COLOR MIX</div>
-      </div>
-
-      <div class="home-center-stage">
-        <h1 class="home-huge-title">OWN</h1>
-        <div class="home-interactive-menu">
-          <div class="interactive-link" data-hover onclick="switchSection('estudio')">
-            Estudio
-            <span>// Filosofía y Taller</span>
-          </div>
-          <div class="interactive-link" data-hover onclick="switchSection('proyectos')">
-            Archivo
-            <span>// Memorias de Obra</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="home-status-bar">
-        <span>ESTADO: APARICIÓN Y DESAPARICIÓN AUTOMÁTICA RÁPIDA Y TENUE</span>
-        <span>ATMÓSFERA EDITORIAL</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. SECCIÓN ESTUDIO -->
-  <section id="section-estudio" class="page-section">
-    <nav class="nav-bar">
-      <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
-      <button class="nav-back-btn" onclick="switchSection('home')">← Volver al Inicio</button>
-    </nav>
-    <div class="section-inner">
-      <h2 class="section-header-title">El Estudio</h2>
-      <p class="section-intro-text">
-        Bajo los principios de nuestro manifiesto material, OWN Studio concibe la arquitectura a través de la tensión formal y la honestidad constructiva, combinando acabados naturales con matices cromáticos selectos.
-      </p>
-
-      <div class="team-group-photo-container">
-        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" alt="Equipo OWN al completo">
-      </div>
-
-      <div class="team-grid-compact">
-        <div class="team-card-compact">
-          <div class="team-img-small"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800" alt="Elena Vance"></div>
-          <h4 class="team-name">Elena Vance</h4>
-          <p class="team-role">Socia Fundadora / Dirección Creativa</p>
-        </div>
-        <div class="team-card-compact">
-          <div class="team-img-small"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Marc Aureli"></div>
-          <h4 class="team-name">Marc Aureli</h4>
-          <p class="team-role">Socio Fundador / Dirección Técnica</p>
-        </div>
-        <div class="team-card-compact">
-          <div class="team-img-small"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" alt="Sofía Larsson"></div>
-          <h4 class="team-name">Sofía Larsson</h4>
-          <p class="team-role">Arquitecta Senior</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. SECCIÓN PROYECTOS -->
-  <section id="section-proyectos" class="page-section">
-    <nav class="nav-bar">
-      <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
-      <button class="nav-back-btn" onclick="switchSection('home')">← Volver al Inicio</button>
-    </nav>
-    <div class="section-inner">
-      <h2 class="section-header-title">Archivo de Proyectos</h2>
-      
-      <div class="projects-asymmetric-grid">
-        <div class="project-card-item p-item-1" onclick="openProjectDetail(1)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Torre en Conill"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Torre en Conill</span>
-            <span class="project-card-loc">Valencia</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-2" onclick="openProjectDetail(2)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Villa Pedralbes"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Villa Pedralbes</span>
-            <span class="project-card-loc">Barcelona</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-3" onclick="openProjectDetail(3)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Residencia Brava"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Residencia Brava</span>
-            <span class="project-card-loc">Girona</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-4" onclick="openProjectDetail(4)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop" alt="Refugio Hormigón"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Refugio Hormigón</span>
-            <span class="project-card-loc">Alicante</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-5" onclick="openProjectDetail(5)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop" alt="Casa Claro de Luz"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Casa Claro de Luz</span>
-            <span class="project-card-loc">Besalú</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-6" onclick="openProjectDetail(6)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop" alt="Casa Claroscuro"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Casa Claroscuro</span>
-            <span class="project-card-loc">Sarrià</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-7" onclick="openProjectDetail(7)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop" alt="Pabellón Empordà"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Pabellón Empordà</span>
-            <span class="project-card-loc">Costa Brava</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-8" onclick="openProjectDetail(8)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop" alt="Casa Minimal Sitges"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Casa Minimal Sitges</span>
-            <span class="project-card-loc">Sitges</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-9" onclick="openProjectDetail(9)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop" alt="Casa Linde"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Casa Linde</span>
-            <span class="project-card-loc">Madrid</span>
-          </div>
-        </div>
-
-        <div class="project-card-item p-item-10" onclick="openProjectDetail(10)">
-          <div class="project-card-thumb"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop" alt="Pabellón Linde Norte"></div>
-          <div class="project-card-info">
-            <span class="project-card-title">Pabellón Linde Norte</span>
-            <span class="project-card-loc">Asturias</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 4. VISTA DE DETALLE DE PROYECTO -->
-  <section id="section-project-detail" class="page-section">
-    <nav class="nav-bar">
-      <h3 class="brand-logo" onclick="switchSection('home')">OWN</h3>
-      <button class="nav-back-btn" onclick="switchSection('proyectos')">← Volver al Archivo</button>
-    </nav>
-
-    <div class="project-detail-view">
-      <div class="blueprint-top-guides"></div>
-      <div class="reg-mark" style="top: 20px; left: 20px;" id="det-ref">+ REF. 01 // ARCHIVE</div>
-      <div class="reg-mark" style="top: 20px; right: 100px;">SCALE 1:100</div>
-
-      <div class="canvas-container">
-        <div class="header-block reveal">
-          <strong id="det-subtitle">ESTUDIO / MEMORIA DESCRIPTIVA</strong>
-          Geometría de precisión, contrastes y materialidad natural.
-        </div>
-
-        <div class="item-01 zoom-container is-bw reveal" style="transition-delay: 0.1s;">
-          <img id="det-img-1" src="" alt="Proyecto Arquitectura 01">
-          <div class="blueprint-sketch-overlay">
-            <svg viewBox="0 0 200 250">
-              <rect x="25" y="30" width="150" height="190" stroke-dasharray="4 2" />
-              <line x1="25" y1="90" x2="175" y2="90" />
-              <line x1="25" y1="160" x2="175" y2="160" />
-              <circle cx="132" cy="125" r="22" />
-            </svg>
-            <div class="blueprint-label">ELEVACIÓN_01 [B&N]</div>
-          </div>
-          <div class="image-label">01 [B&N]</div>
-        </div>
-
-        <div class="main-title reveal" id="det-title" style="transition-delay: 0.2s;">NOMBRE</div>
-
-        <div class="edge-element-left reveal" style="transition-delay: 0.15s;"><span>[ PLANTA NORTE ]</span></div>
-        <div class="edge-element-right reveal" style="transition-delay: 0.1s;"><span>AXIS_02 // SECCIÓN TRANSVERSAL</span></div>
-
-        <div class="item-02 zoom-container is-color reveal">
-          <img id="det-img-2" src="" alt="Proyecto Arquitectura 02">
-          <div class="image-label">02 [COLOR]</div>
-        </div>
-
-        <div class="item-03 zoom-container is-bw reveal">
-          <img id="det-img-3" src="" alt="Proyecto Arquitectura 03">
-          <div class="image-label">03 [B&N]</div>
-        </div>
-
-        <div class="middle-right-card zoom-container is-color reveal">
-          <img id="det-img-4" src="" alt="Detalle Constructivo">
-          <div class="image-label">04 [COLOR]</div>
-        </div>
-
-        <div class="item-drawing-1 zoom-container is-bw reveal" style="transition-delay: 0.15s;">
-          <img id="det-drawing-1" src="" alt="Croquis Técnico 01">
-          <div class="blueprint-sketch-overlay">
-            <svg viewBox="0 0 300 200"><rect x="20" y="20" width="260" height="160" stroke-dasharray="5 3" /><circle cx="150" cy="100" r="45" /></svg>
-            <div class="blueprint-label">DIAGRAMA</div>
-          </div>
-          <div class="image-label">CROQUIS 01 [B&N]</div>
-        </div>
-
-        <div class="item-drawing-2 zoom-container is-color reveal" style="transition-delay: 0.2s;">
-          <img id="det-drawing-2" src="" alt="Croquis Técnico 02">
-          <div class="blueprint-sketch-overlay">
-            <svg viewBox="0 0 300 200"><circle cx="150" cy="100" r="70" stroke-dasharray="3 3" /></svg>
-            <div class="blueprint-label">SECCIÓN</div>
-          </div>
-          <div class="image-label">CROQUIS 02 [COLOR]</div>
-        </div>
-
-        <div class="footer-section reveal">
-          <div class="footer-image zoom-container is-bw">
-            <img id="det-img-footer" src="" alt="Memoria Final de Proyecto">
-            <div class="overflow-title" id="det-overflow-title">OWN</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    const projectDatabase = {
-      1: { title: "Torre en Conill", subtitle: "VALENCIA, ESPAÑA / 480 M²", ref: "+ REF. 01 // TORRE EN CONILL", img1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", overflow: "TORRE CONILL" },
-      2: { title: "Villa Pedralbes", subtitle: "BARCELONA, ESPAÑA / 620 M²", ref: "+ REF. 02 // PEDRALBES", img1: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", overflow: "PEDRALBES" },
-      3: { title: "Residencia Brava", subtitle: "GIRONA, ESPAÑA / 390 M²", ref: "+ REF. 03 // BRAVA", img1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", overflow: "BRAVA" },
-      4: { title: "Refugio Hormigón", subtitle: "ALICANTE, ESPAÑA / 310 M²", ref: "+ REF. 04 // HORMIGÓN", img1: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", overflow: "HORMIGÓN" },
-      5: { title: "Casa Claro de Luz", subtitle: "BESALÚ, ESPAÑA / 450 M²", ref: "+ REF. 05 // CLARO DE LUZ", img1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", overflow: "CLARO LUZ" },
-      6: { title: "Casa Claroscuro", subtitle: "SARRIÀ, BARCELONA / 510 M²", ref: "+ REF. 06 // CLAROSCURO", img1: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1400&auto=format&fit=crop", overflow: "CLAROSCURO" },
-      7: { title: "Pabellón Empordà", subtitle: "COSTA BRAVA, GIRONA / 280 M²", ref: "+ REF. 07 // EMPORDÀ", img1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", overflow: "EMPORDÀ" },
-      8: { title: "Casa Minimal Sitges", subtitle: "SITGES, BARCELONA / 410 M²", ref: "+ REF. 08 // SITGES", img1: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", overflow: "SITGES" },
-      9: { title: "Casa Linde", subtitle: "MADRID, ESPAÑA / 500 M²", ref: "+ REF. 09 // LINDE", img1: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", overflow: "LINDE" },
-      10: { title: "Pabellón Linde Norte", subtitle: "ASTURIAS, ESPAÑA / 340 M²", ref: "+ REF. 10 // LINDE NORTE", img1: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", img2: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", img3: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop", img4: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1400&auto=format&fit=crop", drawing1: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1400&auto=format&fit=crop", drawing2: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop", footerImg: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop", overflow: "LINDE NORTE" }
-    };
-
-    const cursor = document.getElementById('cursor');
-    const blueprints = document.querySelectorAll('.floating-blueprint');
-    const homeSection = document.getElementById('section-home');
-
-    // Movimiento básico solo del cursor personalizado (sin atar las imágenes al mouse)
-    window.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-
-    document.querySelectorAll('[data-hover], .interactive-link, .brand-logo').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-    });
-
-    // LÓGICA DE APARICIÓN Y DESAPARICIÓN ALTERNADA AUTOMÁTICA (RÁPIDA Y TENUE)
-    let activeBlueprintIndex = 0;
-
-    function rotateBlueprints() {
-      // Ocultar todas las imágenes primero
-      blueprints.forEach(bp => {
-        bp.style.opacity = '0';
-        bp.style.transform = 'scale(0.9) translate(-50%, -50%)';
-      });
-
-      // Mostrar únicamente la imagen actual con opacidad muy tenue (0.12)
-      if (homeSection.classList.contains('active')) {
-        blueprints[activeBlueprintIndex].style.opacity = '0.12'; 
-        blueprints[activeBlueprintIndex].style.transform = 'scale(1) translate(-50%, -50%)';
-        
-        // Pasar a la siguiente imagen en el ciclo
-        activeBlueprintIndex = (activeBlueprintIndex + 1) % blueprints.length;
-      }
-    }
-
-    // Intervalo ajustado a 1200ms (1.2 segundos) para mayor velocidad
-    setInterval(rotateBlueprints, 1200);
-    rotateBlueprints();
-
-    function switchSection(sectionId) {
-      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-      const target = document.getElementById('section-' + sectionId);
-      
-      if(target) {
-        target.classList.add('active');
-        window.scrollTo(0, 0);
-
-        if (sectionId === 'home') {
-          document.body.classList.remove('light-mode');
-        } else {
-          document.body.classList.add('light-mode');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>OWN ARCHITECTURE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
-      }
-    }
 
-    function openProjectDetail(id) {
-      const p = projectDatabase[id];
-      if(!p) return;
+        html { 
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
 
-      document.getElementById('det-ref').innerText = p.ref;
-      document.getElementById('det-subtitle').innerHTML = `<strong>ESTUDIO / MEMORIA DESCRIPTIVA</strong>${p.subtitle}`;
-      document.getElementById('det-title').innerText = p.title;
-      document.getElementById('det-img-1').src = p.img1;
-      document.getElementById('det-img-2').src = p.img2;
-      document.getElementById('det-img-3').src = p.img3;
-      document.getElementById('det-img-4').src = p.img4;
-      document.getElementById('det-drawing-1').src = p.drawing1;
-      document.getElementById('det-drawing-2').src = p.drawing2;
-      document.getElementById('det-img-footer').src = p.footerImg;
-      document.getElementById('det-overflow-title').innerText = p.overflow;
+        body {
+            background-color: #0d0d0d;
+            color: #111111;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-      switchSection('project-detail');
+        body.content-active {
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
 
-      setTimeout(() => {
-        const detailSec = document.getElementById('section-project-detail');
-        const reveals = detailSec.querySelectorAll('.reveal');
-        reveals.forEach(el => el.classList.remove('active'));
-        setTimeout(() => { reveals.forEach(el => el.classList.add('active')); }, 50);
-      }, 50);
-    }
+        body.story-active, body.modal-active { overflow: hidden; }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.1 };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-      }, observerOptions);
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    });
-  </script>
+        /* CURSOR NEGRO PURO */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #000000;
+            border: none;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+            opacity: 0;
+        }
+
+        #custom-cursor.visible { opacity: 1; }
+
+        #custom-cursor.hovered {
+            width: 22px;
+            height: 22px;
+            background-color: #000000;
+        }
+
+        .mono-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #777777;
+        }
+
+        /* PANTALLA INICIAL DE SELECCIÓN (SPLIT LANDING) */
+        .entry-split-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            z-index: 2000;
+            background-color: #0d0d0d;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+
+        .entry-split-container.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .split-pane {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(60px, 10vh, 120px) 6% clamp(40px, 8vh, 80px) 6%;
+            transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            overflow: hidden;
+        }
+
+        .split-pane.pane-stories {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .split-pane.pane-visuals {
+            background-color: #f7f7f7;
+            color: #111111;
+        }
+
+        .pane-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+            z-index: 1;
+        }
+        
+        .pane-stories .pane-bg { background-image: url('img/croquis.jpg'); }
+        .pane-visuals .pane-bg { background-image: url('img/HAVANA%2048.jpg'); opacity: 0.15; filter: grayscale(100%); }
+
+        @media (hover: hover) {
+            .entry-split-container:hover .split-pane { flex: 0.8; filter: brightness(0.6); }
+            .entry-split-container .split-pane:hover { flex: 1.4; filter: brightness(1); }
+            .entry-split-container .split-pane:hover .pane-bg { transform: scale(1.05); opacity: 0.5; }
+        }
+
+        .split-content-top { position: relative; z-index: 2; }
+        .split-content-bottom { position: relative; z-index: 2; max-width: 520px; }
+
+        .split-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .pane-stories .split-badge { background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .pane-visuals .split-badge { background-color: rgba(0, 0, 0, 0.06); color: #111111; border: 1px solid rgba(0, 0, 0, 0.15); }
+
+        .split-title {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .split-desc { font-size: clamp(0.9rem, 1.2vw, 1.05rem); line-height: 1.6; font-weight: 300; opacity: 0.85; }
+
+        .split-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .split-action svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .split-pane:hover .split-action svg { transform: translateX(8px); }
+
+        /* HEADER / NAVEGACIÓN */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 6%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+        }
+
+        body.content-active header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo { font-size: 0.95rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: #111111; }
+
+        .mode-switch-bar {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            gap: 4px;
+        }
+
+        .mode-btn {
+            background: none;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #666666;
+            transition: all 0.25s ease;
+        }
+
+        .mode-btn.active {
+            background-color: #111111;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* VISTAS PRINCIPALES */
+        .main-view-container {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.3s;
+        }
+
+        body.content-active .main-view-container { opacity: 1; }
+
+        .gallery-section { padding: 140px 6% 80px 6%; background-color: #ffffff; min-height: 100vh; }
+
+        .gallery-header {
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #111111;
+            padding-bottom: 20px;
+        }
+
+        .gallery-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
+
+        /* SECCIÓN MEMORIAS */
+        .view-stories-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .story-card-item {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 80px;
+        }
+
+        .story-card-item:last-child { border-bottom: none; }
+
+        .story-card-img {
+            width: 100%;
+            height: 55vh;
+            min-height: 350px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .story-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .story-card-item:hover .story-card-img img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        .story-card-content h3 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin: 10px 0; }
+        .story-card-excerpt { font-size: 1.1rem; line-height: 1.8; color: #444444; font-weight: 300; margin-bottom: 20px; max-width: 850px; }
+        .story-read-more { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #111111; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* SECCIÓN PROYECTOS */
+        .view-visuals-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .visual-card-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .visual-card-img {
+            width: 100%;
+            height: 60vh;
+            min-height: 350px;
+            overflow: hidden;
+            background-color: #f2f2f2;
+            position: relative;
+        }
+
+        .visual-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .visual-card-item:hover .visual-card-img img {
+            transform: scale(1.04);
+        }
+
+        .visual-card-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 6px;
+        }
+
+        .visual-card-info h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; }
+
+        /* SECCIÓN ESTUDIO */
+        .view-about-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        .about-statement {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 300;
+            line-height: 1.35;
+            letter-spacing: -1px;
+            color: #111111;
+            border-left: 3px solid #111111;
+            padding-left: 30px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            margin-top: 20px;
+        }
+
+        .about-col h4 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-col p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555555;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 50vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        /* SECCIÓN CONTACTO */
+        .view-contact-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .contact-info-block h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .contact-info-block p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555555;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .contact-detail-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-detail-item label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .contact-detail-item p, .contact-detail-item a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111111;
+            text-decoration: none;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 16px 0;
+            border: none;
+            border-bottom: 1px solid #cccccc;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #111111;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-bottom-color: #111111;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            background-color: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #000000;
+            transform: scale(1.02);
+        }
+
+        /* CONTROL DE VISIBILIDAD DE VISTAS */
+        .layout-block { display: none; }
+        body.mode-stories-active .view-stories-layout { display: flex; }
+        body.mode-visual-active .view-visuals-layout { display: grid; }
+        body.mode-about-active .view-about-layout { display: flex; }
+        body.mode-contact-active .view-contact-layout { display: grid; }
+
+        /* MODAL GALERÍA FOTOGRÁFICA */
+        .gallery-modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background-color: #000000;
+            z-index: 7000;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-modal-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .gallery-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 6%;
+            z-index: 7001;
+            color: #ffffff;
+        }
+
+        .gallery-modal-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
+
+        .gallery-modal-close {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            transition: background 0.2s ease;
+        }
+
+        .gallery-modal-close:hover { background: #ffffff; color: #000000; }
+
+        .gallery-modal-stage {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6%;
+            overflow: hidden;
+        }
+
+        .gallery-modal-stage img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background 0.2s ease;
+            z-index: 7002;
+        }
+
+        .gallery-nav-btn:hover { background: #ffffff; color: #000000; }
+        .gallery-nav-prev { left: 4%; }
+        .gallery-nav-next { right: 4%; }
+
+        .gallery-modal-footer {
+            padding: 24px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            z-index: 7001;
+        }
+
+        .gallery-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #888888;
+        }
+
+        /* MODAL DE LECTURA / MEMORIAS */
+        .story-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            background-color: #ffffff;
+            z-index: 5000;
+            opacity: 0;
+            pointer-events: none;
+            overflow-y: auto;
+            outline: none;
+            transform: translateY(30px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+
+        .story-container.active { 
+            opacity: 1; 
+            pointer-events: all; 
+            transform: translateY(0); 
+        }
+
+        .close-story-btn {
+            position: fixed;
+            top: 24px;
+            right: 6%;
+            z-index: 6000;
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 12px 26px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .close-story-btn:hover {
+            transform: scale(1.05);
+            background-color: #000000;
+        }
+
+        .story-header-cover {
+            width: 100%;
+            height: 70vh;
+            min-height: 450px;
+            position: relative;
+            background-color: #111111;
+        }
+
+        .story-header-cover img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.85);
+        }
+
+        .story-title-overlay {
+            position: absolute;
+            bottom: clamp(40px, 8vh, 80px);
+            left: 6%;
+            right: 6%;
+            color: #ffffff;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-title-overlay h2 {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+
+        .story-editorial-body { 
+            padding: 100px 6% 140px 6%; 
+            max-width: 1100px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 90px;
+        }
+
+        .story-lead-statement { 
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem); 
+            font-weight: 400; 
+            line-height: 1.45; 
+            color: #111111; 
+            border-left: 3px solid #111111;
+            padding-left: 32px;
+            margin-bottom: 20px;
+        }
+
+        .story-text-block-narrative {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .story-chapter-num { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.75rem; 
+            color: #888888; 
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .story-section-title { 
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem); 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: #111111;
+        }
+
+        .story-paragraph { 
+            font-size: 1.15rem; 
+            line-height: 1.9; 
+            color: #333333; 
+            font-weight: 300; 
+        }
+
+        .story-hero-frame {
+            width: 100%;
+            height: 55vh;
+            min-height: 380px;
+            max-height: 650px;
+            margin: 20px 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+        }
+
+        .story-hero-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .story-caption { 
+            margin-top: 14px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.7rem; 
+            color: #777777; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (pointer: coarse), (hover: none) {
+            * { cursor: auto !important; }
+            #custom-cursor { display: none !important; }
+        }
+
+        @media (max-width: 1024px) {
+            header { padding: 18px 5%; }
+            .entry-split-container { flex-direction: column; }
+            .split-pane { min-height: 50vh; min-height: 50dvh; padding: 60px 8% 40px 8%; }
+            .split-pane.pane-stories { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+            .view-visuals-layout { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .story-editorial-body { padding: 60px 5% 100px 5%; gap: 60px; }
+            .story-hero-frame { height: 45vh; min-height: 280px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .view-contact-layout { grid-template-columns: 1fr; gap: 60px; }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 12px; padding: 14px 5%; }
+            .mode-switch-bar { width: 100%; justify-content: center; flex-wrap: wrap; }
+            .mode-btn { flex: 1; text-align: center; padding: 6px 12px; }
+            .view-visuals-layout { grid-template-columns: 1fr; gap: 50px; }
+            .visual-card-img { height: 45vh; }
+            .story-header-cover { height: 50vh; }
+            .story-hero-frame { height: 35vh; min-height: 250px; }
+            .story-lead-statement { padding-left: 20px; font-size: 1.25rem; }
+            .close-story-btn { top: auto; bottom: 24px; right: 50%; transform: translateX(50%); width: 85%; max-width: 300px; text-align: center; }
+        }
+    </style>
+</head>
+<body class="mode-stories-active">
+
+    <!-- PUNTO NEGRO PERSONALIZADO -->
+    <div id="custom-cursor"></div>
+
+    <!-- PANTALLA INICIAL DE SELECCIÓN (SPLIT LANDING) -->
+    <section class="entry-split-container" id="entrySplit">
+        <div class="split-pane pane-stories" id="selectStories">
+            <div class="pane-bg"></div>
+            <div class="split-content-top">
+                <span class="split-badge">01 / CONCEPTOS Y RELATOS</span>
+            </div>
+            <div class="split-content-bottom">
+                <h2 class="split-title">MEMORIAS</h2>
+                <p class="split-desc">El desarrollo teórico, los fundamentos y el lenguaje conceptual detrás de cada diseño.</p>
+                <div class="split-action">
+                    VER MEMORIAS
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-pane pane-visuals" id="selectVisuals">
+            <div class="pane-bg"></div>
+            <div class="split-content-top">
+                <span class="split-badge">02 / ARQUITECTURA VISUAL</span>
+            </div>
+            <div class="split-content-bottom">
+                <h2 class="split-title">PROYECTOS</h2>
+                <p class="split-desc">Una experiencia limpia, directa y contemplativa a través de la fotografía final.</p>
+                <div class="split-action">
+                    EXPLORAR GALERÍA
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header id="mainHeader">
+        <div class="logo" id="brandLogo">OWN ARCHITECTURE</div>
+        <div class="mode-switch-bar">
+            <button class="mode-btn active" id="btnModeStories">MEMORIAS</button>
+            <button class="mode-btn" id="btnModeVisuals">PROYECTOS</button>
+            <button class="mode-btn" id="btnModeAbout">ESTUDIO</button>
+            <button class="mode-btn" id="btnModeContact">CONTACTO</button>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-view-container">
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2 id="galleryModeTitle">MEMORIAS</h2>
+                <span class="mono-tag" id="galleryModeTag">RELATOS Y CONCEPTOS</span>
+            </div>
+            
+            <!-- VISTA 1: MEMORIAS -->
+            <div class="view-stories-layout layout-block">
+                
+                <article class="story-card-item story-link"
+                         data-title="CASA INFINITA" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-statement="Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba."
+                         data-sec1-title="Diálogo con la topografía"
+                         data-sec1-text="La normativa urbanística, muy restrictiva en cuanto a movimientos de tierra y creación de desniveles, fue el punto de partida de la propuesta. De la necesidad de resolver este condicionante surgió la idea fundamental del proyecto: generar una gran plataforma continua en la planta intermedia, donde se ubica la zona de día, fundida con un jardín elevado y una piscina infinita que se extiende sobre la cubierta del nivel inferior."
+                         data-sec1-img="img/miranda-6/miranda-6.jpg"
+                         data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
+                         data-sec2-title="Tectónica y luz cenital"
+                         data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
+                         data-sec2-img="img/miranda-6/miranda-2.jpg"
+                         data-sec2-cap="FIG 02. Detalle de luz difusa y textura"
+                         data-hero-img="img/miranda-6/miranda-1.jpg">
+                    <div class="story-card-img">
+                        <img src="img/croquis.jpg" alt="Croquis Casa Infinita">
+                    </div>
+                    <div class="story-card-content">
+                        <span class="mono-tag">MEMORIA N° 01 • BARCELONA</span>
+                        <h3>CASA INFINITA</h3>
+                        <p class="story-card-excerpt">Infinita no habita el paisaje: se funde en él, dibujando en la pendiente una luz que no se acaba...</p>
+                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
+                    </div>
+                </article>
+
+                <article class="story-card-item story-link"
+                         data-title="FUYU" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-statement="La búsqueda del silencio a través de una masa ciega que protege microuniversos de patios interiores."
+                         data-sec1-title="La fachada como refugio"
+                         data-sec1-text="En un entorno urbano saturado, FUYU actúa como un monolito introspectivo. La fachada carece de aberturas hacia la calle, concentrando la vida hacia el núcleo."
+                         data-sec1-img="img/biguesiriells/bigues-1.jpg"
+                         data-sec1-cap="FIG 01. Fachada monolítica sobre el entorno"
+                         data-sec2-title="Naturaleza interior"
+                         data-sec2-text="El volumen se perfora estratégicamente creando tres patios ajardinados. Paneles correderos permiten transformar las estancias diáfanas en espacios integrados con la vegetación."
+                         data-sec2-img="img/biguesiriells/bigues-2.jpg"
+                         data-sec2-cap="FIG 02. Patio central de luz y lámina de agua"
+                         data-hero-img="img/biguesiriells/bigues-4.jpg">
+                    <div class="story-card-img">
+                        <img src="img/HAVANA%2048.jpg" alt="Concepto Fuyu">
+                    </div>
+                    <div class="story-card-content">
+                        <span class="mono-tag">MEMORIA N° 02 • BARCELONA</span>
+                        <h3>FUYU</h3>
+                        <p class="story-card-excerpt">Una reflexión teórica sobre la intimidad y el aislamiento sonoro en la arquitectura contemporánea. FUYU rechaza las vistas exteriores para centrarse en patios interiores privados...</p>
+                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
+                    </div>
+                </article>
+
+                <article class="story-card-item story-link"
+                         data-title="PASSACAGLIA" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-statement="Passacaglia es una coreografía arquitectónica, donde la luz, los volúmenes y el espacio dialogan con una cadencia casi musical."
+                         data-sec1-title="Diálogo con el paisaje"
+                         data-sec1-text="Su diseño sigue una cadencia precisa de llenos y vacíos, generando una composición arquitectónica donde la luz y la sombra alternan en perfecta armonía. Como en la obra musical de Handel, la repetición y la variación rigen la experiencia espacial, ofreciendo una percepción dinámica y fluida de los espacios."
+                         data-sec1-img="img/havana48/havana1.jpg"
+                         data-sec1-cap="FIG 01. Voladizo principal proyectado sobre la ladera"
+                         data-sec2-title="Tectónica y luz cenital"
+                         data-sec2-text="Un gran porche cubierto, bajo el primer volumen, prolonga este plano habitable, diluyendo los límites entre interior y exterior. Desde cada rincón, los puntos de fuga llevan la mirada más allá, hacia un horizonte sin fin."
+                         data-sec2-img="img/havana48/havana2.jpg"
+                         data-sec2-cap="FIG 02. Detalle de luz interior"
+                         data-hero-img="img/havana48/havana4.jpg">
+                    <div class="story-card-img">
+                        <img src="img/croquis.jpg" alt="Croquis Casa Passacaglia">
+                    </div>
+                    <div class="story-card-content">
+                        <span class="mono-tag">MEMORIA N° 03 • BARCELONA</span>
+                        <h3>PASSACAGLIA</h3>
+                        <p class="story-card-excerpt">Un hogar donde la precisión geométrica y la emoción sensorial convergen para crear una experiencia única.</p>
+                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
+                    </div>
+                </article>
+
+                <article class="story-card-item story-link"
+                         data-title="VILA CLARA" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-statement="Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
+                         data-sec1-title="Diálogo con la luz"
+                         data-sec1-text="Es una pequeña vivienda en Canyelles organizada alrededor de una escalera central. Más que un elemento de circulación, la escalera se convierte en un hueco vertical que introduce la luz natural en el corazón de la casa, conectando las distintas plantas y dando profundidad a los espacios interiores."
+                         data-sec1-img="img/mirador-42/mirador-4.jpg"
+                         data-sec1-cap="FIG 01. Vista vacío escalera central"
+                         data-sec2-title="Tectónica y luz cenital"
+                         data-sec2-text="Vilaclara es una vivienda donde el vacío se convierte en el verdadero protagonista: un espacio que no se construye, pero que da sentido a todo lo demás."
+                         data-sec2-img="img/mirador-42/mirador-2.jpg"
+                         data-sec2-cap="FIG 02. Detalle de luz interior"
+                         data-hero-img="img/mirador-42/mirador-3.jpg">
+                    <div class="story-card-img">
+                        <img src="img/croquis.jpg" alt="Croquis Vila Clara">
+                    </div>
+                    <div class="story-card-content">
+                        <span class="mono-tag">MEMORIA N° 04 • BARCELONA</span>
+                        <h3>VILA CLARA</h3>
+                        <p class="story-card-excerpt">Un hogar donde la precisión geométrica y la emoción sensorial convergen para crear una experiencia única.</p>
+                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
+                    </div>
+                </article>
+
+                <article class="story-card-item story-link"
+                         data-title="CLARO DE LUZ" 
+                         data-category="RESIDENCIAL • BARCELONA" 
+                         data-statement="Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro."
+                         data-sec1-title="Diálogo con el entorno"
+                         data-sec1-text="Su forma en L abraza un jardín íntimo y acogedor, un claro vegetal donde la vida cotidiana florece entre sombras suaves, reflejos y vegetación."
+                         data-sec1-img="img/miranda-6/miranda-1.jpg"
+                         data-sec1-cap="FIG 01. Integración con el espacio vegetal"
+                         data-sec2-title="Atmósfera interior"
+                         data-sec2-text="Cada estancia busca la luz de forma matizada, creando espacios de contemplación y serenidad."
+                         data-sec2-img="img/miranda-6/miranda-2.jpg"
+                         data-sec2-cap="FIG 02. Interior diáfano"
+                         data-hero-img="img/miranda-6/miranda-6.jpg">
+                    <div class="story-card-img">
+                        <img src="img/croquis.jpg" alt="Croquis Claro de Luz">
+                    </div>
+                    <div class="story-card-content">
+                        <span class="mono-tag">MEMORIA N° 05 • BARCELONA</span>
+                        <h3>CLARO DE LUZ</h3>
+                        <p class="story-card-excerpt">Casa Claro de Luz es un refugio sereno, una vivienda que se repliega para que la luz y la calma ocupen el centro.</p>
+                        <span class="story-read-more">LEER MEMORIA COMPLETA &rarr;</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- VISTA 2: PROYECTOS (GALERÍA FOTOGRÁFICA) -->
+            <div class="view-visuals-layout layout-block">
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/miranda-6/miranda-1.jpg" alt="Casa Infinita">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>CASA INFINITA</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/biguesiriells/bigues-1.jpg" alt="FUYU">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>FUYU</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/havana48/havana1.jpg" alt="PASSACAGLIA">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>PASSACAGLIA</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/mirador-42/mirador-3.jpg" alt="VILA CLARA">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>VILA CLARA</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                         </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/clarodeluz/clarodeluz-1.jpg" alt="CLARO DE LUZ">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>CLARO DE LUZ</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                    </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/miranda4/miranda4-1.jpg" alt="BRISA DE LUZ">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>BRISA DE LUZ</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                     </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/reivissa/reivissa-1.jpg" alt="BRISA DEL ALBA">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>BRISA DEL ALBA</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                     </div>
+                <div class="visual-card-item">
+                    <div class="visual-card-img">
+                        <img src="img/JP/jp1.jpg" alt="CLAROSCURO">
+                    </div>
+                    <div class="visual-card-info">
+                        <h3>CLAROSCURO</h3>
+                        <span class="mono-tag">BARCELONA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 3: SOBRE EL ESTUDIO -->
+            <div class="view-about-layout layout-block">
+                <p class="about-statement">
+                    Concebimos la arquitectura como una respuesta esencial al lugar, la materia y la luz. Buscamos la belleza en la honestidad de la forma y la precisión de cada detalle.
+                </p>
+                <div class="about-grid">
+                    <div class="about-col">
+                        <h4>FILOSOFÍA</h4>
+                        <p>En OWN ARCHITECTURE abordamos el diseño desde la introspección teórica y la rigorosa ejecución constructiva. Creemos en espacios vacíos de artificio donde la luz y la sombra moldean atmósferas atemporales.</p>
+                        <p>Cada proyecto nace de un diálogo constante con las limitaciones del territorio y las dinámicas del habitar contemporáneo.</p>
+                    </div>
+                    <div class="about-col">
+                        <h4>MÉTODO DE TRABAJO</h4>
+                        <p>Entendemos la arquitectura como una disciplina integral. Desde los primeros croquis teóricos hasta la dirección técnica de obra, controlamos cada escala del proyecto.</p>
+                        <p>Inspirados por una sensibilidad minimalista y tectónica, materializamos estructuras duraderas con vocación escultórica.</p>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/HAVANA%2048.jpg" alt="Estudio OWN Architecture">
+                </div>
+            </div>
+
+            <!-- VISTA 4: CONTACTO -->
+            <div class="view-contact-layout layout-block">
+                <div class="contact-info-block">
+                    <h3>HABLEMOS DE TU PRÓXIMO PROYECTO</h3>
+                    <p>Estamos disponibles para encargos, colaboraciones y consultas arquitectónicas internacionales.</p>
+                    
+                    <div class="contact-detail-item">
+                        <label>UBICACIÓN</label>
+                        <p>Barcelona, España</p>
+                    </div>
+                    <div class="contact-detail-item">
+                        <label>EMAIL</label>
+                        <p><a href="mailto:info@ownarchitecture.com">info@ownarchitecture.com</a></p>
+                    </div>
+                    <div class="contact-detail-item">
+                        <label>TELÉFONO</label>
+                        <p>+34 930 000 000</p>
+                    </div>
+                </div>
+
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado correctamente.');">
+                    <div class="form-group">
+                        <label>NOMBRE COMPLETO</label>
+                        <input type="text" placeholder="Ej. Sofia Alarcón" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CORREO ELECTRÓNICO</label>
+                        <input type="email" placeholder="ejemplo@dominio.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ASUNTO / PROYECTO</label>
+                        <input type="text" placeholder="Ej. Residencia Unifamiliar">
+                    </div>
+                    <div class="form-group">
+                        <label>MENSAJE</label>
+                        <textarea rows="4" placeholder="Describe brevemente la idea o necesidad del proyecto..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ENVIAR MENSAJE</button>
+                </form>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- MODAL DE MEMORIA EDITORIAL -->
+    <div class="story-container" id="storyModal">
+        <button class="close-story-btn" id="closeStoryBtn">&larr; CERRAR MEMORIA</button>
+        <div class="story-header-cover">
+            <img id="mHeroImg" src="" alt="">
+            <div class="story-title-overlay">
+                <span class="mono-tag" id="mCategory" style="color: rgba(255,255,255,0.7);"></span>
+                <h2 id="mTitle"></h2>
+            </div>
+        </div>
+        <div class="story-editorial-body">
+            <p class="story-lead-statement" id="mStatement"></p>
+
+            <div class="story-text-block-narrative">
+                <span class="story-chapter-num">01 / CAPÍTULO I</span>
+                <h3 class="story-section-title" id="mSec1Title"></h3>
+                <p class="story-paragraph" id="mSec1Text"></p>
+                <div class="story-hero-frame">
+                    <img id="mSec1Img" src="" alt="">
+                </div>
+                <p class="story-caption" id="mSec1Cap"></p>
+            </div>
+
+            <div class="story-text-block-narrative">
+                <span class="story-chapter-num">02 / CAPÍTULO II</span>
+                <h3 class="story-section-title" id="mSec2Title"></h3>
+                <p class="story-paragraph" id="mSec2Text"></p>
+                <div class="story-hero-frame">
+                    <img id="mSec2Img" src="" alt="">
+                </div>
+                <p class="story-caption" id="mSec2Cap"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // CURSOR PERSONALIZADO
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if (!cursor.classList.contains('visible')) cursor.classList.add('visible');
+        });
+
+        const hoverables = document.querySelectorAll('button, a, .split-pane, .story-card-item, .visual-card-item, input, textarea');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // CONTROL DE SPLIT INITIAL
+        const entrySplit = document.getElementById('entrySplit');
+        const selectStories = document.getElementById('selectStories');
+        const selectVisuals = document.getElementById('selectVisuals');
+
+        function activateContent(mode) {
+            entrySplit.classList.add('hidden');
+            document.body.classList.add('content-active');
+            switchMode(mode);
+        }
+
+        selectStories.addEventListener('click', () => activateContent('stories'));
+        selectVisuals.addEventListener('click', () => activateContent('visuals'));
+
+        // CONMUTACIÓN DE SECCIONES (NAVEGACIÓN)
+        const btnStories = document.getElementById('btnModeStories');
+        const btnVisuals = document.getElementById('btnModeVisuals');
+        const btnAbout = document.getElementById('btnModeAbout');
+        const btnContact = document.getElementById('btnModeContact');
+
+        const titleHeader = document.getElementById('galleryModeTitle');
+        const tagHeader = document.getElementById('galleryModeTag');
+
+        function switchMode(mode) {
+            document.body.classList.remove('mode-stories-active', 'mode-visual-active', 'mode-about-active', 'mode-contact-active');
+            btnStories.classList.remove('active');
+            btnVisuals.classList.remove('active');
+            btnAbout.classList.remove('active');
+            btnContact.classList.remove('active');
+
+            if (mode === 'stories') {
+                document.body.classList.add('mode-stories-active');
+                btnStories.classList.add('active');
+                titleHeader.textContent = 'MEMORIAS';
+                tagHeader.textContent = 'RELATOS Y CONCEPTOS';
+            } else if (mode === 'visuals') {
+                document.body.classList.add('mode-visual-active');
+                btnVisuals.classList.add('active');
+                titleHeader.textContent = 'PROYECTOS';
+                tagHeader.textContent = 'GALERÍA FOTOGRÁFICA';
+            } else if (mode === 'about') {
+                document.body.classList.add('mode-about-active');
+                btnAbout.classList.add('active');
+                titleHeader.textContent = 'EL ESTUDIO';
+                tagHeader.textContent = 'FILOSOFÍA Y EQUIPO';
+            } else if (mode === 'contact') {
+                document.body.classList.add('mode-contact-active');
+                btnContact.classList.add('active');
+                titleHeader.textContent = 'CONTACTO';
+                tagHeader.textContent = 'CONSULTAS Y PROYECTOS';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        btnStories.addEventListener('click', () => switchMode('stories'));
+        btnVisuals.addEventListener('click', () => switchMode('visuals'));
+        btnAbout.addEventListener('click', () => switchMode('about'));
+        btnContact.addEventListener('click', () => switchMode('contact'));
+
+        // Cargar Modal de Memorias
+        const storyLinks = document.querySelectorAll('.story-link');
+        const storyModal = document.getElementById('storyModal');
+        const closeStoryBtn = document.getElementById('closeStoryBtn');
+
+        storyLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mTitle').textContent = link.dataset.title;
+                document.getElementById('mCategory').textContent = link.dataset.category;
+                document.getElementById('mStatement').textContent = link.dataset.statement;
+                
+                document.getElementById('mSec1Title').textContent = link.dataset.sec1Title;
+                document.getElementById('mSec1Text').textContent = link.dataset.sec1Text;
+                document.getElementById('mSec1Img').src = link.dataset.sec1Img;
+                document.getElementById('mSec1Cap').textContent = link.dataset.sec1Cap;
+
+                document.getElementById('mSec2Title').textContent = link.dataset.sec2Title;
+                document.getElementById('mSec2Text').textContent = link.dataset.sec2Text;
+                document.getElementById('mSec2Img').src = link.dataset.sec2Img;
+                document.getElementById('mSec2Cap').textContent = link.dataset.sec2Cap;
+
+                document.getElementById('mHeroImg').src = link.dataset.heroImg;
+
+                storyModal.classList.add('active');
+                document.body.classList.add('story-active');
+            });
+        });
+
+        closeStoryBtn.addEventListener('click', () => {
+            storyModal.classList.remove('active');
+            document.body.classList.remove('story-active');
+        });
+    </script>
 </body>
 </html>
